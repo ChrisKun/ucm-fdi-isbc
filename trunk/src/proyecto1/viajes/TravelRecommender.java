@@ -38,7 +38,7 @@ public class TravelRecommender implements StandardCBRApplication{
 			_connector = new DataBaseConnector();
 			//Inicializar el conector con su archivo xml de configuración
 			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile(
-					"jcolibri/test/travel/databaseconfig.xml"));
+					"proyecto1/viajes/databaseconfig.xml"));
 			//La organización en memoria será lineal
 			_caseBase = new LinealCaseBase();
 		} catch (Exception e){
