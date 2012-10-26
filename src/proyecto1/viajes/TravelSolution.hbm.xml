@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-<class name="jcolibri.test.travel.TravelSolution" table="travel">
+<class name="proyecto1.viajes.TravelSolution" table="travel">
 	<id name="caseId" column="caseId"/>
 	<property name="price" column="Price"/>
 	<property name="hotel" column="Hotel"/>
