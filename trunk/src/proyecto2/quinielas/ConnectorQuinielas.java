@@ -5,7 +5,9 @@ import proyecto2.quinielas.representacion.SolucionQuinielas;
 import proyecto2.quinielas.representacion.SolucionQuinielas.UnoXDos;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +59,8 @@ public class ConnectorQuinielas implements Connector {
 		int i=0;
 		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("datos.txt"));
+			//TODO Cambiar la ruta por una donde tengamos localizados archivos media
+			BufferedReader br = new BufferedReader(new FileReader("src/proyecto2/quinielas/datos.txt"));
 			
 			
 			String line = null;
