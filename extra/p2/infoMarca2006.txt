@@ -1,0 +1,380 @@
+Valencia,2,Betis,1,5,Valencia,1,1,0,0,2,1,3,16,Betis,1,0,0,1,1,2,0
+R. Madrid,0,Villarreal,0,12,R. Madrid,1,0,1,0,0,0,1,13,Villarreal,1,0,1,0,0,0,1
+Racing,0,Atlético,1,18,Racing,1,0,0,1,0,1,0,6,Atlético,1,1,0,0,1,0,3
+Recreativo,1,Mallorca,1,11,Recreativo,1,0,1,0,1,1,1,9,Mallorca,1,0,1,0,1,1,1
+Deportivo,3,Zaragoza,2,4,Deportivo,1,1,0,0,3,2,3,15,Zaragoza,1,0,0,1,2,3,0
+Espanyol,0,Gimnástic,1,17,Espanyol,1,0,0,1,0,1,0,7,Gimnástic,1,1,0,0,1,0,3
+Osasuna,0,Getafe,2,19,Osasuna,1,0,0,1,0,2,0,2,Getafe,1,1,0,0,2,0,3
+Athletic,1,R. Sociedad,1,8,Athletic,1,0,1,0,1,1,1,10,R. Sociedad,1,0,1,0,1,1,1
+Celta,2,Barcelona,3,14,Celta,1,0,0,1,2,3,0,3,Barcelona,1,1,0,0,3,2,3
+Sevilla,4,Levante,0,1,Sevilla,1,1,0,0,4,0,3,20,Levante,1,0,0,1,0,4,0
+Barcelona,3,Osasuna,0,2,Barcelona,2,2,0,0,6,2,6,19,Osasuna,2,0,0,2,0,5,0
+Atlético,0,Valencia,1,12,Atlético,2,1,0,1,1,1,3,4,Valencia,2,2,0,0,3,1,6
+R. Sociedad,1,Sevilla,3,15,R. Sociedad,2,0,1,1,2,4,1,1,Sevilla,2,2,0,0,7,1,6
+Betis,3,Athletic,0,9,Betis,2,1,0,1,4,2,3,16,Athletic,2,0,1,1,1,4,1
+Villarreal,0,Recreativo,1,14,Villarreal,2,0,1,1,0,1,1,7,Recreativo,2,1,1,0,2,1,4
+Levante,1,R. Madrid,4,20,Levante,2,0,0,2,1,8,0,5,R. Madrid,2,1,1,0,4,1,4
+Gimnástic,1,Celta,2,11,Gimnástic,2,1,0,1,2,2,3,10,Celta,2,1,0,1,4,4,3
+Mallorca,0,Deportivo,0,13,Mallorca,2,0,2,0,1,1,2,6,Deportivo,2,1,1,0,3,2,4
+Getafe,1,Racing,0,3,Getafe,2,2,0,0,3,0,6,17,Racing,2,0,0,2,0,2,0
+Zaragoza,3,Espanyol,0,8,Zaragoza,2,1,0,1,5,3,3,18,Espanyol,2,0,0,2,0,4,0
+Deportivo,2,Villarreal,0,5,Deportivo,3,2,1,0,5,2,7,17,Villarreal,3,0,1,2,0,3,1
+Sevilla,3,Betis,2,1,Sevilla,3,3,0,0,10,3,9,10,Betis,3,1,0,2,6,5,3
+Zaragoza,2,Mallorca,0,6,Zaragoza,3,2,0,1,7,3,6,16,Mallorca,3,0,2,1,1,3,2
+Osasuna,2,Gimnástic,0,14,Osasuna,3,1,0,2,2,5,3,12,Gimnástic,3,1,0,2,2,4,3
+Recreativo,0,Levante,1,9,Recreativo,3,1,1,1,2,2,4,15,Levante,3,1,0,2,2,8,3
+Racing,0,Barcelona,3,20,Racing,3,0,0,3,0,5,0,2,Barcelona,3,3,0,0,9,2,9
+Espanyol,2,Celta,1,13,Espanyol,3,1,0,2,2,5,3,11,Celta,3,1,0,2,5,6,3
+Athletic,1,Atlético,4,19,Athletic,3,0,1,2,2,8,1,7,Atlético,3,2,0,1,5,2,6
+Valencia,2,Getafe,0,3,Valencia,3,3,0,0,5,1,9,8,Getafe,3,2,0,1,3,2,6
+R. Madrid,2,R. Sociedad,0,4,R. Madrid,3,2,1,0,6,1,7,18,R. Sociedad,3,0,1,2,2,6,1
+Betis,0,R. Madrid,1,15,Betis,4,1,0,3,6,6,3,2,R. Madrid,4,3,1,0,7,1,10
+Atlético,2,Sevilla,1,5,Atlético,4,3,0,1,7,3,9,4,Sevilla,4,3,0,1,11,5,9
+Levante,2,Deportivo,0,11,Levante,4,2,0,2,4,8,6,6,Deportivo,4,2,1,1,5,4,7
+Celta,0,Osasuna,2,16,Celta,4,1,0,3,5,8,3,10,Osasuna,4,2,0,2,4,5,6
+Getafe,0,Athletic,0,8,Getafe,4,2,1,1,3,2,7,18,Athletic,4,0,2,2,2,8,2
+Mallorca,1,Espanyol,0,12,Mallorca,4,1,2,1,2,3,5,17,Espanyol,4,1,0,3,2,6,3
+Villarreal,3,Zaragoza,2,14,Villarreal,4,1,1,2,3,5,4,9,Zaragoza,4,2,0,2,9,6,6
+R. Sociedad,2,Recreativo,3,19,R. Sociedad,4,0,1,3,4,9,1,7,Recreativo,4,2,1,1,5,4,7
+Gimnástic,2,Racing,2,13,Gimnástic,4,1,1,2,4,6,4,20,Racing,4,0,1,3,2,7,1
+Barcelona,1,Valencia,1,1,Barcelona,4,3,1,0,10,3,10,3,Valencia,4,3,1,0,6,2,10
+Sevilla,1,Getafe,0,3,Sevilla,5,4,0,1,12,5,12,9,Getafe,5,2,1,2,3,3,7
+Zaragoza,2,Levante,2,8,Zaragoza,5,2,1,2,11,8,7,12,Levante,5,2,1,2,6,10,7
+Mallorca,1,Villarreal,2,13,Mallorca,5,1,2,2,3,5,5,10,Villarreal,5,2,1,2,5,6,7
+Deportivo,2,R. Sociedad,0,6,Deportivo,5,3,1,1,7,4,10,20,R. Sociedad,5,0,1,4,4,11,1
+Recreativo,2,Betis,0,7,Recreativo,5,3,1,1,7,4,10,17,Betis,5,1,0,4,6,8,3
+R. Madrid,1,Atlético,1,4,R. Madrid,5,3,2,0,8,2,11,5,Atlético,5,3,1,1,8,4,10
+Espanyol,0,Osasuna,0,15,Espanyol,5,1,1,3,2,6,4,11,Osasuna,5,2,1,2,4,5,7
+Racing,1,Celta,1,18,Racing,5,0,2,3,3,8,2,14,Celta,5,1,1,3,6,9,4
+Valencia,4,Gimnástic,0,2,Valencia,5,4,1,0,10,2,13,16,Gimnástic,5,1,1,3,4,10,4
+Athletic,1,Barcelona,3,19,Athletic,5,0,2,3,3,11,2,1,Barcelona,5,4,1,0,13,4,13
+Getafe,1,R. Madrid,0,9,Getafe,6,3,1,2,4,3,10,5,R. Madrid,6,3,2,1,8,3,11
+Atlético,2,Recreativo,1,3,Atlético,6,4,1,1,10,5,13,8,Recreativo,6,3,1,2,8,6,10
+Osasuna,0,Racing,1,13,Osasuna,6,2,1,3,4,6,7,15,Racing,6,1,2,3,4,8,5
+Celta,3,Valencia,2,12,Celta,6,2,1,3,9,11,7,2,Valencia,6,4,1,1,12,5,13
+R. Sociedad,1,Zaragoza,3,20,R. Sociedad,6,0,1,5,5,14,1,7,Zaragoza,6,3,1,2,14,9,10
+Villarreal,0,Espanyol,0,10,Villarreal,6,2,2,2,5,6,8,16,Espanyol,6,1,2,3,2,6,5
+Gimnástic,2,Athletic,3,19,Gimnástic,6,1,1,4,6,13,4,17,Athletic,6,1,2,3,6,13,5
+Levante,0,Mallorca,1,14,Levante,6,2,1,3,6,11,7,11,Mallorca,6,2,2,2,4,5,8
+Barcelona,3,Sevilla,1,1,Barcelona,6,5,1,0,16,5,16,4,Sevilla,6,4,0,2,13,8,12
+Betis,1,Deportivo,1,18,Betis,6,1,1,4,7,9,4,6,Deportivo,6,3,2,1,8,5,11
+Zaragoza,2,Betis,1,6,Zaragoza,7,4,1,2,16,10,13,18,Betis,7,1,1,5,8,11,4
+Villarreal,1,Levante,1,11,Villarreal,7,2,3,2,6,7,9,13,Levante,7,2,2,3,7,12,8
+Deportivo,1,Atlético,0,5,Deportivo,7,4,2,1,9,5,14,7,Atlético,7,4,1,2,10,6,13
+Mallorca,0,R. Sociedad,0,12,Mallorca,7,2,3,2,4,5,9,20,R. Sociedad,7,0,2,5,5,14,2
+Espanyol,2,Racing,2,16,Espanyol,7,1,3,3,4,8,6,15,Racing,7,1,3,3,6,10,6
+Recreativo,1,Getafe,2,9,Recreativo,7,3,1,3,9,8,10,8,Getafe,7,4,1,2,6,4,13
+Valencia,1,Osasuna,0,2,Valencia,7,5,1,1,13,5,16,14,Osasuna,7,2,1,4,4,7,7
+Athletic,0,Celta,1,17,Athletic,7,1,2,4,6,14,5,10,Celta,7,3,1,3,10,11,10
+Sevilla,2,Gimnástic,1,3,Sevilla,7,5,0,2,15,9,15,19,Gimnástic,7,1,1,5,7,15,4
+R. Madrid,2,Barcelona,0,4,R. Madrid,7,4,2,1,10,3,14,1,Barcelona,7,5,1,1,16,7,16
+Getafe,2,Deportivo,0,6,Getafe,8,5,1,2,8,4,16,7,Deportivo,8,4,2,2,9,7,14
+Barcelona,3,Recreativo,0,1,Barcelona,8,6,1,1,19,7,19,12,Recreativo,8,3,1,4,9,11,10
+Racing,1,Valencia,0,13,Racing,8,2,3,3,7,10,9,5,Valencia,8,5,1,2,13,6,16
+Gimnástic,1,R. Madrid,3,19,Gimnástic,8,1,1,6,8,18,4,3,R. Madrid,8,5,2,1,13,4,17
+Celta,1,Sevilla,2,11,Celta,8,3,1,4,11,13,10,2,Sevilla,8,6,0,2,17,10,18
+R. Sociedad,0,Villarreal,1,20,R. Sociedad,8,0,2,6,5,15,2,9,Villarreal,8,3,3,2,7,7,12
+Levante,0,Espanyol,0,14,Levante,8,2,3,3,7,12,9,16,Espanyol,8,1,4,3,4,8,7
+Betis,0,Mallorca,1,18,Betis,8,1,1,6,8,12,4,10,Mallorca,8,3,3,2,5,5,12
+Osasuna,1,Athletic,1,15,Osasuna,8,2,2,4,5,8,8,17,Athletic,8,1,3,4,7,15,6
+Atlético,0,Zaragoza,1,8,Atlético,8,4,1,3,10,7,13,4,Zaragoza,8,5,1,2,17,10,16
+Mallorca,0,Atlético,0,10,Mallorca,9,3,4,2,5,5,13,9,Atlético,9,4,2,3,10,7,14
+Levante,2,R. Sociedad,0,13,Levante,9,3,3,3,9,12,12,20,R. Sociedad,9,0,2,7,5,17,2
+Deportivo,1,Barcelona,1,7,Deportivo,9,4,3,2,10,8,15,2,Barcelona,9,6,2,1,20,8,20
+Villarreal,3,Betis,2,8,Villarreal,9,4,3,2,10,9,15,18,Betis,9,1,1,7,10,15,4
+Zaragoza,3,Getafe,1,3,Zaragoza,9,6,1,2,20,11,19,6,Getafe,9,5,1,3,9,7,16
+Sevilla,2,Osasuna,0,1,Sevilla,9,7,0,2,19,10,21,16,Osasuna,9,2,2,5,5,10,8
+Athletic,0,Racing,0,17,Athletic,9,1,4,4,7,15,7,14,Racing,9,2,4,3,7,10,10
+Recreativo,2,Gimnástic,1,12,Recreativo,9,4,1,4,11,12,13,19,Gimnástic,9,1,1,7,9,20,4
+R. Madrid,1,Celta,2,4,R. Madrid,9,5,2,2,14,6,17,11,Celta,9,4,1,4,13,14,13
+Espanyol,1,Valencia,1,15,Espanyol,9,1,5,3,5,9,8,5,Valencia,9,5,2,2,14,7,17
+Atlético,3,Villarreal,1,7,Atlético,10,5,2,3,13,8,17,10,Villarreal,10,4,3,3,11,12,15
+Valencia,1,Athletic,1,6,Valencia,10,5,3,2,15,8,18,16,Athletic,10,1,5,4,8,16,8
+Racing,0,Sevilla,0,14,Racing,10,2,5,3,7,10,11,2,Sevilla,10,7,1,2,19,10,22
+Celta,1,Recreativo,2,12,Celta,10,4,1,5,14,16,13,9,Recreativo,10,5,1,4,13,13,16
+R. Sociedad,1,Espanyol,1,20,R. Sociedad,10,0,3,7,6,18,3,15,Espanyol,10,1,6,3,6,10,9
+Betis,2,Levante,1,18,Betis,10,2,1,7,12,16,7,13,Levante,10,3,3,4,10,14,12
+Gimnástic,0,Deportivo,0,19,Gimnástic,10,1,2,7,9,20,5,8,Deportivo,10,4,4,2,10,8,16
+Getafe,1,Mallorca,0,5,Getafe,10,6,1,3,10,7,19,11,Mallorca,10,3,4,3,5,6,13
+Osasuna,1,R. Madrid,4,17,Osasuna,10,2,2,6,6,14,8,3,R. Madrid,10,6,2,2,18,7,20
+Barcelona,3,Zaragoza,1,1,Barcelona,10,7,2,1,23,9,23,4,Zaragoza,10,6,1,3,21,14,19
+R. Madrid,3,Racing,1,3,R. Madrid,11,7,2,2,21,8,23,15,Racing,11,2,5,4,8,13,11
+Sevilla,3,Valencia,0,2,Sevilla,11,8,1,2,22,10,25,8,Valencia,11,5,3,3,15,11,18
+Zaragoza,3,Gimnástic,0,4,Zaragoza,11,7,1,3,24,14,22,19,Gimnástic,11,1,2,8,9,23,5
+Villarreal,1,Getafe,0,9,Villarreal,11,5,3,3,12,12,18,7,Getafe,11,6,1,4,10,8,19
+Espanyol,3,Athletic,2,13,Espanyol,11,2,6,3,9,12,12,17,Athletic,11,1,5,5,10,19,8
+R. Sociedad,0,Betis,0,20,R. Sociedad,11,0,4,7,6,18,4,16,Betis,11,2,2,7,12,16,8
+Recreativo,2,Osasuna,0,6,Recreativo,11,6,1,4,15,13,19,18,Osasuna,11,2,2,7,6,16,8
+Levante,0,Atlético,3,14,Levante,11,3,3,5,10,17,12,5,Atlético,11,6,2,3,16,8,20
+Mallorca,1,Barcelona,4,12,Mallorca,11,3,4,4,6,10,13,1,Barcelona,11,8,2,1,27,10,26
+Deportivo,0,Celta,1,10,Deportivo,11,4,4,3,10,9,16,11,Celta,11,5,1,5,15,16,16
+Barcelona,4,Villarreal,0,1,Barcelona,12,9,2,1,31,10,29,9,Villarreal,12,5,3,4,12,16,18
+Atlético,1,R. Sociedad,1,5,Atlético,12,6,3,3,17,9,21,19,R. Sociedad,12,0,5,7,7,19,5
+Getafe,0,Levante,0,6,Getafe,12,6,2,4,10,8,20,15,Levante,12,3,4,5,10,17,13
+Celta,1,Zaragoza,1,10,Celta,12,5,2,5,16,17,17,4,Zaragoza,12,7,2,3,25,15,23
+Betis,1,Espanyol,1,17,Betis,12,2,3,7,13,17,9,14,Espanyol,12,2,7,3,10,13,13
+Osasuna,4,Deportivo,1,16,Osasuna,12,3,2,7,10,17,11,11,Deportivo,12,4,4,4,11,13,16
+Racing,4,Recreativo,3,13,Racing,12,3,5,4,12,16,14,7,Recreativo,12,6,1,5,18,17,19
+Gimnástic,2,Mallorca,3,20,Gimnástic,12,1,2,9,11,26,5,12,Mallorca,12,4,4,4,9,12,16
+Valencia,0,R. Madrid,1,8,Valencia,12,5,3,4,15,12,18,3,R. Madrid,12,8,2,2,22,8,26
+Athletic,1,Sevilla,3,18,Athletic,12,1,5,6,11,22,8,2,Sevilla,12,9,1,2,25,11,28
+Levante,1,Barcelona,1,16,Levante,13,3,5,5,11,18,14,1,Barcelona,13,9,3,1,32,11,30
+Recreativo,2,Valencia,0,6,Recreativo,13,7,1,5,20,17,22,9,Valencia,13,5,3,5,15,14,18
+Betis,0,Atlético,1,17,Betis,13,2,3,8,13,18,9,4,Atlético,13,7,3,3,18,9,24
+Espanyol,2,Sevilla,1,13,Espanyol,13,3,7,3,12,14,16,3,Sevilla,13,9,1,3,26,13,28
+Villarreal,2,Gimnástic,0,8,Villarreal,13,6,3,4,14,16,21,20,Gimnástic,13,1,2,10,11,28,5
+Mallorca,2,Celta,2,12,Mallorca,13,4,5,4,11,14,17,10,Celta,13,5,3,5,18,19,18
+R. Sociedad,0,Getafe,0,19,R. Sociedad,13,0,6,7,7,19,6,7,Getafe,13,6,3,4,10,8,21
+Deportivo,0,Racing,0,11,Deportivo,13,4,5,4,11,13,17,14,Racing,13,3,6,4,12,16,15
+R. Madrid,2,Athletic,1,2,R. Madrid,13,9,2,2,24,9,29,18,Athletic,13,1,5,7,12,24,8
+Zaragoza,1,Osasuna,2,5,Zaragoza,13,7,2,4,26,17,23,15,Osasuna,13,4,2,7,12,18,14
+Barcelona,1,R. Sociedad,0,1,Barcelona,14,10,3,1,33,11,33,20,R. Sociedad,14,0,6,8,7,20,6
+Sevilla,2,R. Madrid,1,2,Sevilla,14,10,1,3,28,14,31,3,R. Madrid,14,9,2,3,25,11,29
+Athletic,4,Recreativo,2,17,Athletic,14,2,5,7,16,26,11,7,Recreativo,14,7,1,6,22,21,22
+Racing,0,Zaragoza,2,15,Racing,14,3,6,5,12,18,15,4,Zaragoza,14,8,2,4,28,17,26
+Celta,1,Villarreal,1,10,Celta,14,5,4,5,19,20,19,8,Villarreal,14,6,4,4,15,17,22
+Osasuna,3,Mallorca,0,12,Osasuna,14,5,2,7,15,18,17,14,Mallorca,14,4,5,5,11,17,17
+Gimnástic,2,Levante,1,19,Gimnástic,14,2,2,10,13,29,8,16,Levante,14,3,5,6,12,20,14
+Getafe,1,Betis,1,6,Getafe,14,6,4,4,11,9,22,18,Betis,14,2,4,8,14,19,10
+Atlético,1,Espanyol,2,5,Atlético,14,7,3,4,19,11,24,11,Espanyol,14,4,7,3,14,15,19
+Valencia,4,Deportivo,0,9,Valencia,14,6,3,5,19,14,21,13,Deportivo,14,4,5,5,11,17,17
+Mallorca,1,Racing,2,14,Mallorca,15,4,5,6,12,19,17,13,Racing,15,4,6,5,14,19,18
+Deportivo,0,Athletic,2,15,Deportivo,15,4,5,6,11,19,17,17,Athletic,15,3,5,7,18,26,14
+Zaragoza,0,Valencia,1,5,Zaragoza,15,8,2,5,28,18,26,6,Valencia,15,7,3,5,20,14,24
+Recreativo,1,Sevilla,3,8,Recreativo,15,7,1,7,23,24,22,1,Sevilla,15,11,1,3,31,15,34
+Villarreal,1,Osasuna,4,9,Villarreal,15,6,4,5,16,21,22,10,Osasuna,15,6,2,7,19,19,20
+R. Sociedad,3,Gimnástic,2,19,R. Sociedad,15,1,6,8,10,22,9,20,Gimnástic,15,2,2,11,15,32,8
+Levante,1,Celta,1,16,Levante,15,3,6,6,13,21,15,11,Celta,15,5,5,5,20,21,20
+Espanyol,0,R. Madrid,1,12,Espanyol,15,4,7,4,14,16,19,3,R. Madrid,15,10,2,3,26,11,32
+Atlético,1,Getafe,0,4,Atlético,15,8,3,4,20,11,27,7,Getafe,15,6,4,5,11,10,22
+Betis,1,Barcelona,1,18,Betis,14,2,4,8,14,19,10,2,Barcelona,14,10,3,1,33,11,33
+Valencia,3,Mallorca,1,6,Valencia,16,8,3,5,23,15,27,14,Mallorca,16,4,5,7,13,22,17
+Athletic,0,Zaragoza,0,16,Athletic,16,3,6,7,18,26,15,5,Zaragoza,16,8,3,5,28,18,27
+Osasuna,2,Levante,1,8,Osasuna,16,7,2,7,21,20,23,17,Levante,16,3,6,7,14,23,15
+Racing,2,Villarreal,1,13,Racing,16,5,6,5,16,20,21,11,Villarreal,16,6,4,6,17,23,22
+Celta,0,R. Sociedad,0,12,Celta,16,5,6,5,20,21,21,19,R. Sociedad,16,1,7,8,10,22,10
+Getafe,0,Espanyol,1,9,Getafe,16,6,4,6,11,11,22,10,Espanyol,16,5,7,4,15,16,22
+Gimnástic,0,Betis,1,20,Gimnástic,16,2,2,12,15,33,8,18,Betis,15,3,4,8,15,19,13
+R. Madrid,0,Recreativo,3,3,R. Madrid,16,10,2,4,26,14,32,7,Recreativo,16,8,1,7,26,24,25
+Sevilla,4,Deportivo,0,1,Sevilla,16,12,1,3,35,15,37,15,Deportivo,16,4,5,7,11,23,17
+Barcelona,1,Atlético,1,2,Barcelona,15,10,4,1,34,12,34,4,Atlético,16,8,4,4,21,12,28
+R. Sociedad,2,Osasuna,1,19,R. Sociedad,17,2,7,8,12,23,13,8,Osasuna,17,7,2,8,22,22,23
+Atlético,0,Gimnástic,0,6,Atlético,17,8,5,4,21,12,29,20,Gimnástic,17,2,3,12,15,33,9
+Zaragoza,2,Sevilla,1,4,Zaragoza,17,9,3,5,30,19,30,1,Sevilla,17,12,1,4,36,17,37
+Getafe,1,Barcelona,1,9,Getafe,17,6,5,6,12,12,23,2,Barcelona,16,10,5,1,35,13,35
+Betis,1,Celta,0,18,Betis,16,4,4,8,16,19,16,12,Celta,17,5,6,6,20,22,21
+Espanyol,0,Recreativo,1,10,Espanyol,17,5,7,5,15,17,22,7,Recreativo,17,9,1,7,27,24,28
+Mallorca,1,Athletic,3,17,Mallorca,17,4,5,8,14,25,17,15,Athletic,17,4,6,7,21,27,18
+Levante,2,Racing,0,16,Levante,17,4,6,7,16,23,18,13,Racing,17,5,6,6,16,22,21
+Deportivo,2,R. Madrid,0,14,Deportivo,17,5,5,7,13,23,20,3,R. Madrid,17,10,2,5,26,16,32
+Villarreal,0,Valencia,1,11,Villarreal,17,6,4,7,17,24,22,5,Valencia,17,9,3,5,24,15,30
+Valencia,3,Levante,0,4,Valencia,18,10,3,5,27,15,33,17,Levante,18,4,6,8,16,26,18
+Espanyol,3,Barcelona,1,10,Espanyol,18,6,7,5,18,18,25,2,Barcelona,17,10,5,2,36,16,35
+Gimnástic,1,Getafe,3,20,Gimnástic,18,2,3,13,16,36,9,9,Getafe,18,7,5,6,15,13,26
+Athletic,0,Villarreal,1,16,Athletic,18,4,6,8,21,28,18,11,Villarreal,18,7,4,7,18,24,25
+Sevilla,1,Mallorca,2,1,Sevilla,18,12,1,5,37,19,37,15,Mallorca,18,5,5,8,16,26,20
+Osasuna,5,Betis,1,8,Osasuna,18,8,2,8,27,23,26,18,Betis,17,4,4,9,17,24,16
+Recreativo,1,Deportivo,1,7,Recreativo,18,9,2,7,28,25,29,14,Deportivo,18,5,6,7,14,24,21
+Racing,1,R. Sociedad,0,12,Racing,18,6,6,6,17,22,24,19,R. Sociedad,18,2,7,9,12,24,13
+Celta,1,Atlético,3,13,Celta,18,5,6,7,21,25,21,5,Atlético,18,9,5,4,24,13,32
+R. Madrid,1,Zaragoza,0,3,R. Madrid,18,11,2,5,27,16,35,6,Zaragoza,18,9,3,6,30,20,30
+Atlético,1,Osasuna,0,5,Atlético,19,10,5,4,25,13,35,9,Osasuna,19,8,2,9,27,24,26
+Villarreal,0,Sevilla,0,11,Villarreal,19,7,5,7,18,24,26,2,Sevilla,19,12,2,5,37,19,38
+Getafe,1,Celta,0,8,Getafe,19,8,5,6,16,13,29,14,Celta,19,5,6,8,21,26,21
+Levante,0,Athletic,0,17,Levante,19,4,7,8,16,26,19,16,Athletic,19,4,7,8,21,28,19
+Deportivo,0,Espanyol,0,13,Deportivo,19,5,7,7,14,24,22,10,Espanyol,19,6,8,5,18,18,26
+Zaragoza,0,Recreativo,0,6,Zaragoza,19,9,4,6,30,20,31,7,Recreativo,19,9,3,7,28,25,30
+R. Sociedad,0,Valencia,1,19,R. Sociedad,19,2,7,10,12,25,13,4,Valencia,19,11,3,5,28,15,36
+Betis,1,Racing,1,18,Betis,19,4,6,9,19,26,18,12,Racing,19,6,7,6,18,23,25
+Barcelona,3,Gimnástic,0,1,Barcelona,19,11,6,2,40,17,39,20,Gimnástic,19,2,3,14,16,39,9
+Mallorca,0,R. Madrid,1,15,Mallorca,19,5,5,9,16,27,20,3,R. Madrid,19,12,2,5,28,16,38
+Atlético,1,Racing,1,5,Atlético,20,10,6,4,26,14,36,12,Racing,20,6,8,6,19,24,26
+Villarreal,1,R. Madrid,0,9,Villarreal,20,8,5,7,19,24,29,3,R. Madrid,20,12,2,6,28,17,38
+R. Sociedad,0,Athletic,2,19,R. Sociedad,20,2,7,11,12,27,13,15,Athletic,20,5,7,8,23,28,22
+Levante,2,Sevilla,4,18,Levante,20,4,7,9,18,30,19,2,Sevilla,20,13,2,5,41,21,41
+Gimnástic,4,Espanyol,0,20,Gimnástic,20,3,3,14,20,39,12,11,Espanyol,20,6,8,6,18,22,26
+Mallorca,2,Recreativo,1,13,Mallorca,20,6,5,9,18,28,23,8,Recreativo,20,9,3,8,29,27,30
+Zaragoza,1,Deportivo,1,6,Zaragoza,20,9,5,6,31,21,32,14,Deportivo,20,5,8,7,15,25,23
+Getafe,2,Osasuna,0,7,Getafe,20,9,5,6,18,13,32,10,Osasuna,20,8,2,10,27,26,26
+Barcelona,3,Celta,1,1,Barcelona,20,12,6,2,43,18,42,17,Celta,20,5,6,9,22,29,21
+Betis,2,Valencia,1,16,Betis,20,5,6,9,21,27,21,4,Valencia,20,11,3,6,29,17,36
+Espanyol,1,Zaragoza,2,12,Espanyol,21,6,8,7,19,24,26,6,Zaragoza,21,10,5,6,33,22,35
+Deportivo,1,Mallorca,0,13,Deportivo,21,6,8,7,16,25,26,15,Mallorca,21,6,5,10,18,29,23
+Valencia,3,Atlético,1,3,Valencia,21,12,3,6,32,18,39,5,Atlético,21,10,6,5,27,17,36
+Racing,1,Getafe,0,9,Racing,21,7,8,6,20,24,29,8,Getafe,21,9,5,7,18,14,32
+Celta,1,Gimnástic,1,17,Celta,21,5,7,9,23,30,22,20,Gimnástic,21,3,4,14,21,40,13
+Athletic,1,Betis,2,16,Athletic,21,5,7,9,24,30,22,14,Betis,21,6,6,9,23,28,24
+Sevilla,0,R. Sociedad,0,2,Sevilla,21,13,3,5,41,21,42,19,R. Sociedad,21,2,8,11,12,27,14
+Recreativo,2,Villarreal,1,7,Recreativo,21,10,3,8,31,28,33,10,Villarreal,21,8,5,8,20,26,29
+R. Madrid,0,Levante,1,4,R. Madrid,21,12,2,7,28,18,38,18,Levante,21,5,7,9,19,30,22
+Osasuna,0,Barcelona,0,11,Osasuna,21,8,3,10,27,26,27,1,Barcelona,21,12,7,2,43,18,43
+R. Sociedad,1,R. Madrid,2,19,R. Sociedad,22,2,8,12,13,29,14,3,R. Madrid,22,13,2,7,30,19,41
+Betis,0,Sevilla,0,15,Betis,22,6,7,9,23,28,25,2,Sevilla,22,13,4,5,41,21,43
+Celta,0,Espanyol,2,18,Celta,22,5,7,10,23,32,22,10,Espanyol,22,7,8,7,21,24,29
+Getafe,3,Valencia,0,7,Getafe,22,10,5,7,21,14,35,4,Valencia,22,12,3,7,32,21,39
+Gimnástic,2,Osasuna,3,20,Gimnástic,22,3,4,15,23,43,13,9,Osasuna,22,9,3,10,30,28,30
+Levante,2,Recreativo,1,16,Levante,22,6,7,9,21,31,25,8,Recreativo,22,10,3,9,32,30,33
+Mallorca,2,Zaragoza,1,14,Mallorca,22,7,5,10,20,30,26,6,Zaragoza,22,10,5,7,34,24,35
+Villarreal,0,Deportivo,2,13,Villarreal,22,8,5,9,20,28,29,12,Deportivo,22,7,8,7,18,25,29
+Barcelona,2,Racing,0,1,Barcelona,22,13,7,2,45,18,46,11,Racing,22,7,8,7,20,26,29
+Atlético,1,Athletic,0,5,Atlético,22,11,6,5,28,17,39,17,Athletic,22,5,7,10,24,31,22
+R. Madrid,0,Betis,0,4,R. Madrid,23,13,3,7,30,19,42,14,Betis,23,6,8,9,23,28,26
+Zaragoza,1,Villarreal,0,6,Zaragoza,23,11,5,7,35,24,38,13,Villarreal,23,8,5,10,20,29,29
+Deportivo,0,Levante,0,12,Deportivo,23,7,9,7,18,25,30,15,Levante,23,6,8,9,21,31,26
+Espanyol,3,Mallorca,1,9,Espanyol,23,8,8,7,24,25,32,16,Mallorca,23,7,5,11,21,33,26
+Racing,4,Gimnástic,1,10,Racing,23,8,8,7,24,27,32,20,Gimnástic,23,3,4,16,24,47,13
+Recreativo,1,R. Sociedad,0,7,Recreativo,23,11,3,9,33,30,36,19,R. Sociedad,23,2,8,13,13,30,14
+Athletic,2,Getafe,0,17,Athletic,23,6,7,10,26,31,25,8,Getafe,23,10,5,8,21,16,35
+Osasuna,0,Celta,1,11,Osasuna,23,9,3,11,30,29,30,18,Celta,23,6,7,10,24,32,25
+Valencia,2,Barcelona,1,3,Valencia,23,13,3,7,34,22,42,1,Barcelona,23,13,7,3,46,20,46
+Sevilla,3,Atlético,1,2,Sevilla,23,14,4,5,44,22,46,5,Atlético,23,11,6,6,29,20,39
+R. Sociedad,0,Deportivo,1,19,R. Sociedad,24,2,8,14,13,31,14,11,Deportivo,24,8,9,7,19,25,33
+Atlético,1,R. Madrid,1,5,Atlético,24,11,7,6,30,21,40,4,R. Madrid,24,13,4,7,31,20,43
+Celta,2,Racing,2,16,Celta,24,6,8,10,26,34,26,10,Racing,24,8,9,7,26,29,33
+Betis,0,Recreativo,0,14,Betis,24,6,9,9,23,28,27,7,Recreativo,24,11,4,9,33,30,37
+Getafe,0,Sevilla,0,8,Getafe,24,10,6,8,21,16,36,2,Sevilla,24,14,5,5,44,22,47
+Villarreal,2,Mallorca,1,12,Villarreal,24,9,5,10,22,30,32,17,Mallorca,24,7,5,12,22,35,26
+Levante,0,Zaragoza,0,15,Levante,24,6,9,9,21,31,27,6,Zaragoza,24,11,6,7,35,24,39
+Osasuna,0,Espanyol,2,13,Osasuna,24,9,3,12,30,31,30,9,Espanyol,24,9,8,7,26,25,35
+Gimnástic,1,Valencia,1,20,Gimnástic,24,3,5,16,25,48,14,3,Valencia,24,13,4,7,35,23,43
+Barcelona,3,Athletic,0,1,Barcelona,24,14,7,3,49,20,49,18,Athletic,24,6,7,11,26,34,25
+Valencia,1,Celta,0,3,Valencia,25,14,4,7,36,23,46,17,Celta,25,6,8,11,26,35,26
+Sevilla,2,Barcelona,1,1,Sevilla,25,15,5,5,46,23,50,2,Barcelona,25,14,7,4,50,22,49
+Espanyol,1,Villarreal,1,9,Espanyol,25,9,9,7,27,26,36,12,Villarreal,25,9,6,10,23,31,33
+Racing,1,Osasuna,0,10,Racing,25,9,9,7,27,29,36,13,Osasuna,25,9,3,13,30,32,30
+Athletic,0,Gimnástic,2,18,Athletic,25,6,7,12,26,36,25,19,Gimnástic,25,4,5,16,27,48,17
+Zaragoza,3,R. Sociedad,2,5,Zaragoza,25,12,6,7,38,26,42,20,R. Sociedad,25,2,8,15,15,34,14
+Mallorca,3,Levante,1,15,Mallorca,25,8,5,12,25,36,29,16,Levante,25,6,9,10,22,34,27
+Deportivo,0,Betis,1,11,Deportivo,25,8,9,8,19,26,33,14,Betis,25,7,9,9,24,28,30
+R. Madrid,1,Getafe,1,4,R. Madrid,25,13,5,7,32,21,44,8,Getafe,25,10,7,8,22,17,37
+Recreativo,1,Atlético,0,7,Recreativo,25,12,4,9,34,30,40,6,Atlético,25,11,7,7,30,22,40
+Levante,0,Villarreal,2,17,Levante,26,6,9,11,22,36,27,11,Villarreal,26,10,6,10,25,31,36
+Barcelona,3,R. Madrid,3,1,Barcelona,26,14,8,4,53,25,50,4,R. Madrid,26,13,6,7,35,24,45
+Racing,1,Espanyol,1,10,Racing,26,9,10,7,28,30,37,9,Espanyol,26,9,10,7,28,27,37
+R. Sociedad,3,Mallorca,1,20,R. Sociedad,26,3,8,15,18,35,17,15,Mallorca,26,8,5,13,26,39,29
+Gimnástic,1,Sevilla,0,19,Gimnástic,26,5,5,16,28,48,20,2,Sevilla,26,15,5,6,46,24,50
+Celta,1,Athletic,1,16,Celta,26,6,9,11,27,36,27,18,Athletic,26,6,8,12,27,37,26
+Betis,1,Zaragoza,1,14,Betis,26,7,10,9,25,29,31,5,Zaragoza,26,12,7,7,39,27,43
+Getafe,1,Recreativo,1,8,Getafe,26,10,8,8,23,18,38,7,Recreativo,26,12,5,9,35,31,41
+Atlético,2,Deportivo,0,6,Atlético,26,12,7,7,32,22,43,12,Deportivo,26,8,9,9,19,28,33
+Osasuna,1,Valencia,1,13,Osasuna,26,9,4,13,31,33,31,3,Valencia,26,14,5,7,37,24,47
+Valencia,0,Racing,2,4,Valencia,27,14,5,8,37,26,47,8,Racing,27,10,10,7,30,30,40
+Mallorca,2,Betis,0,14,Mallorca,27,9,5,13,28,39,32,15,Betis,27,7,10,10,25,31,31
+Recreativo,0,Barcelona,4,7,Recreativo,27,12,5,10,35,35,41,1,Barcelona,27,15,8,4,57,25,53
+Athletic,0,Osasuna,3,18,Athletic,27,6,8,13,27,40,26,13,Osasuna,27,10,4,13,34,33,34
+Espanyol,1,Levante,1,10,Espanyol,27,9,11,7,29,28,38,16,Levante,27,6,10,11,23,37,28
+Deportivo,1,Getafe,0,12,Deportivo,27,9,9,9,20,28,36,9,Getafe,27,10,8,9,23,19,38
+Zaragoza,1,Atlético,0,5,Zaragoza,27,13,7,7,40,27,46,6,Atlético,27,12,7,8,32,23,43
+Villarreal,1,R. Sociedad,1,11,Villarreal,27,10,7,10,26,32,37,20,R. Sociedad,27,3,9,15,19,36,18
+R. Madrid,2,Gimnástic,0,3,R. Madrid,27,14,6,7,37,24,48,19,Gimnástic,27,5,5,17,28,50,20
+Sevilla,2,Celta,0,2,Sevilla,27,16,5,6,48,24,53,17,Celta,27,6,9,12,27,38,27
+Gimnástic,1,Recreativo,1,20,Gimnástic,28,5,6,17,29,51,21,8,Recreativo,28,12,6,10,36,36,42
+Racing,5,Athletic,4,7,Racing,28,11,10,7,35,34,43,18,Athletic,28,6,8,14,31,45,26
+Atlético,1,Mallorca,1,6,Atlético,28,12,8,8,33,24,44,14,Mallorca,28,9,6,13,29,40,33
+Getafe,2,Zaragoza,2,9,Getafe,28,10,9,9,25,21,39,5,Zaragoza,28,13,8,7,42,29,47
+Celta,1,R. Madrid,2,17,Celta,28,6,9,13,28,40,27,3,R. Madrid,28,15,6,7,39,25,51
+Osasuna,0,Sevilla,0,13,Osasuna,28,10,5,13,34,33,35,2,Sevilla,28,16,6,6,48,24,54
+Betis,3,Villarreal,3,15,Betis,28,7,11,10,28,34,32,11,Villarreal,28,10,8,10,29,35,38
+R. Sociedad,1,Levante,0,19,R. Sociedad,28,4,9,15,20,36,21,16,Levante,28,6,10,12,23,38,28
+Valencia,3,Espanyol,2,4,Valencia,28,15,5,8,40,28,50,10,Espanyol,28,9,11,8,31,31,38
+Barcelona,2,Deportivo,1,1,Barcelona,28,16,8,4,59,26,56,12,Deportivo,28,9,9,10,21,30,36
+Zaragoza,1,Barcelona,0,4,Zaragoza,29,14,8,7,43,29,50,1,Barcelona,29,16,8,5,59,27,56
+Athletic,1,Valencia,0,16,Athletic,29,7,8,14,32,45,29,5,Valencia,29,15,5,9,40,29,50
+Sevilla,0,Racing,0,2,Sevilla,29,16,7,6,48,24,55,8,Racing,29,11,11,7,35,34,44
+Mallorca,2,Getafe,0,13,Mallorca,29,10,6,13,31,40,36,10,Getafe,29,10,9,10,25,23,39
+Espanyol,1,R. Sociedad,0,9,Espanyol,29,10,11,8,32,31,41,19,R. Sociedad,29,4,9,16,20,37,21
+Deportivo,1,Gimnástic,0,11,Deportivo,29,10,9,10,22,30,39,20,Gimnástic,29,5,6,18,29,52,21
+Levante,1,Betis,1,17,Levante,29,6,11,12,24,39,29,15,Betis,29,7,12,10,29,35,33
+Recreativo,4,Celta,2,7,Recreativo,29,13,6,10,40,38,45,18,Celta,29,6,9,14,30,44,27
+R. Madrid,2,Osasuna,0,3,R. Madrid,29,16,6,7,41,25,54,14,Osasuna,29,10,5,14,34,35,35
+Villarreal,0,Atlético,1,12,Villarreal,29,10,8,11,29,36,38,6,Atlético,29,13,8,8,34,24,47
+Racing,2,R. Madrid,1,7,Racing,30,12,11,7,37,35,47,3,R. Madrid,30,16,6,8,42,27,54
+Betis,0,R. Sociedad,1,15,Betis,30,7,12,11,29,36,33,19,R. Sociedad,30,5,9,16,21,37,24
+Gimnástic,1,Zaragoza,0,20,Gimnástic,30,6,6,18,30,52,24,5,Zaragoza,30,14,8,8,43,30,50
+Atlético,1,Levante,0,6,Atlético,30,14,8,8,35,24,50,18,Levante,30,6,11,13,24,40,29
+Athletic,2,Espanyol,1,16,Athletic,30,8,8,14,34,46,32,10,Espanyol,30,10,11,9,33,33,41
+Celta,1,Deportivo,0,17,Celta,30,7,9,14,31,44,30,11,Deportivo,30,10,9,11,22,31,39
+Osasuna,1,Recreativo,1,13,Osasuna,30,10,6,14,35,36,36,8,Recreativo,30,13,7,10,41,39,46
+Getafe,3,Villarreal,0,9,Getafe,30,11,9,10,28,23,42,12,Villarreal,30,10,8,12,29,39,38
+Barcelona,1,Mallorca,0,1,Barcelona,30,17,8,5,60,27,59,14,Mallorca,30,10,6,14,31,41,36
+Valencia,2,Sevilla,0,4,Valencia,30,16,5,9,42,29,53,2,Sevilla,30,16,7,7,48,26,55
+Mallorca,1,Gimnástic,0,13,Mallorca,31,11,6,14,32,41,39,20,Gimnástic,31,6,6,19,30,53,24
+R. Sociedad,2,Atlético,0,19,R. Sociedad,31,6,9,16,23,37,27,6,Atlético,31,14,8,9,35,26,50
+R. Madrid,2,Valencia,1,3,R. Madrid,31,17,6,8,44,28,57,5,Valencia,31,16,5,10,43,31,53
+Deportivo,1,Osasuna,0,11,Deportivo,31,11,9,11,23,31,42,14,Osasuna,31,10,6,15,35,37,36
+Espanyol,2,Betis,2,10,Espanyol,31,10,12,9,35,35,42,15,Betis,31,7,13,11,31,38,34
+Recreativo,4,Racing,2,7,Recreativo,31,14,7,10,45,41,49,8,Racing,31,12,11,8,39,39,47
+Zaragoza,2,Celta,0,4,Zaragoza,31,15,8,8,45,30,53,17,Celta,31,7,9,15,31,46,30
+Levante,1,Getafe,1,18,Levante,31,6,12,13,25,41,30,9,Getafe,31,11,10,10,29,24,43
+Sevilla,4,Athletic,1,2,Sevilla,31,17,7,7,52,27,58,16,Athletic,31,8,8,15,35,50,32
+Villarreal,2,Barcelona,0,12,Villarreal,31,11,8,12,31,39,41,1,Barcelona,31,17,8,6,60,29,59
+Atlético,0,Betis,0,6,Atlético,32,14,9,9,35,26,51,15,Betis,32,7,14,11,31,38,35
+Valencia,2,Recreativo,0,4,Valencia,32,17,5,10,45,31,56,7,Recreativo,32,14,7,11,45,43,49
+Racing,0,Deportivo,0,8,Racing,32,12,12,8,39,39,48,11,Deportivo,32,11,10,11,23,31,43
+Osasuna,2,Zaragoza,2,14,Osasuna,32,10,7,15,37,39,37,5,Zaragoza,32,15,9,8,47,32,54
+Celta,0,Mallorca,3,18,Celta,32,7,9,16,31,49,30,13,Mallorca,32,12,6,14,35,41,42
+Gimnástic,0,Villarreal,3,20,Gimnástic,32,6,6,20,30,56,24,10,Villarreal,32,12,8,12,34,39,44
+Sevilla,3,Espanyol,1,2,Sevilla,32,18,7,7,55,28,61,12,Espanyol,32,10,12,10,36,38,42
+Getafe,1,R. Sociedad,0,9,Getafe,32,12,10,10,30,24,46,19,R. Sociedad,32,6,9,17,23,38,27
+Barcelona,1,Levante,0,1,Barcelona,32,18,8,6,61,29,62,17,Levante,32,6,12,14,25,42,30
+Athletic,1,R. Madrid,4,16,Athletic,32,8,8,16,36,54,32,3,R. Madrid,32,18,6,8,48,29,60
+R. Sociedad,0,Barcelona,2,19,R. Sociedad,33,6,9,18,23,40,27,1,Barcelona,33,19,8,6,63,29,65
+Deportivo,1,Valencia,2,13,Deportivo,33,11,10,12,24,33,43,4,Valencia,33,18,5,10,47,32,59
+Zaragoza,0,Racing,0,5,Zaragoza,33,15,10,8,47,32,55,9,Racing,33,12,13,8,39,39,49
+Recreativo,0,Athletic,0,7,Recreativo,33,14,8,11,45,43,50,17,Athletic,33,8,9,16,36,54,33
+Villarreal,1,Celta,0,10,Villarreal,33,13,8,12,35,39,47,18,Celta,33,7,9,17,31,50,30
+Betis,0,Getafe,2,15,Betis,33,7,14,12,31,40,35,8,Getafe,33,13,10,10,32,24,49
+Levante,2,Gimnástic,0,16,Levante,33,7,12,14,27,42,33,20,Gimnástic,33,6,6,21,30,58,24
+Mallorca,3,Osasuna,1,12,Mallorca,33,13,6,14,38,42,45,14,Osasuna,33,10,7,16,38,42,37
+Espanyol,2,Atlético,1,11,Espanyol,33,11,12,10,38,39,45,6,Atlético,33,14,9,10,36,28,51
+R. Madrid,3,Sevilla,2,2,R. Madrid,33,19,6,8,51,31,63,3,Sevilla,33,18,7,8,57,31,61
+R. Madrid,4,Espanyol,3,1,R. Madrid,34,20,6,8,55,34,66,12,Espanyol,34,11,12,11,41,43,45
+Sevilla,2,Recreativo,1,3,Sevilla,34,19,7,8,59,32,64,7,Recreativo,34,14,8,12,46,45,50
+Celta,1,Levante,2,19,Celta,34,7,9,18,32,52,30,16,Levante,34,8,12,14,29,43,36
+Athletic,1,Deportivo,1,17,Athletic,34,8,10,16,37,55,34,13,Deportivo,34,11,11,12,25,34,44
+Getafe,1,Atlético,4,9,Getafe,34,13,10,11,33,28,49,6,Atlético,34,15,9,10,40,29,54
+Osasuna,1,Villarreal,4,14,Osasuna,34,10,7,17,39,46,37,8,Villarreal,34,14,8,12,39,40,50
+Gimnástic,1,R. Sociedad,3,20,Gimnástic,34,6,6,22,31,61,24,18,R. Sociedad,34,7,9,18,26,41,30
+Racing,0,Mallorca,2,10,Racing,34,12,13,9,39,41,49,11,Mallorca,34,14,6,14,40,42,48
+Barcelona,1,Betis,1,2,Barcelona,34,19,9,6,64,30,66,15,Betis,34,7,15,12,32,41,36
+Valencia,2,Zaragoza,0,4,Valencia,34,19,5,10,49,32,62,5,Zaragoza,34,15,10,9,47,34,55
+Betis,1,Gimnástic,1,15,Betis,35,7,16,12,33,42,37,20,Gimnástic,35,6,7,22,32,62,25
+Mallorca,0,Valencia,1,11,Mallorca,35,14,6,15,40,43,48,4,Valencia,35,20,5,10,50,32,65
+Zaragoza,4,Athletic,3,5,Zaragoza,35,16,10,9,51,37,58,17,Athletic,35,8,10,17,40,59,34
+Villarreal,2,Racing,1,7,Villarreal,35,15,8,12,41,41,53,10,Racing,35,12,13,10,40,43,49
+Espanyol,1,Getafe,5,12,Espanyol,35,11,12,12,42,48,45,8,Getafe,35,14,10,11,38,29,52
+R. Sociedad,3,Celta,1,18,R. Sociedad,35,8,9,18,29,42,33,19,Celta,35,7,9,19,33,55,30
+Deportivo,1,Sevilla,2,13,Deportivo,35,11,11,13,26,36,44,3,Sevilla,35,20,7,8,61,33,67
+Levante,1,Osasuna,4,16,Levante,35,8,12,15,30,47,36,14,Osasuna,35,11,7,17,43,47,40
+Recreativo,2,R. Madrid,3,9,Recreativo,35,14,8,13,48,48,50,1,R. Madrid,35,21,6,8,58,36,69
+Atlético,0,Barcelona,6,6,Atlético,35,15,9,11,40,35,54,2,Barcelona,35,20,9,6,70,30,69
+Valencia,2,Villarreal,3,4,Valencia,36,20,5,11,52,35,65,7,Villarreal,36,16,8,12,44,43,56
+R. Madrid,3,Deportivo,1,1,R. Madrid,36,22,6,8,61,37,72,13,Deportivo,36,11,11,14,27,39,44
+Barcelona,1,Getafe,0,2,Barcelona,36,21,9,6,71,30,72,8,Getafe,36,14,10,12,38,30,52
+Athletic,1,Mallorca,0,17,Athletic,36,9,10,17,41,59,37,12,Mallorca,36,14,6,16,40,44,48
+Celta,2,Betis,1,19,Celta,36,8,9,19,35,56,33,16,Betis,36,7,16,13,34,44,37
+Racing,2,Levante,3,10,Racing,36,12,13,11,42,46,49,15,Levante,36,9,12,15,33,49,39
+Osasuna,2,R. Sociedad,0,14,Osasuna,36,12,7,17,45,47,43,18,R. Sociedad,36,8,9,19,29,44,33
+Recreativo,0,Espanyol,1,9,Recreativo,36,14,8,14,48,49,50,11,Espanyol,36,12,12,12,43,48,48
+Gimnástic,0,Atlético,2,20,Gimnástic,36,6,7,23,32,64,25,6,Atlético,36,16,9,11,42,35,57
+Sevilla,3,Zaragoza,1,3,Sevilla,36,21,7,8,64,34,70,5,Zaragoza,36,16,10,10,52,40,58
+Levante,4,Valencia,2,15,Levante,37,10,12,15,37,51,42,4,Valencia,37,20,5,12,54,39,65
+Barcelona,2,Espanyol,2,2,Barcelona,37,21,10,6,73,32,73,11,Espanyol,37,12,13,12,45,50,49
+R. Sociedad,0,Racing,0,19,R. Sociedad,37,8,10,19,29,44,34,10,Racing,37,12,14,11,42,46,50
+Zaragoza,2,R. Madrid,2,5,Zaragoza,37,16,11,10,54,42,59,1,R. Madrid,37,22,7,8,63,39,73
+Betis,0,Osasuna,5,16,Betis,37,7,16,14,34,49,37,13,Osasuna,37,13,7,17,50,47,46
+Mallorca,0,Sevilla,0,12,Mallorca,37,14,7,16,40,44,49,3,Sevilla,37,21,8,8,64,34,71
+Villarreal,3,Athletic,1,6,Villarreal,37,17,8,12,47,44,59,17,Athletic,37,9,10,18,42,62,37
+Atlético,2,Celta,3,7,Atlético,37,16,9,12,44,38,57,18,Celta,37,9,9,19,38,58,36
+Getafe,0,Gimnástic,1,9,Getafe,37,14,10,13,38,31,52,20,Gimnástic,37,7,7,23,33,64,28
+Deportivo,2,Recreativo,5,14,Deportivo,37,11,11,15,29,44,44,8,Recreativo,37,15,8,14,53,51,53
+Racing,0,Betis,2,10,Racing,38,12,14,12,42,48,50,16,Betis,38,8,16,14,36,49,40
+Espanyol,1,Deportivo,3,11,Espanyol,38,12,13,13,46,53,49,13,Deportivo,38,12,11,15,32,45,47
+Valencia,3,R. Sociedad,3,4,Valencia,38,20,6,12,57,42,66,19,R. Sociedad,38,8,11,19,32,47,35
+Celta,2,Getafe,1,18,Celta,38,10,9,19,40,59,39,9,Getafe,38,14,10,14,39,33,52
+Athletic,2,Levante,0,17,Athletic,38,10,10,18,44,62,40,15,Levante,38,10,12,16,37,53,42
+Gimnástic,1,Barcelona,5,20,Gimnástic,38,7,7,24,34,69,28,2,Barcelona,38,22,10,6,78,33,76
+Osasuna,1,Atlético,2,14,Osasuna,38,13,7,18,51,49,46,7,Atlético,38,17,9,12,46,39,60
+Sevilla,0,Villarreal,1,3,Sevilla,38,21,8,9,64,35,71,5,Villarreal,38,18,8,12,48,44,62
+Recreativo,1,Zaragoza,1,8,Recreativo,38,15,9,14,54,52,54,6,Zaragoza,38,16,12,10,55,43,60
+R. Madrid,3,Mallorca,1,1,R. Madrid,38,23,7,8,66,40,76,12,Mallorca,38,14,7,17,41,47,49
