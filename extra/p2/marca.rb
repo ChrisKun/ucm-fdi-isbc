@@ -45,7 +45,9 @@ end
 time1 = Time.new
 puts "Current Time : " + time1.inspect
 
-f = File.new("C:/Programacion/Java/workspace/ucm-fdi-isbc/extra/p2/infoMarca.txt", "w")  
+#f = File.new("C:/Programacion/Java/workspace/ucm-fdi-isbc/extra/p2/infoMarca.txt", "w")  
+f = File.new("infoMarca.txt", "w")  
+
 for i in (2000..2012) do
   #ToDo - Quitar la ruta absoluta por una relativa
   #       Para esto es necesario buscar función que devuelva dir actual (creo quue 'getwd')
