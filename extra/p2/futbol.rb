@@ -11,35 +11,36 @@ class Partido
   end
   
   def to_file
-    return @equipoLocal +','+ @resEqL +','+ @equipoVisitante +','+ @resEqV
+    return @equipoLocal +','+ @equipoVisitante 
   end
 end
 
 
 class Clasificacion
   attr_accessor :eq
-  def initialize(pos,eq,pj,pg,pe,pp,gf,gc,nsnc)
+  def initialize(pos,eq,pj,pg,pe,pp,gf,gc,ptos)
     @pos = pos ; @eq = eq
     @pj = pj ; @pg = pg ; @pe = pe ; @pp = pp
     @gf = gf ; @gc = gc
-    @nsnc = nsnc
+    @ptos = ptos
   end
   
   def to_s
-    return @pos+' '+@eq+' '+@pj+' '+@pg+' '+@pe+' '+@pp+' '+@gf+' '+@gc+' '+@nsnc
+    return @pj+' '+@pos+' '+@eq+' '+@pg+' '+@pe+' '+@pp+' '+@gf+' '+@gc+' '+@ptos
   end
   
   def to_file
-    return @pos+','+@eq+','+@pj+','+@pg+','+@pe+','+@pp+','+@gf+','+@gc+','+@nsnc
+    return @pj+','+@pos+','+@eq+','+@pg+','+@pe+','+@pp+','+@gf+','+@gc+','+@ptos
   end
   
 end
 
 class Jornada
   # Partido[] partidos, Clasificacion[] clas
-  def initialize(partidos, clas)
+  def initialize(partidos, clas, anyo)
     @partidos = partidos
     @clas = clas
+    @anyo = anyo
   end
   
   def to_file
@@ -51,7 +52,7 @@ class Jornada
     
     temp_s = ''
     @partidos.each do |part|
-      temp_s = temp_s + part.to_file
+      temp_s = temp_s + @anyo.to_s + ',' + part.to_file
       @clas.each do |c|
         if ( c.eq == part.equipoLocal ) then
           temp_s = temp_s +','+ c.to_file
@@ -71,7 +72,7 @@ class Jornada
   end
 end
 
-=begin
+
 partidos = []
 partidos.push(Partido.new('Ponferradina','5','Getafe','0'))
 partidos.push(Partido.new('Barcelona','3','Madrid','2'))
@@ -81,6 +82,5 @@ clasificaciones.push(Clasificacion.new('4','Ponferradina','34','35','0','1','55'
 clasificaciones.push(Clasificacion.new('2','Madrid','36','30','12','126','11','41','100'))
 clasificaciones.push(Clasificacion.new('1','Barcelona','34','31','15','120','11','41','100'))
 
-jornada = Jornada.new(partidos,clasificaciones)
+jornada = Jornada.new(partidos,clasificaciones,'2014')
 puts jornada.to_file
-=end

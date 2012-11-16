@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
-require 'C:\Documents and Settings\Xavi\Mis documentos\Programacion\Ruby\futbol.rb'
+require 'C:\Programacion\Java\workspace\ucm-fdi-isbc\extra\p2\futbol.rb'
 
 def infoJornada(anyo, jornada)
 
@@ -18,6 +18,7 @@ def infoJornada(anyo, jornada)
   doc = Nokogiri::HTML(open("http://www.marca.com/estadisticas/futbol/primera/#{anyo}_#{anyo2}/jornada_#{jornada}/"))
   doc2 = doc.xpath("//td")
   doc3 = []
+
   doc2.each { |line| doc3.push(line.text) }
   
   tmp = doc3[0..39]
@@ -33,17 +34,30 @@ def infoJornada(anyo, jornada)
     clasificacion.push(Clasificacion.new(s[0],s[1],s[2],s[3],s[4],s[5],s[6],s[7],s[8]))
   end
   
-  jornada = Jornada.new(partidos, clasificacion)
+  jornada = Jornada.new(partidos, clasificacion, anyo)
   return jornada.to_file
+  
+  #rescue SocketError
   rescue Exception
   puts "! - No se ha podido cargar la jornada #{jornada} del anyo #{anyo}"
 end
 
-puts File.directory?(".")
+time1 = Time.new
+puts "Current Time : " + time1.inspect
+
+f = File.new("C:/Programacion/Java/workspace/ucm-fdi-isbc/extra/p2/infoMarca.txt", "w")  
 for i in (2000..2012) do
-  f = File.new("C:/Documents and Settings/Xavi/Mis documentos/Programacion/Ruby/infoMarca#{i}.txt", "w")  
+  #ToDo - Quitar la ruta absoluta por una relativa
+  #       Para esto es necesario buscar función que devuelva dir actual (creo quue 'getwd')
+  #f = File.new("C:/Documents and Settings/Xavi/Mis documentos/Programacion/Ruby/infoMarca#{i}.txt", "w")  
   for j in (1..38) do
     f.puts(infoJornada(i,j))
   end
-  f.close
+  #f.close
 end
+f.close
+
+time2 = Time.now
+puts "Current Time : " + time2.inspect
+
+puts "Time spent : " + (time2 - time1).inspect
