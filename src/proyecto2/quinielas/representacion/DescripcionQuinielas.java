@@ -11,9 +11,36 @@ public class DescripcionQuinielas implements CaseComponent {
 	private int jornada;
 	private String local;
 	private String visitante;
+	private int golesLocal;
+	private int golesVisitante;
 	
 	
 	
+	
+	public int getGolesLocal() {
+		return golesLocal;
+	}
+
+
+
+	public void setGolesLocal(int golesLocal) {
+		this.golesLocal = golesLocal;
+	}
+
+
+
+	public int getGolesVisitante() {
+		return golesVisitante;
+	}
+
+
+
+	public void setGolesVisitante(int golesVisitante) {
+		this.golesVisitante = golesVisitante;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -84,45 +111,9 @@ public class DescripcionQuinielas implements CaseComponent {
 		this.visitante = visitante;
 	}
 
-
-
-	public int getGolesLocal() {
-		return golesLocal;
-	}
-
-
-
-	public void setGolesLocal(int golesLocal) {
-		this.golesLocal = golesLocal;
-	}
-
-
-
-	public int getGolesVisitante() {
-		return golesVisitante;
-	}
-
-
-
-	public void setGolesVisitante(int golesVisitante) {
-		this.golesVisitante = golesVisitante;
-	}
-
-
-
-	@Override
 	public Attribute getIdAttribute() {
 		return new Attribute("id",DescripcionQuinielas.class);
 	}
-
-
-
-	@Override
-	public String toString() {
-		return id + "," + temporada + "," + liga + "," + jornada + "," + local
-				+ "," + visitante + "," + golesLocal + "," + golesVisitante;
-	}
-	
 	
 
 }
