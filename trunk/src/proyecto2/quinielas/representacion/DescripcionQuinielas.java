@@ -11,8 +11,6 @@ public class DescripcionQuinielas implements CaseComponent {
 	private int jornada;
 	private String local;
 	private String visitante;
-	private int golesLocal;
-	private int golesVisitante;
 	
 	
 	
