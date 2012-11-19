@@ -5,8 +5,8 @@ public class Partido {
 	//Atributos
 	private String equipoLocal;
 	private String equipoVisitante;
-	private int		resEqLocal;
-	private int		resEqVisitante;
+	private int	resEqLocal;
+	private int	resEqVisitante;
 	private char resultado;
 	
 	public Partido(String equipoLocal, String equipoVisitante, int resEqLocal, int resEqVisitante){

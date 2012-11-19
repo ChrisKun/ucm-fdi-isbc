@@ -1,7 +1,6 @@
 package proyecto2.quinielas.datosWeb;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class ParserWeb {
 			}
 		} catch (IOException e) {
 			System.out.println("Pero que le pasa a "+dir+"?");
-			return "";
+			return dir;
 		}
 		ArrayList<Partido> partidos = new ArrayList<Partido>();
 		String[] res;
@@ -67,7 +66,7 @@ public class ParserWeb {
 			res = info.get(i+1).split("-");
 			partidos.add(new Partido(info.get(i), info.get(i+2), Integer.parseInt(res[0]), Integer.parseInt(res[1])));
 		}
-		
+																							
 		ArrayList<Clasificacion> clasificacion = new ArrayList<Clasificacion>();
 		for (int i=numPartidos*4;i<=numEquipos*9+40-1;i=i+9){
 			//Procesar clasificacion de UN equipo
