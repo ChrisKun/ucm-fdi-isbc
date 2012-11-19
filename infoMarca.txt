@@ -378,7 +378,7 @@
 2000,Villarreal,Espanyol,2,Villarreal,38,7,16,9,13,58,52,57,Espanyol,38,9,14,8,16,46,44,50
 2000,Zaragoza,Celta,X,Zaragoza,38,17,9,15,14,54,57,42,Celta,38,6,16,11,11,51,49,59
 2000,Mallorca,Oviedo,2,Mallorca,38,3,20,11,7,61,43,71,Oviedo,38,18,11,8,19,51,67,41
-2001,Málaga,Betis,2,Málaga,1,6,1,0,0,3,2,3,Betis,1,11,0,0,1,2,3,0
+http://www.marca.com/estadisticas/futbol/primera/2000_01/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2000_01/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2000_01/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2000_01/jornada_42/2001,Málaga,Betis,2,Málaga,1,6,1,0,0,3,2,3,Betis,1,11,0,0,1,2,3,0
 2001,Valencia,R. Madrid,2,Valencia,1,10,1,0,0,1,0,3,R. Madrid,1,15,0,0,1,0,1,0
 2001,Deportivo,Valladolid,2,Deportivo,1,1,1,0,0,4,0,3,Valladolid,1,20,0,0,1,0,4,0
 2001,Mallorca,Las Palmas,1,Mallorca,1,18,0,0,1,0,3,0,Las Palmas,1,3,1,0,0,3,0,3
@@ -758,7 +758,7 @@
 2001,Valencia,Betis,2,Valencia,38,1,21,12,5,51,27,75,Betis,38,6,15,14,9,42,34,59
 2001,Zaragoza,Barcelona,X,Zaragoza,38,20,9,10,19,35,54,37,Barcelona,38,4,18,10,10,65,37,64
 2001,Tenerife,Athletic,1,Tenerife,38,19,10,8,20,32,58,38,Athletic,38,9,14,11,13,54,66,53
-2002,Recreativo,Málaga,1,Málaga,4,3,3,0,1,7,2,9
+http://www.marca.com/estadisticas/futbol/primera/2001_02/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2001_02/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2001_02/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2001_02/jornada_42/2002,Recreativo,Málaga,1,Málaga,4,3,3,0,1,7,2,9
 2002,Mallorca,Valencia,1,Mallorca,4,15,1,0,3,1,4,3,Valencia,4,2,3,1,0,8,5,10
 2002,Sevilla,Celta,1,Sevilla,4,5,2,2,0,5,3,8
 2002,Barcelona,Atlético,X,Barcelona,4,4,2,2,0,17,4,8,Atlético,4,8,2,1,1,8,1,7
@@ -1138,7 +1138,7 @@
 2002,Barcelona,Celta,2,Barcelona,38,6,15,11,12,63,47,56,Celta,38,4,17,10,11,45,36,61
 2002,R. Sociedad,Atlético,2,R. Sociedad,38,2,22,10,6,71,45,76,Atlético,38,12,12,11,15,51,56,47
 2002,R. Madrid,Athletic,2,R. Madrid,38,1,22,12,4,86,42,78,Athletic,38,7,15,10,13,63,61,55
-2003,R. Madrid,Betis,2,R. Madrid,1,2,1,0,0,2,1,3,Betis,1,15,0,0,1,1,2,0
+http://www.marca.com/estadisticas/futbol/primera/2002_03/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2002_03/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2002_03/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2002_03/jornada_42/2003,R. Madrid,Betis,2,R. Madrid,1,2,1,0,0,2,1,3,Betis,1,15,0,0,1,1,2,0
 2003,Espanyol,R. Sociedad,X,Espanyol,1,8,0,1,0,1,1,1,R. Sociedad,1,10,0,1,0,1,1,1
 2003,Málaga,Villarreal,X,Málaga,1,13,0,1,0,0,0,1,Villarreal,1,14,0,1,0,0,0,1
 2003,Albacete,Osasuna,1,Albacete,1,20,0,0,1,0,2,0,Osasuna,1,1,1,0,0,2,0,3
@@ -1518,7 +1518,7 @@
 2003,Sevilla,Osasuna,2,Sevilla,38,6,15,10,13,56,45,55,Osasuna,38,13,11,15,12,38,37,48
 2003,Athletic,Atlético,1,Athletic,38,5,15,11,12,53,49,56,Atlético,38,7,15,10,13,51,53,55
 2003,Valencia,Albacete,1,Valencia,38,1,23,8,7,71,27,77,Albacete,38,14,13,8,17,40,48,47
-2004,Atlético,Málaga,2,Atlético,1,2,1,0,0,2,0,3,Málaga,1,19,0,0,1,0,2,0
+http://www.marca.com/estadisticas/futbol/primera/2003_04/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2003_04/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2003_04/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2003_04/jornada_42/2004,Atlético,Málaga,2,Atlético,1,2,1,0,0,2,0,3,Málaga,1,19,0,0,1,0,2,0
 2004,Numancia,Betis,X,Numancia,1,12,0,1,0,1,1,1,Betis,1,8,0,1,0,1,1,1
 2004,Espanyol,Deportivo,X,Espanyol,1,10,0,1,0,1,1,1,Deportivo,1,9,0,1,0,1,1,1
 2004,R. Sociedad,Levante,X,R. Sociedad,1,14,0,1,0,1,1,1,Levante,1,11,0,1,0,1,1,1
@@ -1898,7 +1898,7 @@
 2004,Mallorca,Betis,X,Mallorca,38,17,10,9,19,42,63,39,Betis,38,4,16,14,8,62,50,62
 2004,Espanyol,Athletic,2,Espanyol,38,5,17,10,11,54,46,61,Athletic,38,9,14,9,15,59,54,51
 2004,Numancia,Deportivo,X,Numancia,38,19,6,11,21,30,61,29,Deportivo,38,8,12,15,11,46,50,51
-2005,Alavés,Barcelona,X,Alavés,1,9,0,1,0,0,0,1,Barcelona,1,11,0,1,0,0,0,1
+http://www.marca.com/estadisticas/futbol/primera/2004_05/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2004_05/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2004_05/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2004_05/jornada_42/2005,Alavés,Barcelona,X,Alavés,1,9,0,1,0,0,0,1,Barcelona,1,11,0,1,0,0,0,1
 2005,Athletic,R. Sociedad,2,Athletic,1,1,1,0,0,3,0,3,R. Sociedad,1,20,0,0,1,0,3,0
 2005,Valencia,Betis,2,Valencia,1,8,1,0,0,1,0,3,Betis,1,15,0,0,1,0,1,0
 2005,Atlético,Zaragoza,X,Atlético,1,10,0,1,0,0,0,1,Zaragoza,1,12,0,1,0,0,0,1
@@ -2278,7 +2278,7 @@
 2005,Osasuna,Valencia,2,Osasuna,38,4,21,5,12,49,43,68,Valencia,38,3,19,12,7,58,33,69
 2005,Sevilla,R. Madrid,2,Sevilla,38,5,20,8,10,54,39,68,R. Madrid,38,2,20,10,8,70,40,70
 2005,Athletic,Barcelona,2,Athletic,38,12,11,12,15,40,46,45,Barcelona,38,1,25,7,6,80,35,82
-2006,Valencia,Betis,2,Valencia,1,5,1,0,0,2,1,3,Betis,1,16,0,0,1,1,2,0
+http://www.marca.com/estadisticas/futbol/primera/2005_06/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2005_06/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2005_06/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2005_06/jornada_42/2006,Valencia,Betis,2,Valencia,1,5,1,0,0,2,1,3,Betis,1,16,0,0,1,1,2,0
 2006,R. Madrid,Villarreal,X,R. Madrid,1,12,0,1,0,0,0,1,Villarreal,1,13,0,1,0,0,0,1
 2006,Racing,Atlético,1,Racing,1,18,0,0,1,0,1,0,Atlético,1,6,1,0,0,1,0,3
 2006,Recreativo,Mallorca,X,Recreativo,1,11,0,1,0,1,1,1,Mallorca,1,9,0,1,0,1,1,1
@@ -2658,7 +2658,7 @@
 2006,Sevilla,Villarreal,1,Sevilla,38,3,21,8,9,64,35,71,Villarreal,38,5,18,8,12,48,44,62
 2006,Recreativo,Zaragoza,X,Recreativo,38,8,15,9,14,54,52,54,Zaragoza,38,6,16,12,10,55,43,60
 2006,R. Madrid,Mallorca,2,R. Madrid,38,1,23,7,8,66,40,76,Mallorca,38,12,14,7,17,41,47,49
-2007,R. Madrid,Atlético,2,R. Madrid,1,6,1,0,0,2,1,3,Atlético,1,14,0,0,1,1,2,0
+http://www.marca.com/estadisticas/futbol/primera/2006_07/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2006_07/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2006_07/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2006_07/jornada_42/2007,R. Madrid,Atlético,2,R. Madrid,1,6,1,0,0,2,1,3,Atlético,1,14,0,0,1,1,2,0
 2007,Sevilla,Getafe,2,Sevilla,1,1,1,0,0,4,1,3,Getafe,1,17,0,0,1,1,4,0
 2007,Murcia,Zaragoza,2,Murcia,1,5,1,0,0,2,1,3,Zaragoza,1,15,0,0,1,1,2,0
 2007,Racing,Barcelona,X,Racing,1,13,0,1,0,0,0,1,Barcelona,1,11,0,1,0,0,0,1
@@ -3038,7 +3038,7 @@
 2007,Sevilla,Athletic,2,Sevilla,38,5,20,4,14,75,49,64,Athletic,38,11,13,11,14,40,43,50
 2007,R. Madrid,Levante,2,R. Madrid,38,1,27,4,7,84,36,85,Levante,38,20,7,5,26,33,75,26
 2007,Espanyol,Almería,1,Espanyol,38,12,13,9,16,43,53,48,Almería,38,8,14,10,14,42,45,52
-2008,Espanyol,Valladolid,2,Espanyol,1,6,1,0,0,1,0,3,Valladolid,1,17,0,0,1,0,1,0
+http://www.marca.com/estadisticas/futbol/primera/2007_08/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2007_08/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2007_08/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2007_08/jornada_42/2008,Espanyol,Valladolid,2,Espanyol,1,6,1,0,0,1,0,3,Valladolid,1,17,0,0,1,0,1,0
 2008,Valencia,Mallorca,2,Valencia,1,2,1,0,0,3,0,3,Mallorca,1,19,0,0,1,0,3,0
 2008,Betis,Recreativo,1,Betis,1,16,0,0,1,0,1,0,Recreativo,1,8,1,0,0,1,0,3
 2008,Racing,Sevilla,X,Racing,1,10,0,1,0,1,1,1,Sevilla,1,11,0,1,0,1,1,1
@@ -3418,7 +3418,7 @@
 2008,Sporting,Recreativo,2,Sporting,38,14,14,1,23,47,79,43,Recreativo,38,20,8,9,21,34,57,33
 2008,Betis,Valladolid,X,Betis,38,18,10,12,16,51,58,42,Valladolid,38,16,12,7,19,46,58,43
 2008,Racing,Getafe,X,Racing,38,12,12,10,16,49,48,46,Getafe,38,17,10,12,16,50,56,42
-2009,R. Madrid,Deportivo,2,R. Madrid,1,6,1,0,0,3,2,3,Deportivo,1,13,0,0,1,2,3,0
+http://www.marca.com/estadisticas/futbol/primera/2008_09/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2008_09/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2008_09/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2008_09/jornada_42/2009,R. Madrid,Deportivo,2,R. Madrid,1,6,1,0,0,3,2,3,Deportivo,1,13,0,0,1,2,3,0
 2009,Zaragoza,Tenerife,2,Zaragoza,1,8,1,0,0,1,0,3,Tenerife,1,15,0,0,1,0,1,0
 2009,Málaga,Atlético,2,Málaga,1,3,1,0,0,3,0,3,Atlético,1,19,0,0,1,0,3,0
 2009,Mallorca,Xerez,2,Mallorca,1,4,1,0,0,2,0,3,Xerez,1,17,0,0,1,0,2,0
@@ -3798,7 +3798,7 @@
 2009,Barcelona,Valladolid,2,Barcelona,38,1,31,6,1,98,24,99,Valladolid,38,18,7,15,16,37,62,36
 2009,Racing,Sporting,2,Racing,38,16,9,12,17,42,59,39,Sporting,38,15,9,13,16,36,51,40
 2009,Valencia,Tenerife,2,Valencia,38,3,21,8,9,59,40,71,Tenerife,38,19,9,9,20,40,74,36
-2010,Hércules,Athletic,1,Hércules,1,14,0,0,1,0,1,0,Athletic,1,6,1,0,0,1,0,3
+http://www.marca.com/estadisticas/futbol/primera/2009_10/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2009_10/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2009_10/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2009_10/jornada_42/2010,Hércules,Athletic,1,Hércules,1,14,0,0,1,0,1,0,Athletic,1,6,1,0,0,1,0,3
 2010,Málaga,Valencia,1,Málaga,1,17,0,0,1,1,3,0,Valencia,1,5,1,0,0,3,1,3
 2010,Levante,Sevilla,1,Levante,1,18,0,0,1,1,4,0,Sevilla,1,2,1,0,0,4,1,3
 2010,Espanyol,Getafe,2,Espanyol,1,4,1,0,0,3,1,3,Getafe,1,16,0,0,1,1,3,0
@@ -4178,7 +4178,7 @@
 2010,R. Sociedad,Getafe,X,R. Sociedad,29,15,9,6,14,32,45,33,Getafe,29,10,10,9,10,31,36,39
 2010,Osasuna,Villarreal,2,Osasuna,30,6,10,13,7,35,45,43,Villarreal,29,17,7,10,12,30,42,31
 2010,Espanyol,Sevilla,1,Espanyol,29,7,11,7,11,37,39,40,Sevilla,29,9,10,9,10,33,31,39
-2011,R. Sociedad,Atlético,1,R. Sociedad,1,20,0,0,1,0,4,0,Atlético,1,1,1,0,0,4,0,3
+http://www.marca.com/estadisticas/futbol/primera/2010_11/jornada_39/http://www.marca.com/estadisticas/futbol/primera/2010_11/jornada_40/http://www.marca.com/estadisticas/futbol/primera/2010_11/jornada_41/http://www.marca.com/estadisticas/futbol/primera/2010_11/jornada_42/2011,R. Sociedad,Atlético,1,R. Sociedad,1,20,0,0,1,0,4,0,Atlético,1,1,1,0,0,4,0,3
 2011,Betis,Sevilla,X,Betis,1,8,0,1,0,1,1,1,Sevilla,1,10,0,1,0,1,1,1
 2011,Espanyol,Granada,2,Espanyol,1,4,1,0,0,3,0,3,Granada,1,18,0,0,1,0,3,0
 2011,Racing,Getafe,1,Racing,1,14,0,0,1,1,2,0,Getafe,1,6,1,0,0,2,1,3
@@ -4512,38 +4512,4 @@
 2011,Levante,Barcelona,1,Levante,33,5,14,6,13,47,46,48,Barcelona,33,2,25,6,2,96,24,81
 2011,Málaga,R. Sociedad,X,Málaga,33,4,15,6,12,49,46,51,R. Sociedad,33,15,10,9,14,40,49,39
 2011,Villarreal,Racing,X,Villarreal,33,16,8,12,13,34,47,36,Racing,33,20,4,14,15,24,52,26
-2011,Rayo,Atlético,1,Rayo,33,14,12,4,17,49,58,40,Atlético,33,8,12,9,12,44,41,45
-2011,Espanyol,Valencia,2,Espanyol,33,10,12,9,12,43,43,45,Valencia,33,3,14,10,9,50,42,52
-2011,Betis,Osasuna,2,Betis,33,12,12,6,15,40,45,42,Osasuna,33,6,11,13,9,37,53,46
-2011,Zaragoza,Granada,2,Zaragoza,33,18,8,7,18,29,59,31,Granada,33,17,10,6,17,30,49,36
-2011,Athletic,Mallorca,2,Athletic,33,7,11,12,10,48,44,45,Mallorca,33,13,10,10,13,35,41,40
-2011,Getafe,Sevilla,2,Getafe,33,11,12,9,12,38,44,45,Sevilla,33,9,12,9,12,40,38,45
-2011,Barcelona,R. Madrid,1,Barcelona,34,2,25,6,3,97,26,81,R. Madrid,34,1,28,4,2,109,30,88
-2011,Sporting,Rayo,2,Sporting,34,19,8,7,19,35,64,31,Rayo,34,15,12,4,18,50,60,40
-2011,Sevilla,Levante,X,Sevilla,34,9,12,10,12,41,39,46,Levante,34,5,14,7,13,48,47,49
-2011,Mallorca,Zaragoza,2,Mallorca,34,12,11,10,13,36,41,43,Zaragoza,34,18,8,7,19,29,60,31
-2011,R. Sociedad,Villarreal,X,R. Sociedad,34,14,10,10,14,41,50,40,Villarreal,34,17,8,13,13,35,48,37
-2011,Valencia,Betis,2,Valencia,34,3,15,10,9,54,42,55,Betis,34,13,12,6,16,40,49,42
-2011,Granada,Getafe,2,Granada,34,16,11,6,17,31,49,39,Getafe,34,11,12,9,13,38,45,45
-2011,Atlético,Espanyol,2,Atlético,34,7,13,9,12,47,42,48,Espanyol,34,10,12,9,13,44,46,45
-2011,Racing,Athletic,1,Racing,34,20,4,14,16,24,53,26,Athletic,34,6,12,12,10,49,44,48
-2011,Osasuna,Málaga,X,Osasuna,34,8,11,14,9,38,54,47,Málaga,34,4,15,7,12,50,47,52
-2011,Villarreal,Osasuna,X,Villarreal,36,16,9,14,13,39,51,41,Osasuna,36,9,11,15,10,39,59,48
-2011,Getafe,Mallorca,1,Getafe,36,10,12,10,14,40,49,46,Mallorca,36,7,13,10,13,40,42,49
-2011,Levante,Granada,2,Levante,36,5,15,7,14,51,49,52,Granada,36,15,12,6,18,34,53,42
-2011,Espanyol,Sporting,1,Espanyol,36,13,12,9,15,45,51,45,Sporting,36,19,9,7,20,40,67,34
-2011,R. Sociedad,Racing,2,R. Sociedad,36,14,11,11,14,45,51,44,Racing,36,20,4,15,17,25,57,27
-2011,Málaga,Valencia,2,Málaga,36,4,16,7,13,52,51,55,Valencia,36,3,16,10,10,58,43,58
-2011,Betis,Atlético,X,Betis,36,11,13,7,16,44,52,46,Atlético,36,6,13,11,12,50,45,50
-2011,R. Madrid,Sevilla,2,R. Madrid,36,1,30,4,2,115,30,94,Sevilla,36,12,12,10,14,42,44,46
-2011,Zaragoza,Athletic,2,Zaragoza,36,18,10,7,19,32,60,37,Athletic,36,8,12,12,12,49,49,48
-2011,Rayo,Barcelona,1,Rayo,36,17,12,4,20,50,68,40,Barcelona,36,2,27,6,3,108,27,87
-2011,Zaragoza,Racing,2,Zaragoza,37,18,11,7,19,34,61,40,Racing,37,20,4,15,18,26,59,27
-2011,Athletic,Getafe,X,Athletic,37,9,12,13,12,49,49,49,Getafe,37,11,12,11,14,40,49,47
-2011,Mallorca,Levante,2,Mallorca,37,6,14,10,13,41,42,52,Levante,37,7,15,7,15,51,50,52
-2011,Granada,R. Madrid,1,Granada,37,15,12,6,19,35,55,42,R. Madrid,37,1,31,4,2,117,31,97
-2011,Osasuna,R. Sociedad,2,Osasuna,37,8,12,15,10,40,59,51,R. Sociedad,37,14,11,11,15,45,52,44
-2011,Barcelona,Espanyol,2,Barcelona,37,2,28,6,3,112,27,90,Espanyol,37,13,12,9,16,45,55,45
-2011,Sporting,Betis,2,Sporting,37,19,10,7,20,42,68,37,Betis,37,12,13,7,17,45,54,46
-2011,Atlético,Málaga,2,Atlético,37,5,14,11,12,52,46,53,Málaga,37,4,16,7,14,53,53,55
-2011,Valencia,Villarreal,2,Valencia,37,3,17,10,10,59,43,61,Villa
+2011
