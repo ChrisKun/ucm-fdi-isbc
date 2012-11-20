@@ -44,9 +44,9 @@ public class ParserWeb {
 		Elements tabla;
 		ArrayList<String> info = new ArrayList<String>();
 		
-		String anyo2 = String.valueOf(anyo+1);
-		anyo2 = anyo2.substring(2);
+		String anyo2 = String.valueOf(anyo+1).substring(2);
 		String dir = "http://www.marca.com/estadisticas/futbol/"+categoria+"/"+anyo+"_"+anyo2+"/jornada_"+jorn+"/";
+		
 		System.out.println(dir);
 		
 		try {
@@ -57,14 +57,20 @@ public class ParserWeb {
 			}
 		} catch (IOException e) {
 			System.out.println("Pero que le pasa a "+dir+"?");
-			return dir;
+			return dir + "\n";
 		}
 		ArrayList<Partido> partidos = new ArrayList<Partido>();
-		String[] res;
+		String[] res; int res1, res2;
 		for (int i=0;i<=numPartidos*4-1;i=i+4){
 			//Procesar info de UN partido
-			res = info.get(i+1).split("-");
-			partidos.add(new Partido(info.get(i), info.get(i+2), Integer.parseInt(res[0]), Integer.parseInt(res[1])));
+			try{
+				res = info.get(i+1).split("-");
+				res1 = Integer.parseInt(res[0]);
+				res2 = Integer.parseInt(res[1]);
+			} catch (Exception e){
+				return info.get(i+1) + "\n";
+			}
+			partidos.add(new Partido(info.get(i), info.get(i+2), res1, res2));
 		}
 																							
 		ArrayList<Clasificacion> clasificacion = new ArrayList<Clasificacion>();
