@@ -17,13 +17,13 @@ import jcolibri.exception.ExecutionException;
 import jcolibri.extensions.recommendation.casesDisplay.DisplayCasesTableMethod;
 import jcolibri.method.gui.formFilling.ObtainQueryWithFormMethod;
 import jcolibri.method.retrieve.RetrievalResult;
-import jcolibri.method.retrieve.FilterBasedRetrieval.predicates.Equal;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
-import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
+
 
 public class TravelRecommender implements StandardCBRApplication{
 
@@ -52,8 +52,8 @@ public class TravelRecommender implements StandardCBRApplication{
 		// Imprimir los casos leidos
 		// Puedes comentar las siguientes líneas una vez que funciones
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
-		for(CBRCase c: cases)
-			System.out.println(c);
+		/*for(CBRCase c: cases)
+			System.out.println(c);*/
 		return _caseBase;
 	}
 
@@ -65,8 +65,8 @@ public class TravelRecommender implements StandardCBRApplication{
 		
 		// Fijamos las funciones de similitud locales
 		simConfig.addMapping(
-				new Attribute("HolidayType", TravelDescription.class), 
-				(LocalSimilarityFunction) new Equal()
+				new Attribute("HolidayType", TravelDescription.class),
+				new Equal()
 				);
 		simConfig.addMapping(
 				new Attribute("NumberOfPersons", TravelDescription.class),
@@ -74,11 +74,11 @@ public class TravelRecommender implements StandardCBRApplication{
 				);
 		simConfig.addMapping(
 				new Attribute("Region", TravelDescription.class),
-				(LocalSimilarityFunction) new Equal()
+				new Equal()
 				);
 		simConfig.addMapping(
 				new Attribute("Transportation", TravelDescription.class),
-				(LocalSimilarityFunction) new Equal()
+				new Equal()
 				);
 		simConfig.addMapping(
 				new Attribute("Duration", TravelDescription.class),
@@ -86,11 +86,11 @@ public class TravelRecommender implements StandardCBRApplication{
 				);
 		simConfig.addMapping(
 				new Attribute("Season", TravelDescription.class),
-				(LocalSimilarityFunction) new Equal()
+				new Equal()
 				);
 		simConfig.addMapping(
 				new Attribute("Accommodation", TravelDescription.class),
-				(LocalSimilarityFunction) new Equal()
+				new Equal()
 				);
 		
 		// Es posible modificar el peso de cada atributo en la media ponderada.
