@@ -51,8 +51,8 @@ public class TravelRecommender implements StandardCBRApplication{
 		_caseBase.init(_connector);
 		// Imprimir los casos leidos
 		// Puedes comentar las siguientes líneas una vez que funciones
-		java.util.Collection<CBRCase> cases = _caseBase.getCases();
-		/*for(CBRCase c: cases)
+		/*java.util.Collection<CBRCase> cases = _caseBase.getCases();
+		for(CBRCase c: cases)
 			System.out.println(c);*/
 		return _caseBase;
 	}
