@@ -88,7 +88,7 @@ public class ParserWeb {
 					Integer.parseInt(info.get(i+7)),
 					Integer.parseInt(info.get(i+8))));
 		}
-		
+
 		Jornada jornada = new Jornada(anyo, partidos, clasificacion);
 		return jornada.toFile();
 	}
