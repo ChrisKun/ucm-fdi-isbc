@@ -11,6 +11,6 @@
 	<property name="Transportation" column="Transportation"/>
 	<property name="Duration" column="Duration"/>
 	<property name="Season" column="Season"/>
-	<property name="Accomodation" column="Accomodation"/>
+	<property name="Accommodation" column="Accommodation"/>
 </class>
 </hibernate-mapping>

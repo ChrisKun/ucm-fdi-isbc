@@ -6,22 +6,22 @@ import jcolibri.cbrcore.CaseComponent;
 public class TravelDescription implements CaseComponent {
 
 	String caseId;
-	String HolidayTipe;
+	String HolidayType;
 	Integer NumberOfPersons;
 	String Region;
 	String Transportation;
 	Integer Duration;
 	String Season;
-	String Acommodation;
+	String Accommodation;
 	
 	public Attribute getIdAttribute() {
 		return new Attribute("caseId", TravelDescription.class);
 	}
 
 	public String toString(){
-		return caseId + " " + HolidayTipe + NumberOfPersons.toString() + " " +
+		return caseId + " " + HolidayType + NumberOfPersons.toString() + " " +
 				Region + " " + Transportation + " " + Duration.toString() + " " +
-				Season + " " + Acommodation;
+				Season + " " + Accommodation;
 	}
 	
 	public String getCaseId() {
@@ -32,12 +32,12 @@ public class TravelDescription implements CaseComponent {
 		this.caseId = caseId;
 	}
 
-	public String getHolidayTipe() {
-		return HolidayTipe;
+	public String getHolidayType() {
+		return HolidayType;
 	}
 
-	public void setHolidayTipe(String holidayTipe) {
-		HolidayTipe = holidayTipe;
+	public void setHolidayType(String holidayType) {
+		HolidayType = holidayType;
 	}
 
 	public Integer getNumberOfPersons() {
@@ -80,11 +80,11 @@ public class TravelDescription implements CaseComponent {
 		Season = season;
 	}
 
-	public String getAcommodation() {
-		return Acommodation;
+	public String getAccommodation() {
+		return Accommodation;
 	}
 
-	public void setAcommodation(String acommodation) {
-		Acommodation = acommodation;
+	public void setAccommodation(String accommodation) {
+		Accommodation = accommodation;
 	}
 }
