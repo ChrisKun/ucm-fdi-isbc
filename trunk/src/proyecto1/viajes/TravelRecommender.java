@@ -65,7 +65,7 @@ public class TravelRecommender implements StandardCBRApplication{
 		
 		// Fijamos las funciones de similitud locales
 		simConfig.addMapping(
-				new Attribute("HolidayTipe", TravelDescription.class), 
+				new Attribute("HolidayType", TravelDescription.class), 
 				(LocalSimilarityFunction) new Equal()
 				);
 		simConfig.addMapping(
@@ -89,7 +89,7 @@ public class TravelRecommender implements StandardCBRApplication{
 				(LocalSimilarityFunction) new Equal()
 				);
 		simConfig.addMapping(
-				new Attribute("Accomodation", TravelDescription.class),
+				new Attribute("Accommodation", TravelDescription.class),
 				(LocalSimilarityFunction) new Equal()
 				);
 		
