@@ -14,7 +14,7 @@ public class Partido {
 		this.equipoVisitante = equipoVisitante;
 		this.resEqLocal = resEqLocal;
 		this.resEqVisitante = resEqVisitante;
-		if (resEqLocal < resEqVisitante)
+		if (resEqLocal > resEqVisitante)
 			resultado = '1';
 		else if (resEqLocal == resEqVisitante)
 			resultado = 'X';
