@@ -120,7 +120,6 @@ public class TravelRecommender implements StandardCBRApplication{
 
 	public void postCycle() throws ExecutionException {
 		this._caseBase.close();
-		
 	}
 
 	public static void main(String[] args){
