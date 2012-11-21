@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import proyecto2.quinielas.representacion.DescripcionQuinielas;
+import proyecto2.quinielas.representacion.SolucionQuinielas.UnoXDos;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
@@ -18,6 +19,7 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.exception.ExecutionException;
+import jcolibri.extensions.classification.ClassificationSolution;
 import jcolibri.method.gui.formFilling.ObtainQueryWithFormMethod;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
@@ -105,7 +107,16 @@ public class Quinielas implements StandardCBRApplication {
 		
 		Collection<CBRCase> casos = new ArrayList<CBRCase>();
 		System.out.println("Casos Recuperados:");
+		// 0 = X, 1 = 1, 2 = 2
+		double [] resQuini = new double[3];
 		for (RetrievalResult nse: eval){
+			String sol = nse.get_case().getSolution().toString();			
+			if (sol.contains("UNO")) {
+				resQuini[1] = resQuini[1]+nse.getEval();
+			} else if (sol.contains("DOS")) {
+				resQuini[2] = resQuini[2]+nse.getEval();
+			} else
+				resQuini[0] = resQuini[0]+nse.getEval();
 			System.out.println(nse);
 			casos.add(nse.get_case());
 		}
@@ -129,7 +140,7 @@ public class Quinielas implements StandardCBRApplication {
 			HashMap<String, int[]> hash = rellenaHash(query);
 			do {
 				// Ejemplo de equipos
-				String equipoLocal = "Athletic";
+				String equipoLocal = "Osasuna";
 				String equipoVisitante = "Getafe";
 				rellenaQuery(query,hash,equipoLocal,equipoVisitante);		
 				//Ejecutar el ciclo
@@ -168,7 +179,8 @@ public class Quinielas implements StandardCBRApplication {
 	private static void rellenaQuery(CBRQuery query, HashMap<String, int[]> hash, String local, String visitante) {
 		int [] clasifLocal = hash.get(local);
 		int [] clasifVisitante = hash.get(visitante);
-		DescripcionQuinielas queryDesc = new DescripcionQuinielas (2012,local,clasifLocal,visitante,clasifVisitante);		
+		int temporada = 2012;
+		DescripcionQuinielas queryDesc = new DescripcionQuinielas (temporada,local,clasifLocal,visitante,clasifVisitante);		
 		query.setDescription(queryDesc);		
 	}
 }
