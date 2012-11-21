@@ -21,16 +21,16 @@ public class Clasificacion {
 	}
 	
 	public String toString() {
-		return "Clasificacion [\n" +
-				"Equipo (eq) =" + eq + ",\n" +
-				"Partidos Jugados (pj) o Jornada =" + pj + ", \n" +
-				"Posicion (pos) =" + pos + ",\n" +
-				"Partidos Ganados (pg)   =" + pg + ",\n" +
-				"Partidos Empatados (pe) =" + pe + ",\n" +
-				"Partidos Perdidos (pp)  =" + pp + ",\n" +
-				"Goles a Favor (gf)      =" + gf + ",\n" +
-				"Goles en Contra (gc)    =" + gc + ",\n" +
-				"Puntos (ptos) =" + ptos + "]\n";
+		return "\nClasificacion [\n" +
+				"Equipo (eq) = " + eq + ",\n" +
+				"Partidos Jugados (pj) o Jornada = " + pj + ", \n" +
+				"Posicion (pos) = " + pos + ",\n" +
+				"Partidos Ganados (pg)   = " + pg + ",\n" +
+				"Partidos Empatados (pe) = " + pe + ",\n" +
+				"Partidos Perdidos (pp)  = " + pp + ",\n" +
+				"Goles a Favor (gf)      = " + gf + ",\n" +
+				"Goles en Contra (gc)    = " + gc + ",\n" +
+				"Puntos (ptos) = " + ptos + "]\n";
 	}
 
 	public String toFile() {

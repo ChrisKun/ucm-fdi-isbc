@@ -20,10 +20,11 @@ public class Jornada {
 				+ ", clasificacion=" + clasificacion + "]";
 	}
 
-	public String toFile() {
+	public ArrayList<String> toFile() {
+		ArrayList<String> resultados = new ArrayList<String>();
 		String temp_s = "";
 		for (Partido partido: partidos){
-			temp_s = temp_s + anyo + "," + partido.toFile();
+			temp_s = anyo + "," + partido.toFile();
 			for (Clasificacion clas: clasificacion){
 				if (clas.getEq().equals(partido.getEquipoLocal()))
 					temp_s = temp_s +','+ clas.toFile();
@@ -32,8 +33,9 @@ public class Jornada {
 				if (clas.getEq().equals(partido.getEquipoVisitante()))
 					temp_s = temp_s +','+ clas.toFile();
 			}
-			temp_s = temp_s + "\n";
+			resultados.add(temp_s);
 		}
-	    return temp_s;
+		
+	    return resultados;
 	}
 }
