@@ -5,14 +5,10 @@ import proyecto2.quinielas.representacion.SolucionQuinielas;
 import proyecto2.quinielas.representacion.SolucionQuinielas.UnoXDos;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.commons.logging.Log;
 
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CaseBaseFilter;
@@ -25,8 +21,6 @@ import jcolibri.exception.InitializingException;
  *
  */
 public class ConnectorQuinielas implements Connector {
-
-
 	
 	@Override
 	public void initFromXMLfile(URL file) throws InitializingException {
@@ -59,46 +53,52 @@ public class ConnectorQuinielas implements Connector {
 		int i=0;
 		
 		try {
-			//TODO Cambiar la ruta por una donde tengamos localizados archivos media
-			BufferedReader br = new BufferedReader(new FileReader("src/proyecto2/quinielas/datos.txt"));
-			
-			
+			BufferedReader br = new BufferedReader(new FileReader("infoMarca.txt"));
+						
 			String line = null;
 			while((line=br.readLine())!=null){
 				
-				if(line.contains("Promo")||line.contains("Descenso"))
-					continue;
+				String[] tokens = line.split(",");
+				// Medida de seguridad frente a posibles errores en el archivo de texto
+				if (tokens.length<DescripcionQuinielas.NUMCAMPOS) continue;
 				
-				String[] tokens = line.split(" {2,}");
 				
 				DescripcionQuinielas desc = new DescripcionQuinielas();
+				
 				desc.setId(i);
-				desc.setTemporada(tokens[0]);
-				desc.setLiga(tokens[1]);
-				desc.setJornada(Integer.valueOf(tokens[2]));
-				desc.setLocal(tokens[3]);
-				desc.setVisitante(tokens[4]);
-				String[] goles = tokens[5].split("-");
-				desc.setGolesLocal(Integer.valueOf(goles[0]));
-				desc.setGolesVisitante(Integer.valueOf(goles[1]));
-				
-				int diff = desc.getGolesLocal()-desc.getGolesVisitante(); 
-				
+				desc.setTemporada(Integer.valueOf(tokens[0]));
+				desc.setLocal(tokens[1]);
+				desc.setVisitante(tokens[2]);
+				desc.setPosLocal(Integer.valueOf(tokens[6]));
+				desc.setPgLocal(Integer.valueOf(tokens[7]));
+				desc.setPeLocal(Integer.valueOf(tokens[8]));
+				desc.setPpLocal(Integer.valueOf(tokens[9]));
+				desc.setGfavorLocal(Integer.valueOf(tokens[10]));
+				desc.setGcontraLocal(Integer.valueOf(tokens[11]));
+				desc.setPuntosLocal(Integer.valueOf(tokens[12]));
+				desc.setPosVisitante(Integer.valueOf(tokens[14]));
+				desc.setPgVisitante(Integer.valueOf(tokens[15]));
+				desc.setPeVisitante(Integer.valueOf(tokens[16]));
+				desc.setPpVisitante(Integer.valueOf(tokens[17]));
+				desc.setGfavorVisitante(Integer.valueOf(tokens[18]));
+				desc.setGcontraVisitante(Integer.valueOf(tokens[19]));
+				desc.setPuntosVisitante(Integer.valueOf(tokens[20]));
+					
 				SolucionQuinielas sol = new SolucionQuinielas();
+				
 				sol.setId(i);
 				
-				if(diff>0)
+				if(tokens[3].equals("1"))
 					sol.setSolucion(UnoXDos.UNO);
-				else if(diff==0)
-					sol.setSolucion(UnoXDos.X);
-				else
+				else if(tokens[3].equals("2"))
 					sol.setSolucion(UnoXDos.DOS);
-				
+				else
+					sol.setSolucion(UnoXDos.X);
+
 				CBRCase _case = new CBRCase();
 				_case.setDescription(desc);
 				_case.setSolution(sol);
-				
-				
+								
 				list.add(_case);
 				
 				i++;
