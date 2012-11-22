@@ -7,18 +7,18 @@ public class SolucionQuinielas implements CaseComponent {
 
 	public enum UnoXDos {UNO, X, DOS};
 	
-	private int id;
+	private String id;
 	private UnoXDos solucion;
 	
 	
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
 
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

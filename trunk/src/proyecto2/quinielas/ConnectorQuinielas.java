@@ -60,15 +60,15 @@ public class ConnectorQuinielas implements Connector {
 				
 				String[] tokens = line.split(",");
 				// Medida de seguridad frente a posibles errores en el archivo de texto
-			    if (tokens.length<DescripcionQuinielas.NUMCAMPOS) {
-			    	System.out.println(line);
+			    if (tokens.length < 21) {
+			    	System.out.println("Falta informacion en: " + line);
 			    	continue;
 			    }
 			    
 				
 				DescripcionQuinielas desc = new DescripcionQuinielas();
 				
-				desc.setId(i);
+				desc.setId(String.valueOf(i));
 				desc.setTemporada(Integer.valueOf(tokens[0]));
 				desc.setLocal(tokens[1]);
 				desc.setVisitante(tokens[2]);
@@ -89,7 +89,7 @@ public class ConnectorQuinielas implements Connector {
 					
 				SolucionQuinielas sol = new SolucionQuinielas();
 				
-				sol.setId(i);
+				sol.setId(String.valueOf(i));
 				
 				if(tokens[3].equals("1"))
 					sol.setSolucion(UnoXDos.UNO);

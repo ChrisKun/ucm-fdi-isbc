@@ -6,27 +6,29 @@ import jcolibri.cbrcore.CaseComponent;
 public class DescripcionQuinielas implements CaseComponent {	
 
 	// Numero de campos que tenemos
-	public final static int NUMCAMPOS = 20;
-	private int id;
-	private int temporada;
+	//public final static Integer NUMCAMPOS = 18;
+	
+	private String id;
+	private Integer temporada;
 	private String local;
 	private String visitante;
-	private int puntosLocal;
-	private int pgLocal;
-	private int peLocal;
-	private int ppLocal;
-	private int puntosVisitante;
-	private int pgVisitante;
-	private int peVisitante;
-	private int ppVisitante;
-	private int posLocal;
-	private int posVisitante;
-	private int gfavorLocal;
-	private int gcontraLocal;
-	private int gfavorVisitante;
-	private int gcontraVisitante;
+	private Integer puntosLocal;
+	private Integer pgLocal;
+	private Integer peLocal;
+	private Integer ppLocal;
+	private Integer puntosVisitante;
+	private Integer pgVisitante;
+	private Integer peVisitante;
+	private Integer ppVisitante;
+	private Integer posLocal;
+	private Integer posVisitante;
+	private Integer gfavorLocal;
+	private Integer gcontraLocal;
+	private Integer gfavorVisitante;
+	private Integer gcontraVisitante;
 
-	public DescripcionQuinielas(int temporada,String local, int[] clasifLocal, String visitante, int[] clasifVisitante) {
+	// Constructor que inicializa desde dos String que contienen la información de ambos equipos
+	public DescripcionQuinielas(Integer temporada,String local, Integer[] clasifLocal, String visitante, Integer[] clasifVisitante) {
 		this.temporada = temporada;
 		this.local = local;
 		this.visitante = visitante;
@@ -68,25 +70,25 @@ public class DescripcionQuinielas implements CaseComponent {
 
 
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
 
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
 
 
-	public int getTemporada() {
+	public Integer getTemporada() {
 		return temporada;
 	}
 
 
 
-	public void setTemporada(int temporada) {
+	public void setTemporada(Integer temporada) {
 		this.temporada = temporada;
 	}
 
@@ -116,169 +118,169 @@ public class DescripcionQuinielas implements CaseComponent {
 
 
 
-	public int getPuntosLocal() {
+	public Integer getPuntosLocal() {
 		return puntosLocal;
 	}
 
 
 
-	public void setPuntosLocal(int puntosLocal) {
+	public void setPuntosLocal(Integer puntosLocal) {
 		this.puntosLocal = puntosLocal;
 	}
 
 
 
-	public int getPgLocal() {
+	public Integer getPgLocal() {
 		return pgLocal;
 	}
 
 
 
-	public void setPgLocal(int pgLocal) {
+	public void setPgLocal(Integer pgLocal) {
 		this.pgLocal = pgLocal;
 	}
 
 
 
-	public int getPeLocal() {
+	public Integer getPeLocal() {
 		return peLocal;
 	}
 
 
 
-	public void setPeLocal(int peLocal) {
+	public void setPeLocal(Integer peLocal) {
 		this.peLocal = peLocal;
 	}
 
 
 
-	public int getPpLocal() {
+	public Integer getPpLocal() {
 		return ppLocal;
 	}
 
 
 
-	public void setPpLocal(int ppLocal) {
+	public void setPpLocal(Integer ppLocal) {
 		this.ppLocal = ppLocal;
 	}
 
 
 
-	public int getPuntosVisitante() {
+	public Integer getPuntosVisitante() {
 		return puntosVisitante;
 	}
 
 
 
-	public void setPuntosVisitante(int puntosVisitante) {
+	public void setPuntosVisitante(Integer puntosVisitante) {
 		this.puntosVisitante = puntosVisitante;
 	}
 
 
 
-	public int getPgVisitante() {
+	public Integer getPgVisitante() {
 		return pgVisitante;
 	}
 
 
 
-	public void setPgVisitante(int pgVisitante) {
+	public void setPgVisitante(Integer pgVisitante) {
 		this.pgVisitante = pgVisitante;
 	}
 
 
 
-	public int getPeVisitante() {
+	public Integer getPeVisitante() {
 		return peVisitante;
 	}
 
 
 
-	public void setPeVisitante(int peVisitante) {
+	public void setPeVisitante(Integer peVisitante) {
 		this.peVisitante = peVisitante;
 	}
 
 
 
-	public int getPpVisitante() {
+	public Integer getPpVisitante() {
 		return ppVisitante;
 	}
 
 
 
-	public void setPpVisitante(int ppVisitante) {
+	public void setPpVisitante(Integer ppVisitante) {
 		this.ppVisitante = ppVisitante;
 	}
 
 
 
-	public int getPosLocal() {
+	public Integer getPosLocal() {
 		return posLocal;
 	}
 
 
 
-	public void setPosLocal(int posLocal) {
+	public void setPosLocal(Integer posLocal) {
 		this.posLocal = posLocal;
 	}
 
 
 
-	public int getPosVisitante() {
+	public Integer getPosVisitante() {
 		return posVisitante;
 	}
 
 
 
-	public void setPosVisitante(int posVisitante) {
+	public void setPosVisitante(Integer posVisitante) {
 		this.posVisitante = posVisitante;
 	}
 
 
 
-	public int getGfavorLocal() {
+	public Integer getGfavorLocal() {
 		return gfavorLocal;
 	}
 
 
 
-	public void setGfavorLocal(int gfavorLocal) {
+	public void setGfavorLocal(Integer gfavorLocal) {
 		this.gfavorLocal = gfavorLocal;
 	}
 
 
 
-	public int getGcontraLocal() {
+	public Integer getGcontraLocal() {
 		return gcontraLocal;
 	}
 
 
 
-	public void setGcontraLocal(int gcontraLocal) {
+	public void setGcontraLocal(Integer gcontraLocal) {
 		this.gcontraLocal = gcontraLocal;
 	}
 
 
 
-	public int getGfavorVisitante() {
+	public Integer getGfavorVisitante() {
 		return gfavorVisitante;
 	}
 
 
 
-	public void setGfavorVisitante(int gfavorVisitante) {
+	public void setGfavorVisitante(Integer gfavorVisitante) {
 		this.gfavorVisitante = gfavorVisitante;
 	}
 
 
 
-	public int getGcontraVisitante() {
+	public Integer getGcontraVisitante() {
 		return gcontraVisitante;
 	}
 
 
 
-	public void setGcontraVisitante(int gcontraVisitante) {
+	public void setGcontraVisitante(Integer gcontraVisitante) {
 		this.gcontraVisitante = gcontraVisitante;
 	}
 
