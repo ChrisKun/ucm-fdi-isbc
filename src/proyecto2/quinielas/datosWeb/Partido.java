@@ -22,6 +22,12 @@ public class Partido {
 			resultado = '2';
 	}
 	
+	public Partido(String equipoLocal, String equipoVisitante, char resultado){
+		this.equipoLocal = equipoLocal;
+		this.equipoVisitante = equipoVisitante;
+		this.resultado = resultado;
+	}
+	
 	public String toString() {
 		return "Partido [equipoLocal=" + equipoLocal + ", equipoVisitante="
 				+ equipoVisitante + ", resEqLocal=" + resEqLocal
