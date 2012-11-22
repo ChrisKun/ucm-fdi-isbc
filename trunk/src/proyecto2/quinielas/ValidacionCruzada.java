@@ -32,7 +32,7 @@ public class ValidacionCruzada {
 		eval.LeaveOneOut();
 		    
 		System.out.println(Evaluator.getEvaluationReport());
-		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quiniela - Evaluation", false);
+		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quinielas - Evaluation", false);
     }
     
     public void SameSplitEvaluation()
@@ -47,7 +47,7 @@ public class ValidacionCruzada {
 		eval.HoldOutfromFile("split1.txt");
 		            
 		System.out.println(Evaluator.getEvaluationReport());
-		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quiniela - Evaluation", false);
+		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quinielas - Evaluation", false);
     }
 
 }
