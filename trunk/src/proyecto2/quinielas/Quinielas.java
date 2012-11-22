@@ -3,6 +3,7 @@ package proyecto2.quinielas;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -18,9 +19,7 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.evaluation.Evaluator;
-import jcolibri.evaluation.evaluators.HoldOutEvaluator;
 import jcolibri.exception.ExecutionException;
-import jcolibri.method.gui.formFilling.ObtainQueryWithFormMethod;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.ParallelNNScoringMethod;
@@ -38,6 +37,30 @@ public class Quinielas implements StandardCBRApplication {
 	Connector connector;
 	CBRCaseBase caseBase;
 	
+	// ArrayList que contiene los resultados
+	ArrayList<Prediccion> listaPredicciones;
+	// Booleano que indica si estamos ejecutando una evaluación o no
+	boolean esValidacion;
+	
+	/* ** CONSTRUCTORAS ** */
+	public Quinielas () {
+		super();
+		listaPredicciones = new ArrayList<Prediccion>();
+		esValidacion = false;
+	}
+	
+	public Quinielas (boolean esEvaluacion) {
+		super();
+		// listaPredicciones = new ArrayList<Prediccion>();
+		esValidacion = true;
+	}
+	
+	/* ** GETTERS/SETTERS ** */
+	public ArrayList<Prediccion> getListaPredicciones (){
+		return this.listaPredicciones;
+	}
+	
+	/* ** METODOS ** */	
 	@Override
 	public void configure() throws ExecutionException {
 		try{
@@ -114,6 +137,10 @@ public class Quinielas implements StandardCBRApplication {
 		// Seleccionamos metodo de votacion
 		Votacion votacion = new Votacion();
 		Prediccion prediccion = votacion.mediaPonderada(eval);		
+		
+		// Si estamos haciendo una validación no añadimos la prediccion a la lista de predicciones
+		if (esValidacion) validacion(query, prediccion);
+		else listaPredicciones.add(prediccion);
 	}
 
 	@Override
@@ -130,14 +157,23 @@ public class Quinielas implements StandardCBRApplication {
                 pre = 1.0;
         else 
                 pre = 0.0;
-        System.out.println("sol.getRes()"+sol.getSolucion().toString()+" - "+prediccion.getResultado());
+        System.out.println("Resultado: "+sol.getSolucion().toString()+" - "+"Prediccion: "+prediccion.getResultado());
         Evaluator.getEvaluationReport().addDataToSeries("Aciertos", pre);
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
 			
 		System.out.println(prediccion.toString());
 	}
 	
+	// PODEMOS CAMBIAR ESTE MAIN Y PONER UNA CLASE QUE EJECUTE EL MAIN Y LANCE LA INTERFAZ Y TAL
 	public static void main(String[] args) {
+		ValidacionCruzada validador = new ValidacionCruzada(); 
+		if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
+			validador.HoldOutEvaluation();
+		if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
+				validador.LeaveOneOutEvaluation();
+		if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
+			validador.SameSplitEvaluation();
+		/*
 		Quinielas q = new Quinielas();
 		try {
 			//Configuración
@@ -159,11 +195,10 @@ public class Quinielas implements StandardCBRApplication {
 			} while (JOptionPane.showConfirmDialog(null, "Continuar?")==JOptionPane.OK_OPTION);
 		} catch (ExecutionException e) {			
 			e.printStackTrace();
-		}	
+		}	*/
 	}
 
-
-	
+	/*
 	private static HashMap<String, Integer[]> rellenaHash (CBRQuery query){		
 		try {
 			// Rellenamos la información de los equipos de la jornada pedida
@@ -195,4 +230,5 @@ public class Quinielas implements StandardCBRApplication {
 		DescripcionQuinielas queryDesc = new DescripcionQuinielas (temporada,local,clasifLocal,visitante,clasifVisitante);		
 		query.setDescription(queryDesc);		
 	}
+	*/
 }
