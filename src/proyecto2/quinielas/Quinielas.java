@@ -157,11 +157,11 @@ public class Quinielas implements StandardCBRApplication {
                 pre = 1.0;
         else 
                 pre = 0.0;
-        System.out.println("Resultado: "+sol.getSolucion().toString()+" - "+"Prediccion: "+prediccion.getResultado());
+        System.out.print("********* ");
+        System.out.print("Resultado: "+sol.getSolucion().toString()+" - "+"Prediccion: "+prediccion.getResultado() + " -> Confianza= " + "[ " + prediccion.getConfianza() + " ]");
+        System.out.println(" *********");
         Evaluator.getEvaluationReport().addDataToSeries("Aciertos", pre);
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
-			
-		System.out.println(prediccion.toString());
 	}
 	
 	// PODEMOS CAMBIAR ESTE MAIN Y PONER UNA CLASE QUE EJECUTE EL MAIN Y LANCE LA INTERFAZ,PARSEADOR... Y PERMITA EJECUTAR VALIDACION O NO
