@@ -3,10 +3,13 @@ package proyecto2.quinielas.representacion;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
+/*
+ * Clase que define nuestra Query 
+ */
 public class DescripcionQuinielas implements CaseComponent {	
 
-	// Numero de campos que tenemos
-	//public final static Integer NUMCAMPOS = 18;
+	// Numero de campos que tenemos SIN contar el ID
+	public final static Integer NUMCAMPOS = 17;
 	
 	private String id;
 	private Integer temporada;

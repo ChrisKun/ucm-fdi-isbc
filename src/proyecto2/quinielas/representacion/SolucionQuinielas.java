@@ -3,6 +3,9 @@ package proyecto2.quinielas.representacion;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
+/*
+ * Clase que define nuestra solución
+ */
 public class SolucionQuinielas implements CaseComponent {
 
 	public enum UnoXDos {UNO, X, DOS};
