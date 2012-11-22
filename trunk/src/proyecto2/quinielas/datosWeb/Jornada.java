@@ -20,6 +20,16 @@ public class Jornada {
 				+ ", clasificacion=" + clasificacion + "]";
 	}
 
+	public void fromFile(String jornada){
+		/*
+		partidos.clear();
+		clasificacion.clear();
+		String[] info = jornada.split(",");
+		anyo = Integer.parseInt(info[0]);
+		partidos.add(new Partido(info[1], info[2], info[3].charAt(0)));
+		*/
+	}
+	
 	public ArrayList<String> toFile() {
 		ArrayList<String> resultados = new ArrayList<String>();
 		String temp_s = "";
