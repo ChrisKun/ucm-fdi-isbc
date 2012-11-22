@@ -9,9 +9,11 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import proyecto2.quinielas.representacion.DescripcionQuinielas;
+import proyecto2.quinielas.representacion.SolucionQuinielas;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
+import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
@@ -30,10 +32,11 @@ import jcolibri.method.retrieve.selection.SelectCases;
 
 public class Quinielas implements StandardCBRApplication {
 
+	// Numero de casos que recuperamos en el algoritmo KNN
+	final static int K = 5;		
+	
 	Connector connector;
 	CBRCaseBase caseBase;
-	// Numero de casos que recuperamos en el algoritmo KNN
-	final static int K = 5;
 	
 	@Override
 	public void configure() throws ExecutionException {
@@ -100,7 +103,7 @@ public class Quinielas implements StandardCBRApplication {
 		simConfig.setWeight(new Attribute("gfavorVisitante", DescripcionQuinielas.class), 0.4);
 		simConfig.setWeight(new Attribute("gcontraVisitante", DescripcionQuinielas.class), 0.2);
 		
-		// Ejecutamos la recuperación del vecino más próximo
+		// Ejecutamos la recuperación del vecino más próximo (usando el método en paralelo)
 		// Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
 		Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(caseBase.getCases(), query, simConfig);
 		// Seleccionamos los K mejores casos
@@ -110,14 +113,28 @@ public class Quinielas implements StandardCBRApplication {
 		
 		// Seleccionamos metodo de votacion
 		Votacion votacion = new Votacion();
-		Prediccion prediccion = votacion.mediaPonderada(eval);
-		Evaluator.getEvaluationReport().addDataToSeries("Similarity", new Double(eval.iterator().next().getEval()));
-		System.out.println(prediccion.toString());
+		Prediccion prediccion = votacion.mediaPonderada(eval);		
 	}
 
 	@Override
 	public void postCycle() throws ExecutionException {
 		this.caseBase.close();
+	}
+	
+	public void validacion(CBRQuery query, Prediccion prediccion) {
+        CBRCase caso = (CBRCase)query;
+        SolucionQuinielas sol = (SolucionQuinielas)caso.getSolution();
+        double pre;
+        
+        if(sol.getSolucion().equals(prediccion.getResultado()))
+                pre = 1.0;
+        else 
+                pre = 0.0;
+        System.out.println("sol.getRes()"+sol.getSolucion().toString()+" - "+prediccion.getResultado());
+        Evaluator.getEvaluationReport().addDataToSeries("Aciertos", pre);
+        Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
+			
+		System.out.println(prediccion.toString());
 	}
 	
 	public static void main(String[] args) {
@@ -131,14 +148,8 @@ public class Quinielas implements StandardCBRApplication {
 			CBRQuery query = new CBRQuery();
 			query.setDescription(new DescripcionQuinielas());
 			// Rellenamos el HashMap con la información de los equipos
-			//HashMap<String, int[]> hash = rellenaHash(query);
-			//q.HoldOutEvaluation();
-            do
-            {
-                    ObtainQueryWithFormMethod.obtainQueryWithoutInitialValues(query, null, null);
-                    q.cycle(query);
-            }while (JOptionPane.showConfirmDialog(null, "Continuar?")==JOptionPane.OK_OPTION);
-			/*do {
+			HashMap<String, Integer[]> hash = rellenaHash(query);
+			do {
 				// Ejemplo de equipos
 				String equipoLocal = "Osasuna";
 				String equipoVisitante = "Getafe";
@@ -146,26 +157,12 @@ public class Quinielas implements StandardCBRApplication {
 				//Ejecutar el ciclo
 				q.cycle(query);
 			} while (JOptionPane.showConfirmDialog(null, "Continuar?")==JOptionPane.OK_OPTION);
-		*/} catch (ExecutionException e) {			
+		} catch (ExecutionException e) {			
 			e.printStackTrace();
 		}	
 	}
 
-    public void HoldOutEvaluation()
-    {
-            //SwingProgressBar shows the progress
-    jcolibri.util.ProgressController.clear();
-    jcolibri.util.ProgressController.register(new jcolibri.test.main.SwingProgressBar(), HoldOutEvaluator.class);
-    
-    // Example of the Hold-Out evaluation
-            HoldOutEvaluator eval = new HoldOutEvaluator();
-            eval.init(new Quinielas());
-            eval.HoldOut(2, 1);
-            
-            
-          System.out.println(Evaluator.getEvaluationReport());
-          jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quiniela - Evaluation", false);
-    }
+
 	
 	private static HashMap<String, Integer[]> rellenaHash (CBRQuery query){		
 		try {
