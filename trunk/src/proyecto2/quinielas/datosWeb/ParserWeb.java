@@ -16,83 +16,93 @@ public class ParserWeb {
 	private static FileWriter fstream;
 	private static FileWriter fstream_err;
 	private static FileWriter fstream_esp;
+	private static FileWriter fstream_conf;
 	private static BufferedWriter out;
 	private static BufferedWriter out_err;
 	private static BufferedWriter out_esp;
-	
-	
+	private static BufferedWriter out_conf;
+
 	public static void main(String[] args) throws IOException{
-		
-		fstream = new FileWriter("infoMarca.txt");
-		fstream_err = new FileWriter("errores.txt");
-		fstream_esp = new FileWriter("porJugar.txt");
-		out = new BufferedWriter(fstream);
-		out_err = new BufferedWriter(fstream_err);
-		out_esp = new BufferedWriter(fstream_esp);
-		
+
+		fstream = 		new FileWriter("infoMarca.txt");
+		fstream_err = 	new FileWriter("errores.txt");
+		fstream_esp = 	new FileWriter("porJugar.txt");
+		fstream_conf = 	new FileWriter("config.txt");
+		out = 			new BufferedWriter(fstream);
+		out_err = 		new BufferedWriter(fstream_err);
+		out_esp = 		new BufferedWriter(fstream_esp);
+		out_conf = 		new BufferedWriter(fstream_conf);
+
 		int anyoIni = 2000;
 		int anyoFin = 2012;
 		int maxJornPrim=0, maxJornSeg=0;
-		
-		//"http://www.marca.com/estadisticas/futbol/primera/clasificacion.html"
-		//"http://www.marca.com/estadisticas/futbol/segunda/clasificacion.html"
-		
+
 		try {
 			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/primera/clasificacion.html").get();
 			Elements tabla = doc.getElementsByTag("td");
 			String[] title = doc.getElementsByTag("title").text().split(" ");
-			//System.out.println(title[1].toLowerCase());
 			anyoFin = Integer.parseInt(title[3].split("-")[0]);			
 			maxJornPrim = Integer.parseInt(tabla.get(2).text());
-					
+
 		} catch (IOException e) {
 			System.err.println("No se puede acceder a la pagina principal de Primera division");
 		}
-		
+
 		try {
-			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/primera/clasificacion.html").get();
+			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/segunda/clasificacion.html").get();
 			Elements tabla = doc.getElementsByTag("td");		
 			maxJornSeg = Integer.parseInt(tabla.get(2).text());
-					
+
 		} catch (IOException e) {
 			System.err.println("No se puede acceder a la pagina principal de Segunda division");
 		}
-		
+
+		out_conf.write(anyoFin+"\n");
+		out_conf.write(maxJornPrim+"\n");
+		out_conf.write(maxJornSeg+"\n");
+
 		for (int i=anyoIni;i<anyoFin;i++){
 			for (int j=1;j<=38;j++){
 				anyadirJornada("primera",i,j);
 			}
 			for (int j=1;j<=42;j++){
-				//anyadirJornada("segunda",i,j);
+				anyadirJornada("segunda",i,j);
 			}
 		}
 		for (int j=1;j<=maxJornPrim;j++){
 			anyadirJornada("primera",anyoFin,j);
 		}
 		for (int j=1;j<=maxJornSeg;j++){
-			//anyadirJornada("segunda",anyoFin,j);
+			anyadirJornada("segunda",anyoFin,j);
 		}
+
 		out.close();
 		out_err.close();
 		out_esp.close();
-			
+		out_conf.close();
+
 	}
 
-	
+
 	public static void anyadirJornada(String categoria, int anyo, int jorn) throws IOException{
-		
+
 		int numEquipos  = categoria.equals("primera")? 20 : 22;
-		//if (anyo == 2003 && jorn == 1) numEquipos = 20;
+
+		//Paginas Web mal diseñadas
+		if (anyo == 2003 && jorn == 1) return;
+		if (anyo == 2011 && jorn == 7) return;
+		if (anyo == 2011 && jorn == 33) return;
+
 		int numPartidos = (numEquipos/2);
 		Document doc;
 		Elements tabla;
 		ArrayList<String> info = new ArrayList<String>();
-		
+
 		String anyo2 = String.valueOf(anyo+1).substring(2);
 		String dir = "http://www.marca.com/estadisticas/futbol/"+categoria+"/"+anyo+"_"+anyo2+"/jornada_"+jorn+"/";
-		
+
 		System.out.println(dir);
-		
+
 		try {
 			doc = Jsoup.connect(dir).get();
 			tabla = doc.getElementsByTag("td");
@@ -120,7 +130,7 @@ public class ParserWeb {
 			}
 			partidos.add(new Partido(info.get(i), info.get(i+2), res1, res2));
 		}
-																							
+
 		ArrayList<Clasificacion> clasificacion = new ArrayList<Clasificacion>();
 		for (int i=numPartidos*n;i<=numEquipos*9+numPartidos*n-1;i=i+9){
 			//Procesar clasificacion de UN equipo
