@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -18,6 +19,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -35,6 +37,17 @@ public class Interfaz extends JFrame{
 	public final static int VISITANTE = 1;
 	public final static int RESULTADO = 2;
 	public final static int NUM_EQU = 15;
+	
+	// Información que podría inferirse de los archivos de texto
+	public final static int num_temporada_inicial = 2000;
+	public final static int num_temporada_final = 2012;
+	
+	public static int modo_muestra = 0; // modo de un partido (0) o modo de una jornada con los 15 partidos(1) a rellenar
+	
+	/** LEER DESDE FICHERO **/
+	public static int jornada_max_actual = 7; // jornada de la temporada actual a la que se puede acceder
+	
+	public final static int NUM_JOR = 20; // Quinielas totales??
 	public final static int NUM_JOR_PRIMERA = 38;
 	public final static int NUM_JOR_SEGUNDA = 42;
 	
@@ -44,10 +57,14 @@ public class Interfaz extends JFrame{
 	private JTextField jplog_log;
 	private JLabel jlab_jornada;
 	private int num_jornada;
+	private int num_temporada;
 	
 	// Elementos a leer y modificar
 	private JTextField jtxt_jornada;
 	private JProgressBar jplog_barra;
+	JComboBox<String> comboBox_jornada;
+	JRadioButton rbutt_uno;
+	JRadioButton rbutt_var;
 	
 	//botones
 	private JButton jp_info_butt_ok;
@@ -63,6 +80,7 @@ public class Interfaz extends JFrame{
 	{
 		//DATOS POR DEFECTO, INICIALIZACION
 		num_jornada = 1; //jornada
+		num_temporada = 2012;
 		//jp_info_año = "2012-2013"; //año (a la hora de ponerlo en pantalla)
 		datos_tabla = new String[NUM_EQU][3];
 		jlab_jornada = new JLabel();
@@ -100,11 +118,121 @@ public class Interfaz extends JFrame{
 	{
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setLayout(new BorderLayout());
-		panelPrincipal.add(getInfoAñoJornada(),BorderLayout.NORTH);
-		panelPrincipal.add(getTabla());
+		//panelPrincipal.add(getInfoAñoJornada(),BorderLayout.NORTH);
+		panelPrincipal.add(getPanelInformacion(), BorderLayout.NORTH);
+		panelPrincipal.add(getTabla(), BorderLayout.CENTER);
 		panelPrincipal.add(getPanelLog(), BorderLayout.SOUTH);
 		panelPrincipal.validate();
 		return panelPrincipal;
+	}
+	
+	/** PANEL INFORMACIÓN:
+	 * Muestra la temporada actual y la jornada
+	 * A través de un desplegable permite seleccionar la temporada y la jornada a consultar
+	 * A través de un RadioButton permite seleccionar un partido o una jornada a rellenar
+	**/
+	private JPanel getPanelInformacion()
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(3,1));
+		p.add(getJLabelTemporadaJornada()); //En la parte superior
+		p.add(getSeleccionTemporadaJornada()); //En la parte de media
+		p.add(getSeleccionUnoVariosPartidos()); //En la parte inferior
+		return p;
+	}
+	
+	// Subpanel del panel información para seleccionar uno o la jornada completa para rellenar
+	private JPanel getSeleccionUnoVariosPartidos()
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout());
+		JLabel label = new JLabel("Rellenar: ");
+		p.add(label);
+		// Botones de selección
+		rbutt_uno = new JRadioButton("Sólo un partido");
+		rbutt_var = new JRadioButton("Todos los partidos");
+		
+		rbutt_uno.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent e) {
+		    	  actualizarPartidos(e);
+		    	      }
+		      });
+		
+		rbutt_var.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent e) {
+		    	  actualizarPartidos(e);
+		    	      }
+		      });
+		
+		rbutt_uno.setSelected(true);
+		
+		p.add(rbutt_uno);
+		p.add(rbutt_var);
+		
+		return p;
+	}
+	
+	// Subpanel de Temporada y Jornada con ComboBox desplegables
+	private JPanel getSeleccionTemporadaJornada()
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout());
+		
+		JLabel labelTemp = new JLabel("Temporada: ");
+		p.add(labelTemp);
+		p.add(getDesplegableTemporada());
+		
+		JLabel labelJor = new JLabel("Jornada: ");
+		p.add(labelJor);
+		
+		p.add(getDesplegableJornada());
+		
+		return p;
+	}
+	
+	private JComboBox<String> getDesplegableTemporada()
+	{
+		int num_temporadas = num_temporada_final - num_temporada_inicial + 1;
+		String[] nom_temp = new String[num_temporadas];
+		for (int i = 0; i <num_temporadas; i++)
+			nom_temp[i] = (num_temporada_inicial+i)+"-"+(num_temporada_inicial+(i+1));
+		
+		JComboBox<String> b = new JComboBox<String>(nom_temp);
+		b.addActionListener(new ActionListener() {
+		      public void actionPerformed( ActionEvent e) {
+		    		actualizarTemporada(e);
+		    	      }
+		      });
+		return b;
+	}
+	
+	private JComboBox<String> getDesplegableJornada()
+	{
+		
+		int n_max = NUM_JOR;
+		if (num_temporada == num_temporada_final)
+			n_max = jornada_max_actual; // Si estamos en la temporada actual, solo se muestra hasta una jornada más alla de la que estamos
+
+		
+		comboBox_jornada = new JComboBox<String>();	
+		
+		
+		comboBox_jornada.addActionListener(new ActionListener() {
+		      public void actionPerformed( ActionEvent e) {
+		    		actualizarJornada(e);
+		    	      }
+		      });
+		setNumElemComboBoxJornada(n_max);	
+		return comboBox_jornada;
+	}
+	
+	private void setNumElemComboBoxJornada(int n)
+	{
+		comboBox_jornada.removeAllItems();
+		for (int i = 0; i < n; i++)
+		{
+			comboBox_jornada.addItem(""+(i+1));
+		}
 	}
 	
 	// Panel que contiene la tabla con los equipos y los resultados
@@ -152,11 +280,13 @@ public class Interfaz extends JFrame{
 		
 		//Selección de jornada
 		JLabel j = new JLabel("Jornada: ");
+		
 		// Lista donde aparecen todas las jornadas
 		String[] nom_jor = new String[NUM_JOR_PRIMERA];
 		for (int i = 0; i <NUM_JOR_PRIMERA; i++)
 			nom_jor[i]=""+(i+1);
-		JComboBox b = new JComboBox(nom_jor);
+		
+		JComboBox<String> b = new JComboBox<String>(nom_jor);
 		b.addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
 		    		actualizarJornada(e);
@@ -198,9 +328,9 @@ public class Interfaz extends JFrame{
 		
 	}
 	
-	private JLabel getInfoAñoJornada()
+	private JLabel getJLabelTemporadaJornada()
 	{
-		setJornadaAño(num_jornada,"2012-2013");
+		setJornadaAño(num_jornada,num_temporada);
 		return jlab_jornada;
 	}
 
@@ -231,11 +361,11 @@ public class Interfaz extends JFrame{
 	
 	/** FUNCIONES PARA EDITAR INFORMACIÓN DE LA INTERFAZ**/
 	// EDITAR JORNADA Y AÑO
-	public void setJornadaAño(int jornada, String año)
+	public void setJornadaAño(int jornada, int año)
 	{
 		// Font("Titulo fuente", "Atributos", "Tamaño"
 		jlab_jornada.setFont(new Font("Verdana", Font.BOLD, 22));
-		jlab_jornada.setText("Año Actual: "+año+"; Jornada: "+jornada);
+		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada: "+jornada);
 	}
 	//EDITAR CELDA DE LA TABLA
 	public void setCeldaTabla(int fila, int columna, String dato)
@@ -259,8 +389,44 @@ public class Interfaz extends JFrame{
 		@SuppressWarnings("rawtypes")
 		JComboBox cb = (JComboBox)e.getSource();
 	    String newSelection = (String)cb.getSelectedItem();
-	    num_jornada = Integer.parseInt(newSelection);
-	    setJornadaAño(num_jornada,"2012-2013");
+	    if (newSelection != null)
+	    	num_jornada = Integer.parseInt(newSelection);
+	    setJornadaAño(num_jornada,num_temporada);
+	}
+	
+	public void actualizarTemporada(ActionEvent e)
+	{
+		int n_max = NUM_JOR;
+		
+		@SuppressWarnings("rawtypes")
+		JComboBox cb = (JComboBox)e.getSource();
+	    String newSelection = (String)cb.getSelectedItem();
+	    // parseamos la entrada
+	    num_temporada = Integer.parseInt(newSelection.substring(0, 4));
+	    // actualizamos la temporada (por defecto a 1)
+	    
+	    
+		if (num_temporada == num_temporada_final)
+			n_max = jornada_max_actual; // Si estamos en la temporada actual, solo se muestra hasta una jornada más alla de la que estamos
+	    setNumElemComboBoxJornada(n_max); // ponemos el nuevo limite para el combobox
+	    
+	    num_jornada = 1;
+	    setJornadaAño(num_jornada,num_temporada);
+	}
+	/** ARREGLARRRRRRRR! **/
+	public void actualizarPartidos(ActionEvent e)
+	{
+		JRadioButton rb = (JRadioButton)e.getSource();
+		if (rb == rbutt_uno)
+		{
+			if (rbutt_uno.isSelected() == false && rbutt_var.isSelected())
+				rbutt_var.setSelected(false);
+		}
+		else if (rb == rbutt_var)
+		{
+			if (rbutt_var.isSelected() == false  && rbutt_uno.isSelected())
+				rbutt_uno.setSelected(false);
+		}
 	}
 	
 	
