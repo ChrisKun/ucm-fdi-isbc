@@ -81,6 +81,16 @@ public class ParserWeb {
 		out_esp.close();
 		out_conf.close();
 
+		/**
+		 * Ficheros
+		 * 	- Base de casos
+		 *  - Clasificacion equipos segun año y jornada (1ª y 2ª)
+		 *  ----- AaaaaJjj
+		 *  --------- A2012J01
+		 *  - Fichero de estado:
+		 *  ----- Jornada
+		 *  ----- Anyo
+		 */
 	}
 
 
