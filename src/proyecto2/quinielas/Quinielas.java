@@ -164,7 +164,7 @@ public class Quinielas implements StandardCBRApplication {
 		System.out.println(prediccion.toString());
 	}
 	
-	// PODEMOS CAMBIAR ESTE MAIN Y PONER UNA CLASE QUE EJECUTE EL MAIN Y LANCE LA INTERFAZ Y TAL
+	// PODEMOS CAMBIAR ESTE MAIN Y PONER UNA CLASE QUE EJECUTE EL MAIN Y LANCE LA INTERFAZ,PARSEADOR... Y PERMITA EJECUTAR VALIDACION O NO
 	public static void main(String[] args) {
 		ValidacionCruzada validador = new ValidacionCruzada(); 
 		if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
