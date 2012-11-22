@@ -60,8 +60,11 @@ public class ConnectorQuinielas implements Connector {
 				
 				String[] tokens = line.split(",");
 				// Medida de seguridad frente a posibles errores en el archivo de texto
-				if (tokens.length<DescripcionQuinielas.NUMCAMPOS) continue;
-				
+			    if (tokens.length<DescripcionQuinielas.NUMCAMPOS) {
+			    	System.out.println(line);
+			    	continue;
+			    }
+			    
 				
 				DescripcionQuinielas desc = new DescripcionQuinielas();
 				
