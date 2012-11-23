@@ -1,4 +1,4 @@
-package proyecto2.quinielas;
+package proyecto2.quinielas.cbr;
 
 import proyecto2.quinielas.representacion.SolucionQuinielas.UnoXDos;
 

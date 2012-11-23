@@ -1,4 +1,4 @@
-package proyecto2.quinielas;
+package proyecto2.quinielas.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

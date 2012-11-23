@@ -1,12 +1,7 @@
-package proyecto2.quinielas;
+package proyecto2.quinielas.cbr;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-
 import javax.swing.JOptionPane;
 
 import proyecto2.quinielas.representacion.DescripcionQuinielas;

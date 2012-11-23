@@ -1,4 +1,4 @@
-package proyecto2.quinielas;
+package proyecto2.quinielas.cbr;
 
 import proyecto2.quinielas.representacion.DescripcionQuinielas;
 import proyecto2.quinielas.representacion.SolucionQuinielas;
@@ -53,7 +53,7 @@ public class ConnectorQuinielas implements Connector {
 		int i=0;
 		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("infoMarca.txt"));
+			BufferedReader br = new BufferedReader(new FileReader(".\\src\\proyecto2\\quinielas\\datos\\infoMarca.txt"));
 						
 			String line = null;
 			while((line=br.readLine())!=null){
@@ -61,7 +61,7 @@ public class ConnectorQuinielas implements Connector {
 				String[] tokens = line.split(",");
 				// Medida de seguridad frente a posibles errores en el archivo de texto
 			    if (tokens.length < 20) {
-			    	System.out.println("Falta informacion en: " + line);
+			    	System.err.println("Falta informacion en: " + line);
 			    	continue;
 			    }
 			    

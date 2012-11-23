@@ -24,10 +24,10 @@ public class ParserWeb {
 
 	public static void main(String[] args) throws IOException{
 
-		fstream = 		new FileWriter("infoMarca.txt");
-		fstream_err = 	new FileWriter("errores.txt");
-		fstream_esp = 	new FileWriter("porJugar.txt");
-		fstream_conf = 	new FileWriter("config.txt");
+		fstream = 		new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\infoMarca.txt");
+		fstream_err = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\errores.txt");
+		fstream_esp = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\porJugar.txt");
+		fstream_conf = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\config.txt");
 		out = 			new BufferedWriter(fstream);
 		out_err = 		new BufferedWriter(fstream_err);
 		out_esp = 		new BufferedWriter(fstream_esp);
@@ -38,12 +38,12 @@ public class ParserWeb {
 		int maxJornPrim=0, maxJornSeg=0;
 
 		//http://www.lne.es/deportes/futbol/quiniela/resultados-quiniela-jornada-20.html
-		Document doc1 = Jsoup.connect("http://www.lne.es/deportes/futbol/quiniela/resultados-quiniela-jornada-20.html").get();
+		/*Document doc1 = Jsoup.connect("http://www.lne.es/deportes/futbol/quiniela/resultados-quiniela-jornada-20.html").get();
 		Elements tabla1 = doc1.getElementsByTag("td");
 		for(Element e: tabla1){
 			System.out.println(e.text());
 		}
-		System.in.read();
+		System.in.read();*/
 		
 		try {
 			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/primera/clasificacion.html").get();
