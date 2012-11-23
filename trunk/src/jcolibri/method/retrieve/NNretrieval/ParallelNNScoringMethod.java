@@ -36,7 +36,7 @@ public class ParallelNNScoringMethod {
 	public static Collection<RetrievalResult> evaluateSimilarityParallel(Collection<CBRCase> cases, CBRQuery query, NNConfig nnConfig)
 	{
 		int numCores = Runtime.getRuntime().availableProcessors();
-		
+		//int numCores = 4;
 		if(numCores == 1)
 		{
 			org.apache.commons.logging.LogFactory.getLog(ParallelNNScoringMethod.class).info("Only 1 core detected. Using normal NNScoringMethod");

@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import proyecto2.quinielas.representacion.DescripcionQuinielas;
 import proyecto2.quinielas.representacion.SolucionQuinielas;
+import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
@@ -34,35 +35,39 @@ public class Quinielas implements StandardCBRApplication {
 	
 	// ArrayList que contiene los resultados
 	ArrayList<Prediccion> listaPredicciones;
+	// Array que contiene la lista de pesos
+	double[] listaPesos;
 	// Booleano que indica si estamos ejecutando una evaluación o no
 	boolean esValidacion;
 	
-	/* ** CONSTRUCTORAS ** */
-	public Quinielas () {
-		super();
+	/* CONSTRUCTORAS */
+	public Quinielas (double[] listaPesos) {
+		this.listaPesos = listaPesos;
 		listaPredicciones = new ArrayList<Prediccion>();
 		esValidacion = false;
 	}
 	
-	public Quinielas (boolean esEvaluacion) {
-		super();
+	public Quinielas (boolean esEvaluacion, double[] listaPesos) {
 		// listaPredicciones = new ArrayList<Prediccion>();
+		this.listaPesos = listaPesos;
 		esValidacion = true;
 	}
 	
-	/* ** GETTERS/SETTERS ** */
+	/* GETTERS/SETTERS */
 	public ArrayList<Prediccion> getListaPredicciones (){
 		return this.listaPredicciones;
 	}
 	
-	/* ** METODOS ** */	
+	/* METODOS */	
 	@Override
 	public void configure() throws ExecutionException {
 		try{
 		// Crear el conector con la base de casos
 		connector = new ConnectorQuinielas();
-		// La organización en memoria será lineal
-		caseBase = new LinealCaseBase();
+		// La organización en memoria será lineal y cacheada (para que en la evaluación no esté
+		// cambiando el medio de persistencia constantemente
+		// caseBase = new LinealCaseBase();
+		caseBase = new CachedLinealCaseBase();
 		} catch (Exception e){
 			throw new ExecutionException(e);
 		}	
@@ -127,7 +132,7 @@ public class Quinielas implements StandardCBRApplication {
 		// Seleccionamos los K mejores casos
 		eval = SelectCases.selectTopKRR(eval, K);
 		
-		for (RetrievalResult nse : eval) System.out.println(nse.toString());
+		// for (RetrievalResult nse : eval) System.out.println(nse.toString());
 		
 		// Seleccionamos metodo de votacion
 		Votacion votacion = new Votacion();
@@ -152,78 +157,12 @@ public class Quinielas implements StandardCBRApplication {
                 pre = 1.0;
         else 
                 pre = 0.0;
-        System.out.print("********* ");
+        // Los println realentizan mucho la ejecución
+    /*  System.out.print("********* ");
         System.out.print("Resultado: "+sol.getSolucion().toString()+" - "+"Prediccion: "+prediccion.getResultado() + " -> Confianza= " + "[ " + prediccion.getConfianza() + " ]");
         System.out.println(" *********");
+     */
         Evaluator.getEvaluationReport().addDataToSeries("Aciertos", pre);
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
-	}
-	
-	// PODEMOS CAMBIAR ESTE MAIN Y PONER UNA CLASE QUE EJECUTE EL MAIN Y LANCE LA INTERFAZ,PARSEADOR... Y PERMITA EJECUTAR VALIDACION O NO
-	public static void main(String[] args) {
-		ValidacionCruzada validador = new ValidacionCruzada(); 
-		if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
-			validador.HoldOutEvaluation();
-		if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
-				validador.LeaveOneOutEvaluation();
-		if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
-			validador.SameSplitEvaluation();
-		/*
-		Quinielas q = new Quinielas();
-		try {
-			//Configuración
-			q.configure();
-			// Preciclo
-			q.preCycle();
-			//Crear un objeto que almacena la consulta
-			CBRQuery query = new CBRQuery();
-			query.setDescription(new DescripcionQuinielas());
-			// Rellenamos el HashMap con la información de los equipos
-			HashMap<String, Integer[]> hash = rellenaHash(query);
-			do {
-				// Ejemplo de equipos
-				String equipoLocal = "Osasuna";
-				String equipoVisitante = "Getafe";
-				rellenaQuery(query,hash,equipoLocal,equipoVisitante);		
-				//Ejecutar el ciclo
-				q.cycle(query);
-			} while (JOptionPane.showConfirmDialog(null, "Continuar?")==JOptionPane.OK_OPTION);
-		} catch (ExecutionException e) {			
-			e.printStackTrace();
-		}	*/
-	}
-
-	/*
-	private static HashMap<String, Integer[]> rellenaHash (CBRQuery query){		
-		try {
-			// Rellenamos la información de los equipos de la jornada pedida
-			BufferedReader br = new BufferedReader(new FileReader("jornada_actual.txt"));			
-			String line = null;
-			HashMap<String, Integer[]> hash = new HashMap<String, Integer[]>();
-			while((line=br.readLine())!=null){					
-				String[] tokens = line.split(",");
-				Integer[] valores=new Integer[8];
-				Integer i=0;
-				while (i < 7) {
-					valores[i] = Integer.valueOf(tokens[i+1]); 					
-					i++;
-				}
-				hash.put(tokens[0],valores);				
-			}
-			br.close();
-			return hash;
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-		return null;		
-	}
-	
-	private static void rellenaQuery(CBRQuery query, HashMap<String, Integer[]> hash, String local, String visitante) {
-		Integer[] clasifLocal = hash.get(local);
-		Integer[] clasifVisitante = hash.get(visitante);
-		Integer temporada = 2012;
-		DescripcionQuinielas queryDesc = new DescripcionQuinielas (temporada,local,clasifLocal,visitante,clasifVisitante);		
-		query.setDescription(queryDesc);		
-	}
-	*/
+	}	
 }
