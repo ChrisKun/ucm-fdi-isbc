@@ -46,27 +46,32 @@ public class Interfaz extends JFrame{
 	public final static int NUM_EQU = 15;
 	
 	// Información que podría inferirse de los archivos de texto
-	public final static int num_temporada_inicial = 2000;
-	public final static int num_temporada_final = 2012;
+	
 	
 	public static int modo_tabla = 0; // modo de un partido (0) o modo de una jornada con los 15 partidos(1) a rellenar
 	
 	/** LEER DESDE FICHERO **/
-	public static int jornada_max_actual = 7; // jornada de la temporada actual a la que se puede acceder
+	public static int jornada_max_actual_primera = 7; // jornada de la temporada actual a la que se puede acceder
+	public static int jornada_max_actual_segunda = 13;
+	public final static int num_temporada_inicial = 2000;
+	public final static int num_temporada_actual = 2012;
 	
-	public final static int NUM_JOR = 20; // Quinielas totales??
+	/** Número de jornadas totales para primera y segunda división */
 	public final static int NUM_JOR_PRIMERA = 38;
 	public final static int NUM_JOR_SEGUNDA = 42;
+	public final static int PRIMERA_DIVISION = 0;
+	public final static int SEGUNDA_DIVISION = 1;
 	
 	// Elementos de la barra de información que hay que modificar
 	private JTextField jplog_log;
 	private JLabel jlab_jornada;
-	private int num_jornada;
+	private int num_jornada_primera;
+	private int num_jornada_segunda;
 	private int num_temporada;
 	
 	// Elementos a leer y modificar
 	private JProgressBar jplog_barra;
-	JComboBox comboBox_jornada;
+	JComboBox[] comboBox_jornada;
 	JRadioButton rbutt_uno;
 	JRadioButton rbutt_var;
 	
@@ -80,7 +85,8 @@ public class Interfaz extends JFrame{
 	public Interfaz()
 	{
 		//DATOS POR DEFECTO, INICIALIZACION
-		num_jornada = 1; //jornada
+		num_jornada_primera = 1; //jornada
+		num_jornada_segunda = 1;
 		num_temporada = 2012;
 		equipos = new ArrayList<String>();
 		//por defecto
@@ -88,6 +94,7 @@ public class Interfaz extends JFrame{
 			equipos.add("EquipoLocal"+(i+1)+","+"EquipoVisitante"+(i+1));
 		
 		jlab_jornada = new JLabel();
+		comboBox_jornada = new JComboBox[2];
 		
 		// Configuración de la ventana
 		this.setVisible(true);
@@ -98,6 +105,7 @@ public class Interfaz extends JFrame{
 		this.setResizable(true);
 		this.setContentPane((getPanelPrincipal()));
 		this.setJMenuBar(getMenuPrincipal());
+		this.validate();
 
 	}
 	
@@ -192,17 +200,23 @@ public class Interfaz extends JFrame{
 		p.add(labelTemp);
 		p.add(getDesplegableTemporada());
 		
-		JLabel labelJor = new JLabel("Jornada: ");
+		JLabel labelJor = new JLabel("Jornada Primera División: ");
 		p.add(labelJor);
 		
-		p.add(getDesplegableJornada());
+		p.add(getDesplegableJornada(PRIMERA_DIVISION)); 
+		// TODO cambiar esto para referirse fácilmente al límite de elementos de cada JComboBox
+		
+		JLabel labelJor2 = new JLabel("Jornada Segunda División: ");
+		p.add(labelJor2);
+		
+		p.add(getDesplegableJornada(SEGUNDA_DIVISION));
 		
 		return p;
 	}
 	
 	private JComboBox getDesplegableTemporada()
 	{
-		int num_temporadas = num_temporada_final - num_temporada_inicial + 1;
+		int num_temporadas = num_temporada_actual - num_temporada_inicial + 1;
 		String[] nom_temp = new String[num_temporadas];
 		for (int i = 0; i <num_temporadas; i++)
 			nom_temp[i] = (num_temporada_inicial+i)+"-"+(num_temporada_inicial+(i+1));
@@ -216,32 +230,43 @@ public class Interfaz extends JFrame{
 		return b;
 	}
 	
-	private JComboBox getDesplegableJornada()
+	private JComboBox getDesplegableJornada(int division)
 	{
+		int n_max = 0; //número máximo de la jornada
+		switch (division)
+		{
+			case PRIMERA_DIVISION: n_max = NUM_JOR_PRIMERA; break;
+			case SEGUNDA_DIVISION: n_max = NUM_JOR_SEGUNDA; break;
+		}
 		
-		int n_max = NUM_JOR;
-		if (num_temporada == num_temporada_final)
-			n_max = jornada_max_actual; // Si estamos en la temporada actual, solo se muestra hasta una jornada más alla de la que estamos
-
+		// Actualizamos el valor si es la temporada actual:
+		// Como máximo se muestra la jornada actual + 1
+		if (num_temporada == num_temporada_actual)
+		{
+			switch (division)
+			{
+				case PRIMERA_DIVISION: n_max = jornada_max_actual_primera; break;
+				case SEGUNDA_DIVISION: n_max = jornada_max_actual_segunda; break;
+			}
+		}
+		comboBox_jornada[division] = new JComboBox();	
 		
-		comboBox_jornada = new JComboBox();	
-		
-		
-		comboBox_jornada.addActionListener(new ActionListener() {
+		comboBox_jornada[division].addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
-		    		actualizarJornada(e);
+		    		actualizarJornada(e); //TODO actualizarJornada para JComboBox Primera o JComboBox segunda
 		    	      }
 		      });
-		setNumElemComboBoxJornada(n_max);	
-		return comboBox_jornada;
+		setNumElemComboBoxJornada(n_max,division);	//TODO este método debería estar mejor en actualizarJornada(e);
+		return comboBox_jornada[division];
 	}
 	
-	private void setNumElemComboBoxJornada(int n)
+	/** Selecciona el número de elementos que tendra el desplegable de la jornada */
+	private void setNumElemComboBoxJornada(int n,int division)
 	{
-		comboBox_jornada.removeAllItems();
+		comboBox_jornada[division].removeAllItems();
 		for (int i = 0; i < n; i++)
 		{
-			comboBox_jornada.addItem(""+(i+1));
+			comboBox_jornada[division].addItem(""+(i+1));
 		}
 	}
 	
@@ -334,10 +359,13 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	private JLabel getJLabelTemporadaJornada()
+	private JPanel getJLabelTemporadaJornada()
 	{
-		setJornadaAño(num_jornada,num_temporada);
-		return jlab_jornada;
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout());
+		setJornadaAño(num_jornada_primera, num_jornada_segunda,num_temporada);
+		p.add(jlab_jornada);
+		return p;
 	}
 	
 	/** FUNCIONES PARA COMUNICARSE CON EL RESTO DEL PROGRAMA **/
@@ -350,11 +378,11 @@ public class Interfaz extends JFrame{
 	
 	/** FUNCIONES PARA EDITAR INFORMACIÓN DE LA INTERFAZ**/
 	// EDITAR JORNADA Y AÑO
-	public void setJornadaAño(int jornada, int año)
+	public void setJornadaAño(int jornada_p, int jornada_s, int año)
 	{
 		// Font("Titulo fuente", "Atributos", "Tamaño"
 		jlab_jornada.setFont(new Font("Verdana", Font.BOLD, 22));
-		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada: "+jornada);
+		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada 1ºDiv : "+jornada_p+" ; Jornada 2ºDiv : "+jornada_s);
 	}
 
 	// Métodos Listener
@@ -365,18 +393,24 @@ public class Interfaz extends JFrame{
 	
 	public void actualizarJornada(ActionEvent e)
 	{
+		int n_jornada = 1;
 		@SuppressWarnings("rawtypes")
 		JComboBox cb = (JComboBox)e.getSource();
 	    String newSelection = (String)cb.getSelectedItem();
 	    if (newSelection != null)
-	    	num_jornada = Integer.parseInt(newSelection);
-	    setJornadaAño(num_jornada,num_temporada);
+	    {
+	    	n_jornada = Integer.parseInt(newSelection);
+	    	if (cb == comboBox_jornada[PRIMERA_DIVISION])
+	    		num_jornada_primera = n_jornada;
+	    	else
+	    		num_jornada_segunda = n_jornada;
+	    		
+	    }
+	    setJornadaAño(num_jornada_primera,num_jornada_segunda,num_temporada);
 	}
 	
 	public void actualizarTemporada(ActionEvent e)
-	{
-		int n_max = NUM_JOR;
-		
+	{	
 		@SuppressWarnings("rawtypes")
 		JComboBox cb = (JComboBox)e.getSource();
 	    String newSelection = (String)cb.getSelectedItem();
@@ -384,13 +418,19 @@ public class Interfaz extends JFrame{
 	    num_temporada = Integer.parseInt(newSelection.substring(0, 4));
 	    // actualizamos la temporada (por defecto a 1)
 	    
-	    
-		if (num_temporada == num_temporada_final)
-			n_max = jornada_max_actual; // Si estamos en la temporada actual, solo se muestra hasta una jornada más alla de la que estamos
-	    setNumElemComboBoxJornada(n_max); // ponemos el nuevo limite para el combobox
-	    
-	    num_jornada = 1;
-	    setJornadaAño(num_jornada,num_temporada);
+		if (num_temporada == num_temporada_actual)
+		{
+			setNumElemComboBoxJornada(jornada_max_actual_primera,PRIMERA_DIVISION);
+			setNumElemComboBoxJornada(jornada_max_actual_segunda,SEGUNDA_DIVISION);
+		}
+		else
+		{
+			setNumElemComboBoxJornada(NUM_JOR_PRIMERA,PRIMERA_DIVISION);
+			setNumElemComboBoxJornada(NUM_JOR_SEGUNDA,SEGUNDA_DIVISION);
+		}
+	    num_jornada_primera = 1;
+	    num_jornada_segunda = 1;
+	    setJornadaAño(num_jornada_primera, num_jornada_segunda,num_temporada);
 	}
 
 	public void actualizarListaPartidos()
