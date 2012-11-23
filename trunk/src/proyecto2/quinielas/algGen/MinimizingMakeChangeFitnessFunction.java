@@ -9,6 +9,7 @@ import org.jgap.IChromosome;
 import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
 
+
 /**
  * This class provides an implementation of the classic "Make change" problem
  * using a genetic algorithm. The goal of the problem is to provide a

@@ -1,4 +1,4 @@
-package proyecto2.quinielas;
+package proyecto2.quinielas.cbr;
 
 import jcolibri.evaluation.Evaluator;
 import jcolibri.evaluation.evaluators.*;
@@ -14,7 +14,7 @@ public class ValidacionCruzada {
 	    HoldOutEvaluator eval = new HoldOutEvaluator();
 	    eval.init(new Quinielas(true));
 	    // Configurar % de casos que cogemos y nº de vueltas
-	    eval.HoldOut(5, 1);
+	    eval.HoldOut(1, 1);
 	    
 	    
 	    System.out.println(Evaluator.getEvaluationReport());

@@ -1,4 +1,4 @@
-package proyecto2.quinielas;
+package proyecto2.quinielas.cbr;
 
 import java.util.Collection;
 
