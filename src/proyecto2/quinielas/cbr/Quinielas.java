@@ -108,23 +108,23 @@ public class Quinielas implements StandardCBRApplication {
 		simConfig.addMapping(new Attribute("gcontraVisitante", DescripcionQuinielas.class), new Interval(120));
 		
 		// Asignamos pesos
-		simConfig.setWeight(new Attribute("temporada", DescripcionQuinielas.class), 0.3);
-		simConfig.setWeight(new Attribute("local", DescripcionQuinielas.class), 0.02);
-		simConfig.setWeight(new Attribute("visitante", DescripcionQuinielas.class), 0.02);
-		simConfig.setWeight(new Attribute("puntosLocal", DescripcionQuinielas.class), 0.2);
-		simConfig.setWeight(new Attribute("pgLocal", DescripcionQuinielas.class), 0.1);
-		simConfig.setWeight(new Attribute("peLocal", DescripcionQuinielas.class), 0.025);
-		simConfig.setWeight(new Attribute("ppLocal", DescripcionQuinielas.class), 0.05);
-		simConfig.setWeight(new Attribute("puntosVisitante", DescripcionQuinielas.class), 0.25);
-		simConfig.setWeight(new Attribute("pgVisitante", DescripcionQuinielas.class), 0.15);
-		simConfig.setWeight(new Attribute("peVisitante", DescripcionQuinielas.class), 0.025);
-		simConfig.setWeight(new Attribute("ppVisitante", DescripcionQuinielas.class), 0.01);
-		simConfig.setWeight(new Attribute("posLocal", DescripcionQuinielas.class), 0.3);
-		simConfig.setWeight(new Attribute("posVisitante", DescripcionQuinielas.class), 0.3);
-		simConfig.setWeight(new Attribute("gfavorLocal", DescripcionQuinielas.class), 0.2);
-		simConfig.setWeight(new Attribute("gcontraLocal", DescripcionQuinielas.class), 0.4);
-		simConfig.setWeight(new Attribute("gfavorVisitante", DescripcionQuinielas.class), 0.4);
-		simConfig.setWeight(new Attribute("gcontraVisitante", DescripcionQuinielas.class), 0.2);
+		simConfig.setWeight(new Attribute("temporada", DescripcionQuinielas.class), listaPesos[0]);
+		simConfig.setWeight(new Attribute("local", DescripcionQuinielas.class), listaPesos[1]);
+		simConfig.setWeight(new Attribute("visitante", DescripcionQuinielas.class), listaPesos[2]);
+		simConfig.setWeight(new Attribute("puntosLocal", DescripcionQuinielas.class), listaPesos[3]);
+		simConfig.setWeight(new Attribute("pgLocal", DescripcionQuinielas.class), listaPesos[4]);
+		simConfig.setWeight(new Attribute("peLocal", DescripcionQuinielas.class), listaPesos[5]);
+		simConfig.setWeight(new Attribute("ppLocal", DescripcionQuinielas.class), listaPesos[6]);
+		simConfig.setWeight(new Attribute("puntosVisitante", DescripcionQuinielas.class), listaPesos[7]);
+		simConfig.setWeight(new Attribute("pgVisitante", DescripcionQuinielas.class), listaPesos[8]);
+		simConfig.setWeight(new Attribute("peVisitante", DescripcionQuinielas.class), listaPesos[9]);
+		simConfig.setWeight(new Attribute("ppVisitante", DescripcionQuinielas.class), listaPesos[10]);
+		simConfig.setWeight(new Attribute("posLocal", DescripcionQuinielas.class), listaPesos[11]);
+		simConfig.setWeight(new Attribute("posVisitante", DescripcionQuinielas.class), listaPesos[12]);
+		simConfig.setWeight(new Attribute("gfavorLocal", DescripcionQuinielas.class), listaPesos[13]);
+		simConfig.setWeight(new Attribute("gcontraLocal", DescripcionQuinielas.class), listaPesos[14]);
+		simConfig.setWeight(new Attribute("gfavorVisitante", DescripcionQuinielas.class), listaPesos[15]);
+		simConfig.setWeight(new Attribute("gcontraVisitante", DescripcionQuinielas.class), listaPesos[16]);
 		
 		// Ejecutamos la recuperación del vecino más próximo (usando el método en paralelo)
 		// Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
