@@ -37,6 +37,14 @@ public class ParserWeb {
 		int anyoFin = 2012;
 		int maxJornPrim=0, maxJornSeg=0;
 
+		//http://www.lne.es/deportes/futbol/quiniela/resultados-quiniela-jornada-20.html
+		Document doc1 = Jsoup.connect("http://www.lne.es/deportes/futbol/quiniela/resultados-quiniela-jornada-20.html").get();
+		Elements tabla1 = doc1.getElementsByTag("td");
+		for(Element e: tabla1){
+			System.out.println(e.text());
+		}
+		System.in.read();
+		
 		try {
 			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/primera/clasificacion.html").get();
 			Elements tabla = doc.getElementsByTag("td");
