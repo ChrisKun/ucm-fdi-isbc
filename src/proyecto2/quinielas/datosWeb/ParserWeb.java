@@ -1,6 +1,8 @@
 package proyecto2.quinielas.datosWeb;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,34 +18,48 @@ public class ParserWeb {
 	private static FileWriter fstream;
 	private static FileWriter fstream_err;
 	private static FileWriter fstream_esp;
-	private static FileWriter fstream_conf;
+	private static FileWriter fstream_conf_out;
+	private static FileReader fstream_conf_in;
 	private static BufferedWriter out;
 	private static BufferedWriter out_err;
 	private static BufferedWriter out_esp;
-	private static BufferedWriter out_conf;
-
+	private static BufferedWriter out_conf_out;
+	private static BufferedReader out_conf_in;
+	
 	public static void main(String[] args) throws IOException{
 
-		fstream = 		new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\infoMarca.txt");
+		fstream = 		new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\infoMarca.txt",true);
 		fstream_err = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\errores.txt");
 		fstream_esp = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\porJugar.txt");
-		fstream_conf = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\config.txt");
 		out = 			new BufferedWriter(fstream);
 		out_err = 		new BufferedWriter(fstream_err);
 		out_esp = 		new BufferedWriter(fstream_esp);
-		out_conf = 		new BufferedWriter(fstream_conf);
-
+		
 		int anyoIni = 2000;
+		//TODO añadir el año en el que estamos
 		int anyoFin = 2012;
 		int maxJornPrim=0, maxJornSeg=0;
-
-		//http://www.lne.es/deportes/futbol/quiniela/resultados-quiniela-jornada-20.html
-		/*Document doc1 = Jsoup.connect("http://www.lne.es/deportes/futbol/quiniela/resultados-quiniela-jornada-20.html").get();
-		Elements tabla1 = doc1.getElementsByTag("td");
-		for(Element e: tabla1){
-			System.out.println(e.text());
+		
+		//TODO Comprobar que hay un fichero llamado datos.txt
+		try{
+			fstream_conf_in  = new FileReader(".\\src\\proyecto2\\quinielas\\datos\\config.txt");
+			out_conf_in =	new BufferedReader(fstream_conf_in);
+			
+			anyoIni = Integer.parseInt(out_conf_in.readLine());
+			maxJornPrim = Integer.parseInt(out_conf_in.readLine());
+			maxJornSeg = Integer.parseInt(out_conf_in.readLine());
+			System.out.println(anyoIni);
+			System.out.println(maxJornPrim);
+			System.out.println(maxJornSeg);
+		
+			out_conf_in.close();
+		} catch (IOException e){
+			
 		}
-		System.in.read();*/
+		
+		fstream_conf_out = new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\config.txt");
+		out_conf_out =	new BufferedWriter(fstream_conf_out);
+		
 		
 		try {
 			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/primera/clasificacion.html").get();
@@ -65,9 +81,9 @@ public class ParserWeb {
 			System.err.println("No se puede acceder a la pagina principal de Segunda division");
 		}
 
-		out_conf.write(anyoFin+"\n");
-		out_conf.write(maxJornPrim+"\n");
-		out_conf.write(maxJornSeg+"\n");
+		out_conf_out.write(anyoFin+"\n");
+		out_conf_out.write(maxJornPrim+"\n");
+		out_conf_out.write(maxJornSeg+"\n");
 
 		for (int i=anyoIni;i<anyoFin;i++){
 			for (int j=1;j<=38;j++){
@@ -87,8 +103,7 @@ public class ParserWeb {
 		out.close();
 		out_err.close();
 		out_esp.close();
-		out_conf.close();
-
+		out_conf_out.close();
 		/**
 		 * Ficheros
 		 * 	- Base de casos
