@@ -5,6 +5,25 @@ import javax.swing.JOptionPane;
 import proyecto2.quinielas.cbr.ValidacionCruzada;
 import proyecto2.quinielas.representacion.DescripcionQuinielas;
 
+/**
+ * 
+ * @author Xavi
+ *
+ * Jornada:
+ * 		AaaaaJjj
+ * 		Ejemplo: A2007J03
+ * 
+ * Clasificaciones:
+ * 		20x Clasificacion (en primera)
+ * 		22x Clasificacion (en segunda)
+ * 
+ * Formato fichero:
+ * 		Para todas las jornadas{
+ * 			Jornada
+ * 			Clasificaciones
+ * 		}
+ */
+
 public class Principal {
 	
 	public final static int TEMPORADA = 0;
