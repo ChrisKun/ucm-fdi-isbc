@@ -24,25 +24,25 @@ public class ConnectorQuinielas implements Connector {
 	
 	@Override
 	public void initFromXMLfile(URL file) throws InitializingException {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 
 	}
 
 	@Override
 	public void storeCases(Collection<CBRCase> cases) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 
 	}
 
 	@Override
 	public void deleteCases(Collection<CBRCase> cases) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 
 	}
 
@@ -54,14 +54,13 @@ public class ConnectorQuinielas implements Connector {
 		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(".\\src\\proyecto2\\quinielas\\datos\\infoMarca.txt"));
-						
 			String line = null;
 			while((line=br.readLine())!=null){
 				
 				String[] tokens = line.split(",");
 				// Medida de seguridad frente a posibles errores en el archivo de texto
 			    if (tokens.length < 20) {
-			    	System.err.println("Falta informacion en: " + line);
+			    	// System.err.println("Falta informacion en: " + line);
 			    	continue;
 			    }
 			    
@@ -108,8 +107,14 @@ public class ConnectorQuinielas implements Connector {
 				
 			}
 			br.close();
+			// Lanzamos una excepcion en caso de estar el fichero vacio
+			if (i == 0) {
+				Exception e = new Exception("Fichero vacio");
+				throw e;
+			}
 		} catch (Exception e) {
 			System.err.println("Error caso: "+i);
+			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 		System.out.println("Conector. Casos cargados: "+i);

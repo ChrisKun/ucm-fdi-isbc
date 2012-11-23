@@ -7,6 +7,7 @@ import proyecto2.quinielas.representacion.DescripcionQuinielas;
 
 public class Principal {
 	
+	public final static int TEMPORADA = 0;
 	/* ATRIBUTOS */
 	double[] listaPesos;
 	
@@ -24,7 +25,7 @@ public class Principal {
 	/* AUXILIARES */
 	private void iniciaPesos () {
 		listaPesos = new double[DescripcionQuinielas.NUMCAMPOS];	
-		listaPesos[0] = 0.3;
+		listaPesos[TEMPORADA] = 0.3;
 		listaPesos[1] = 0.02;
 		listaPesos[2] = 0.02;
 		listaPesos[3] = 0.2;
@@ -47,12 +48,17 @@ public class Principal {
 		Principal principal = new Principal();
 		
 		ValidacionCruzada validador = new ValidacionCruzada(); 
-		if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
-			validador.HoldOutEvaluation(principal.getListaPesos());
-		if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
-				validador.LeaveOneOutEvaluation(principal.getListaPesos());
-		if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
-			validador.SameSplitEvaluation(principal.getListaPesos());
+		try {
+			if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
+				validador.HoldOutEvaluation(principal.getListaPesos());
+			if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
+					validador.LeaveOneOutEvaluation(principal.getListaPesos());
+			if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
+				validador.SameSplitEvaluation(principal.getListaPesos());
+		} catch	(Exception e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 }
