@@ -8,8 +8,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,13 +20,17 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import junit.awtui.ProgressBar;
 
 
 public class Interfaz extends JFrame{
@@ -42,7 +49,7 @@ public class Interfaz extends JFrame{
 	public final static int num_temporada_inicial = 2000;
 	public final static int num_temporada_final = 2012;
 	
-	public static int modo_muestra = 0; // modo de un partido (0) o modo de una jornada con los 15 partidos(1) a rellenar
+	public static int modo_tabla = 0; // modo de un partido (0) o modo de una jornada con los 15 partidos(1) a rellenar
 	
 	/** LEER DESDE FICHERO **/
 	public static int jornada_max_actual = 7; // jornada de la temporada actual a la que se puede acceder
@@ -52,8 +59,6 @@ public class Interfaz extends JFrame{
 	public final static int NUM_JOR_SEGUNDA = 42;
 	
 	// Elementos de la barra de información que hay que modificar
-	//private int jp_info_jo;
-	//private String jp_info_año;
 	private JTextField jplog_log;
 	private JLabel jlab_jornada;
 	private int num_jornada;
@@ -67,23 +72,24 @@ public class Interfaz extends JFrame{
 	JRadioButton rbutt_var;
 	
 	//botones
-	private JButton jp_info_butt_ok;
-	private JButton jp_info_butt_ult;
 	private JButton jplog_actualizar;
 	
 	//Tabla
-	JTable jp_tab_tabla_resul;
-	String[][] datos_tabla;
-	String[] nombreColumnas;
+	DefaultTableModel modelo;
+	ArrayList<String> equipos;
 	
 	public Interfaz()
 	{
 		//DATOS POR DEFECTO, INICIALIZACION
 		num_jornada = 1; //jornada
 		num_temporada = 2012;
-		//jp_info_año = "2012-2013"; //año (a la hora de ponerlo en pantalla)
-		datos_tabla = new String[NUM_EQU][3];
+		equipos = new ArrayList<String>();
+		//por defecto
+		for (int i = 0; i < NUM_EQU; i++)
+			equipos.add("EquipoLocal"+(i+1)+","+"EquipoVisitante"+(i+1));
+		
 		jlab_jornada = new JLabel();
+		
 		// Configuración de la ventana
 		this.setVisible(true);
 		this.setTitle("Quinielas");
@@ -91,7 +97,7 @@ public class Interfaz extends JFrame{
 		this.setSize(500, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(true);
-		this.add(getPanelPrincipal());
+		this.setContentPane((getPanelPrincipal()));
 		this.setJMenuBar(getMenuPrincipal());
 
 	}
@@ -118,7 +124,6 @@ public class Interfaz extends JFrame{
 	{
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setLayout(new BorderLayout());
-		//panelPrincipal.add(getInfoAñoJornada(),BorderLayout.NORTH);
 		panelPrincipal.add(getPanelInformacion(), BorderLayout.NORTH);
 		panelPrincipal.add(getTabla(), BorderLayout.CENTER);
 		panelPrincipal.add(getPanelLog(), BorderLayout.SOUTH);
@@ -127,9 +132,9 @@ public class Interfaz extends JFrame{
 	}
 	
 	/** PANEL INFORMACIÓN:
-	 * Muestra la temporada actual y la jornada
-	 * A través de un desplegable permite seleccionar la temporada y la jornada a consultar
-	 * A través de un RadioButton permite seleccionar un partido o una jornada a rellenar
+	 * Muestra la temporada actual y la jornada.
+	 * A través de un desplegable permite seleccionar la temporada y la jornada a consultar.
+	 * A través de un RadioButton permite seleccionar un partido o una jornada a rellenar.
 	**/
 	private JPanel getPanelInformacion()
 	{
@@ -149,23 +154,29 @@ public class Interfaz extends JFrame{
 		JLabel label = new JLabel("Rellenar: ");
 		p.add(label);
 		// Botones de selección
+		ButtonGroup bg = new ButtonGroup(); //grupo de botones: solo seleccionable 1
 		rbutt_uno = new JRadioButton("Sólo un partido");
 		rbutt_var = new JRadioButton("Todos los partidos");
 		
 		rbutt_uno.addActionListener(new ActionListener() {
 		      public void actionPerformed(ActionEvent e) {
-		    	  actualizarPartidos(e);
-		    	      }
+		    	  actualizarListaPartidos();
+		    	  }
 		      });
 		
 		rbutt_var.addActionListener(new ActionListener() {
 		      public void actionPerformed(ActionEvent e) {
-		    	  actualizarPartidos(e);
-		    	      }
+		    	  actualizarListaPartidos();
+		    	  }
 		      });
 		
 		rbutt_uno.setSelected(true);
 		
+		// Creamos la relación lógica entre los botones
+		bg.add(rbutt_uno);
+		bg.add(rbutt_var);
+		
+		// Añadimos los botones al panel
 		p.add(rbutt_uno);
 		p.add(rbutt_var);
 		
@@ -235,19 +246,67 @@ public class Interfaz extends JFrame{
 		}
 	}
 	
-	// Panel que contiene la tabla con los equipos y los resultados
+	/**
+	 * Tabla que permite introducir al usuario los equipos de la query. También tiene
+	 * dos columnas adicionales donde se muestra el resultado de la solución y la medida de 
+	 * confianza.
+	 */
 	private JTable getTabla() {
-		// Añadimos el elemento de la tabla en el centro
-		jp_tab_tabla_resul = new JTable(getDatosDefecto(), getColumnasTabla());
-		//ajustes de la tabla
-	//	setTablaNoEditable();
-		jp_tab_tabla_resul.setVisible(true);
-		jp_tab_tabla_resul.setEnabled(false); //No se permite editar la tabla
-		jp_tab_tabla_resul.setRowHeight(25);
-		/** FALTA CENTRAR ELEMENTOS COLUMNAS **/
-		return jp_tab_tabla_resul;
+		modelo = new DefaultTableModel();
+		JTable t = new JTable(modelo);
+		modelo.addColumn("Equipo Local");
+		modelo.addColumn("Equipo Visitante");
+		modelo.addColumn("Resultado");
+		modelo.addColumn("Similitud");
+		leerATabla(equipos);
+		return t;
 	}
 	
+	private void leerATabla(ArrayList<String> equipos2) {
+		
+		String str;
+		String[] res;
+		int num_max = NUM_EQU;
+		
+		// Borramos la tabla actual
+		borrarTabla();
+		// Cargamos la nueva tabla desde la estructura
+		
+		if (modo_tabla == 0)
+			num_max = 1;
+		
+		for (int i = 0; i < equipos2.size() && i < num_max; i++)
+		{
+			str = equipos2.get(i);
+			res = str.split(",");
+			modelo.addRow(res);
+		}
+		
+	}
+	
+	private void borrarTabla()
+	{
+		modelo.setRowCount(0);
+	}
+	
+	private void deTablaAEstructura()
+	{
+		String str="";
+		equipos = new ArrayList<String>();
+		for (int i = 0; i < modelo.getRowCount(); i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				str = str+modelo.getValueAt(i,j);
+				if (j == 0)
+					str = str+",";
+			}
+			
+			equipos.add(str);	
+		}
+	}
+
+
 	
 	// Panel donde está el log para cargar resultados, una barra para cargar y los botones
 	/** RETOCAR MÉTODO: AHORA ESTÁ CHAPUZA **/
@@ -259,10 +318,6 @@ public class Interfaz extends JFrame{
 
 		
 		// LOG : información
-		jplog_log = new JTextField();
-		jplog_log.setEditable(false);
-		jplog_log.setSize(10, 200);
-		p.add(jplog_log);
 
 		// Barra de progreso
 		jplog_barra = new JProgressBar();
@@ -270,62 +325,14 @@ public class Interfaz extends JFrame{
 		p.add(jplog_barra);
 		
 		// Boton de Actualizar
-		jplog_actualizar = new JButton("Actualizar Datos");
+		jplog_actualizar = new JButton("Consultar");
 		jplog_actualizar.addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent evt ) {
-		    		actualizarBaseDatos();
+		    		actualizarEstructura();
 		    	      }
 		      });
 		p.add(jplog_actualizar);
-		
-		//Selección de jornada
-		JLabel j = new JLabel("Jornada: ");
-		
-		// Lista donde aparecen todas las jornadas
-		String[] nom_jor = new String[NUM_JOR_PRIMERA];
-		for (int i = 0; i <NUM_JOR_PRIMERA; i++)
-			nom_jor[i]=""+(i+1);
-		
-		JComboBox<String> b = new JComboBox<String>(nom_jor);
-		b.addActionListener(new ActionListener() {
-		      public void actionPerformed( ActionEvent e) {
-		    		actualizarJornada(e);
-		    	      }
-		      });
-		p.add(j);
-		p.add(b);
-		
-		
 		return p;
-	}
-	
-	
-	//SE NECESITARÁ MODIFICAR
-	private Object[][] getDatosDefecto() {
-		String dato;
-		for (int i = 0; i < NUM_EQU; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				switch (j)
-				{
-					case LOCAL: dato = "Equipo"+i; break;
-					case VISITANTE: dato = "Equipo"+i; break;
-					default: dato = "X";
-				}
-				setCeldaTabla(i,j,dato);
-			}
-		}
-		return datos_tabla;
-	}
-	
-	private Object[] getColumnasTabla(){
-		nombreColumnas = new String[3];
-		nombreColumnas[LOCAL]="Equipo Local";
-		nombreColumnas[VISITANTE]="Equipo Visitante";
-		nombreColumnas[RESULTADO]="Resultado";
-		return nombreColumnas;
-		
 	}
 	
 	private JLabel getJLabelTemporadaJornada()
@@ -333,31 +340,14 @@ public class Interfaz extends JFrame{
 		setJornadaAño(num_jornada,num_temporada);
 		return jlab_jornada;
 	}
-
-	// Panel con información sobre la jornada a mostrar y la selección de jornada
-	private JPanel getPanelInfoOUTDATED()
+	
+	/** FUNCIONES PARA COMUNICARSE CON EL RESTO DEL PROGRAMA **/
+	
+	public ArrayList<String> getPartidos()
 	{
-		// Area para introducir texto
-		jtxt_jornada = new JTextField();
-		/**FALTA AÑADIR UNA DIMENSIÓN TOPE**/
-		jtxt_jornada.setText("AQUI");
-		//panelInfo2.add(jtxt_jornada);
-		
-		// Botón de confirmar
-		jp_info_butt_ok = new JButton("Confirmar");
-		// Añadimos el Listener
-			/**FALTA**/
-	//	panelInfo2.add(jp_info_butt_ok);
-		
-		// Botón de última jornada
-		jp_info_butt_ult = new JButton("Última");
-		//panelInfo2.add(jp_info_butt_ult);
-		
-		// Añadimos este subpanel y devolvemos el panel completo de información
-		//panelInfo.add(panelInfo2, BorderLayout.CENTER);
-		//return panelInfo;
-		return null;
+		return equipos;
 	}
+	
 	
 	/** FUNCIONES PARA EDITAR INFORMACIÓN DE LA INTERFAZ**/
 	// EDITAR JORNADA Y AÑO
@@ -367,21 +357,11 @@ public class Interfaz extends JFrame{
 		jlab_jornada.setFont(new Font("Verdana", Font.BOLD, 22));
 		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada: "+jornada);
 	}
-	//EDITAR CELDA DE LA TABLA
-	public void setCeldaTabla(int fila, int columna, String dato)
-	{
-		datos_tabla[fila][columna] = dato;
-		if (jp_tab_tabla_resul != null)
-			jp_tab_tabla_resul.repaint();
-		
-	}
-	
-	// Métodos Listener
-	public void actualizarBaseDatos()
-	{
-		//setCeldaTabla(1,1,"HOLA");
-		//setJornadaAño(2,"2012-2013");
 
+	// Métodos Listener
+	public void actualizarEstructura()
+	{
+		deTablaAEstructura();
 	}
 	
 	public void actualizarJornada(ActionEvent e)
@@ -413,28 +393,22 @@ public class Interfaz extends JFrame{
 	    num_jornada = 1;
 	    setJornadaAño(num_jornada,num_temporada);
 	}
-	/** ARREGLARRRRRRRR! **/
-	public void actualizarPartidos(ActionEvent e)
+
+	public void actualizarListaPartidos()
 	{
-		JRadioButton rb = (JRadioButton)e.getSource();
-		if (rb == rbutt_uno)
-		{
-			if (rbutt_uno.isSelected() == false && rbutt_var.isSelected())
-				rbutt_var.setSelected(false);
-		}
-		else if (rb == rbutt_var)
-		{
-			if (rbutt_var.isSelected() == false  && rbutt_uno.isSelected())
-				rbutt_uno.setSelected(false);
-		}
+		if (rbutt_uno.isSelected())
+			modo_tabla = 0; // Modo de un sólo partido
+		else
+			modo_tabla = 1; // Modo de 15 partidos
+		leerATabla(equipos);
 	}
 	
 	
 	public static void main(String[] args)
 	{
+		JOptionPane.showMessageDialog(null, "ACTUALIZANDO");
 		Interfaz i = new Interfaz();
 	}
-	
 	
 
 }
