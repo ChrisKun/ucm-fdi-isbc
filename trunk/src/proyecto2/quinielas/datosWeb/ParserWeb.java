@@ -38,6 +38,7 @@ public class ParserWeb {
 		int anyoIni = 2000;
 		//TODO añadir el año en el que estamos
 		int anyoFin = 2012;
+		int ultJornPrim=0, ultJornSeg=0;
 		int maxJornPrim=0, maxJornSeg=0;
 		
 		//TODO Comprobar que hay un fichero llamado datos.txt
@@ -46,8 +47,8 @@ public class ParserWeb {
 			out_conf_in =	new BufferedReader(fstream_conf_in);
 			
 			anyoIni = Integer.parseInt(out_conf_in.readLine());
-			maxJornPrim = Integer.parseInt(out_conf_in.readLine());
-			maxJornSeg = Integer.parseInt(out_conf_in.readLine());
+			ultJornPrim = Integer.parseInt(out_conf_in.readLine());
+			ultJornSeg = Integer.parseInt(out_conf_in.readLine());
 			System.out.println(anyoIni);
 			System.out.println(maxJornPrim);
 			System.out.println(maxJornSeg);
@@ -93,10 +94,10 @@ public class ParserWeb {
 				anyadirJornada("segunda",i,j);
 			}
 		}
-		for (int j=1;j<=maxJornPrim;j++){
+		for (int j=ultJornPrim;j<=maxJornPrim;j++){
 			anyadirJornada("primera",anyoFin,j);
 		}
-		for (int j=1;j<=maxJornSeg;j++){
+		for (int j=ultJornSeg;j<=maxJornSeg;j++){
 			anyadirJornada("segunda",anyoFin,j);
 		}
 
