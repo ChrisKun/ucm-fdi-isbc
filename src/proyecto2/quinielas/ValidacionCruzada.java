@@ -43,6 +43,7 @@ public class ValidacionCruzada {
 		            
 		SameSplitEvaluator eval = new SameSplitEvaluator();
 		eval.init(new Quinielas(true));
+		// Configurar el % de testeo y el nombre del fichero de salida
 		eval.generateSplit(10, "split1.txt");
 		eval.HoldOutfromFile("split1.txt");
 		            

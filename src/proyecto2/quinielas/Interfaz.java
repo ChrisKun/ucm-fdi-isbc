@@ -65,9 +65,8 @@ public class Interfaz extends JFrame{
 	private int num_temporada;
 	
 	// Elementos a leer y modificar
-	private JTextField jtxt_jornada;
 	private JProgressBar jplog_barra;
-	JComboBox<String> comboBox_jornada;
+	JComboBox comboBox_jornada;
 	JRadioButton rbutt_uno;
 	JRadioButton rbutt_var;
 	
@@ -75,8 +74,8 @@ public class Interfaz extends JFrame{
 	private JButton jplog_actualizar;
 	
 	//Tabla
-	DefaultTableModel modelo;
-	ArrayList<String> equipos;
+	private DefaultTableModel modelo;
+	private ArrayList<String> equipos;
 	
 	public Interfaz()
 	{
@@ -201,14 +200,14 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	private JComboBox<String> getDesplegableTemporada()
+	private JComboBox getDesplegableTemporada()
 	{
 		int num_temporadas = num_temporada_final - num_temporada_inicial + 1;
 		String[] nom_temp = new String[num_temporadas];
 		for (int i = 0; i <num_temporadas; i++)
 			nom_temp[i] = (num_temporada_inicial+i)+"-"+(num_temporada_inicial+(i+1));
 		
-		JComboBox<String> b = new JComboBox<String>(nom_temp);
+		JComboBox b = new JComboBox(nom_temp);
 		b.addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
 		    		actualizarTemporada(e);
@@ -217,7 +216,7 @@ public class Interfaz extends JFrame{
 		return b;
 	}
 	
-	private JComboBox<String> getDesplegableJornada()
+	private JComboBox getDesplegableJornada()
 	{
 		
 		int n_max = NUM_JOR;
@@ -225,7 +224,7 @@ public class Interfaz extends JFrame{
 			n_max = jornada_max_actual; // Si estamos en la temporada actual, solo se muestra hasta una jornada más alla de la que estamos
 
 		
-		comboBox_jornada = new JComboBox<String>();	
+		comboBox_jornada = new JComboBox();	
 		
 		
 		comboBox_jornada.addActionListener(new ActionListener() {
