@@ -331,63 +331,57 @@ public class Interfaz extends JFrame{
 	
 	private void inicializarDesplegablesEquipoTabla(int numFilas)
 	{
-		
+		// TODO Falta hacer la opción de un solo partido que sea de primera o de segunda division
 		comboBoxLocales = new JComboBox[numFilas];
 		comboBoxVisitantes = new JComboBox[numFilas];
 		
 		for (int i = 0; i < numFilas; i++)
 		{
-			setEquiposComboBox(i,conf);
+			setEquiposComboBox(i,conf,i<10);
 		}
 	}
 	
-	private void setEquiposComboBox(int num, Config c)
+	private void setEquiposComboBox(int num, Config c, boolean primeraDivision)
 	{
 		int ind; // auxiliar para recorrer las jornadas
 		int n = c.getSeleccionTemporada();
-		// Leer de la tabla de datos
-		String[][][] clasfPrimera = c.getClasificacionesPrimera();
+		
 		if (c.getSeleccionTemporada()>=2000)
 			n = n - 2000;
+		
 		String lineaClasificacion = null;
+		// Leer de la tabla de datos
+		String[][][] clasificacion; // Almacenamiento temporal para el acceso a datos
+		String[] eq; // Elementos posibles en el ComboBox
 		
-		// Sumamos el total de equipos que puede haber
-		int numE = c.NUMEROEQUIPOSPRIMERA+c.NUMEROEQUIPOSSEGUNDA;
-		String[] eq = new String[numE];
+		// Datos para segunda division
+		int numEquipos = c.NUMEROEQUIPOSSEGUNDA;
+		clasificacion = c.getClasificacionesSegunda();
 		
-		// Rellenamos para los equipos de primera divisón
-		for (int i = 0; i < c.NUMEROEQUIPOSPRIMERA; i++)
+		// Datos para primera division
+		if (primeraDivision)
+		{
+			numEquipos = c.NUMEROEQUIPOSPRIMERA;
+			clasificacion = c.getClasificacionesPrimera();
+		}
+		
+		eq = new String[numEquipos];
+		
+			// Rellenamos para los equipos de primera divisón
+		for (int i = 0; i < numEquipos; i++)
 		{
 			ind = 0;
-			lineaClasificacion = clasfPrimera[n][ind][i];
+			lineaClasificacion = clasificacion[n][ind][i];
 			
 			while (lineaClasificacion == null) // Sólo en caso de que no haya informacion en la temporada 0
 			{
-				lineaClasificacion = clasfPrimera[n][ind][i];
+				lineaClasificacion = clasificacion[n][ind][i];
 				ind++;
 			}
 		
 			eq[i] = (lineaClasificacion.split(",")[0]);
 		}
 		
-		// Hacemos lo mismo para los equipos de la segunda división
-		String[][][] clasfSegunda = c.getClasificacionesSegunda();
-		ind = 0;
-		
-		for (int j = 0; j < c.NUMEROEQUIPOSSEGUNDA; j++)
-		{
-			ind = 0;
-			lineaClasificacion = clasfSegunda[n][ind][j];
-			
-			while (lineaClasificacion == null) // Sólo en caso de que no haya informacion en la temporada 0
-			{
-				lineaClasificacion = clasfSegunda[n][ind][j];
-				ind++;
-			}
-			
-			
-			eq[j+c.NUMEROEQUIPOSPRIMERA] = (lineaClasificacion.split(",")[0]);
-		}
 		
 		// Ahora con la lista de todos los equipos, creamos el JComboBox
 		comboBoxLocales[num] = new JComboBox(eq);
