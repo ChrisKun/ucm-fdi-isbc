@@ -139,13 +139,4 @@ public class Config {
 	public String[][][] getClasificacionesPrimera() {
 		return clasificacionesPrimera;
 	}
-	/* MAIN PARA PRUEBAS */
-
-	public static void main (String args[]) {
-		Config c = new Config();
-		c.rellenaClasificacionesPrimera();
-		c.rellenaClasificacionesSegunda();
-	}
-
-	
 }
