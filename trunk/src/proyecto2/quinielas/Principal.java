@@ -89,9 +89,9 @@ public class Principal {
 		//if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
 			validador.HoldOutEvaluation(principal.getListaPesos());
 		//if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
-			validador.LeaveOneOutEvaluation(principal.getListaPesos());
+		//	validador.LeaveOneOutEvaluation(principal.getListaPesos());
 		//if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
-			validador.SameSplitEvaluation(principal.getListaPesos());
+		//	validador.SameSplitEvaluation(principal.getListaPesos());
 	}
 
 }
