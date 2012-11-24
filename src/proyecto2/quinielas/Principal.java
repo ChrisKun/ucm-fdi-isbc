@@ -8,6 +8,7 @@ import proyecto2.quinielas.cbr.DescripcionQuinielas;
 import proyecto2.quinielas.cbr.Prediccion;
 import proyecto2.quinielas.cbr.Quinielas;
 import proyecto2.quinielas.cbr.ValidacionCruzada;
+import proyecto2.quinielas.interfaz.Interfaz;
 
 public class Principal {
 	
@@ -69,19 +70,28 @@ public class Principal {
 	public static void main (String args[]) {
 		Principal principal = new Principal();
 		principal.iniciaPesos();
+
 		Config c = new Config();
+		//	JOptionPane.showMessageDialog(null, "ACTUALIZANDO");
 		c.setUltimaTemporada(2012);
+		c.setUltimaJornadaPrimera(14);
+		c.setUltimaJornadaSegunda(18);
+
+		c.rellenaClasificacionesPrimera();
 		c.rellenaClasificacionesPrimera();
 		c.rellenaClasificacionesSegunda();
 		Quinielas q = new Quinielas(principal.getListaPesos());
 		
 		// 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
+		
 		// String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
 		ArrayList<String> a = new ArrayList<String>();
 		a.add("Valencia,Málaga");
 		a.add("Espanyol,Rayo");
+		Interfaz i = new Interfaz(principal.getListaPesos(),c);
 		
-		q.querysCBR(a,2012,4,principal.listaPesos,c.getClasificacionesPrimera(),c.getClasificacionesSegunda());
+		//q.querysCBR(a,2012,4,principal.listaPesos,c.getClasificacionesPrimera(),c.getClasificacionesSegunda());
+		//ValidacionCruzada validador = new ValidacionCruzada(); 
 	}
 
 }
