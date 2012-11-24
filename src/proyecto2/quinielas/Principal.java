@@ -1,8 +1,12 @@
 package proyecto2.quinielas;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import proyecto2.quinielas.cbr.DescripcionQuinielas;
+import proyecto2.quinielas.cbr.Prediccion;
+import proyecto2.quinielas.cbr.Quinielas;
 import proyecto2.quinielas.cbr.ValidacionCruzada;
 
 /**
@@ -83,15 +87,20 @@ public class Principal {
 	
 	public static void main (String args[]) {
 		Principal principal = new Principal();
+		principal.iniciaPesos();
+		Config c = new Config();
+		c.setUltimaTemporada(2012);
+		c.rellenaClasificacionesPrimera();
+		c.rellenaClasificacionesSegunda();
+		Quinielas q = new Quinielas(principal.getListaPesos());
 		
-		ValidacionCruzada validador = new ValidacionCruzada(); 
-
-		//if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
-			validador.HoldOutEvaluation(principal.getListaPesos());
-		//if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
-		//	validador.LeaveOneOutEvaluation(principal.getListaPesos());
-		//if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
-		//	validador.SameSplitEvaluation(principal.getListaPesos());
+		// 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
+		// String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
+		ArrayList<String> a = new ArrayList<String>();
+		a.add("Valencia,Málaga");
+		a.add("Espanyol,Rayo");
+		
+		q.querysCBR(a,2012,4,principal.listaPesos,c.getClasificacionesPrimera(),c.getClasificacionesSegunda());
 	}
 
 }

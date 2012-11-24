@@ -35,20 +35,20 @@ public class DescripcionQuinielas implements CaseComponent {
 		this.temporada = temporada;
 		this.local = local;
 		this.visitante = visitante;
-		this.posLocal = clasifLocal[1];		
-		this.pgLocal = clasifLocal[2];
-		this.peLocal = clasifLocal[3];
-		this.ppLocal = clasifLocal[4];
-		this.gfavorLocal = clasifLocal[5];
-		this.gcontraLocal = clasifLocal[6];
-		this.puntosLocal = clasifLocal[7];
-		this.posVisitante = clasifVisitante[1];		
-		this.pgVisitante = clasifVisitante[2];
-		this.peVisitante = clasifVisitante[3];
-		this.ppVisitante = clasifVisitante[4];
-		this.gfavorVisitante = clasifVisitante[5];
-		this.gcontraVisitante = clasifVisitante[6];
-		this.puntosVisitante = clasifVisitante[7];
+		this.posLocal = clasifLocal[0];		
+		this.pgLocal = clasifLocal[1];
+		this.peLocal = clasifLocal[2];
+		this.ppLocal = clasifLocal[3];
+		this.gfavorLocal = clasifLocal[4];
+		this.gcontraLocal = clasifLocal[5];
+		this.puntosLocal = clasifLocal[6];
+		this.posVisitante = clasifVisitante[0];		
+		this.pgVisitante = clasifVisitante[1];
+		this.peVisitante = clasifVisitante[2];
+		this.ppVisitante = clasifVisitante[3];
+		this.gfavorVisitante = clasifVisitante[4];
+		this.gcontraVisitante = clasifVisitante[5];
+		this.puntosVisitante = clasifVisitante[6];
 	}
 	
 	@Override
