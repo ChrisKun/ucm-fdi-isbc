@@ -14,10 +14,10 @@ import java.io.FileReader;
 public class Config {
 	
 	/* CONSTANTES */ 
-	private final int JORNADASPRIMERA = 38;
-	private final int JORNADASSEGUNDA = 42;
-	private final int NUMEROEQUIPOSPRIMERA = 20;
-	private final int NUMEROEQUIPOSSEGUNDA = 22;
+	public static final int JORNADASPRIMERA = 38;
+	public static int JORNADASSEGUNDA = 42;
+	public static int NUMEROEQUIPOSPRIMERA = 20;
+	public static int NUMEROEQUIPOSSEGUNDA = 22;
 	
 	/* ATRIBUTOS */
 	private Integer ultimaTemporada;
