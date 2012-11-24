@@ -146,6 +146,7 @@ public class Quinielas implements StandardCBRApplication {
 		// for (RetrievalResult nse : eval) System.out.println(nse.toString());
 		
 		// Seleccionamos metodo de votacion
+		// TODO Permitir al usuario usar tipo de votacion???
 		Votacion votacion = new Votacion();
 		Prediccion prediccion = votacion.mediaPonderada(eval);		
 		
@@ -216,8 +217,10 @@ public class Quinielas implements StandardCBRApplication {
 					clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
 					clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
 				}
+				
 				// Rellenamos la query con los valores apropiados
 				query.setDescription(new DescripcionQuinielas(Integer.valueOf(temporada),tokens[0],clasifLocal,tokens[1],clasifVisitante));
+				
 				//Ejecutar el ciclo
 				cycle(query);
 			}

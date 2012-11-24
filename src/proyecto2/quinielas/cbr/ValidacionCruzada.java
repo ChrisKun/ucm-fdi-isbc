@@ -25,7 +25,7 @@ public class ValidacionCruzada {
 	    Evaluator.getEvaluationReport().putOtherData("Media aciertos", Double.toString(media));
 	}
 	
-    public void HoldOutEvaluation(double[] listaPesos)
+    public void HoldOutEvaluation(double[] listaPesos, int numeroCasos, int numeroVueltas)
     {
 	    //SwingProgressBar shows the progress
 	    jcolibri.util.ProgressController.clear();
@@ -34,7 +34,7 @@ public class ValidacionCruzada {
 	    HoldOutEvaluator eval = new HoldOutEvaluator();
 	    eval.init(new Quinielas(true, listaPesos));
 	    // Configurar % de casos que cogemos y nº de vueltas
-	    eval.HoldOut(1, 1);
+	    eval.HoldOut(numeroCasos,numeroVueltas);
 	    
 	    this.MediaAciertos();
 	    
@@ -58,7 +58,7 @@ public class ValidacionCruzada {
 		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quinielas - LeaveOneOutEvaluation", false);
     }
     
-    public void SameSplitEvaluation(double[] listaPesos)
+    public void SameSplitEvaluation(double[] listaPesos, int numeroCasos)
     {
 		//SwingProgressBar shows the progress
 		jcolibri.util.ProgressController.clear();
@@ -67,7 +67,7 @@ public class ValidacionCruzada {
 		SameSplitEvaluator eval = new SameSplitEvaluator();
 		eval.init(new Quinielas(true, listaPesos));
 		// Configurar el % de testeo y el nombre del fichero de salida
-		eval.generateSplit(10, "split1.txt");
+		eval.generateSplit(numeroCasos, "split1.txt");
 		eval.HoldOutfromFile("split1.txt");
 			    
 	    this.MediaAciertos();
