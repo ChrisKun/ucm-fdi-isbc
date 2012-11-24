@@ -2,7 +2,13 @@ package proyecto2.quinielas.cbr;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+
 import javax.swing.JOptionPane;
+
+import proyecto1.viajes.TravelDescription;
+import proyecto1.viajes.TravelRecommender;
+import proyecto2.quinielas.Config;
 
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.casebase.LinealCaseBase;
@@ -14,6 +20,7 @@ import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.evaluation.Evaluator;
 import jcolibri.exception.ExecutionException;
+import jcolibri.method.gui.formFilling.ObtainQueryWithFormMethod;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.ParallelNNScoringMethod;
@@ -22,9 +29,15 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
 
+/**
+ * 
+ * Clase encargada de ejecutar todo el ciclo CBR
+ *
+ */
 
 public class Quinielas implements StandardCBRApplication {
 
+	/* CONSTANTES */
 	// Numero de casos que recuperamos en el algoritmo KNN
 	final static int K = 5;		
 	
@@ -162,5 +175,49 @@ public class Quinielas implements StandardCBRApplication {
      */
         Evaluator.getEvaluationReport().addDataToSeries("Aciertos", pre);
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
+	}
+	
+	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
+			String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
+		try{
+			//Configuración
+			configure();
+			
+			//Preciclo
+			preCycle();
+	
+			//Crear un objeto que almacena la consulta
+			CBRQuery query = new CBRQuery();	
+			// Si nos piden la jornada 1, entonces los equipos están con todos sus valores a 0
+			Integer[] clasifLocal = {0,0,0,0,0,0,0};
+			Integer[] clasifVisitante = {0,0,0,0,0,0,0};			
+			// Iteramos los partidos pedidos
+			Iterator<String> iterador = equipos.iterator();
+			String[] tokens = null;
+			String[] tokensLocal = null;
+			String[] tokensVisitante = null;
+			while (iterador.hasNext()) {
+				tokens = iterador.next().split(",");
+				tokensLocal = null;
+				for (String i: clasificacionesPrimera[temporada-2000][jornada]) {					
+					if ((i != null)	&& i.startsWith(tokens[0])) {
+						tokensLocal = i.split((","));
+					}
+					if ((i != null)	&& i.startsWith(tokens[1])) {
+						tokensVisitante = i.split((","));
+					}
+				}			
+				for (int i = 0;i<tokensLocal.length-2;i++) {
+					clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
+					clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
+				}
+				query.setDescription(new DescripcionQuinielas(Integer.valueOf(temporada),tokens[0],clasifLocal,tokens[1],clasifVisitante));
+				//Ejecutar el ciclo
+				cycle(query);
+			}
+		} catch (Exception e) {
+			org.apache.commons.logging.LogFactory.getLog(TravelRecommender.class).error(e);
+		}
+		return listaPredicciones;
 	}	
 }

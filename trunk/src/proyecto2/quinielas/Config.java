@@ -55,7 +55,7 @@ public class Config {
 	public void rellenaClasificacionesSegunda() {
 		if (ultimaTemporada < 2000) return;
 		int numeroTemporadas = (ultimaTemporada - 2000) + 1;
-		clasificacionesPrimera = new String[numeroTemporadas][JORNADASSEGUNDA][NUMEROEQUIPOSSEGUNDA];
+		clasificacionesSegunda = new String[numeroTemporadas][JORNADASSEGUNDA][NUMEROEQUIPOSSEGUNDA];
 		rellenaEstructura(clasificacionesSegunda, 2);
 	}
 	// TODO Comprobar que funciona con los ficheros de Xavi
@@ -84,7 +84,8 @@ public class Config {
 					}
 				} else {
 					// La jornada en el array se almacena siempre empezando en el 0, asi que la jornada tiene que ser: jornada-1
-					clasificacionesPrimera[temporada][jornada-1][i] = line;
+					if (liga == 1) clasificacionesPrimera[temporada][jornada-1][i] = line;
+					else clasificacionesSegunda[temporada][jornada-1][i] = line;
 					i++;
 				}
 			}
