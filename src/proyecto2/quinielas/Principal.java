@@ -2,8 +2,8 @@ package proyecto2.quinielas;
 
 import javax.swing.JOptionPane;
 
+import proyecto2.quinielas.cbr.DescripcionQuinielas;
 import proyecto2.quinielas.cbr.ValidacionCruzada;
-import proyecto2.quinielas.representacion.DescripcionQuinielas;
 
 /**
  * 
@@ -26,7 +26,25 @@ import proyecto2.quinielas.representacion.DescripcionQuinielas;
 
 public class Principal {
 	
+	// TODO Raul, aqui te dejo las constantes para que te sea más comodo operar
 	public final static int TEMPORADA = 0;
+	public final static int LOCAL = 1;
+	public final static int VISITANTE = 2;
+	public final static int PUNTOSLOCAL = 3;
+	public final static int PGLOCAL = 4;
+	public final static int PELOCAL = 5;
+	public final static int PPLOCAL = 6;
+	public final static int PUNTOSVISITANTE = 7;
+	public final static int PGVISITANTE = 8;
+	public final static int PEVISITANTE = 9;
+	public final static int PPVISITANTE = 10;
+	public final static int POSLOCAL = 11;
+	public final static int POSVISITANTE = 12;
+	public final static int GFAVORLOCAL = 13;
+	public final static int GCONTRALOCAL = 14;
+	public final static int GFAVORVISITANTE = 15;
+	public final static int GCONTRAVISITANTE = 16;
+	
 	/* ATRIBUTOS */
 	double[] listaPesos;
 	
@@ -67,17 +85,13 @@ public class Principal {
 		Principal principal = new Principal();
 		
 		ValidacionCruzada validador = new ValidacionCruzada(); 
-		try {
-			//if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
-				validador.HoldOutEvaluation(principal.getListaPesos());
-			//if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
-				validador.LeaveOneOutEvaluation(principal.getListaPesos());
-			//if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
-				validador.SameSplitEvaluation(principal.getListaPesos());
-		} catch	(Exception e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
+
+		//if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
+			validador.HoldOutEvaluation(principal.getListaPesos());
+		//if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
+			validador.LeaveOneOutEvaluation(principal.getListaPesos());
+		//if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
+			validador.SameSplitEvaluation(principal.getListaPesos());
 	}
 
 }

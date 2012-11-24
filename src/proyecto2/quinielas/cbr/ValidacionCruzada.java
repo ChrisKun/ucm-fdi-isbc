@@ -34,7 +34,7 @@ public class ValidacionCruzada {
 	    HoldOutEvaluator eval = new HoldOutEvaluator();
 	    eval.init(new Quinielas(true, listaPesos));
 	    // Configurar % de casos que cogemos y nº de vueltas
-	    eval.HoldOut(25, 1);
+	    eval.HoldOut(1, 1);
 	    
 	    this.MediaAciertos();
 	    

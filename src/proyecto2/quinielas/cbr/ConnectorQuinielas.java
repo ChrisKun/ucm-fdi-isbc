@@ -1,8 +1,6 @@
 package proyecto2.quinielas.cbr;
 
-import proyecto2.quinielas.representacion.DescripcionQuinielas;
-import proyecto2.quinielas.representacion.SolucionQuinielas;
-import proyecto2.quinielas.representacion.SolucionQuinielas.UnoXDos;
+import proyecto2.quinielas.cbr.SolucionQuinielas.UnoXDos;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -59,7 +57,7 @@ public class ConnectorQuinielas implements Connector {
 				
 				String[] tokens = line.split(",");
 				// Medida de seguridad frente a posibles errores en el archivo de texto
-			    if (tokens.length < 20) {
+			    if (tokens.length < 22) {
 			    	// System.err.println("Falta informacion en: " + line);
 			    	continue;
 			    }

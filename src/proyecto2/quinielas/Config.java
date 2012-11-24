@@ -3,6 +3,7 @@ package proyecto2.quinielas;
 /**
  * 
  * Clase que contiene la última información disponible en la Web y la información que solicita el usuario.
+ * También contiene la estructura de datos que almacena las clasificaciones de cada equipo por temporada y jornada
  *
  */
 

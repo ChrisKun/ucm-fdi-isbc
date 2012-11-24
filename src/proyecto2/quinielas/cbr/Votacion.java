@@ -2,7 +2,7 @@ package proyecto2.quinielas.cbr;
 
 import java.util.Collection;
 
-import proyecto2.quinielas.representacion.SolucionQuinielas.UnoXDos;
+import proyecto2.quinielas.cbr.SolucionQuinielas.UnoXDos;
 
 import jcolibri.method.retrieve.RetrievalResult;
 
