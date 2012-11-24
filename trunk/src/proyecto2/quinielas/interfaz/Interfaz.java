@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -56,6 +57,10 @@ public class Interfaz extends JFrame{
 	public final static int num_temporada_inicial = 2000;
 	public final static int num_temporada_actual = 2012;
 	
+	/** Configuracion de pantalla */
+	public final static int W = 800;
+	public final static int H = 600;
+	
 	/** Número de jornadas totales para primera y segunda división */
 	public final static int NUM_JOR_PRIMERA = 38;
 	public final static int NUM_JOR_SEGUNDA = 42;
@@ -63,24 +68,35 @@ public class Interfaz extends JFrame{
 	public final static int SEGUNDA_DIVISION = 1;
 	
 	// Elementos de la barra de información que hay que modificar
-	private JTextField jplog_log;
 	private JLabel jlab_jornada;
-	private int num_jornada_primera;
-	private int num_jornada_segunda;
-	private int num_temporada;
+	private int num_jornada_primera; //jornada de primera división
+	private int num_jornada_segunda; // jornada de segunda división
+	private int num_temporada; // temporada "num_temporada-(num_temporada+1)"
+	JComboBox[] comboBox_jornada; // tiene guardado los 2 desplegables de las jornadas
 	
-	// Elementos a leer y modificar
-	private JProgressBar jplog_barra;
-	JComboBox[] comboBox_jornada;
-	JRadioButton rbutt_uno;
-	JRadioButton rbutt_var;
+
+	JRadioButton rbutt_uno; // seleccion de un partido
+	JRadioButton rbutt_var; // seleccion de varios partidos
+	// Elementos en la tabla que hay que modificar
+	private JPanel panelTabla;
+	private JComboBox[] comboBoxLocales;
+	private JComboBox[] comboBoxVisitantes;
+	private JTextField[] resultados;
+	private JProgressBar[] confianza;
+	
+	// Panel principal que hay que modificar al cambiar de modo de tabla
+	private JPanel panelPrincipal;
 	
 	//botones
 	private JButton jplog_actualizar;
 	
-	//Tabla
-	private DefaultTableModel modelo;
-	private ArrayList<String> equipos;
+	// Datos de la tabla
+	private String[][] datosTabla; 
+	
+	//private DefaultTableModel modelo;
+	//private ArrayList<String> equipos;
+	
+
 	
 	public Interfaz()
 	{
@@ -88,19 +104,17 @@ public class Interfaz extends JFrame{
 		num_jornada_primera = 1; //jornada
 		num_jornada_segunda = 1;
 		num_temporada = 2012;
-		equipos = new ArrayList<String>();
-		//por defecto
-		for (int i = 0; i < NUM_EQU; i++)
-			equipos.add("EquipoLocal"+(i+1)+","+"EquipoVisitante"+(i+1));
 		
 		jlab_jornada = new JLabel();
 		comboBox_jornada = new JComboBox[2];
+		
+		
 		
 		// Configuración de la ventana
 		this.setVisible(true);
 		this.setTitle("Quinielas");
 		// Falta poner icono :D
-		this.setSize(500, 600);
+		this.setSize(W, H);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(true);
 		this.setContentPane((getPanelPrincipal()));
@@ -129,10 +143,10 @@ public class Interfaz extends JFrame{
 	
 	private JPanel getPanelPrincipal()
 	{
-		JPanel panelPrincipal = new JPanel();
+		panelPrincipal = new JPanel();
 		panelPrincipal.setLayout(new BorderLayout());
 		panelPrincipal.add(getPanelInformacion(), BorderLayout.NORTH);
-		panelPrincipal.add(getTabla(), BorderLayout.CENTER);
+		panelPrincipal.add(getJPanelTabla(modo_tabla), BorderLayout.CENTER);
 		panelPrincipal.add(getPanelLog(), BorderLayout.SOUTH);
 		panelPrincipal.validate();
 		return panelPrincipal;
@@ -204,7 +218,6 @@ public class Interfaz extends JFrame{
 		p.add(labelJor);
 		
 		p.add(getDesplegableJornada(PRIMERA_DIVISION)); 
-		// TODO cambiar esto para referirse fácilmente al límite de elementos de cada JComboBox
 		
 		JLabel labelJor2 = new JLabel("Jornada Segunda División: ");
 		p.add(labelJor2);
@@ -253,10 +266,10 @@ public class Interfaz extends JFrame{
 		
 		comboBox_jornada[division].addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
-		    		actualizarJornada(e); //TODO actualizarJornada para JComboBox Primera o JComboBox segunda
+		    		actualizarJornada(e); 
 		    	      }
 		      });
-		setNumElemComboBoxJornada(n_max,division);	//TODO este método debería estar mejor en actualizarJornada(e);
+		setNumElemComboBoxJornada(n_max,division);	
 		return comboBox_jornada[division];
 	}
 	
@@ -275,60 +288,112 @@ public class Interfaz extends JFrame{
 	 * dos columnas adicionales donde se muestra el resultado de la solución y la medida de 
 	 * confianza.
 	 */
-	private JTable getTabla() {
-		modelo = new DefaultTableModel();
-		JTable t = new JTable(modelo);
-		modelo.addColumn("Equipo Local");
-		modelo.addColumn("Equipo Visitante");
-		modelo.addColumn("Resultado");
-		modelo.addColumn("Similitud");
-		leerATabla(equipos);
-		return t;
-	}
 	
-	private void leerATabla(ArrayList<String> equipos2) {
+	private JPanel getJPanelTabla(int modo)
+	{
+		int numF = NUM_EQU+1;
+		panelTabla = new JPanel();
+		if (modo == 0) // un solo partido
+			numF = 2;
+		panelTabla.setLayout(new GridLayout(numF,4));
+		// Añadimos los elementos de la primera fila 
+		JLabel j = new JLabel("Equipo Local");
+		panelTabla.add(j);
+		JLabel p = new JLabel("Equipo Visitante");
+		panelTabla.add(p);
+		JLabel s = new JLabel("Resultado");
+		panelTabla.add(s);
+		JLabel o = new JLabel("Confianza");
+		panelTabla.add(o);
 		
-		String str;
-		String[] res;
-		int num_max = NUM_EQU;
+		// añadimos los equipos correspondientes
+		inicializarDatosPartidos(numF-1);
+		inicializarDesplegablesEquipoTabla(numF-1);
+		inicializarResultados(numF-1);
+		inicializarConfianza(numF-1);
 		
-		// Borramos la tabla actual
-		borrarTabla();
-		// Cargamos la nueva tabla desde la estructura
-		
-		if (modo_tabla == 0)
-			num_max = 1;
-		
-		for (int i = 0; i < equipos2.size() && i < num_max; i++)
+		for (int i = 0; i < numF-1; i++)
 		{
-			str = equipos2.get(i);
-			res = str.split(",");
-			modelo.addRow(res);
+			panelTabla.add(comboBoxLocales[i]);
+			panelTabla.add(comboBoxVisitantes[i]);
+			panelTabla.add(resultados[i]);
+			panelTabla.add(confianza[i]);
 		}
 		
+		return panelTabla;
 	}
 	
-	private void borrarTabla()
+	/** Incializa la tabla de datos intermedia, que será modificada por la interfaz y
+	 *  por el resto del programa
+	 */
+	
+	private void inicializarDatosPartidos(int numFilas)
 	{
-		modelo.setRowCount(0);
+		datosTabla = new String[numFilas][4];
+		// TODO SET DATOS POR DEFECTO leer de la estructura pasada por parametro con equipos temporada = 2012 y jornadas 1 y 1
+		// Datos por defecto para resultado y confianza a "-1"
 	}
 	
-	private void deTablaAEstructura()
+	private void inicializarDesplegablesEquipoTabla(int numFilas)
 	{
-		String str="";
-		equipos = new ArrayList<String>();
-		for (int i = 0; i < modelo.getRowCount(); i++)
+		
+		comboBoxLocales = new JComboBox[numFilas];
+		comboBoxVisitantes = new JComboBox[numFilas];
+		
+		for (int i = 0; i < numFilas; i++)
 		{
-			for (int j = 0; j < 2; j++)
-			{
-				str = str+modelo.getValueAt(i,j);
-				if (j == 0)
-					str = str+",";
-			}
-			
-			equipos.add(str);	
+			setEquiposComboBox(i,num_temporada, num_jornada_primera, num_jornada_segunda);
 		}
 	}
+	
+	private void setEquiposComboBox(int num, int num_temporada2, int num_jornada_primera2, int num_jornada_segunda2)
+	{
+		// TODO Leer de la tabla de datos
+		int numE = 20;// DEFAULT
+		String[] eq = new String[numE];
+		for (int i = 0; i < numE; i++)
+		{
+			eq[i] = "Equipo "+i;
+		}
+		comboBoxLocales[num] = new JComboBox(eq);
+		
+		comboBoxLocales[num].addActionListener(new ActionListener() {
+		      public void actionPerformed( ActionEvent e) {
+		    		setDatoTablaLocales(e);
+		    	      }
+		});
+		comboBoxVisitantes[num] = new JComboBox(eq);
+		// TODO Hacer un metodo setDatoTablaVisitantes para modificar los datos de los visitantes
+	}
+	
+	private void inicializarResultados(int numFilas)
+	{
+		// TODO leer de la tabla de datos
+		resultados = new JTextField[numFilas];
+		
+		for (int i = 0; i < numFilas; i++)
+		{
+			resultados[i] = new JTextField("N/D");
+			resultados[i].setEditable(false);
+			resultados[i].setAlignmentX(CENTER_ALIGNMENT);
+		}
+	}
+	
+	private void inicializarConfianza(int numFilas)
+	{
+		// Leer de la tabla de datos
+		confianza = new JProgressBar[numFilas];
+		
+		for (int i = 0; i < numFilas; i++)
+		{
+			confianza[i] = new JProgressBar();
+			//confianza[i].setValue(35);
+			confianza[i].setStringPainted(true);
+			confianza[i].setString("N/D");
+		//	confianza[i].setString(confianza[i].getValue()+"%");
+		}
+	}
+	
 
 
 	
@@ -344,9 +409,9 @@ public class Interfaz extends JFrame{
 		// LOG : información
 
 		// Barra de progreso
-		jplog_barra = new JProgressBar();
-		jplog_barra.setValue(0);
-		p.add(jplog_barra);
+		//jplog_barra = new JProgressBar();
+		//jplog_barra.setValue(0);
+		//p.add(jplog_barra);
 		
 		// Boton de Actualizar
 		jplog_actualizar = new JButton("Consultar");
@@ -369,12 +434,9 @@ public class Interfaz extends JFrame{
 	}
 	
 	/** FUNCIONES PARA COMUNICARSE CON EL RESTO DEL PROGRAMA **/
-	
-	public ArrayList<String> getPartidos()
-	{
-		return equipos;
-	}
-	
+	// Crear método que cree un arrayList con la estructura "Equipo0,Equipo1" de todos los
+	// partidos que se van a jugar...
+
 	
 	/** FUNCIONES PARA EDITAR INFORMACIÓN DE LA INTERFAZ**/
 	// EDITAR JORNADA Y AÑO
@@ -388,7 +450,7 @@ public class Interfaz extends JFrame{
 	// Métodos Listener
 	public void actualizarEstructura()
 	{
-		deTablaAEstructura();
+		//deTablaAEstructura();
 	}
 	
 	public void actualizarJornada(ActionEvent e)
@@ -407,6 +469,7 @@ public class Interfaz extends JFrame{
 	    		
 	    }
 	    setJornadaAño(num_jornada_primera,num_jornada_segunda,num_temporada);
+	    // TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
 	}
 	
 	public void actualizarTemporada(ActionEvent e)
@@ -431,15 +494,29 @@ public class Interfaz extends JFrame{
 	    num_jornada_primera = 1;
 	    num_jornada_segunda = 1;
 	    setJornadaAño(num_jornada_primera, num_jornada_segunda,num_temporada);
+	 // TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
 	}
 
 	public void actualizarListaPartidos()
 	{
+		panelPrincipal.remove(panelTabla);
 		if (rbutt_uno.isSelected())
 			modo_tabla = 0; // Modo de un sólo partido
 		else
 			modo_tabla = 1; // Modo de 15 partidos
-		leerATabla(equipos);
+		panelPrincipal.add(getJPanelTabla(modo_tabla), BorderLayout.CENTER);
+		panelPrincipal.validate();
+		// TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
+	}
+	
+	private void setDatoTablaLocales(ActionEvent e)
+	{
+		//Hay que identificar que comboBox es el que ha sido seleccionado
+		JComboBox cb = (JComboBox)e.getSource();
+	    String newSelection = (String)cb.getSelectedItem();
+	    for (int i = 0; i < 1; i++)
+	    	if (comboBoxLocales[i] == cb) //tenemos el comboBox que buscabamos
+	    		datosTabla [i][LOCAL] = newSelection;
 	}
 	
 	
