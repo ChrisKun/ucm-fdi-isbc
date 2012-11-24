@@ -177,6 +177,7 @@ public class Quinielas implements StandardCBRApplication {
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
 	}
 	
+	// Este método ejecuta una consulta pedida por el usuario mediante la interfaz
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
 			String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
 		try{
