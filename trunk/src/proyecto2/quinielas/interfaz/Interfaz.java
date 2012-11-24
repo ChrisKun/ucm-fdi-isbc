@@ -31,6 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import proyecto2.quinielas.Config;
+
 import junit.awtui.ProgressBar;
 
 
@@ -51,27 +53,16 @@ public class Interfaz extends JFrame{
 	
 	public static int modo_tabla = 0; // modo de un partido (0) o modo de una jornada con los 15 partidos(1) a rellenar
 	
-	/** LEER DESDE FICHERO **/
-	public static int jornada_max_actual_primera = 7; // jornada de la temporada actual a la que se puede acceder
-	public static int jornada_max_actual_segunda = 13;
-	public final static int num_temporada_inicial = 2000;
-	public final static int num_temporada_actual = 2012;
-	
 	/** Configuracion de pantalla */
 	public final static int W = 800;
 	public final static int H = 600;
 	
 	/** Número de jornadas totales para primera y segunda división */
-	public final static int NUM_JOR_PRIMERA = 38;
-	public final static int NUM_JOR_SEGUNDA = 42;
 	public final static int PRIMERA_DIVISION = 0;
 	public final static int SEGUNDA_DIVISION = 1;
 	
 	// Elementos de la barra de información que hay que modificar
 	private JLabel jlab_jornada;
-	private int num_jornada_primera; //jornada de primera división
-	private int num_jornada_segunda; // jornada de segunda división
-	private int num_temporada; // temporada "num_temporada-(num_temporada+1)"
 	JComboBox[] comboBox_jornada; // tiene guardado los 2 desplegables de las jornadas
 	
 
@@ -87,26 +78,30 @@ public class Interfaz extends JFrame{
 	// Panel principal que hay que modificar al cambiar de modo de tabla
 	private JPanel panelPrincipal;
 	
-	//botones
-	private JButton jplog_actualizar;
-	
 	// Datos de la tabla
 	private String[][] datosTabla; 
+	private double[] datosPesos;
+	
+	// Datos de configuración
+	private Config conf;
+	
+	
+	//botones
+	private JButton jplog_actualizar;
 	
 	//private DefaultTableModel modelo;
 	//private ArrayList<String> equipos;
 	
 
 	
-	public Interfaz()
+	public Interfaz(double[] ds, Config c)
 	{
 		//DATOS POR DEFECTO, INICIALIZACION
-		num_jornada_primera = 1; //jornada
-		num_jornada_segunda = 1;
-		num_temporada = 2012;
 		
 		jlab_jornada = new JLabel();
 		comboBox_jornada = new JComboBox[2];
+		setDatosPesos(ds);
+		conf = c;
 		
 		
 		
@@ -229,10 +224,10 @@ public class Interfaz extends JFrame{
 	
 	private JComboBox getDesplegableTemporada()
 	{
-		int num_temporadas = num_temporada_actual - num_temporada_inicial + 1;
+		int num_temporadas = conf.getUltimaTemporada() - 2000 + 1;
 		String[] nom_temp = new String[num_temporadas];
 		for (int i = 0; i <num_temporadas; i++)
-			nom_temp[i] = (num_temporada_inicial+i)+"-"+(num_temporada_inicial+(i+1));
+			nom_temp[i] = (2000+i)+"-"+(2000+(i+1));
 		
 		JComboBox b = new JComboBox(nom_temp);
 		b.addActionListener(new ActionListener() {
@@ -248,18 +243,18 @@ public class Interfaz extends JFrame{
 		int n_max = 0; //número máximo de la jornada
 		switch (division)
 		{
-			case PRIMERA_DIVISION: n_max = NUM_JOR_PRIMERA; break;
-			case SEGUNDA_DIVISION: n_max = NUM_JOR_SEGUNDA; break;
+			case PRIMERA_DIVISION: n_max = conf.JORNADASPRIMERA; break;
+			case SEGUNDA_DIVISION: n_max = conf.JORNADASSEGUNDA; break;
 		}
 		
 		// Actualizamos el valor si es la temporada actual:
 		// Como máximo se muestra la jornada actual + 1
-		if (num_temporada == num_temporada_actual)
+		if (conf.getSeleccionTemporada() == conf.getUltimaTemporada())
 		{
 			switch (division)
 			{
-				case PRIMERA_DIVISION: n_max = jornada_max_actual_primera; break;
-				case SEGUNDA_DIVISION: n_max = jornada_max_actual_segunda; break;
+				case PRIMERA_DIVISION: n_max = conf.getUltimaJornadaPrimera(); break;
+				case SEGUNDA_DIVISION: n_max = conf.getUltimaJornadaSegunda(); break;
 			}
 		}
 		comboBox_jornada[division] = new JComboBox();	
@@ -342,7 +337,7 @@ public class Interfaz extends JFrame{
 		
 		for (int i = 0; i < numFilas; i++)
 		{
-			setEquiposComboBox(i,num_temporada, num_jornada_primera, num_jornada_segunda);
+			setEquiposComboBox(i,conf.getSeleccionTemporada(), conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda());
 		}
 	}
 	
@@ -428,7 +423,7 @@ public class Interfaz extends JFrame{
 	{
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
-		setJornadaAño(num_jornada_primera, num_jornada_segunda,num_temporada);
+		setJornadaAño(conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
 		p.add(jlab_jornada);
 		return p;
 	}
@@ -463,12 +458,12 @@ public class Interfaz extends JFrame{
 	    {
 	    	n_jornada = Integer.parseInt(newSelection);
 	    	if (cb == comboBox_jornada[PRIMERA_DIVISION])
-	    		num_jornada_primera = n_jornada;
+	    		conf.setSeleccionJornadaPrimera(n_jornada);
 	    	else
-	    		num_jornada_segunda = n_jornada;
+	    		conf.setSeleccionJornadaSegunda(n_jornada);
 	    		
 	    }
-	    setJornadaAño(num_jornada_primera,num_jornada_segunda,num_temporada);
+	    setJornadaAño(conf.getSeleccionJornadaPrimera(),conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
 	    // TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
 	}
 	
@@ -477,23 +472,23 @@ public class Interfaz extends JFrame{
 		@SuppressWarnings("rawtypes")
 		JComboBox cb = (JComboBox)e.getSource();
 	    String newSelection = (String)cb.getSelectedItem();
-	    // parseamos la entrada
-	    num_temporada = Integer.parseInt(newSelection.substring(0, 4));
-	    // actualizamos la temporada (por defecto a 1)
+	    // Nos quedamos solo con los 4 primeros digitos de la temporada 
+	    conf.setSeleccionTemporada(Integer.parseInt(newSelection.substring(0, 4)));
 	    
-		if (num_temporada == num_temporada_actual)
+	    
+		if (conf.getSeleccionTemporada().equals(conf.getUltimaTemporada()))
 		{
-			setNumElemComboBoxJornada(jornada_max_actual_primera,PRIMERA_DIVISION);
-			setNumElemComboBoxJornada(jornada_max_actual_segunda,SEGUNDA_DIVISION);
+			setNumElemComboBoxJornada(conf.getUltimaJornadaPrimera(),PRIMERA_DIVISION);
+			setNumElemComboBoxJornada(conf.getUltimaJornadaSegunda(),SEGUNDA_DIVISION);
 		}
 		else
 		{
-			setNumElemComboBoxJornada(NUM_JOR_PRIMERA,PRIMERA_DIVISION);
-			setNumElemComboBoxJornada(NUM_JOR_SEGUNDA,SEGUNDA_DIVISION);
+			setNumElemComboBoxJornada(conf.JORNADASPRIMERA,PRIMERA_DIVISION);
+			setNumElemComboBoxJornada(conf.JORNADASSEGUNDA,SEGUNDA_DIVISION);
 		}
-	    num_jornada_primera = 1;
-	    num_jornada_segunda = 1;
-	    setJornadaAño(num_jornada_primera, num_jornada_segunda,num_temporada);
+		conf.setSeleccionJornadaPrimera(1);
+		conf.setSeleccionJornadaSegunda(1);
+	    setJornadaAño(conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
 	 // TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
 	}
 
@@ -518,13 +513,15 @@ public class Interfaz extends JFrame{
 	    	if (comboBoxLocales[i] == cb) //tenemos el comboBox que buscabamos
 	    		datosTabla [i][LOCAL] = newSelection;
 	}
-	
-	
-	public static void main(String[] args)
-	{
-		JOptionPane.showMessageDialog(null, "ACTUALIZANDO");
-		Interfaz i = new Interfaz();
+
+	public double[] getDatosPesos() {
+		return datosPesos;
 	}
+
+	public void setDatosPesos(double[] ds) {
+		this.datosPesos = ds;
+	}
+	
 	
 
 }
