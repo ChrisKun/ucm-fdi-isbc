@@ -47,14 +47,14 @@ public class Config {
 	/* FUNCIONES */ 
 	public void rellenaClasificacionesPrimera() {
 		if (ultimaTemporada < 2000) return;
-		int numeroTemporadas = ultimaTemporada - 2000;
+		int numeroTemporadas = (ultimaTemporada - 2000) + 1;
 		clasificacionesPrimera = new String[numeroTemporadas][JORNADASPRIMERA][NUMEROEQUIPOSPRIMERA];
 		rellenaEstructura(clasificacionesPrimera, 1);
 	}
 	
 	public void rellenaClasificacionesSegunda() {
 		if (ultimaTemporada < 2000) return;
-		int numeroTemporadas = ultimaTemporada - 2000;
+		int numeroTemporadas = (ultimaTemporada - 2000) + 1;
 		clasificacionesPrimera = new String[numeroTemporadas][JORNADASSEGUNDA][NUMEROEQUIPOSSEGUNDA];
 		rellenaEstructura(clasificacionesSegunda, 2);
 	}
@@ -67,8 +67,8 @@ public class Config {
 		try {
 			String file;
 			// Seleccion del archivo
-			if (liga == 1) file = "clasificacionesPrimera.txt";
-			else file = "clasificacionesPrimera.txt";
+			if (liga == 1) file = "clasPrimera.txt";
+			else file = "clasSegunda.txt";
 			
 			BufferedReader br = new BufferedReader(new FileReader(".\\src\\proyecto2\\quinielas\\datos\\" + file));
 			String line = null;
@@ -77,16 +77,20 @@ public class Config {
 				if (line.startsWith("A") && line.length() == 8) {
 					i=0;
 					String[] tokens = line.split("A|J");		
-					temporada = Integer.valueOf(tokens[0]) - 2000;
-					jornada = Integer.valueOf(tokens[1]);
+					temporada = Integer.valueOf(tokens[1]) - 2000;
+					jornada = Integer.valueOf(tokens[2]);
+					if (temporada == 12) {
+						i=0;
+					}
 				} else {
-					clasificacionesPrimera[temporada][jornada][i] = line;
+					// La jornada en el array se almacena siempre empezando en el 0, asi que la jornada tiene que ser: jornada-1
+					clasificacionesPrimera[temporada][jornada-1][i] = line;
 					i++;
 				}
 			}
 			br.close();
 		} catch (Exception e) {
-			System.err.println("Error lectura en temporada: "+temporada+" jornada: "+ jornada + "posicion de equipo: " + i);
+			System.err.println("Error lectura en temporada: "+temporada+" jornada: "+ jornada + " posicion de equipo: " + i);
 			e.printStackTrace();
 		}
 	}
@@ -134,11 +138,13 @@ public class Config {
 	public String[][][] getClasificacionesPrimera() {
 		return clasificacionesPrimera;
 	}
-	/* MAIN PARA PRUEBAS
+	/* MAIN PARA PRUEBAS */
+
 	public static void main (String args[]) {
 		Config c = new Config();
 		c.rellenaClasificacionesPrimera();
+		c.rellenaClasificacionesSegunda();
 	}
-	*/
+
 	
 }
