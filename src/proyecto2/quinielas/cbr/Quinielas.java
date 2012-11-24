@@ -196,9 +196,11 @@ public class Quinielas implements StandardCBRApplication {
 			String[] tokens = null;
 			String[] tokensLocal = null;
 			String[] tokensVisitante = null;
+			// Buscamos para cada par de equipos del arrayList su clasificacion
 			while (iterador.hasNext()) {
 				tokens = iterador.next().split(",");
 				tokensLocal = null;
+				// Buscamos la clasifiacion de cada uno
 				for (String i: clasificacionesPrimera[temporada-2000][jornada]) {					
 					if ((i != null)	&& i.startsWith(tokens[0])) {
 						tokensLocal = i.split((","));
@@ -206,17 +208,20 @@ public class Quinielas implements StandardCBRApplication {
 					if ((i != null)	&& i.startsWith(tokens[1])) {
 						tokensVisitante = i.split((","));
 					}
+					if (tokensLocal != null && tokensVisitante != null) break;
 				}			
+				// Rellenamos la clasificacion
 				for (int i = 0;i<tokensLocal.length-2;i++) {
 					clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
 					clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
 				}
+				// Rellenamos la query con los valores apropiados
 				query.setDescription(new DescripcionQuinielas(Integer.valueOf(temporada),tokens[0],clasifLocal,tokens[1],clasifVisitante));
 				//Ejecutar el ciclo
 				cycle(query);
 			}
-		} catch (Exception e) {
-			org.apache.commons.logging.LogFactory.getLog(TravelRecommender.class).error(e);
+		} catch (Exception e) {			
+			e.printStackTrace();
 		}
 		return listaPredicciones;
 	}	

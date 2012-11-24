@@ -9,25 +9,6 @@ import proyecto2.quinielas.cbr.Prediccion;
 import proyecto2.quinielas.cbr.Quinielas;
 import proyecto2.quinielas.cbr.ValidacionCruzada;
 
-/**
- * 
- * @author Xavi
- *
- * Jornada:
- * 		AaaaaJjj
- * 		Ejemplo: A2007J03
- * 
- * Clasificaciones:
- * 		20x Clasificacion (en primera)
- * 		22x Clasificacion (en segunda)
- * 
- * Formato fichero:
- * 		Para todas las jornadas{
- * 			Jornada
- * 			Clasificaciones
- * 		}
- */
-
 public class Principal {
 	
 	// TODO Raul, aqui te dejo las constantes para que te sea más comodo operar
