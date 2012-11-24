@@ -68,11 +68,11 @@ public class Principal {
 		
 		ValidacionCruzada validador = new ValidacionCruzada(); 
 		try {
-			if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
+			//if (JOptionPane.showConfirmDialog(null, "Hacer HoldOutEval?")==JOptionPane.OK_OPTION)
 				validador.HoldOutEvaluation(principal.getListaPesos());
-			if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
-					validador.LeaveOneOutEvaluation(principal.getListaPesos());
-			if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
+			//if (JOptionPane.showConfirmDialog(null, "Hacer LeaveOneOutEval?")==JOptionPane.OK_OPTION)
+				validador.LeaveOneOutEvaluation(principal.getListaPesos());
+			//if (JOptionPane.showConfirmDialog(null, "Hacer SameSplitEval?")==JOptionPane.OK_OPTION)
 				validador.SameSplitEvaluation(principal.getListaPesos());
 		} catch	(Exception e) {
 			System.err.println(e.getMessage());
