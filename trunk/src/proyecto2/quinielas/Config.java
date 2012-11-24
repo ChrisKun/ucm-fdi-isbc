@@ -58,7 +58,6 @@ public class Config {
 		clasificacionesSegunda = new String[numeroTemporadas][JORNADASSEGUNDA][NUMEROEQUIPOSSEGUNDA];
 		rellenaEstructura(clasificacionesSegunda, 2);
 	}
-	// TODO Comprobar que funciona con los ficheros de Xavi
 	private void rellenaEstructura (String[][][] clasificaciones, int liga) {
 		int temporada = 0;
 		int jornada = 0;
