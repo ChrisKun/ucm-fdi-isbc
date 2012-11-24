@@ -337,21 +337,62 @@ public class Interfaz extends JFrame{
 		
 		for (int i = 0; i < numFilas; i++)
 		{
-			setEquiposComboBox(i,conf.getSeleccionTemporada(), conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda());
+			setEquiposComboBox(i,conf);
 		}
 	}
 	
-	private void setEquiposComboBox(int num, int num_temporada2, int num_jornada_primera2, int num_jornada_segunda2)
+	private void setEquiposComboBox(int num, Config c)
 	{
-		// TODO Leer de la tabla de datos
-		int numE = 20;// DEFAULT
+		int ind; // auxiliar para recorrer las jornadas
+		int n = c.getSeleccionTemporada();
+		// Leer de la tabla de datos
+		String[][][] clasfPrimera = c.getClasificacionesPrimera();
+		if (c.getSeleccionTemporada()>=2000)
+			n = n - 2000;
+		String lineaClasificacion = null;
+		
+		// Sumamos el total de equipos que puede haber
+		int numE = c.NUMEROEQUIPOSPRIMERA+c.NUMEROEQUIPOSSEGUNDA;
 		String[] eq = new String[numE];
-		for (int i = 0; i < numE; i++)
+		
+		// Rellenamos para los equipos de primera divisón
+		for (int i = 0; i < c.NUMEROEQUIPOSPRIMERA; i++)
 		{
-			eq[i] = "Equipo "+i;
+			ind = 0;
+			lineaClasificacion = clasfPrimera[n][ind][i];
+			
+			while (lineaClasificacion == null) // Sólo en caso de que no haya informacion en la temporada 0
+			{
+				lineaClasificacion = clasfPrimera[n][ind][i];
+				ind++;
+			}
+		
+			eq[i] = (lineaClasificacion.split(",")[0]);
 		}
+		
+		// Hacemos lo mismo para los equipos de la segunda división
+		String[][][] clasfSegunda = c.getClasificacionesSegunda();
+		ind = 0;
+		
+		for (int j = 0; j < c.NUMEROEQUIPOSSEGUNDA; j++)
+		{
+			ind = 0;
+			lineaClasificacion = clasfSegunda[n][ind][j];
+			
+			while (lineaClasificacion == null) // Sólo en caso de que no haya informacion en la temporada 0
+			{
+				lineaClasificacion = clasfSegunda[n][ind][j];
+				ind++;
+			}
+			
+			
+			eq[j+c.NUMEROEQUIPOSPRIMERA] = (lineaClasificacion.split(",")[0]);
+		}
+		
+		// Ahora con la lista de todos los equipos, creamos el JComboBox
 		comboBoxLocales[num] = new JComboBox(eq);
 		
+		// Y le añadimos el listener para cuando el usuario modifique algo
 		comboBoxLocales[num].addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
 		    		setDatoTablaLocales(e);
@@ -419,8 +460,10 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
+	/** Panel con la información de la temporada y las jornadas */
 	private JPanel getJLabelTemporadaJornada()
 	{
+
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
 		setJornadaAño(conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
@@ -438,6 +481,8 @@ public class Interfaz extends JFrame{
 	public void setJornadaAño(int jornada_p, int jornada_s, int año)
 	{
 		// Font("Titulo fuente", "Atributos", "Tamaño"
+		if (año == 0)
+			año = 2000;
 		jlab_jornada.setFont(new Font("Verdana", Font.BOLD, 22));
 		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada 1ºDiv : "+jornada_p+" ; Jornada 2ºDiv : "+jornada_s);
 	}
@@ -489,7 +534,7 @@ public class Interfaz extends JFrame{
 		conf.setSeleccionJornadaPrimera(1);
 		conf.setSeleccionJornadaSegunda(1);
 	    setJornadaAño(conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
-	 // TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
+	    actualizarListaPartidos();
 	}
 
 	public void actualizarListaPartidos()
