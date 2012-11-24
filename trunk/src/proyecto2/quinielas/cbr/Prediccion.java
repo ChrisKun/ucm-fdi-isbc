@@ -1,6 +1,6 @@
 package proyecto2.quinielas.cbr;
 
-import proyecto2.quinielas.representacion.SolucionQuinielas.UnoXDos;
+import proyecto2.quinielas.cbr.SolucionQuinielas.UnoXDos;
 
 /*
  * Clase que devuelve el resultado con una medida de confianza entre [0,1] 

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.JOptionPane;
 
-import proyecto2.quinielas.representacion.DescripcionQuinielas;
-import proyecto2.quinielas.representacion.SolucionQuinielas;
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
