@@ -2,6 +2,7 @@ package proyecto2.quinielas.datosWeb;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,28 +21,44 @@ public class ParserWeb {
 	private static FileWriter fstream_esp;
 	private static FileWriter fstream_conf_out;
 	private static FileReader fstream_conf_in;
+	private static FileWriter fstream_clasP;
+	private static FileWriter fstream_clasS;
 	private static BufferedWriter out;
 	private static BufferedWriter out_err;
 	private static BufferedWriter out_esp;
 	private static BufferedWriter out_conf_out;
 	private static BufferedReader out_conf_in;
+	private static BufferedWriter out_clasP;
+	private static BufferedWriter out_clasS;
 	
 	public static void main(String[] args) throws IOException{
 
+		File carpeta = new File(".\\src\\proyecto2\\quinielas\\datos");
+		if (!carpeta.exists()) {
+			carpeta.mkdir();
+		}
+		
 		fstream = 		new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\infoMarca.txt",true);
 		fstream_err = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\errores.txt");
 		fstream_esp = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\porJugar.txt");
+		fstream_clasP =	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\clasPrimera.txt");
+		fstream_clasS =	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\clasSegunda.txt");
+		
 		out = 			new BufferedWriter(fstream);
 		out_err = 		new BufferedWriter(fstream_err);
 		out_esp = 		new BufferedWriter(fstream_esp);
+		out_clasP = 	new BufferedWriter(fstream_clasP);
+		out_clasS =		new BufferedWriter(fstream_clasS);
 		
 		int anyoIni = 2000;
 		//TODO añadir el año en el que estamos
 		int anyoFin = 2012;
-		int ultJornPrim=0, ultJornSeg=0;
-		int maxJornPrim=0, maxJornSeg=0;
+		int ultJornPrim=1, ultJornSeg=1;
+		int maxJornPrim=1, maxJornSeg=1;
 		
 		//TODO Comprobar que hay un fichero llamado datos.txt
+		
+		
 		try{
 			fstream_conf_in  = new FileReader(".\\src\\proyecto2\\quinielas\\datos\\config.txt");
 			out_conf_in =	new BufferedReader(fstream_conf_in);
@@ -49,9 +66,6 @@ public class ParserWeb {
 			anyoIni = Integer.parseInt(out_conf_in.readLine());
 			ultJornPrim = Integer.parseInt(out_conf_in.readLine());
 			ultJornSeg = Integer.parseInt(out_conf_in.readLine());
-			System.out.println(anyoIni);
-			System.out.println(maxJornPrim);
-			System.out.println(maxJornSeg);
 		
 			out_conf_in.close();
 		} catch (IOException e){
@@ -82,10 +96,6 @@ public class ParserWeb {
 			System.err.println("No se puede acceder a la pagina principal de Segunda division");
 		}
 
-		out_conf_out.write(anyoFin+"\n");
-		out_conf_out.write(maxJornPrim+"\n");
-		out_conf_out.write(maxJornSeg+"\n");
-
 		for (int i=anyoIni;i<anyoFin;i++){
 			for (int j=1;j<=38;j++){
 				anyadirJornada("primera",i,j);
@@ -101,20 +111,17 @@ public class ParserWeb {
 			anyadirJornada("segunda",anyoFin,j);
 		}
 
+		maxJornPrim++; maxJornSeg++;
+		out_conf_out.write(anyoFin+"\n");
+		out_conf_out.write(maxJornPrim+"\n");
+		out_conf_out.write(maxJornSeg+"\n");
+		
 		out.close();
 		out_err.close();
 		out_esp.close();
 		out_conf_out.close();
-		/**
-		 * Ficheros
-		 * 	- Base de casos
-		 *  - Clasificacion equipos segun año y jornada (1ª y 2ª)
-		 *  ----- AaaaaJjj
-		 *  --------- A2012J01
-		 *  - Fichero de estado:
-		 *  ----- Jornada
-		 *  ----- Anyo
-		 */
+		out_clasP.close();
+		out_clasS.close();
 	}
 
 
@@ -182,6 +189,25 @@ public class ParserWeb {
 		}
 
 		Jornada jornada = new Jornada(anyo, partidos, clasificacion);
+		
+		// Guardar clasificaciones en formato AaaaaJjj
+		String s_jorn;
+		if (jorn<10) 
+			s_jorn = "0" + String.valueOf(jorn);
+		else
+			s_jorn = String.valueOf(jorn);
+		if (categoria == "primera"){
+			out_clasP.write("A"+anyo+"J"+s_jorn+"\n");
+			for (Clasificacion c: clasificacion){
+				out_clasP.write(c.toFile()+"\n");
+			}
+		}else{
+			out_clasS.write("A"+anyo+"J"+s_jorn+"\n");
+			for (Clasificacion c: clasificacion){
+				out_clasS.write(c.toFile()+"\n");
+			}
+		}
+		
 		// Procesar jornada
 		ArrayList<String> resultados = jornada.toFile();
 		if (resultados.isEmpty()) return;
@@ -189,4 +215,14 @@ public class ParserWeb {
 			out.write(s+"\n");
 		}
 	}
+
+	public void inicializarDatos(){
+		
+	}
+	
+	public void inicializarFicheros(){
+		
+		
+	}
+
 }
