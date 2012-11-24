@@ -123,7 +123,6 @@ public class ConnectorQuinielas implements Connector {
 
 	@Override
 	public Collection<CBRCase> retrieveSomeCases(CaseBaseFilter filter) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
