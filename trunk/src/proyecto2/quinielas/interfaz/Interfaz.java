@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -25,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -141,7 +143,7 @@ public class Interfaz extends JFrame{
 		panelPrincipal.setLayout(new BorderLayout());
 		panelPrincipal.add(getPanelInformacion(), BorderLayout.NORTH);
 		panelPrincipal.add(getJPanelTabla(modo_tabla), BorderLayout.CENTER);
-		panelPrincipal.add(getPanelLog(), BorderLayout.SOUTH);
+		panelPrincipal.add(getPanelLogYPesos(), BorderLayout.SOUTH);
 		panelPrincipal.validate();
 		return panelPrincipal;
 	}
@@ -491,14 +493,30 @@ public class Interfaz extends JFrame{
 
 	
 	// Panel donde está el log para cargar resultados, una barra para cargar y los botones
-	/** RETOCAR MÉTODO: AHORA ESTÁ CHAPUZA **/
-	private JPanel getPanelLog()
+	/** TODO RETOCAR MÉTODO: AHORA ESTÁ CHAPUZA E INCOMPLETO **/
+	private JPanel getPanelLogYPesos()
 	{
 		// Definición del panel
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
 
+		JSlider j = new JSlider(JSlider.HORIZONTAL, 0, 1000, 675);
+		j.setPaintLabels(true);
+		//j.setPaintTicks(true);
+		j.setPaintTrack(true);
+		Hashtable labelTable = new Hashtable();
+		labelTable.put( new Integer( 0 ), new JLabel("0") );
+		labelTable.put( new Integer( 1000 ), new JLabel("1") );
+		j.setLabelTable( labelTable );
+
+		j.setMajorTickSpacing(10);
+		j.setMinorTickSpacing(1);
 		
+		double i = j.getValue();
+		i = i/1000;
+		
+		JTextField o = new JTextField(""+i);
+		o.setEditable(false);
 		// LOG : información
 
 		// Barra de progreso
@@ -514,6 +532,8 @@ public class Interfaz extends JFrame{
 		    	      }
 		      });
 		p.add(jplog_actualizar);
+		p.add(j);
+		p.add(o);
 		return p;
 	}
 	
