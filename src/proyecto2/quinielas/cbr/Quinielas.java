@@ -178,6 +178,7 @@ public class Quinielas implements StandardCBRApplication {
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
 	}
 	
+	// TODO Ver como va con la primera jornada -> Como lo pide la interfaz??
 	// Este método ejecuta una consulta pedida por el usuario mediante la interfaz
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
 			String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
@@ -203,13 +204,16 @@ public class Quinielas implements StandardCBRApplication {
 				tokens = iterador.next().split(",");
 				tokensLocal = null;
 				// Buscamos la clasifiacion de cada uno
-				for (String i: clasificacionesPrimera[temporada-2000][jornada]) {					
+				for (String i: clasificacionesPrimera[temporada-2000][jornada]) {		
+					// Buscamos el local
 					if ((i != null)	&& i.startsWith(tokens[0])) {
 						tokensLocal = i.split((","));
 					}
+					// Buscamos el visitante
 					if ((i != null)	&& i.startsWith(tokens[1])) {
 						tokensVisitante = i.split((","));
 					}
+					// Si encontramos ambos, paramos
 					if (tokensLocal != null && tokensVisitante != null) break;
 				}			
 				// Rellenamos la clasificacion
