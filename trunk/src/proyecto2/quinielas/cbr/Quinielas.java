@@ -196,32 +196,39 @@ public class Quinielas implements StandardCBRApplication {
 			Integer[] clasifVisitante = {0,0,0,0,0,0,0};			
 			// Iteramos los partidos pedidos
 			Iterator<String> iterador = equipos.iterator();
+
 			String[] tokens = null;
 			String[] tokensLocal = null;
 			String[] tokensVisitante = null;
+			
 			// Buscamos para cada par de equipos del arrayList su clasificacion
-			while (iterador.hasNext()) {
+			while (iterador.hasNext()) {	
+				// Sacamos los nombres de ambos equipos tokens[0] = local, tokens[1] = visitante
 				tokens = iterador.next().split(",");
-				tokensLocal = null;
-				// Buscamos la clasifiacion de cada uno
-				for (String i: clasificacionesPrimera[temporada-2000][jornada]) {		
-					// Buscamos el local
-					if ((i != null)	&& i.startsWith(tokens[0])) {
-						tokensLocal = i.split((","));
+				// Rellenamos la clasificacion en caso de que la jornada sea mayor que la primera	
+				// ya que los datos para predecir la primera jornada sería la jornada 0, que es tener las estadisticas a 0
+				if (jornada >  1) {	
+					tokensLocal = null;
+					tokensVisitante = null;
+					// Buscamos la clasifiacion de cada uno en la temporada pedida, pero en la jornada ANTERIOR
+					for (String i: clasificacionesPrimera[temporada-2000][jornada-1]) {		
+						// Buscamos la clasificación del local
+						if ((i != null)	&& i.startsWith(tokens[0])) {
+							tokensLocal = i.split((","));
+						}
+						// Buscamos la clasificación del visitante
+						if ((i != null)	&& i.startsWith(tokens[1])) {
+							tokensVisitante = i.split((","));
+						}
+						// Si encontramos ambos, paramos
+						if (tokensLocal != null && tokensVisitante != null) break;
+					}			
+					// Rellenamos los valores de las clasificaciones
+					for (int i = 0;i<tokensLocal.length-2;i++) {
+						clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
+						clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
 					}
-					// Buscamos el visitante
-					if ((i != null)	&& i.startsWith(tokens[1])) {
-						tokensVisitante = i.split((","));
-					}
-					// Si encontramos ambos, paramos
-					if (tokensLocal != null && tokensVisitante != null) break;
-				}			
-				// Rellenamos la clasificacion
-				for (int i = 0;i<tokensLocal.length-2;i++) {
-					clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
-					clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
 				}
-				
 				// Rellenamos la query con los valores apropiados
 				query.setDescription(new DescripcionQuinielas(Integer.valueOf(temporada),tokens[0],clasifLocal,tokens[1],clasifVisitante));
 				
