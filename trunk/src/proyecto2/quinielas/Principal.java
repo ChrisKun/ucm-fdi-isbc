@@ -48,7 +48,7 @@ public class Principal {
 	/* AUXILIARES */
 	private void iniciaPesos () {
 		listaPesos = new double[DescripcionQuinielas.NUMCAMPOS];	
-		listaPesos[TEMPORADA] = 0.3;
+		listaPesos[TEMPORADA] = 0.4;
 		listaPesos[1] = 0.02;
 		listaPesos[2] = 0.02;
 		listaPesos[3] = 0.2;
@@ -61,7 +61,7 @@ public class Principal {
 		listaPesos[10] = 0.01;
 		listaPesos[11] =  0.3;
 		listaPesos[12] = 0.3;
-		listaPesos[13] = 0.2;
+		listaPesos[13] = 0.35;
 		listaPesos[14] = 0.4;
 		listaPesos[15] = 0.4;
 		listaPesos[16] = 0.2;	

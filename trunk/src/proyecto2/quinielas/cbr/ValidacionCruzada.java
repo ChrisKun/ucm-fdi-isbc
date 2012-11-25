@@ -2,6 +2,8 @@ package proyecto2.quinielas.cbr;
 
 import java.util.Vector;
 
+import proyecto2.quinielas.Principal;
+
 import jcolibri.evaluation.Evaluator;
 import jcolibri.evaluation.evaluators.*;
 
@@ -74,6 +76,14 @@ public class ValidacionCruzada {
 		
 		System.out.println(Evaluator.getEvaluationReport());
 		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quinielas - SameSplitEvaluation", false);
+    }
+    
+    public static void main (String[] args) {
+    	ValidacionCruzada v = new ValidacionCruzada();
+    	Principal p = new Principal();
+    	v.HoldOutEvaluation(p.getListaPesos(),15,1);
+    	v.LeaveOneOutEvaluation(p.getListaPesos());
+    	v.SameSplitEvaluation(p.getListaPesos(),14);
     }
 
 }
