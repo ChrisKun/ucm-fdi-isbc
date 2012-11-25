@@ -182,6 +182,8 @@ public class Quinielas implements StandardCBRApplication {
 	// Este método ejecuta una consulta pedida por el usuario mediante la interfaz
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
 			String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
+		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar
+		jornada = jornada - 1;
 		try{
 			//Configuración
 			configure();
