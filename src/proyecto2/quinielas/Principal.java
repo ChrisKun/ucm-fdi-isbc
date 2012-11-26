@@ -12,7 +12,7 @@ import proyecto2.quinielas.interfaz.Interfaz;
 
 public class Principal {
 	
-	// TODO Raul, aqui te dejo las constantes para que te sea más comodo operar
+	// Constantes para que sea más comodo operar
 	public final static int TEMPORADA = 0;
 	public final static int LOCAL = 1;
 	public final static int VISITANTE = 2;
@@ -31,6 +31,26 @@ public class Principal {
 	public final static int GFAVORVISITANTE = 15;
 	public final static int GCONTRAVISITANTE = 16;
 	
+	// Pesos por defecto
+	public final static double PESOTEMPORADA = 0.4;
+	public final static double PESOLOCAL = 0.02;
+	public final static double PESOVISITANTE = 0.02;
+	public final static double PESOPUNTOSLOCAL = 0.2;
+	public final static double PESOPGLOCAL = 0.1;
+	public final static double PESOPELOCAL = 0.025;
+	public final static double PESOPPLOCAL = 0.05;
+	public final static double PESOPUNTOSVISITANTE = 0.25;
+	public final static double PESOPGVISITANTE = 0.15;
+	public final static double PESOPEVISITANTE = 0.025;
+	public final static double PESOPPVISITANTE = 0.01;
+	public final static double PESOPOSLOCAL = 0.3;
+	public final static double PESOPOSVISITANTE = 0.3;
+	public final static double PESOGFAVORLOCAL = 0.35;
+	public final static double PESOGCONTRALOCAL = 0.4;
+	public final static double PESOGFAVORVISITANTE = 0.4;
+	public final static double PESOGCONTRAVISITANTE = 0.2;
+	
+	
 	/* ATRIBUTOS */
 	double[] listaPesos;
 	
@@ -48,23 +68,23 @@ public class Principal {
 	/* AUXILIARES */
 	private void iniciaPesos () {
 		listaPesos = new double[DescripcionQuinielas.NUMCAMPOS];	
-		listaPesos[TEMPORADA] = 0.4;
-		listaPesos[1] = 0.02;
-		listaPesos[2] = 0.02;
-		listaPesos[3] = 0.2;
-		listaPesos[4] = 0.1;
-		listaPesos[5] = 0.025;
-		listaPesos[6] = 0.05;
-		listaPesos[7] = 0.25;
-		listaPesos[8] = 0.15;
-		listaPesos[9] = 0.025;
-		listaPesos[10] = 0.01;
-		listaPesos[11] =  0.3;
-		listaPesos[12] = 0.3;
-		listaPesos[13] = 0.35;
-		listaPesos[14] = 0.4;
-		listaPesos[15] = 0.4;
-		listaPesos[16] = 0.2;	
+		listaPesos[TEMPORADA] = PESOTEMPORADA;
+		listaPesos[LOCAL] = PESOLOCAL;
+		listaPesos[VISITANTE] = PESOVISITANTE;
+		listaPesos[PUNTOSLOCAL] = PESOPUNTOSLOCAL;
+		listaPesos[PGLOCAL] = PESOPGLOCAL;
+		listaPesos[PELOCAL] = PESOPELOCAL;
+		listaPesos[PPLOCAL] = PESOPPLOCAL;
+		listaPesos[PUNTOSVISITANTE] = PESOPUNTOSVISITANTE;
+		listaPesos[PGVISITANTE] = PESOPGVISITANTE;
+		listaPesos[PEVISITANTE] = PESOPEVISITANTE;
+		listaPesos[PPVISITANTE] = PESOPPVISITANTE;
+		listaPesos[POSLOCAL] =  PESOPOSLOCAL;
+		listaPesos[POSVISITANTE] = PESOPOSVISITANTE;
+		listaPesos[GFAVORLOCAL] = PESOGFAVORLOCAL;
+		listaPesos[GCONTRALOCAL] = PESOGCONTRALOCAL;
+		listaPesos[GFAVORVISITANTE] = PESOGFAVORVISITANTE;
+		listaPesos[GCONTRAVISITANTE] = PESOGCONTRAVISITANTE;	
 	}
 	
 	public static void main (String args[]) {
@@ -88,7 +108,7 @@ public class Principal {
 		ArrayList<String> a = new ArrayList<String>();
 		a.add("Valencia,Málaga");
 		a.add("Espanyol,Rayo");
-		Interfaz i = new Interfaz(principal.getListaPesos(),c);
+		Interfaz i = new Interfaz(principal.getListaPesos(),c,q);
 		
 		//q.querysCBR(a,2012,4,principal.listaPesos,c.getClasificacionesPrimera(),c.getClasificacionesSegunda());
 		//ValidacionCruzada validador = new ValidacionCruzada(); 
