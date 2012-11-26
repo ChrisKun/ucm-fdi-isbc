@@ -38,6 +38,8 @@ import javax.swing.table.TableModel;
 
 import proyecto2.quinielas.Config;
 import proyecto2.quinielas.Principal;
+import proyecto2.quinielas.cbr.Prediccion;
+import proyecto2.quinielas.cbr.Quinielas;
 
 import junit.awtui.ProgressBar;
 
@@ -89,25 +91,17 @@ public class Interfaz extends JFrame{
 	private Config conf;
 	
 	// Datos de la tabla
-	private String[][] datosTabla; 
+	//private String[][] datosTabla; 
 	
 	// Datos de los pesos
 	private double[] datosPesos;
 	private JTextField[] campoPesos;
 	private JSlider[] sliderPesos; // para poder escucharlos
 	
-
+	//Quinielas
+	Quinielas q;
 	
-	
-	//botones
-	private JButton jplog_actualizar;
-	
-	//private DefaultTableModel modelo;
-	//private ArrayList<String> equipos;
-	
-
-	
-	public Interfaz(double[] ds, Config c)
+	public Interfaz(double[] ds, Config c, Quinielas q)
 	{
 		// Inicialización
 		jlab_jornada = new JLabel();
@@ -116,6 +110,7 @@ public class Interfaz extends JFrame{
 		campoPesos = new JTextField[datosPesos.length];
 		sliderPesos = new JSlider[datosPesos.length];
 		conf = c;
+		this.q = q;
 		
 		// Configuración de la ventana
 		this.setVisible(true);
@@ -324,7 +319,7 @@ public class Interfaz extends JFrame{
 		//panelTabla.add(o);
 		
 		// añadimos los equipos correspondientes
-		inicializarDatosPartidos(numF-1);
+		//inicializarDatosPartidos(numF-1);
 		inicializarDesplegablesEquipoTabla(numF-1);
 		inicializarResultados(numF-1);
 		inicializarConfianza(numF-1);
@@ -393,12 +388,12 @@ public class Interfaz extends JFrame{
 	 *  por el resto del programa
 	 */
 	
-	private void inicializarDatosPartidos(int numFilas)
-	{
-		datosTabla = new String[numFilas][4];
+	//private void inicializarDatosPartidos(int numFilas)
+	//{
+	//	datosTabla = new String[numFilas][4];
 		// TODO SET DATOS POR DEFECTO leer de la estructura pasada por parametro con equipos temporada = 2012 y jornadas 1 y 1
 		// Datos por defecto para resultado y confianza a "-1"
-	}
+	//}
 	
 	private void inicializarDesplegablesEquipoTabla(int numFilas)
 	{
@@ -463,11 +458,11 @@ public class Interfaz extends JFrame{
 		comboBoxLocales[num] = new JComboBox(eq);
 		
 		// Y le añadimos el listener para cuando el usuario modifique algo
-		comboBoxLocales[num].addActionListener(new ActionListener() {
-		      public void actionPerformed( ActionEvent e) {
-		    		setDatoTablaLocales(e);
-		    	      }
-		});
+		//comboBoxLocales[num].addActionListener(new ActionListener() {
+		//      public void actionPerformed( ActionEvent e) {
+		//    		setDatoTablaLocales(e);
+		//    	      }
+		//});
 		comboBoxVisitantes[num] = new JComboBox(eq);
 		// TODO Hacer un metodo setDatoTablaVisitantes para modificar los datos de los visitantes
 	}
@@ -512,17 +507,32 @@ public class Interfaz extends JFrame{
 		p.setLayout(new BorderLayout());
 		
 		p.add(getPanelCompletoPesos(), BorderLayout.CENTER);
-
+		p.add(getSubPanelBotones(), BorderLayout.SOUTH);
+		return p;
+	}
+	
+	/** SUBPANEL con los botones de consultar y poner pesos a default **/
+	private JPanel getSubPanelBotones()
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout());
 		// Boton de Consultar
-		jplog_actualizar = new JButton("Consultar"); //TODO Creo que se puede dejar local este boton
-		jplog_actualizar.addActionListener(new ActionListener() {
-		      public void actionPerformed( ActionEvent evt ) {
-		    		actualizarEstructura();
-		    	      }
-		      });
-		p.add(jplog_actualizar, BorderLayout.SOUTH);
-		//p.add(j);
-		//p.add(o);
+		JButton botonConsulta = new JButton("Consultar");
+		botonConsulta.addActionListener(new ActionListener() {
+				public void actionPerformed( ActionEvent evt ) {
+				    	accionesBotones(evt);
+				    	   }
+				});
+		p.add(botonConsulta);
+		
+		//Boton de Poner pesos a default
+		JButton botonDefault = new JButton("Reiniciar Pesos");
+		botonDefault.addActionListener(new ActionListener() {
+			public void actionPerformed( ActionEvent evt ) {
+			    	accionesBotones(evt);
+			    	   }
+			});
+		p.add(botonDefault);
 		return p;
 	}
 	
@@ -654,12 +664,7 @@ public class Interfaz extends JFrame{
 		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada 1ºDiv : "+jornada_p+" ; Jornada 2ºDiv : "+jornada_s);
 	}
 
-	// Métodos Listener
-	public void actualizarEstructura()
-	{
-		//deTablaAEstructura();
-	}
-	
+	// Métodos Listener	
 	public void actualizarJornada(ActionEvent e)
 	{
 		int n_jornada = 1;
@@ -728,14 +733,80 @@ public class Interfaz extends JFrame{
 		// TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
 	}
 	
-	private void setDatoTablaLocales(ActionEvent e)
-	{
+	//TODO private void setDatoTablaLocales(ActionEvent e)
+	//{
 		//Hay que identificar que comboBox es el que ha sido seleccionado
-		JComboBox cb = (JComboBox)e.getSource();
-	    String newSelection = (String)cb.getSelectedItem();
-	    for (int i = 0; i < 1; i++)
-	    	if (comboBoxLocales[i] == cb) //tenemos el comboBox que buscabamos
-	    		datosTabla [i][LOCAL] = newSelection;
+	//	JComboBox cb = (JComboBox)e.getSource();
+	//    String newSelection = (String)cb.getSelectedItem();
+	//    for (int i = 0; i < 1; i++)
+	//    	if (comboBoxLocales[i] == cb) //tenemos el comboBox que buscabamos
+	//    		datosTabla [i][LOCAL] = newSelection;
+	//}
+	
+	public void accionesBotones(ActionEvent e)
+	{
+		JButton b = (JButton)e.getSource();
+		// Para ver el modo en el que estamos
+		
+		if (b.getText().equals("Consultar"))
+		{
+			ArrayList<String> partidosPrimera = new ArrayList<String>();
+			ArrayList<String> partidosSegunda = new ArrayList<String>();
+			ArrayList<Prediccion> respuestaPrimera;
+			ArrayList<Prediccion> respuestaSegunda;
+			
+			if (modo_tabla == 0) // un solo partido
+			{
+				if (modo_partido == 0) // de primera division
+				{
+					partidosPrimera.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
+					respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
+				}
+				else // de segunda división
+				{
+					partidosSegunda.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
+					respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
+				}
+			}
+			else // todos los partidos -> 10 de primera y 5 de segunda
+			{
+				for (int i = 0; i < NUM_EQU; i++)
+				{
+					if (i < 10)
+						partidosPrimera.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
+					else
+						partidosSegunda.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
+				}
+				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
+				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
+			}
+		}
+		else //en caso de que sea el botón default
+		{
+			datosPesos[Principal.TEMPORADA] = Principal.PESOTEMPORADA;
+			datosPesos[Principal.LOCAL] = Principal.PESOLOCAL;
+			datosPesos[Principal.VISITANTE] = Principal.PESOVISITANTE;
+			datosPesos[Principal.PUNTOSLOCAL] = Principal.PESOPUNTOSLOCAL;
+			datosPesos[Principal.PGLOCAL] = Principal.PESOPGLOCAL;
+			datosPesos[Principal.PELOCAL] = Principal.PESOPELOCAL;
+			datosPesos[Principal.PPLOCAL] = Principal.PESOPPLOCAL;
+			datosPesos[Principal.PUNTOSVISITANTE] = Principal.PESOPUNTOSVISITANTE;
+			datosPesos[Principal.PGVISITANTE] = Principal.PESOPGVISITANTE;
+			datosPesos[Principal.PEVISITANTE] = Principal.PESOPEVISITANTE;
+			datosPesos[Principal.PPVISITANTE] = Principal.PESOPPVISITANTE;
+			datosPesos[Principal.POSLOCAL] = Principal.PESOPOSLOCAL;
+			datosPesos[Principal.POSVISITANTE] = Principal.PESOPOSVISITANTE;
+			datosPesos[Principal.GFAVORLOCAL] = Principal.PESOGFAVORLOCAL;
+			datosPesos[Principal.GCONTRALOCAL] = Principal.PESOGCONTRALOCAL;
+			datosPesos[Principal.GFAVORVISITANTE] = Principal.PESOGFAVORVISITANTE;
+			datosPesos[Principal.GCONTRAVISITANTE] = Principal.PESOGCONTRAVISITANTE;
+			
+			for (int i = 0; i < datosPesos.length; i++)
+			{
+				campoPesos[i].setText(""+datosPesos[i]);
+				sliderPesos[i].setValue((int)(datosPesos[i]*1000));
+			}
+		}
 	}
 
 	public double[] getDatosPesos() {
