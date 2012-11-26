@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -30,10 +31,13 @@ import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import proyecto2.quinielas.Config;
+import proyecto2.quinielas.Principal;
 
 import junit.awtui.ProgressBar;
 
@@ -53,7 +57,7 @@ public class Interfaz extends JFrame{
 	
 	/** Configuracion de pantalla */
 	public final static int W = 800;
-	public final static int H = 600;
+	public final static int H = 700;
 	
 	/** Número de jornadas totales para primera y segunda división */
 	public final static int PRIMERA_DIVISION = 0;
@@ -86,7 +90,11 @@ public class Interfaz extends JFrame{
 	
 	// Datos de la tabla
 	private String[][] datosTabla; 
+	
+	// Datos de los pesos
 	private double[] datosPesos;
+	private JTextField[] campoPesos;
+	private JSlider[] sliderPesos; // para poder escucharlos
 	
 
 	
@@ -105,6 +113,8 @@ public class Interfaz extends JFrame{
 		jlab_jornada = new JLabel();
 		comboBox_jornada = new JComboBox[2];
 		setDatosPesos(ds);
+		campoPesos = new JTextField[datosPesos.length];
+		sliderPesos = new JSlider[datosPesos.length];
 		conf = c;
 		
 		// Configuración de la ventana
@@ -116,9 +126,10 @@ public class Interfaz extends JFrame{
 		this.setContentPane((getPanelPrincipal()));
 		this.setJMenuBar(getMenuPrincipal());
 		this.validate();
+		//inicializarCamposPesos(campoPesos);
 
 	}
-	
+
 	private JMenuBar getMenuPrincipal()
 	{
 		/** FALTA ACTION LISTENER Y COMPLETAR MENU **/
@@ -334,7 +345,7 @@ public class Interfaz extends JFrame{
 		
 		//Y Ahora, si esta el modo 0, añadimos un panel inferior con la información de primera o segunda division
 		if (modo == 0)
-			panelTabla.add(getPanelPrimeraOSegunda(), BorderLayout.SOUTH);
+			panelTabla.add(getPanelPrimeraOSegunda(), BorderLayout.NORTH);
 		
 		return panelTabla;
 	}
@@ -498,44 +509,123 @@ public class Interfaz extends JFrame{
 	{
 		// Definición del panel
 		JPanel p = new JPanel();
-		p.setLayout(new FlowLayout());
-
-		JSlider j = new JSlider(JSlider.HORIZONTAL, 0, 1000, 675);
-		j.setPaintLabels(true);
-		//j.setPaintTicks(true);
-		j.setPaintTrack(true);
-		Hashtable labelTable = new Hashtable();
-		labelTable.put( new Integer( 0 ), new JLabel("0") );
-		labelTable.put( new Integer( 1000 ), new JLabel("1") );
-		j.setLabelTable( labelTable );
-
-		j.setMajorTickSpacing(10);
-		j.setMinorTickSpacing(1);
+		p.setLayout(new BorderLayout());
 		
-		double i = j.getValue();
-		i = i/1000;
-		
-		JTextField o = new JTextField(""+i);
-		o.setEditable(false);
-		// LOG : información
+		p.add(getPanelCompletoPesos(), BorderLayout.CENTER);
 
-		// Barra de progreso
-		//jplog_barra = new JProgressBar();
-		//jplog_barra.setValue(0);
-		//p.add(jplog_barra);
-		
-		// Boton de Actualizar
-		jplog_actualizar = new JButton("Consultar");
+		// Boton de Consultar
+		jplog_actualizar = new JButton("Consultar"); //TODO Creo que se puede dejar local este boton
 		jplog_actualizar.addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent evt ) {
 		    		actualizarEstructura();
 		    	      }
 		      });
-		p.add(jplog_actualizar);
-		p.add(j);
-		p.add(o);
+		p.add(jplog_actualizar, BorderLayout.SOUTH);
+		//p.add(j);
+		//p.add(o);
 		return p;
 	}
+	
+	/** Creamos el panel completo de los pesos, que tendra un Grid Layout, en donde cada celda habra
+	 * una etiqueta con el nombre del peso, un Slider y un campo no editable que muestre el valor del peso
+	 */
+	private JPanel getPanelCompletoPesos()
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(4,4));
+		for (int i = 0; i < campoPesos.length; i++)
+		{
+			p.add(getPanelPeso(i));
+		}
+		return p;
+	}
+	
+	private JPanel getPanelPeso(int quePeso)
+	{
+		// Creamos el panel
+		JPanel panelPesos = new JPanel();
+		JPanel subPanel = new JPanel(); // subPanel con la información del peso y el JSlider
+		panelPesos.setLayout(new BorderLayout());
+		subPanel.setLayout(new GridLayout(1,2));
+		// Añadimos la etiqueta con el nombre del peso
+		panelPesos.add(getJLabelNombrePeso(quePeso),BorderLayout.NORTH);
+		
+		// Añadimos el JSlider con los datos correspondientes
+		sliderPesos[quePeso] = new JSlider(JSlider.HORIZONTAL, 0, 1000, (int)(datosPesos[quePeso]*1000));
+		sliderPesos[quePeso].setPaintLabels(true); // Pintar las etiquetas
+		sliderPesos[quePeso].setPaintTrack(true); // Pintar por donde va el Slider
+		// Asociamos los valores 0 y 1 a los valores 0 y 1000 de la JSlider para darle más precisión
+		Hashtable labelTable = new Hashtable();
+		labelTable.put( new Integer( 0 ), new JLabel("0") );
+		labelTable.put( new Integer( 1000 ), new JLabel("1") );
+		sliderPesos[quePeso].setLabelTable( labelTable );
+		// Espaciados
+		//sliderPesos[quePeso].setMaximumSize(new Dimension(10,5));
+		// Listener
+		sliderPesos[quePeso].addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				  JSlider source = (JSlider)e.getSource();
+				  double d;
+				  // Buscamos el Slider que ha producido el evento
+				  for (int i = 0; i < campoPesos.length; i++)
+				  {
+					  if (source == sliderPesos[i])
+					  {
+						  d = source.getValue();
+						  datosPesos[i] = d/1000;
+						  campoPesos[i].setText(""+datosPesos[i]);
+					  }
+				  }
+				  
+				  
+				
+			}});
+		
+		subPanel.add(sliderPesos[quePeso]); //añadimos el Slider
+		// Creamos los campos que contienen el valor numerico del peso
+		campoPesos[quePeso] = new JTextField(""+datosPesos[quePeso]); // Datos iniciales
+		campoPesos[quePeso].setEditable(false);
+		subPanel.add(campoPesos[quePeso]);
+		panelPesos.add(subPanel,BorderLayout.CENTER);
+		return panelPesos;
+		
+	}
+	
+	private JLabel getJLabelNombrePeso(int quePeso)
+	{
+		String str = "Default";
+		JLabel j;
+		
+		switch(quePeso)
+		{
+			case Principal.TEMPORADA: str = "Temporada"; break;
+			case Principal.LOCAL: str = "Local"; break;
+			case Principal.VISITANTE: str = "Visitante"; break;
+			case Principal.PUNTOSLOCAL: str = "Puntos Local"; break;
+			case Principal.PGLOCAL: str = "P. Ganados Local"; break;
+			case Principal.PELOCAL: str = "P. Empatados Local"; break;
+			case Principal.PPLOCAL: str = "P. Perdidos Local"; break;
+			case Principal.PUNTOSVISITANTE: str = "Puntos Visitante"; break;
+			case Principal.PGVISITANTE: str = "P. Ganados Visitante"; break;
+			case Principal.PEVISITANTE: str = "P. Empatados Visitante"; break;
+			case Principal.PPVISITANTE: str = "P. Perdidos Visitante"; break;
+			case Principal.POSLOCAL: str = "Posición Local"; break;
+			case Principal.POSVISITANTE: str = "Posición VIsitante"; break;
+			case Principal.GFAVORLOCAL: str = "Goles a Favor Local"; break;
+			case Principal.GCONTRALOCAL: str = "Goles en Contra Local"; break;
+			case Principal.GFAVORVISITANTE: str = "Goles a Favor Visitante"; break;
+			case Principal.GCONTRAVISITANTE: str = "Goles en Contra Visitante"; break;
+			default: str = "Default";
+			
+		}
+		
+		j = new JLabel(str);
+		return j;
+		
+	}
+	
+	
+	
 	
 	/** Panel con la información de la temporada y las jornadas */
 	private JPanel getJLabelTemporadaJornada()
