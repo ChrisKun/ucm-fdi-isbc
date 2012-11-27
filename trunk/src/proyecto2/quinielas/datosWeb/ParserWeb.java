@@ -32,7 +32,7 @@ public class ParserWeb {
 	private static BufferedWriter out_clasS;
 	
 	public static void main(String[] args) throws IOException{
-
+		
 		File carpeta = new File(".\\src\\proyecto2\\quinielas\\datos");
 		if (!carpeta.exists()) {
 			carpeta.mkdir();
@@ -41,8 +41,8 @@ public class ParserWeb {
 		fstream = 		new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\infoMarca.txt",true);
 		fstream_err = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\errores.txt");
 		fstream_esp = 	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\porJugar.txt");
-		fstream_clasP =	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\clasPrimera.txt");
-		fstream_clasS =	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\clasSegunda.txt");
+		fstream_clasP =	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\clasPrimera.txt",true);
+		fstream_clasS =	new FileWriter(".\\src\\proyecto2\\quinielas\\datos\\clasSegunda.txt",true);
 		
 		out = 			new BufferedWriter(fstream);
 		out_err = 		new BufferedWriter(fstream_err);
