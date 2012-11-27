@@ -1,5 +1,6 @@
 package proyecto2.quinielas;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -8,6 +9,7 @@ import proyecto2.quinielas.cbr.DescripcionQuinielas;
 import proyecto2.quinielas.cbr.Prediccion;
 import proyecto2.quinielas.cbr.Quinielas;
 import proyecto2.quinielas.cbr.ValidacionCruzada;
+import proyecto2.quinielas.datosWeb.ParserWeb;
 import proyecto2.quinielas.interfaz.Interfaz;
 
 public class Principal {
@@ -88,9 +90,24 @@ public class Principal {
 	}
 	
 	public static void main (String args[]) {
+		// Configuración de pesos
 		Principal principal = new Principal();
+		Interfaz i;
 		principal.iniciaPesos();
-
+		
+		// PASO 1. LANZAR EL PARSER
+		ParserWeb parser = new ParserWeb();
+		try {
+			//Interfaz.mensajeEsperaParser();
+			parser.main(args);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// PASO 2. CONFIGURAR (LEER DE CONFIG.TXT) Y DEMÁS
+		// PASO 3. LLAMAR A LA INTERFAZ
 		Config c = new Config();
 		//	JOptionPane.showMessageDialog(null, "ACTUALIZANDO");
 		c.setUltimaTemporada(2012);
@@ -105,10 +122,10 @@ public class Principal {
 		// 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
 		
 		// String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
-		ArrayList<String> a = new ArrayList<String>();
-		a.add("Valencia,Málaga");
-		a.add("Espanyol,Rayo");
-		Interfaz i = new Interfaz(principal.getListaPesos(),c,q);
+		//ArrayList<String> a = new ArrayList<String>();
+		//a.add("Valencia,Málaga");
+		//a.add("Espanyol,Rayo");
+		i = new Interfaz(principal.getListaPesos(),c,q);
 		
 		//q.querysCBR(a,2012,4,principal.listaPesos,c.getClasificacionesPrimera(),c.getClasificacionesSegunda());
 		//ValidacionCruzada validador = new ValidacionCruzada(); 
