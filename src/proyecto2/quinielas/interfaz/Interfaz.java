@@ -816,6 +816,11 @@ public class Interfaz extends JFrame{
 	public void setDatosPesos(double[] ds) {
 		this.datosPesos = ds;
 	}
+
+	public static void mensajeEsperaParser() {
+		JOptionPane.showMessageDialog(null , "Actualizando, por favor, espere");
+		
+	}
 	
 	
 
