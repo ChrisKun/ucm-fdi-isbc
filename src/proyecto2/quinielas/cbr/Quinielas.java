@@ -232,10 +232,12 @@ public class Quinielas implements StandardCBRApplication {
 						// Si encontramos ambos, paramos
 						if (tokensLocal != null && tokensVisitante != null) break;
 					}
-					// Rellenamos los valores de las clasificaciones
-					for (int i = 0;i<tokensLocal.length-2;i++) {
-						clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
-						clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
+					// Rellenamos los valores de las clasificaciones si no es nula la info
+					if (tokensLocal != null && tokensVisitante != null) {
+						for (int i = 0;i<tokensLocal.length-2;i++) {
+							clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
+							clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
+						}
 					}
 				}
 				// Rellenamos la query con los valores apropiados
