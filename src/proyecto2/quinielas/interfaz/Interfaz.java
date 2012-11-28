@@ -674,8 +674,8 @@ public class Interfaz extends JFrame{
 	public void setJornadaAño(int jornada_p, int jornada_s, int año)
 	{
 		// Font("Titulo fuente", "Atributos", "Tamaño"
-		if (año == 0)
-			año = 2000;
+		//if (año == 0)
+		//	año = 2000;
 		jlab_jornada.setFont(new Font("Verdana", Font.BOLD, 22));
 		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada 1ºDiv : "+jornada_p+" ; Jornada 2ºDiv : "+jornada_s);
 	}
