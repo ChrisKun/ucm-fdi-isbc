@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import proyecto1.viajes.TravelDescription;
 import proyecto1.viajes.TravelRecommender;
 import proyecto2.quinielas.Config;
+import proyecto2.quinielas.interfaz.BarraProgreso;
 
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.casebase.LinealCaseBase;
@@ -250,6 +251,9 @@ public class Quinielas implements StandardCBRApplication {
 				//Ejecutar el ciclo
 				cycle(query);			
 				System.out.println("Ejecutado ciclo para el partido: "+tokens[0]+" vs. "+tokens[1]);
+				
+				BarraProgreso.aumentarBarraProgreso(); // Interfaz para la barra de progreso
+				
 				for(int i =0;i<clasifLocal.length;i++)clasifLocal[i]=0;
 				for(int i =0;i<clasifVisitante.length;i++)clasifVisitante[i]=0;
 			}

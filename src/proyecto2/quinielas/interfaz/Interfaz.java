@@ -1,6 +1,7 @@
 package proyecto2.quinielas.interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -31,6 +32,7 @@ import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -76,6 +78,7 @@ public class Interfaz extends JFrame{
 	JComboBox[] comboBox_jornada; // tiene guardado los 2 desplegables de las jornadas
 	JRadioButton rbutt_uno; // seleccion de un partido
 	JRadioButton rbutt_var; // seleccion de varios partidos
+	JComboBox desplegableNumPartidosPrimera;
 	
 	/** Elementos del panel que contiene la tabla de los partidos que tienen que modificarse*/
 	private JPanel panelTabla;
@@ -93,7 +96,8 @@ public class Interfaz extends JFrame{
 	private Config conf;
 	
 	// Datos de la tabla
-	//private String[][] datosTabla; 
+	ArrayList<Prediccion> respuestaPrimera;
+	ArrayList<Prediccion> respuestaSegunda;
 	
 	// Datos de los pesos
 	private double[] datosPesos;
@@ -101,7 +105,11 @@ public class Interfaz extends JFrame{
 	private JSlider[] sliderPesos; // para poder escucharlos
 	
 	//Quinielas
-	Quinielas q;
+	private Quinielas q;
+	
+	//Interfaz
+	private Interfaz interfaz;
+	
 	
 	public Interfaz(double[] ds, Config c, Quinielas q)
 	{
@@ -113,6 +121,7 @@ public class Interfaz extends JFrame{
 		sliderPesos = new JSlider[datosPesos.length];
 		conf = c;
 		this.q = q;
+		interfaz = this;
 		
 		// Configuración de la ventana
 		this.setVisible(true);
@@ -204,6 +213,23 @@ public class Interfaz extends JFrame{
 		// Añadimos los botones al panel
 		p.add(rbutt_uno);
 		p.add(rbutt_var);
+		
+		// añadimos un JLabel para el numero de partidos
+		JLabel jl = new JLabel("Partidos 1ºD: ");
+		// Añadimos un comboBox con el número de partidos de primera y de segunda
+		String[] num_par = new String[NUM_EQU-3];
+		for (int i = 0; i < NUM_EQU-3; i++)
+			num_par[i] = ""+(i+2);
+		desplegableNumPartidosPrimera = new JComboBox(num_par);
+		desplegableNumPartidosPrimera.setSelectedIndex(8);
+		desplegableNumPartidosPrimera.setEnabled(false);
+		desplegableNumPartidosPrimera.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent e) {
+		    	  actualizarNumeroPartidos(e);
+		    	  }
+		      });
+		p.add(jl);
+		p.add(desplegableNumPartidosPrimera);
 		
 		return p;
 	}
@@ -458,6 +484,9 @@ public class Interfaz extends JFrame{
 		// Ahora con la lista de todos los equipos, creamos el JComboBox
 		comboBoxLocales[num] = new JComboBox(eq);
 		
+		// Selecciona un equipo aleatorio
+		comboBoxLocales[num].setSelectedIndex((int) (Math.random() * eq.length));
+		
 		 //Y le añadimos el listener para cuando el usuario modifique algo se reinicie la confinanza
 		comboBoxLocales[num].addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
@@ -465,13 +494,25 @@ public class Interfaz extends JFrame{
 		    	      }
 		});
 		comboBoxVisitantes[num] = new JComboBox(eq);
+		// Selecciona un equipo aleatorio
+		comboBoxVisitantes[num].setSelectedIndex((int) (Math.random() * eq.length));
 		
 		comboBoxVisitantes[num].addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
 		    		reiniciarConfianzaYResultado();
 		    	      }
 		});
-		// TODO Hacer un metodo setDatoTablaVisitantes para modificar los datos de los visitantes
+		// Ahora ponemos un color distinto para los ComboBox
+		if (primeraDivision)
+		{
+			comboBoxLocales[num].setBackground(Color.WHITE);
+			comboBoxVisitantes[num].setBackground(Color.WHITE);
+		}
+		else
+		{
+			comboBoxLocales[num].setBackground(Color.LIGHT_GRAY);
+			comboBoxVisitantes[num].setBackground(Color.LIGHT_GRAY);
+		}
 	}
 	
 	protected void reiniciarConfianzaYResultado() {
@@ -729,9 +770,15 @@ public class Interfaz extends JFrame{
 	{
 		panelPrincipal.remove(panelTabla);
 		if (rbutt_uno.isSelected())
+		{
 			modo_tabla = 0; // Modo de un sólo partido
+			desplegableNumPartidosPrimera.setEnabled(false);
+		}
 		else
+		{
 			modo_tabla = 1; // Modo de 15 partidos
+			desplegableNumPartidosPrimera.setEnabled(true);
+		}
 		panelPrincipal.add(getJPanelTabla(modo_tabla), BorderLayout.CENTER);
 		panelPrincipal.validate();
 	}
@@ -747,6 +794,14 @@ public class Interfaz extends JFrame{
 		panelPrincipal.validate();
 	}
 	
+	private void  actualizarNumeroPartidos(ActionEvent e)
+	{
+		JComboBox cb = (JComboBox)e.getSource();
+	    String newSelection = (String)cb.getSelectedItem();
+	    num_partidos_primera = Integer.parseInt(newSelection);
+	    actualizarEquiposPrimeraOSegunda();
+	}
+	
 	public void accionesBotones(ActionEvent e)
 	{
 		JButton b = (JButton)e.getSource();
@@ -754,26 +809,29 @@ public class Interfaz extends JFrame{
 		
 		if (b.getText().equals("Consultar"))
 		{
-			ArrayList<String> partidosPrimera = new ArrayList<String>();
-			ArrayList<String> partidosSegunda = new ArrayList<String>();
-			ArrayList<Prediccion> respuestaPrimera = null;
-			ArrayList<Prediccion> respuestaSegunda = null;
+			ArrayList<String> partidosPrimera = null;
+			ArrayList<String> partidosSegunda = null;
 			
 			if (modo_tabla == 0) // un solo partido
 			{
 				if (modo_partido == 0) // de primera division
 				{
+					partidosPrimera = new ArrayList<String>();
 					partidosPrimera.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
 					respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
 				}
 				else // de segunda división
 				{
+					partidosSegunda = new ArrayList<String>();
 					partidosSegunda.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
 					respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
 				}
 			}
 			else // todos los partidos -> 10 de primera y 5 de segunda
 			{
+				partidosPrimera = new ArrayList<String>();
+				partidosSegunda = new ArrayList<String>();
+				
 				for (int i = 0; i < NUM_EQU; i++)
 				{
 					if (i < num_partidos_primera)
@@ -781,12 +839,23 @@ public class Interfaz extends JFrame{
 					else
 						partidosSegunda.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
 				}
-				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
-				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
-			}
+			}	
+				//respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
+				//respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
+				MiThread m = new MiThread(partidosPrimera,partidosSegunda);
+				m.start();
 			
-			actualizarDatos(respuestaPrimera, respuestaSegunda);
 			
+
+			
+			//actualizarDatos(respuestaPrimera, respuestaSegunda);
+			int numMax = 0;
+			if (partidosPrimera != null)
+				numMax = numMax + partidosPrimera.size();
+			if (partidosSegunda != null)
+				numMax = numMax + partidosSegunda.size();
+			interfaz.setEnabled(false);
+			Principal.setBarra(new BarraProgreso(1,numMax));
 		}
 		else //en caso de que sea el botón default
 		{
@@ -866,6 +935,25 @@ public class Interfaz extends JFrame{
 		}
 	}
 	
-	
+	class MiThread extends Thread {
+		private ArrayList<String> partidosPrimera;
+		private ArrayList<String> partidosSegunda;
+		
+		public MiThread(ArrayList<String> pP, ArrayList<String> pS)
+		{
+			partidosPrimera = pP;
+			partidosSegunda = pS;
+		}
+		
+		public void run() {
+			if (partidosPrimera != null)
+				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
+			if (partidosSegunda != null)
+				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
+			interfaz.setEnabled(true);
+			Principal.getBarra().cerrarVentana();
+			actualizarDatos(respuestaPrimera, respuestaSegunda);
+		}
+	}
 
 }
