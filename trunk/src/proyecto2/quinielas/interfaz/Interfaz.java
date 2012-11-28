@@ -66,8 +66,10 @@ public class Interfaz extends JFrame{
 	public final static int SEGUNDA_DIVISION = 1;
 	
 	/** Modo de la tabla (0) para un partido y (1) para todos	 */
-	public static int modo_tabla = 0; // modo de un partido (0) o modo de una jornada con los 15 partidos(1) a rellenar
-	public static int modo_partido = 0;
+	private static int modo_tabla = 0; // modo de un partido (0) o modo de una jornada con los 15 partidos(1) a rellenar
+	private static int modo_partido = 0;
+	private static int num_partidos_primera = 10;
+	
 	
 	/** Elementos del panel superior de información que tienen que modificarse */
 	private JLabel jlab_jornada;
@@ -341,7 +343,6 @@ public class Interfaz extends JFrame{
 		//Y Ahora, si esta el modo 0, añadimos un panel inferior con la información de primera o segunda division
 		if (modo == 0)
 			panelTabla.add(getPanelPrimeraOSegunda(), BorderLayout.NORTH);
-		
 		return panelTabla;
 	}
 	
@@ -407,7 +408,7 @@ public class Interfaz extends JFrame{
 		{
 			for (int i = 0; i < numFilas; i++)
 			{
-				setEquiposComboBox(i,conf,(i<10));
+				setEquiposComboBox(i,conf,(i<num_partidos_primera));
 			}
 		}
 	}
@@ -457,16 +458,34 @@ public class Interfaz extends JFrame{
 		// Ahora con la lista de todos los equipos, creamos el JComboBox
 		comboBoxLocales[num] = new JComboBox(eq);
 		
-		// Y le añadimos el listener para cuando el usuario modifique algo
-		//comboBoxLocales[num].addActionListener(new ActionListener() {
-		//      public void actionPerformed( ActionEvent e) {
-		//    		setDatoTablaLocales(e);
-		//    	      }
-		//});
+		 //Y le añadimos el listener para cuando el usuario modifique algo se reinicie la confinanza
+		comboBoxLocales[num].addActionListener(new ActionListener() {
+		      public void actionPerformed( ActionEvent e) {
+		    		reiniciarConfianzaYResultado();
+		    	      }
+		});
 		comboBoxVisitantes[num] = new JComboBox(eq);
+		
+		comboBoxVisitantes[num].addActionListener(new ActionListener() {
+		      public void actionPerformed( ActionEvent e) {
+		    		reiniciarConfianzaYResultado();
+		    	      }
+		});
 		// TODO Hacer un metodo setDatoTablaVisitantes para modificar los datos de los visitantes
 	}
 	
+	protected void reiniciarConfianzaYResultado() {
+		for (int i = 0; i < resultados.length; i++)
+		{
+			resultados[i].setText("N/D");
+			resultados[i].repaint();
+			confianza[i].setValue(0);
+			confianza[i].setString("N/D");
+			confianza[i].repaint();
+		}
+		
+	}
+
 	private void inicializarResultados(int numFilas)
 	{
 		// TODO leer de la tabla de datos
@@ -633,10 +652,7 @@ public class Interfaz extends JFrame{
 		return j;
 		
 	}
-	
-	
-	
-	
+
 	/** Panel con la información de la temporada y las jornadas */
 	private JPanel getJLabelTemporadaJornada()
 	{
@@ -718,7 +734,6 @@ public class Interfaz extends JFrame{
 			modo_tabla = 1; // Modo de 15 partidos
 		panelPrincipal.add(getJPanelTabla(modo_tabla), BorderLayout.CENTER);
 		panelPrincipal.validate();
-		// TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
 	}
 	
 	public void actualizarEquiposPrimeraOSegunda()
@@ -730,18 +745,7 @@ public class Interfaz extends JFrame{
 			modo_partido = 1; // Modo segunda Division
 		panelPrincipal.add(getJPanelTabla(modo_tabla), BorderLayout.CENTER);
 		panelPrincipal.validate();
-		// TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
 	}
-	
-	//TODO private void setDatoTablaLocales(ActionEvent e)
-	//{
-		//Hay que identificar que comboBox es el que ha sido seleccionado
-	//	JComboBox cb = (JComboBox)e.getSource();
-	//    String newSelection = (String)cb.getSelectedItem();
-	//    for (int i = 0; i < 1; i++)
-	//    	if (comboBoxLocales[i] == cb) //tenemos el comboBox que buscabamos
-	//    		datosTabla [i][LOCAL] = newSelection;
-	//}
 	
 	public void accionesBotones(ActionEvent e)
 	{
@@ -752,8 +756,8 @@ public class Interfaz extends JFrame{
 		{
 			ArrayList<String> partidosPrimera = new ArrayList<String>();
 			ArrayList<String> partidosSegunda = new ArrayList<String>();
-			ArrayList<Prediccion> respuestaPrimera;
-			ArrayList<Prediccion> respuestaSegunda;
+			ArrayList<Prediccion> respuestaPrimera = null;
+			ArrayList<Prediccion> respuestaSegunda = null;
 			
 			if (modo_tabla == 0) // un solo partido
 			{
@@ -772,14 +776,17 @@ public class Interfaz extends JFrame{
 			{
 				for (int i = 0; i < NUM_EQU; i++)
 				{
-					if (i < 10)
+					if (i < num_partidos_primera)
 						partidosPrimera.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
 					else
-						partidosSegunda.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
+						partidosSegunda.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
 				}
 				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
 				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
 			}
+			
+			actualizarDatos(respuestaPrimera, respuestaSegunda);
+			
 		}
 		else //en caso de que sea el botón default
 		{
@@ -817,9 +824,47 @@ public class Interfaz extends JFrame{
 		this.datosPesos = ds;
 	}
 
-	public static void mensajeEsperaParser() {
+	public static void mensajeEspera() {
 		JOptionPane.showMessageDialog(null , "Actualizando, por favor, espere");
 		
+	}
+	
+	/** Actualiza los campos resultado y confianza de la interfaz */
+	public void actualizarDatos(ArrayList<Prediccion> respuestaPrimera,ArrayList<Prediccion> respuestaSegunda)
+	{
+		if (modo_tabla == 0) // un solo partido
+		{
+			if (modo_partido == 0) // de primera division
+			{
+				resultados[0].setText(""+respuestaPrimera.get(0).getResultado()); 
+				confianza[0].setValue((int) (respuestaPrimera.get(0).getConfianza()*100));
+				confianza[0].setString((""+respuestaPrimera.get(0).getConfianza()*100).substring(0, 5)+"%");
+			}
+			else // de segunda división
+			{
+				resultados[0].setText(""+respuestaSegunda.get(0).getResultado()); 
+				confianza[0].setValue((int) (respuestaSegunda.get(0).getConfianza()*100));
+				confianza[0].setString((""+respuestaSegunda.get(0).getConfianza()*100).substring(0, 5)+"%");
+			}
+		}
+		else // todos los partidos -> 10 de primera y 5 de segunda
+		{
+			for (int i = 0; i < NUM_EQU; i++)
+			{
+				if (i < num_partidos_primera)
+				{
+					resultados[i].setText(""+respuestaPrimera.get(i).getResultado()); 
+					confianza[i].setValue((int) (respuestaPrimera.get(i).getConfianza()*100));
+					confianza[i].setString((""+respuestaPrimera.get(i).getConfianza()*100).substring(0, 5)+"%");
+				}
+				else
+				{
+					resultados[i].setText(""+respuestaSegunda.get(i).getResultado()); 
+					confianza[i].setValue((int) (respuestaSegunda.get(i).getConfianza()*100));
+					confianza[i].setString((""+respuestaSegunda.get(i).getConfianza()*100).substring(0, 5)+"%");
+				}
+			}
+		}
 	}
 	
 	

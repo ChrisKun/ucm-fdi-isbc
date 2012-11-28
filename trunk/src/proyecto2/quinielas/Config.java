@@ -1,7 +1,9 @@
 package proyecto2.quinielas;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * 
@@ -34,9 +36,11 @@ public class Config {
 	
 	/* CONSTRUCTORAS */
 	public Config() {
-		ultimaTemporada = 0;
-		ultimaJornadaPrimera = 0;
-		ultimaJornadaSegunda = 0;
+		// Leer de fichero
+		cargarDatosTemporadaJornadaActual("config.txt");
+		//ultimaTemporada = 0;
+		//ultimaJornadaPrimera = 0;
+		//ultimaJornadaSegunda = 0;
 		seleccionTemporada = 0;
 		seleccionJornadaPrimera = 0;
 		seleccionJornadaSegunda = 0;
@@ -138,4 +142,22 @@ public class Config {
 	public String[][][] getClasificacionesPrimera() {
 		return clasificacionesPrimera;
 	}
+	
+	public void cargarDatosTemporadaJornadaActual(String file)
+	{		
+		try 
+		{
+			BufferedReader br = new BufferedReader(new FileReader(".\\src\\proyecto2\\quinielas\\datos\\" + file));
+			ultimaTemporada = Integer.parseInt(br.readLine());
+			ultimaJornadaPrimera = Integer.parseInt(br.readLine());
+			ultimaJornadaSegunda = Integer.parseInt(br.readLine());
+			br.close();	
+		} 	
+		catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+	}
+		
 }
