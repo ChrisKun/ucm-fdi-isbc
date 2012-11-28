@@ -106,25 +106,14 @@ public class Principal {
 			e.printStackTrace();
 		}
 		
-		// PASO 2. CONFIGURAR (LEER DE CONFIG.TXT) Y DEMÁS
-		// PASO 3. LLAMAR A LA INTERFAZ
+		// PASO 2. CONFIGURAR 
 		Config c = new Config();
-		//	JOptionPane.showMessageDialog(null, "ACTUALIZANDO");
-		c.setUltimaTemporada(2012);
-		c.setUltimaJornadaPrimera(14);
-		c.setUltimaJornadaSegunda(18);
-
 		c.rellenaClasificacionesPrimera();
 		c.rellenaClasificacionesPrimera();
 		c.rellenaClasificacionesSegunda();
 		Quinielas q = new Quinielas(principal.getListaPesos());
 		
-		// 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
-		
-		// String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
-		//ArrayList<String> a = new ArrayList<String>();
-		//a.add("Valencia,Málaga");
-		//a.add("Espanyol,Rayo");
+		// PASO 3. LLAMAR A LA INTERFAZ
 		i = new Interfaz(principal.getListaPesos(),c,q);
 		
 		//q.querysCBR(a,2012,4,principal.listaPesos,c.getClasificacionesPrimera(),c.getClasificacionesSegunda());
