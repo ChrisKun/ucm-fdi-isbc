@@ -27,6 +27,7 @@ public class ValidacionCruzada {
 	    Evaluator.getEvaluationReport().putOtherData("Media aciertos", Double.toString(media));
 	}
 	
+	//TODO
     public void HoldOutEvaluation(double[] listaPesos, int numeroCasos, int numeroVueltas)
     {
 	    //SwingProgressBar shows the progress
@@ -44,6 +45,7 @@ public class ValidacionCruzada {
 	    jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quinielas - HoldOutEvaluation", false);
     }
     
+    //TODO
     public void LeaveOneOutEvaluation(double[] listaPesos)
     {
 		//SwingProgressBar shows the progress
@@ -60,6 +62,7 @@ public class ValidacionCruzada {
 		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quinielas - LeaveOneOutEvaluation", false);
     }
     
+    //TODO
     public void SameSplitEvaluation(double[] listaPesos, int numeroCasos)
     {
 		//SwingProgressBar shows the progress
