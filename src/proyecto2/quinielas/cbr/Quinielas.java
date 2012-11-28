@@ -196,6 +196,8 @@ public class Quinielas implements StandardCBRApplication {
 		jornada = jornada - 1;
 		int jornadaActual;
 		try{	
+			// Limpiamos la lista de predicciones
+			listaPredicciones.clear();
 			//Crear un objeto que almacena la consulta
 			CBRQuery query = new CBRQuery();	
 			// Si nos piden la jornada 1, entonces los equipos están con todos sus valores a 0
@@ -208,10 +210,10 @@ public class Quinielas implements StandardCBRApplication {
 			String[] tokensLocal = null;
 			String[] tokensVisitante = null;			
 			
-			// jornadaActual indica la jornada que vamos a buscar
-			jornadaActual = jornada-1;
 			// Buscamos para cada par de equipos del arrayList su clasificacion
-			while (iterador.hasNext()) {					
+			while (iterador.hasNext()) {	
+				// jornadaActual indica la jornada que vamos a buscar
+				jornadaActual = jornada-1;
 				// Sacamos los nombres de ambos equipos tokens[0] = local, tokens[1] = visitante
 				tokens = iterador.next().split(",");
 				// Rellenamos la clasificacion en caso de que la jornada sea mayor que la primera	
@@ -219,25 +221,28 @@ public class Quinielas implements StandardCBRApplication {
 				if (jornadaActual >  -1) {	
 					tokensLocal = null;
 					tokensVisitante = null;
-					// Buscamos la clasifiacion de cada uno en la temporada pedida, pero en la jornada ANTERIOR
-					for (String i: clasificaciones[temporada-2000][jornadaActual]) {		
-						// Buscamos la clasificación del local
-						if ((i != null)	&& i.startsWith(tokens[0])) {
-							tokensLocal = i.split((","));
+					// Buscamos la clasifiacion de cada uno en la temporada pedida, pero en la jornada ANTERIOR con información disponible
+					while (tokensLocal == null && tokensVisitante == null && jornadaActual > -1) {
+						for (String i: clasificaciones[temporada-2000][jornadaActual]) {		
+							// Buscamos la clasificación del local
+							if ((i != null)	&& i.startsWith(tokens[0]) && tokensLocal == null) {
+								tokensLocal = i.split((","));
+							}
+							// Buscamos la clasificación del visitante
+							if ((i != null)	&& i.startsWith(tokens[1]) && tokensVisitante == null) {
+								tokensVisitante = i.split((","));
+							}
+							// Si encontramos ambos, paramos
+							if (tokensLocal != null && tokensVisitante != null) break;
 						}
-						// Buscamos la clasificación del visitante
-						if ((i != null)	&& i.startsWith(tokens[1])) {
-							tokensVisitante = i.split((","));
+						// Rellenamos los valores de las clasificaciones si no es nula la info
+						if (tokensLocal != null && tokensVisitante != null) {
+							for (int i = 0;i<tokensLocal.length-2;i++) {
+								clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
+								clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
+							}
 						}
-						// Si encontramos ambos, paramos
-						if (tokensLocal != null && tokensVisitante != null) break;
-					}
-					// Rellenamos los valores de las clasificaciones si no es nula la info
-					if (tokensLocal != null && tokensVisitante != null) {
-						for (int i = 0;i<tokensLocal.length-2;i++) {
-							clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
-							clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
-						}
+						jornadaActual--;
 					}
 				}
 				// Rellenamos la query con los valores apropiados
