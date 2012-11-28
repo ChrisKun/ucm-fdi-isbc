@@ -206,16 +206,17 @@ public class Quinielas implements StandardCBRApplication {
 
 			String[] tokens = null;
 			String[] tokensLocal = null;
-			String[] tokensVisitante = null;
+			String[] tokensVisitante = null;			
 			
+			// jornadaActual indica la jornada que vamos a buscar
+			jornadaActual = jornada-1;
 			// Buscamos para cada par de equipos del arrayList su clasificacion
-			while (iterador.hasNext()) {	
-				jornadaActual = jornada-1;
+			while (iterador.hasNext()) {					
 				// Sacamos los nombres de ambos equipos tokens[0] = local, tokens[1] = visitante
 				tokens = iterador.next().split(",");
 				// Rellenamos la clasificacion en caso de que la jornada sea mayor que la primera	
 				// ya que los datos para predecir la primera jornada sería la jornada 0, que es tener las estadisticas a 0
-				if (jornadaActual >  0) {	
+				if (jornadaActual >  -1) {	
 					tokensLocal = null;
 					tokensVisitante = null;
 					// Buscamos la clasifiacion de cada uno en la temporada pedida, pero en la jornada ANTERIOR
@@ -243,8 +244,8 @@ public class Quinielas implements StandardCBRApplication {
 				//Ejecutar el ciclo
 				cycle(query);			
 				System.out.println("Ejecutado ciclo para el partido: "+tokens[0]+" vs. "+tokens[1]);
-				for(int i:clasifLocal)i=0;
-				for(int i:clasifVisitante)i=0;
+				for(int i =0;i<clasifLocal.length;i++)clasifLocal[i]=0;
+				for(int i =0;i<clasifVisitante.length;i++)clasifVisitante[i]=0;
 			}
 		} catch (Exception e) {			
 			e.printStackTrace();

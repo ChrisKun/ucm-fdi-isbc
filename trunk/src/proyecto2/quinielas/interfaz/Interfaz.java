@@ -782,7 +782,7 @@ public class Interfaz extends JFrame{
 						partidosSegunda.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
 				}
 				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
-				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesSegunda());
+				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
 			}
 			
 			actualizarDatos(respuestaPrimera, respuestaSegunda);
