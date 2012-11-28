@@ -195,9 +195,7 @@ public class Quinielas implements StandardCBRApplication {
 		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar con la jornada pedida por el usuario
 		jornada = jornada - 1;
 		int jornadaActual;
-		try{	
-			// Limpiamos la lista de predicciones
-			listaPredicciones.clear();
+		try{			
 			//Crear un objeto que almacena la consulta
 			CBRQuery query = new CBRQuery();	
 			// Si nos piden la jornada 1, entonces los equipos están con todos sus valores a 0
@@ -241,8 +239,9 @@ public class Quinielas implements StandardCBRApplication {
 								clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
 								clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
 							}
+						} else {
+							jornadaActual--;
 						}
-						jornadaActual--;
 					}
 				}
 				// Rellenamos la query con los valores apropiados
@@ -257,6 +256,13 @@ public class Quinielas implements StandardCBRApplication {
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}
-		return listaPredicciones;
+		ArrayList<Prediccion> listaDevolucion = new ArrayList<Prediccion>();
+		Iterator<Prediccion> iterador = listaPredicciones.iterator();
+		while (iterador.hasNext()) {
+				listaDevolucion.add(iterador.next());
+		}
+		// Limpiamos la lista de predicciones
+		listaPredicciones.clear();
+		return listaDevolucion;
 	}	
 }

@@ -849,21 +849,20 @@ public class Interfaz extends JFrame{
 		}
 		else // todos los partidos -> 10 de primera y 5 de segunda
 		{
-			for (int i = 0; i < NUM_EQU; i++)
+			for (int i = 0; i < num_partidos_primera; i++)
 			{
-				if (i < num_partidos_primera)
-				{
-					resultados[i].setText(""+respuestaPrimera.get(i).getResultado()); 
-					confianza[i].setValue((int) (respuestaPrimera.get(i).getConfianza()*100));
-					confianza[i].setString((""+respuestaPrimera.get(i).getConfianza()*100).substring(0, 5)+"%");
-				}
-				else
-				{
-					resultados[i].setText(""+respuestaSegunda.get(i).getResultado()); 
-					confianza[i].setValue((int) (respuestaSegunda.get(i).getConfianza()*100));
-					confianza[i].setString((""+respuestaSegunda.get(i).getConfianza()*100).substring(0, 5)+"%");
-				}
+				resultados[i].setText(""+respuestaPrimera.get(i).getResultado()); 
+				confianza[i].setValue((int) (respuestaPrimera.get(i).getConfianza()*100));
+				confianza[i].setString((""+respuestaPrimera.get(i).getConfianza()*100).substring(0, 5)+"%");
 			}
+			for (int i = 0; i < NUM_EQU - num_partidos_primera; i++)
+			{
+				resultados[i+num_partidos_primera].setText(""+respuestaSegunda.get(i).getResultado()); 
+				confianza[i+num_partidos_primera].setValue((int) (respuestaSegunda.get(i).getConfianza()*100));
+				confianza[i+num_partidos_primera].setString((""+respuestaSegunda.get(i).getConfianza()*100).substring(0, 5)+"%");
+			}
+			
+			
 		}
 	}
 	
