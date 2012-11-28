@@ -108,10 +108,8 @@ public class Principal {
 		
 		// PASO 2. CONFIGURAR 
 		Config c = new Config();
-		c.rellenaClasificacionesPrimera();
-		c.rellenaClasificacionesPrimera();
-		c.rellenaClasificacionesSegunda();
 		Quinielas q = new Quinielas(principal.getListaPesos());
+		q.configCBR();
 		
 		// PASO 3. LLAMAR A LA INTERFAZ
 		i = new Interfaz(principal.getListaPesos(),c,q);

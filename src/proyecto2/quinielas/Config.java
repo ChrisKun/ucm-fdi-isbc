@@ -41,11 +41,11 @@ public class Config {
 		//ultimaTemporada = 0;
 		//ultimaJornadaPrimera = 0;
 		//ultimaJornadaSegunda = 0;
-		seleccionTemporada = 0;
+		seleccionTemporada = 2000;
 		seleccionJornadaPrimera = 0;
 		seleccionJornadaSegunda = 0;
-		clasificacionesPrimera = null;
-		clasificacionesSegunda = null;
+		rellenaClasificacionesPrimera();
+		rellenaClasificacionesSegunda();		
 	}
 		
 	/* FUNCIONES */ 
