@@ -764,12 +764,12 @@ public class Interfaz extends JFrame{
 				if (modo_partido == 0) // de primera division
 				{
 					partidosPrimera.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
-					respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
+					respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
 				}
 				else // de segunda división
 				{
 					partidosSegunda.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
-					respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
+					respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesSegunda());
 				}
 			}
 			else // todos los partidos -> 10 de primera y 5 de segunda
@@ -781,8 +781,8 @@ public class Interfaz extends JFrame{
 					else
 						partidosSegunda.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
 				}
-				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
-				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera(),conf.getClasificacionesSegunda());
+				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
+				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesSegunda());
 			}
 			
 			actualizarDatos(respuestaPrimera, respuestaSegunda);

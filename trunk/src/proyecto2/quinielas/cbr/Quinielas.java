@@ -178,19 +178,24 @@ public class Quinielas implements StandardCBRApplication {
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
 	}
 	
-	// TODO Ver como va con la primera jornada -> Como lo pide la interfaz??
-	// Este método ejecuta una consulta pedida por el usuario mediante la interfaz
-	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
-			String[][][] clasificacionesPrimera, String[][][] clasificacionesSegunda) {
-		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar con la jornada pedida por el usuario
-		jornada = jornada - 1;
-		try{
+	public void configCBR () {		
+		try {
 			//Configuración
-			configure();
-			
+			configure();		
 			//Preciclo
 			preCycle();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
+	// Este método ejecuta una consulta pedida por el usuario mediante la interfaz
+	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
+			String[][][] clasificaciones) {
+		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar con la jornada pedida por el usuario
+		jornada = jornada - 1;
+		int jornadaActual;
+		try{	
 			//Crear un objeto que almacena la consulta
 			CBRQuery query = new CBRQuery();	
 			// Si nos piden la jornada 1, entonces los equipos están con todos sus valores a 0
@@ -205,15 +210,16 @@ public class Quinielas implements StandardCBRApplication {
 			
 			// Buscamos para cada par de equipos del arrayList su clasificacion
 			while (iterador.hasNext()) {	
+				jornadaActual = jornada-1;
 				// Sacamos los nombres de ambos equipos tokens[0] = local, tokens[1] = visitante
 				tokens = iterador.next().split(",");
 				// Rellenamos la clasificacion en caso de que la jornada sea mayor que la primera	
 				// ya que los datos para predecir la primera jornada sería la jornada 0, que es tener las estadisticas a 0
-				if (jornada >  1) {	
+				if (jornadaActual >  0) {	
 					tokensLocal = null;
 					tokensVisitante = null;
 					// Buscamos la clasifiacion de cada uno en la temporada pedida, pero en la jornada ANTERIOR
-					for (String i: clasificacionesPrimera[temporada-2000][jornada-1]) {		
+					for (String i: clasificaciones[temporada-2000][jornadaActual]) {		
 						// Buscamos la clasificación del local
 						if ((i != null)	&& i.startsWith(tokens[0])) {
 							tokensLocal = i.split((","));
@@ -224,7 +230,7 @@ public class Quinielas implements StandardCBRApplication {
 						}
 						// Si encontramos ambos, paramos
 						if (tokensLocal != null && tokensVisitante != null) break;
-					}			
+					}
 					// Rellenamos los valores de las clasificaciones
 					for (int i = 0;i<tokensLocal.length-2;i++) {
 						clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
@@ -235,7 +241,10 @@ public class Quinielas implements StandardCBRApplication {
 				query.setDescription(new DescripcionQuinielas(Integer.valueOf(temporada),tokens[0],clasifLocal,tokens[1],clasifVisitante));
 				
 				//Ejecutar el ciclo
-				cycle(query);
+				cycle(query);			
+				System.out.println("Ejecutado ciclo para el partido: "+tokens[0]+" vs. "+tokens[1]);
+				for(int i:clasifLocal)i=0;
+				for(int i:clasifVisitante)i=0;
 			}
 		} catch (Exception e) {			
 			e.printStackTrace();
