@@ -13,6 +13,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import proyecto2.quinielas.interfaz.BarraProgreso;
+
 
 public class ParserWeb {
 
@@ -99,16 +101,26 @@ public class ParserWeb {
 		for (int i=anyoIni;i<anyoFin;i++){
 			for (int j=1;j<=38;j++){
 				anyadirJornada("primera",i,j);
+
+				BarraProgreso.aumentarBarraProgreso();
 			}
 			for (int j=1;j<=42;j++){
 				anyadirJornada("segunda",i,j);
+				
+				BarraProgreso.aumentarBarraProgreso();
 			}
+			
+			BarraProgreso.aumentarBarraProgreso();
 		}
 		for (int j=ultJornPrim;j<=maxJornPrim;j++){
 			anyadirJornada("primera",anyoFin,j);
+
+			BarraProgreso.aumentarBarraProgreso();
 		}
 		for (int j=ultJornSeg;j<=maxJornSeg;j++){
 			anyadirJornada("segunda",anyoFin,j);
+
+			BarraProgreso.aumentarBarraProgreso();
 		}
 
 		maxJornPrim++; maxJornSeg++;
