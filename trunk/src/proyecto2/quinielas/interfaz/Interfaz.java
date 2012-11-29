@@ -64,7 +64,7 @@ public class Interfaz extends JFrame{
 	public final static int MODOUNPARTIDO = 0;
 	
 	/** Configuracion de pantalla */
-	public final static int W = 800;
+	public final static int W = 840;
 	public final static int H = 600;
 	
 	/** Número de jornadas totales para primera y segunda división */
@@ -137,7 +137,7 @@ public class Interfaz extends JFrame{
 		
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setContentPane((getPanelPrincipal()));
 		this.setJMenuBar(getMenuPrincipal());
 		this.validate();
@@ -447,20 +447,11 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	/** Incializa la tabla de datos intermedia, que será modificada por la interfaz y
-	 *  por el resto del programa
+	/** Crea los ComboBox con los equipos disponibles teniendo en cuenta si son partidos
+	 * de primera o de segunda y si el modo de la tabla es de un partido o de varios
 	 */
-	
-	//private void inicializarDatosPartidos(int numFilas)
-	//{
-	//	datosTabla = new String[numFilas][4];
-		// TODO SET DATOS POR DEFECTO leer de la estructura pasada por parametro con equipos temporada = 2012 y jornadas 1 y 1
-		// Datos por defecto para resultado y confianza a "-1"
-	//}
-	
 	private void inicializarDesplegablesEquipoTabla(int numFilas)
 	{
-		// TODO Falta hacer la opción de un solo partido que sea de primera o de segunda division
 		comboBoxLocales = new JComboBox[numFilas];
 		comboBoxVisitantes = new JComboBox[numFilas];
 		
@@ -475,6 +466,7 @@ public class Interfaz extends JFrame{
 		}
 	}
 	
+	/** Rellena un ComboBox con los equipos que juegan en esa temporada y division*/ 
 	private void setEquiposComboBox(int num, Config c, boolean primeraDivision)
 	{
 		int ind; // auxiliar para recorrer las jornadas
@@ -501,7 +493,7 @@ public class Interfaz extends JFrame{
 		
 		eq = new String[numEquipos];
 		
-			// Rellenamos para los equipos de primera divisón
+		// Rellenamos para los equipos de primera divisón
 		for (int i = 0; i < numEquipos; i++)
 		{
 			ind = 0;
@@ -519,7 +511,6 @@ public class Interfaz extends JFrame{
 		
 		// Ahora con la lista de todos los equipos, creamos el JComboBox
 		comboBoxLocales[num] = new JComboBox(eq);
-		comboBoxLocales[num].setAlignmentX(CENTER_ALIGNMENT); //TODO
 		
 		// Selecciona un equipo aleatorio
 		comboBoxLocales[num].setSelectedIndex((int) (Math.random() * eq.length));
@@ -539,7 +530,7 @@ public class Interfaz extends JFrame{
 		    		reiniciarConfianzaYResultado();
 		    	      }
 		});
-		// Ahora ponemos un color distinto para los ComboBox
+		// Ahora ponemos un color distinto para los ComboBox (diferenciamos los de primera division y los de segunda
 		if (primeraDivision)
 		{
 			comboBoxLocales[num].setBackground(Color.WHITE);
@@ -550,18 +541,6 @@ public class Interfaz extends JFrame{
 			comboBoxLocales[num].setBackground(Color.LIGHT_GRAY);
 			comboBoxVisitantes[num].setBackground(Color.LIGHT_GRAY);
 		}
-	}
-	
-	protected void reiniciarConfianzaYResultado() {
-		for (int i = 0; i < resultados.length; i++)
-		{
-			resultados[i].setText("N/D");
-			resultados[i].repaint();
-			confianza[i].setValue(0);
-			confianza[i].setString("N/D");
-			confianza[i].repaint();
-		}
-		
 	}
 
 	/** Inicializa los campos de texto de los resultados **/
@@ -640,7 +619,7 @@ public class Interfaz extends JFrame{
 	private JPanel getPanelCompletoPesos()
 	{
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(2,9)); //TODO
+		p.setLayout(new GridLayout(2,9)); 
 		for (int i = 0; i < campoPesos.length; i++)
 		{
 			p.add(getPanelPeso(i));
@@ -743,12 +722,7 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	/** FUNCIONES PARA COMUNICARSE CON EL RESTO DEL PROGRAMA **/
-	// Crear método que cree un arrayList con la estructura "Equipo0,Equipo1" de todos los
-	// partidos que se van a jugar...
-
-	
-	/** FUNCIONES PARA EDITAR INFORMACIÓN DE LA INTERFAZ**/
+	/** METODOS QUE EDITAN LA INFORMACION DE LA INTERFAZ (Y ACCIONES DE LISTENERS) **/ 
 	
 	/** Actualiza la información de Temporada y Jornadas del título*/
 	public void setJornadaAño(int jornada_p, int jornada_s, int año)
@@ -758,35 +732,35 @@ public class Interfaz extends JFrame{
 		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada 1ºDiv : "+jornada_p+" ; Jornada 2ºDiv : "+jornada_s);
 	}
 
-	// Métodos Listener	
+	/** Actualiza la jornada actual seleccionada en el ComboBox de jornada correspondiente**/
 	public void actualizarJornada(ActionEvent e)
 	{
 		int n_jornada = 1;
-		@SuppressWarnings("rawtypes")
 		JComboBox cb = (JComboBox)e.getSource();
 	    String newSelection = (String)cb.getSelectedItem();
 	    if (newSelection != null)
 	    {
 	    	n_jornada = Integer.parseInt(newSelection);
+	    	// Comprobamos que el ComboBox modificado es el de primera o el de segunda division
 	    	if (cb == comboBox_jornada[PRIMERA_DIVISION])
 	    		conf.setSeleccionJornadaPrimera(n_jornada);
 	    	else
 	    		conf.setSeleccionJornadaSegunda(n_jornada);
 	    		
 	    }
+	    // Actualizamos la información del título
 	    setJornadaAño(conf.getSeleccionJornadaPrimera(),conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
-	    // TODO ACTUALIZAR COMBOBOX DE EQUIPOS A SELECCIONAR
 	}
 	
+	/** Se encarga de leer la modificacion del ComboBox de la temporada y actualizar el valor correspondiente*/
 	public void actualizarTemporada(ActionEvent e)
 	{	
-		@SuppressWarnings("rawtypes")
 		JComboBox cb = (JComboBox)e.getSource();
 	    String newSelection = (String)cb.getSelectedItem();
-	    // Nos quedamos solo con los 4 primeros digitos de la temporada 
+	    // Nos quedamos solo con los 4 primeros digitos de la temporada (las temporadas las almacenamos como enteros) 
 	    conf.setSeleccionTemporada(Integer.parseInt(newSelection.substring(0, 4)));
-	    
-	    
+	    // Comprobamos si es la temporada actual, para actualizar los valores de los ComboBox de jornadas a su
+	    // valor máximo correspondiente (el de la jornada actual para ambos)
 		if (conf.getSeleccionTemporada().equals(conf.getUltimaTemporada()))
 		{
 			setNumElemComboBoxJornada(conf.getUltimaJornadaPrimera(),PRIMERA_DIVISION);
@@ -794,12 +768,15 @@ public class Interfaz extends JFrame{
 		}
 		else
 		{
-			setNumElemComboBoxJornada(conf.JORNADASPRIMERA,PRIMERA_DIVISION);
-			setNumElemComboBoxJornada(conf.JORNADASSEGUNDA,SEGUNDA_DIVISION);
+			setNumElemComboBoxJornada(Config.JORNADASPRIMERA,PRIMERA_DIVISION);
+			setNumElemComboBoxJornada(Config.JORNADASSEGUNDA,SEGUNDA_DIVISION);
 		}
+		// Ponemos a 1 la seleccion de jornadas para que no haya problemas
 		conf.setSeleccionJornadaPrimera(1);
 		conf.setSeleccionJornadaSegunda(1);
+		// Actualizamos el título
 	    setJornadaAño(conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
+	    // Actualizamos la lista de partidos y sus equipos
 	    actualizarListaPartidos();
 	}
 
@@ -839,87 +816,90 @@ public class Interfaz extends JFrame{
 	    actualizarEquiposPrimeraOSegunda();
 	}
 	
-	public void accionesBotones(ActionEvent e)
+	/** Ejecuta las acciones correspondientes a la consulta, como preparar los datos para pasárselos a la consulta, 
+	 * ejecutar la consulta y mostrar una barra de progreso de la consulta. Finalmente, actualiza la informacion y 
+	 * la muestra en pantalla.
+	 */
+	private void accionBotonConsulta()
 	{
-		JButton b = (JButton)e.getSource();
-		// Para ver el modo en el que estamos
-		
-		if (b.getText().equals("Consultar"))
-		{
-			ArrayList<String> partidosPrimera = null;
-			ArrayList<String> partidosSegunda = null;
+		int numMax = 0; // numero de partidos a consultar
+		ArrayList<String> partidosPrimera = null;
+		ArrayList<String> partidosSegunda = null;
 			
-			if (modo_tabla == 0) // un solo partido
-			{
-				if (modo_partido == 0) // de primera division
-				{
-					partidosPrimera = new ArrayList<String>();
-					partidosPrimera.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
-					respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
-				}
-				else // de segunda división
-				{
-					partidosSegunda = new ArrayList<String>();
-					partidosSegunda.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
-					respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
-				}
-			}
-			else // todos los partidos -> 10 de primera y 5 de segunda
+		if (modo_tabla == 0) // un solo partido
+		{
+			if (modo_partido == 0) // de primera division
 			{
 				partidosPrimera = new ArrayList<String>();
-				partidosSegunda = new ArrayList<String>();
-				
-				for (int i = 0; i < NUM_EQU; i++)
-				{
-					if (i < num_partidos_primera)
-						partidosPrimera.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
-					else
-						partidosSegunda.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
-				}
-			}	
-				//respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
-				//respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
-				MiThread m = new MiThread(partidosPrimera,partidosSegunda);
-				m.start();
-			
-			
-
-			
-			//actualizarDatos(respuestaPrimera, respuestaSegunda);
-			int numMax = 0;
-			if (partidosPrimera != null)
-				numMax = numMax + partidosPrimera.size();
-			if (partidosSegunda != null)
-				numMax = numMax + partidosSegunda.size();
-			interfaz.setEnabled(false);
-			Principal.setBarra(new BarraProgreso(1,numMax));
-		}
-		else //en caso de que sea el botón default
-		{
-			datosPesos[Principal.TEMPORADA] = Principal.PESOTEMPORADA;
-			datosPesos[Principal.LOCAL] = Principal.PESOLOCAL;
-			datosPesos[Principal.VISITANTE] = Principal.PESOVISITANTE;
-			datosPesos[Principal.PUNTOSLOCAL] = Principal.PESOPUNTOSLOCAL;
-			datosPesos[Principal.PGLOCAL] = Principal.PESOPGLOCAL;
-			datosPesos[Principal.PELOCAL] = Principal.PESOPELOCAL;
-			datosPesos[Principal.PPLOCAL] = Principal.PESOPPLOCAL;
-			datosPesos[Principal.PUNTOSVISITANTE] = Principal.PESOPUNTOSVISITANTE;
-			datosPesos[Principal.PGVISITANTE] = Principal.PESOPGVISITANTE;
-			datosPesos[Principal.PEVISITANTE] = Principal.PESOPEVISITANTE;
-			datosPesos[Principal.PPVISITANTE] = Principal.PESOPPVISITANTE;
-			datosPesos[Principal.POSLOCAL] = Principal.PESOPOSLOCAL;
-			datosPesos[Principal.POSVISITANTE] = Principal.PESOPOSVISITANTE;
-			datosPesos[Principal.GFAVORLOCAL] = Principal.PESOGFAVORLOCAL;
-			datosPesos[Principal.GCONTRALOCAL] = Principal.PESOGCONTRALOCAL;
-			datosPesos[Principal.GFAVORVISITANTE] = Principal.PESOGFAVORVISITANTE;
-			datosPesos[Principal.GCONTRAVISITANTE] = Principal.PESOGCONTRAVISITANTE;
-			
-			for (int i = 0; i < datosPesos.length; i++)
+				partidosPrimera.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
+			}
+			else // de segunda división
 			{
-				campoPesos[i].setText(""+datosPesos[i]);
-				sliderPesos[i].setValue((int)(datosPesos[i]*1000));
+				partidosSegunda = new ArrayList<String>();
+				partidosSegunda.add(comboBoxLocales[0].getSelectedItem()+","+comboBoxVisitantes[0].getSelectedItem());
 			}
 		}
+		else // todos los partidos -> 10 de primera y 5 de segunda
+		{
+			partidosPrimera = new ArrayList<String>();
+			partidosSegunda = new ArrayList<String>();
+				
+			for (int i = 0; i < NUM_EQU; i++)
+			{
+				if (i < num_partidos_primera)
+						partidosPrimera.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
+				else
+					partidosSegunda.add(comboBoxLocales[i].getSelectedItem()+","+comboBoxVisitantes[i].getSelectedItem());
+			}
+		}	
+			// Creamos el nuevo hilo con los partidos y lo ejecutamos
+		MiThread m = new MiThread(partidosPrimera,partidosSegunda);
+		m.start();
+		// Mientras, creamos una ventana con una barra de progreso para indicarnos el porcentaje de la consulta
+		if (partidosPrimera != null)
+			numMax = numMax + partidosPrimera.size();
+		if (partidosSegunda != null)
+			numMax = numMax + partidosSegunda.size();
+		interfaz.setEnabled(false);
+		Principal.setBarra(new BarraProgreso(1,numMax));
+	}
+	
+	/** Restablece los valores de los pesos a default*/
+	private void accionPesosDefault()
+	{
+		datosPesos[Principal.TEMPORADA] = Principal.PESOTEMPORADA;
+		datosPesos[Principal.LOCAL] = Principal.PESOLOCAL;
+		datosPesos[Principal.VISITANTE] = Principal.PESOVISITANTE;
+		datosPesos[Principal.PUNTOSLOCAL] = Principal.PESOPUNTOSLOCAL;
+		datosPesos[Principal.PGLOCAL] = Principal.PESOPGLOCAL;
+		datosPesos[Principal.PELOCAL] = Principal.PESOPELOCAL;
+		datosPesos[Principal.PPLOCAL] = Principal.PESOPPLOCAL;
+		datosPesos[Principal.PUNTOSVISITANTE] = Principal.PESOPUNTOSVISITANTE;
+		datosPesos[Principal.PGVISITANTE] = Principal.PESOPGVISITANTE;
+		datosPesos[Principal.PEVISITANTE] = Principal.PESOPEVISITANTE;
+		datosPesos[Principal.PPVISITANTE] = Principal.PESOPPVISITANTE;
+		datosPesos[Principal.POSLOCAL] = Principal.PESOPOSLOCAL;
+		datosPesos[Principal.POSVISITANTE] = Principal.PESOPOSVISITANTE;
+		datosPesos[Principal.GFAVORLOCAL] = Principal.PESOGFAVORLOCAL;
+		datosPesos[Principal.GCONTRALOCAL] = Principal.PESOGCONTRALOCAL;
+		datosPesos[Principal.GFAVORVISITANTE] = Principal.PESOGFAVORVISITANTE;
+		datosPesos[Principal.GCONTRAVISITANTE] = Principal.PESOGCONTRAVISITANTE;
+		
+		for (int i = 0; i < datosPesos.length; i++){
+			campoPesos[i].setText(""+datosPesos[i]);
+			sliderPesos[i].setValue((int)(datosPesos[i]*1000));
+		}
+	}
+	
+	private void accionesBotones(ActionEvent e){
+		// Comprobamos que boton se ha pulsado
+		JButton b = (JButton)e.getSource();
+		// Ejecutamos la accion correspondiente dependiendo del boton
+		if (b.getText().equals("Consultar"))
+			accionBotonConsulta();
+		else //en caso de que sea el botón de reiniciar pesos
+			accionPesosDefault();
+		
 	}
 
 	public double[] getDatosPesos() {
@@ -955,34 +935,45 @@ public class Interfaz extends JFrame{
 		}
 		else // todos los partidos -> 10 de primera y 5 de segunda
 		{
-			for (int i = 0; i < num_partidos_primera; i++)
-			{
+			for (int i = 0; i < num_partidos_primera; i++){
 				resultados[i].setText(""+respuestaPrimera.get(i).getResultado()); 
 				confianza[i].setValue((int) (respuestaPrimera.get(i).getConfianza()*100));
 				confianza[i].setString((""+respuestaPrimera.get(i).getConfianza()*100).substring(0, 5)+"%");
 			}
-			for (int i = 0; i < NUM_EQU - num_partidos_primera; i++)
-			{
+			for (int i = 0; i < NUM_EQU - num_partidos_primera; i++){
 				resultados[i+num_partidos_primera].setText(""+respuestaSegunda.get(i).getResultado()); 
 				confianza[i+num_partidos_primera].setValue((int) (respuestaSegunda.get(i).getConfianza()*100));
 				confianza[i+num_partidos_primera].setString((""+respuestaSegunda.get(i).getConfianza()*100).substring(0, 5)+"%");
 			}
-			
-			
 		}
 	}
 	
-	class MiThread extends Thread {
+	/** Reinicia los valores de los campos de resultados y confianza*/
+	private void reiniciarConfianzaYResultado() 
+	{
+		for (int i = 0; i < resultados.length; i++){
+			resultados[i].setText("N/D");
+			resultados[i].repaint();
+			confianza[i].setValue(0);
+			confianza[i].setString("N/D");
+			confianza[i].repaint();
+		}
+		
+	}
+	
+	/** Clase interna para ejecutar el hilo de la consulta*/
+	class MiThread extends Thread 
+	{
 		private ArrayList<String> partidosPrimera;
 		private ArrayList<String> partidosSegunda;
 		
-		public MiThread(ArrayList<String> pP, ArrayList<String> pS)
-		{
+		public MiThread(ArrayList<String> pP, ArrayList<String> pS){
 			partidosPrimera = pP;
 			partidosSegunda = pS;
 		}
 		
-		public void run() {
+		public void run() 
+		{
 			if (partidosPrimera != null)
 				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
 			if (partidosSegunda != null)
