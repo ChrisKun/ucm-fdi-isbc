@@ -69,7 +69,7 @@ public class BarraProgreso extends JFrame{
 		pb.setMaximum(i);
 	}
 	
-	public static void cerrarVentana()
+	public void cerrarVentana()
 	{
 		ventana.dispose();
 	}

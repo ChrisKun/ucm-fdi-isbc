@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -113,6 +114,9 @@ public class Interfaz extends JFrame{
 	
 	public Interfaz(double[] ds, Config c, Quinielas q)
 	{
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		 int width = pantalla.width;
+		 this.setBounds(width/2 - W/2,0, W, H);	
 		// Inicialización
 		jlab_jornada = new JLabel();
 		comboBox_jornada = new JComboBox[2];
@@ -127,6 +131,8 @@ public class Interfaz extends JFrame{
 		this.setVisible(true);
 		this.setTitle("Quinielas"); //TODO Poner icono?
 		this.setSize(W, H);
+		
+
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(true); // TODO Poner a falso
 		this.setContentPane((getPanelPrincipal()));
@@ -139,19 +145,31 @@ public class Interfaz extends JFrame{
 	private JMenuBar getMenuPrincipal()
 	{
 		/** FALTA ACTION LISTENER Y COMPLETAR MENU **/
-		JMenuBar menuPrincipal = new JMenuBar();
+		JMenuBar barraMenuPrincipal = new JMenuBar();
 		// Menu archivo
-		JMenu m_arch = new JMenu("Archivo");
-		menuPrincipal.add(m_arch);
+		JMenu menuArchivo = new JMenu("Archivo");
+		barraMenuPrincipal.add(menuArchivo);
 			// Elementos del menu archivo
 			JMenuItem it_salir = new JMenuItem("Salir");
-			m_arch.add(it_salir);
-			
-		// Menu sobre
-		JMenu m_sobr = new JMenu("Sobre");
-		menuPrincipal.add(m_sobr);
+			menuArchivo.add(it_salir);
 		
-		return menuPrincipal;
+		// Menu eficiencia
+		JMenu menuEficiencia = new JMenu("Eficiencia");
+			// Elementos del menu eficiencia
+			JMenuItem itNFold = new JMenuItem("N-fold");
+			menuEficiencia.add(itNFold);
+			
+			JMenuItem itHoldOut = new JMenuItem("Hold-Out");
+			menuEficiencia.add(itHoldOut);
+			
+			JMenuItem itLeaveOneOut = new JMenuItem("Leave-One-Out");
+			menuEficiencia.add(itLeaveOneOut);
+		barraMenuPrincipal.add(menuEficiencia);
+		// Menu sobre
+		JMenu menuSobre = new JMenu("Sobre");
+		barraMenuPrincipal.add(menuSobre);
+		
+		return barraMenuPrincipal;
 	}
 	
 	private JPanel getPanelPrincipal()
