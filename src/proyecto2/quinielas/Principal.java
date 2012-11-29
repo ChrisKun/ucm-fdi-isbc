@@ -103,10 +103,7 @@ public class Principal {
 		ParserWeb parser = new ParserWeb();
 		barra = new BarraProgreso(BarraProgreso.MODOPARSER,0);
 		try {
-			//Interfaz.mensajeEsperaParser();
-	
 			parser.main(args);
-			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -121,9 +118,6 @@ public class Principal {
 		// PASO 3. LLAMAR A LA INTERFAZ
 		barra.cerrarVentana(); //cerramos la ventana
 		i = new Interfaz(principal.getListaPesos(),c,q);
-		
-		
-		//q.querysCBR(a,2012,4,principal.listaPesos,c.getClasificacionesPrimera(),c.getClasificacionesSegunda());
 		//ValidacionCruzada validador = new ValidacionCruzada(); 
 	}
 	
