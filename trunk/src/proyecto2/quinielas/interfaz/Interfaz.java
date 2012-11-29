@@ -45,6 +45,7 @@ import proyecto2.quinielas.Config;
 import proyecto2.quinielas.Principal;
 import proyecto2.quinielas.cbr.Prediccion;
 import proyecto2.quinielas.cbr.Quinielas;
+import proyecto2.quinielas.cbr.ValidacionCruzada;
 
 import junit.awtui.ProgressBar;
 
@@ -159,9 +160,22 @@ public class Interfaz extends JFrame{
 		JMenu menuEficiencia = new JMenu("Eficiencia");
 			// Elementos del menu eficiencia
 			JMenuItem itNFold = new JMenuItem("N-fold");
+			// Añadimos el listener al item correspondiente
+			itNFold.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg) {
+					accionesMenu(arg);
+				}
+
+			});
 			menuEficiencia.add(itNFold);
 			
 			JMenuItem itHoldOut = new JMenuItem("Hold-Out");
+			itHoldOut.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg) {
+					accionesMenu(arg);
+				}
+
+			});
 			menuEficiencia.add(itHoldOut);
 			
 			JMenuItem itLeaveOneOut = new JMenuItem("Leave-One-Out");
@@ -338,7 +352,6 @@ public class Interfaz extends JFrame{
 	 * dos columnas adicionales donde se muestra el resultado de la solución y la medida de 
 	 * confianza.
 	 */
-	
 	private JPanel getJPanelTabla(int modo)
 	{
 		// Numero de filas que tendra nuestra "tabla" (por defecto 16)
@@ -372,22 +385,6 @@ public class Interfaz extends JFrame{
 			p.add(j);
 			
 		}	
-		//JLabel j = new JLabel(str, JLabel.CENTER);
-		// Aumentamos la fuente de tamaño
-		//j.
-		//p.add(j);
-		//JLabel h = new JLabel("Equipo Visitante", JLabel.CENTER);
-		//p.add(h);
-		//panelTabla.add(p);
-		//JLabel s = new JLabel("Resultado", JLabel.CENTER);
-		//p.add(s);
-		//panelTabla.add(s);
-		//JLabel o = new JLabel("Confianza", JLabel.CENTER);
-		//p.add(o);
-		//panelTabla.add(o);
-		
-		// añadimos los equipos correspondientes
-		//inicializarDatosPartidos(numF-1);
 		inicializarDesplegablesEquipoTabla(numF-1);
 		inicializarResultados(numF-1);
 		inicializarConfianza(numF-1);
@@ -722,10 +719,61 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	/** METODOS QUE EDITAN LA INFORMACION DE LA INTERFAZ (Y ACCIONES DE LISTENERS) **/ 
+	/** METODOS QUE EDITAN LA INFORMACION DE LA INTERFAZ (Y ACCIONES DE LISTENERS) 
+	 * @param arg **/ 
+	
+	private void accionesMenu(ActionEvent arg)
+	{
+		JMenuItem it = (JMenuItem) arg.getSource();
+		String nomb = it.getText();
+		int numCasos = 0;
+		int numCasosDefecto = 15;
+		int numVueltas = 0;
+		int numVueltasDefecto = 1;
+		String str = null;
+		if (nomb == "N-fold")
+		{
+			
+		}
+		else if (nomb == "Hold-Out")
+		{
+			ValidacionCruzada vc = new ValidacionCruzada();
+			str = JOptionPane.showInputDialog(null, "Número de casos (si no introduce algo aceptable se usará el valor por defecto ("+numCasosDefecto+")", "Introduce el número de casos",JOptionPane.QUESTION_MESSAGE);
+			if (str != null)
+			{
+				try{
+				numCasos = Integer.parseInt(str);
+				}
+				catch (Exception e)
+				{
+					numCasos = numCasosDefecto;
+				}
+				if (numCasos < 0)
+					numCasos = numCasosDefecto;
+			}
+			str = JOptionPane.showInputDialog(null, "Introducir numero de vueltas (por defecto 1)", ""+numVueltasDefecto, JOptionPane.QUESTION_MESSAGE);
+			
+			if (str != null)
+			{
+				numVueltas = Integer.parseInt(str);
+				if (numVueltas < 0)
+					numVueltas = numVueltasDefecto;
+			}
+			// TODO Hacerlo en otro hilo a parte...
+			vc.HoldOutEvaluation(datosPesos, numCasos, numVueltas);
+		}
+		else if (nomb == "Leave-One-Out")
+		{
+			
+		}
+		else //accion por defecto -> Salir
+		{
+			
+		}
+	}
 	
 	/** Actualiza la información de Temporada y Jornadas del título*/
-	public void setJornadaAño(int jornada_p, int jornada_s, int año)
+	private void setJornadaAño(int jornada_p, int jornada_s, int año)
 	{
 		// Font("Titulo fuente", "Atributos", "Tamaño")
 		jlab_jornada.setFont(new Font("Verdana", Font.BOLD, 22));
@@ -733,7 +781,7 @@ public class Interfaz extends JFrame{
 	}
 
 	/** Actualiza la jornada actual seleccionada en el ComboBox de jornada correspondiente**/
-	public void actualizarJornada(ActionEvent e)
+	private void actualizarJornada(ActionEvent e)
 	{
 		int n_jornada = 1;
 		JComboBox cb = (JComboBox)e.getSource();
@@ -753,7 +801,7 @@ public class Interfaz extends JFrame{
 	}
 	
 	/** Se encarga de leer la modificacion del ComboBox de la temporada y actualizar el valor correspondiente*/
-	public void actualizarTemporada(ActionEvent e)
+	private void actualizarTemporada(ActionEvent e)
 	{	
 		JComboBox cb = (JComboBox)e.getSource();
 	    String newSelection = (String)cb.getSelectedItem();
@@ -780,7 +828,7 @@ public class Interfaz extends JFrame{
 	    actualizarListaPartidos();
 	}
 
-	public void actualizarListaPartidos()
+	private void actualizarListaPartidos()
 	{
 		panelPrincipal.remove(panelTabla);
 		if (rbutt_uno.isSelected())
@@ -797,7 +845,7 @@ public class Interfaz extends JFrame{
 		panelPrincipal.validate();
 	}
 	
-	public void actualizarEquiposPrimeraOSegunda()
+	private void actualizarEquiposPrimeraOSegunda()
 	{
 		panelPrincipal.remove(panelTabla);
 		if (rbutt_primera.isSelected())
@@ -906,17 +954,12 @@ public class Interfaz extends JFrame{
 		return datosPesos;
 	}
 
-	public void setDatosPesos(double[] ds) {
+	private void setDatosPesos(double[] ds) {
 		this.datosPesos = ds;
-	}
-
-	public static void mensajeEspera() {
-		JOptionPane.showMessageDialog(null , "Actualizando, por favor, espere");
-		
 	}
 	
 	/** Actualiza los campos resultado y confianza de la interfaz */
-	public void actualizarDatos(ArrayList<Prediccion> respuestaPrimera,ArrayList<Prediccion> respuestaSegunda)
+	private void actualizarDatos(ArrayList<Prediccion> respuestaPrimera,ArrayList<Prediccion> respuestaSegunda)
 	{
 		if (modo_tabla == 0) // un solo partido
 		{
