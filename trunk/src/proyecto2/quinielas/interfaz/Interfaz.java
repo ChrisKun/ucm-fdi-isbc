@@ -18,6 +18,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -59,10 +61,11 @@ public class Interfaz extends JFrame{
 	public final static int VISITANTE = 1;
 	public final static int RESULTADO = 2;
 	public final static int NUM_EQU = 15;
+	public final static int MODOUNPARTIDO = 0;
 	
 	/** Configuracion de pantalla */
 	public final static int W = 800;
-	public final static int H = 700;
+	public final static int H = 600;
 	
 	/** Número de jornadas totales para primera y segunda división */
 	public final static int PRIMERA_DIVISION = 0;
@@ -116,7 +119,7 @@ public class Interfaz extends JFrame{
 	{
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		 int width = pantalla.width;
-		 this.setBounds(width/2 - W/2,0, W, H);	
+		 this.setBounds(width/2 - W/2,0, W, H);
 		// Inicialización
 		jlab_jornada = new JLabel();
 		comboBox_jornada = new JComboBox[2];
@@ -134,11 +137,10 @@ public class Interfaz extends JFrame{
 		
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setResizable(true); // TODO Poner a falso
+		this.setResizable(false);
 		this.setContentPane((getPanelPrincipal()));
 		this.setJMenuBar(getMenuPrincipal());
 		this.validate();
-		//inicializarCamposPesos(campoPesos);
 
 	}
 
@@ -339,29 +341,49 @@ public class Interfaz extends JFrame{
 	
 	private JPanel getJPanelTabla(int modo)
 	{
+		// Numero de filas que tendra nuestra "tabla" (por defecto 16)
+		int numF; 
+		// Si el modo es el de un solo partido, serán 2
+		switch (modo)
+		{
+			case MODOUNPARTIDO: numF = 2; break;
+			default: numF = NUM_EQU+1; break;
+		}
+		// Creamos y configuramos el panel
 		panelTabla = new JPanel();
 		panelTabla.setLayout(new BorderLayout());
-		
+		// Creamos Subpaneles para la cabecera y el resto de elementos
 		JPanel p = new JPanel();
-		
-		int numF = NUM_EQU+1;
-		//panelTabla = new JPanel();
-		if (modo == 0) // un solo partido
-			numF = 2;
-		//panelTabla.setLayout(new GridLayout(numF,4));
 		p.setLayout(new GridLayout(numF,4));
-		// Añadimos los elementos de la primera fila 
-		JLabel j = new JLabel("Equipo Local");
-		//panelTabla.add(j);
-		p.add(j);
-		JLabel h = new JLabel("Equipo Visitante");
-		p.add(h);
+		// Añadimos los elementos de la primera fila en el subpanel de cabecera 
+		JLabel j; // Etiqueta auxiliar para completar la cabecera
+		String str = "default"; // Auxiliar para añadir el nombre
+		for (int i = 0; i < 4; i++)
+		{
+			switch(i)
+			{
+				case 0: str = "Equipo Local"; break;
+				case 1: str = "Equipo Visitante"; break;
+				case 2: str = "Resultado"; break;
+				case 3: str = "Confianza"; break;
+			}
+			j = new JLabel(str, JLabel.CENTER);
+			j.setFont(new Font(j.getFont().getFontName(), Font.BOLD, 18));
+			p.add(j);
+			
+		}	
+		//JLabel j = new JLabel(str, JLabel.CENTER);
+		// Aumentamos la fuente de tamaño
+		//j.
+		//p.add(j);
+		//JLabel h = new JLabel("Equipo Visitante", JLabel.CENTER);
+		//p.add(h);
 		//panelTabla.add(p);
-		JLabel s = new JLabel("Resultado");
-		p.add(s);
+		//JLabel s = new JLabel("Resultado", JLabel.CENTER);
+		//p.add(s);
 		//panelTabla.add(s);
-		JLabel o = new JLabel("Confianza");
-		p.add(o);
+		//JLabel o = new JLabel("Confianza", JLabel.CENTER);
+		//p.add(o);
 		//panelTabla.add(o);
 		
 		// añadimos los equipos correspondientes
@@ -372,10 +394,6 @@ public class Interfaz extends JFrame{
 		
 		for (int i = 0; i < numF-1; i++)
 		{
-			//panelTabla.add(comboBoxLocales[i]);
-			//panelTabla.add(comboBoxVisitantes[i]);
-			//panelTabla.add(resultados[i]);
-			//panelTabla.add(confianza[i]);
 			p.add(comboBoxLocales[i]);
 			p.add(comboBoxVisitantes[i]);
 			p.add(resultados[i]);
@@ -501,6 +519,7 @@ public class Interfaz extends JFrame{
 		
 		// Ahora con la lista de todos los equipos, creamos el JComboBox
 		comboBoxLocales[num] = new JComboBox(eq);
+		comboBoxLocales[num].setAlignmentX(CENTER_ALIGNMENT); //TODO
 		
 		// Selecciona un equipo aleatorio
 		comboBoxLocales[num].setSelectedIndex((int) (Math.random() * eq.length));
@@ -545,47 +564,48 @@ public class Interfaz extends JFrame{
 		
 	}
 
+	/** Inicializa los campos de texto de los resultados **/
 	private void inicializarResultados(int numFilas)
 	{
-		// TODO leer de la tabla de datos
 		resultados = new JTextField[numFilas];
 		
 		for (int i = 0; i < numFilas; i++)
 		{
 			resultados[i] = new JTextField("N/D");
 			resultados[i].setEditable(false);
-			resultados[i].setAlignmentX(CENTER_ALIGNMENT);
+			// Centramos el texto del JTextField
+			resultados[i].setHorizontalAlignment(SwingConstants.CENTER);
 		}
 	}
 	
+	/** Inicializa los campos de la medida de confianza (JProgressBar)*/
 	private void inicializarConfianza(int numFilas)
 	{
-		// Leer de la tabla de datos
+		// Creamos el número de campos que va a tener (1 o 15)
 		confianza = new JProgressBar[numFilas];
 		
 		for (int i = 0; i < numFilas; i++)
 		{
 			confianza[i] = new JProgressBar();
-			//confianza[i].setValue(35);
+			// Se muestre el texto encima de la barra
 			confianza[i].setStringPainted(true);
+			// Como al inicio no hay datos, ponemos un "No disponible"
 			confianza[i].setString("N/D");
-		//	confianza[i].setString(confianza[i].getValue()+"%");
 		}
 	}
 	
-
-
-	
-	// Panel donde está el log para cargar resultados, una barra para cargar y los botones
-	/** TODO RETOCAR MÉTODO: AHORA ESTÁ CHAPUZA E INCOMPLETO **/
+	/** Metodo que devuelve el JPanel donde estan los pesos para modificar
+	 * y también los botones de Consulta y Poner Pesos por defecto
+	 */
 	private JPanel getPanelLogYPesos()
 	{
 		// Definición del panel
 		JPanel p = new JPanel();
 		p.setLayout(new BorderLayout());
-		
-		p.add(getPanelCompletoPesos(), BorderLayout.CENTER);
-		p.add(getSubPanelBotones(), BorderLayout.SOUTH);
+		// Subpanel con pesos
+		p.add(getPanelCompletoPesos(), BorderLayout.CENTER); 
+		// Subpanel con botones
+		p.add(getSubPanelBotones(), BorderLayout.SOUTH); 
 		return p;
 	}
 	
@@ -620,7 +640,7 @@ public class Interfaz extends JFrame{
 	private JPanel getPanelCompletoPesos()
 	{
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(4,4));
+		p.setLayout(new GridLayout(2,9)); //TODO
 		for (int i = 0; i < campoPesos.length; i++)
 		{
 			p.add(getPanelPeso(i));
@@ -687,27 +707,27 @@ public class Interfaz extends JFrame{
 		switch(quePeso)
 		{
 			case Principal.TEMPORADA: str = "Temporada"; break;
-			case Principal.LOCAL: str = "Local"; break;
-			case Principal.VISITANTE: str = "Visitante"; break;
-			case Principal.PUNTOSLOCAL: str = "Puntos Local"; break;
-			case Principal.PGLOCAL: str = "P. Ganados Local"; break;
-			case Principal.PELOCAL: str = "P. Empatados Local"; break;
-			case Principal.PPLOCAL: str = "P. Perdidos Local"; break;
-			case Principal.PUNTOSVISITANTE: str = "Puntos Visitante"; break;
-			case Principal.PGVISITANTE: str = "P. Ganados Visitante"; break;
-			case Principal.PEVISITANTE: str = "P. Empatados Visitante"; break;
-			case Principal.PPVISITANTE: str = "P. Perdidos Visitante"; break;
-			case Principal.POSLOCAL: str = "Posición Local"; break;
-			case Principal.POSVISITANTE: str = "Posición VIsitante"; break;
-			case Principal.GFAVORLOCAL: str = "Goles a Favor Local"; break;
-			case Principal.GCONTRALOCAL: str = "Goles en Contra Local"; break;
-			case Principal.GFAVORVISITANTE: str = "Goles a Favor Visitante"; break;
-			case Principal.GCONTRAVISITANTE: str = "Goles en Contra Visitante"; break;
+			case Principal.LOCAL: str = "Local (L)"; break;
+			case Principal.VISITANTE: str = "Visitante (V)"; break;
+			case Principal.PUNTOSLOCAL: str = "Puntos L"; break;
+			case Principal.PGLOCAL: str = "Par. Gan. L"; break;
+			case Principal.PELOCAL: str = "Par. Emp. L"; break;
+			case Principal.PPLOCAL: str = "Par. Per. L"; break;
+			case Principal.PUNTOSVISITANTE: str = "Puntos V"; break;
+			case Principal.PGVISITANTE: str = "Par. Gan. V"; break;
+			case Principal.PEVISITANTE: str = "Par. Emp. V"; break;
+			case Principal.PPVISITANTE: str = "Par. Per. V"; break;
+			case Principal.POSLOCAL: str = "Posición L"; break;
+			case Principal.POSVISITANTE: str = "Posición V"; break;
+			case Principal.GFAVORLOCAL: str = "Gol. Favor L"; break;
+			case Principal.GCONTRALOCAL: str = "Gol. Contra L"; break;
+			case Principal.GFAVORVISITANTE: str = "Gol. Favor V"; break;
+			case Principal.GCONTRAVISITANTE: str = "Gol. Contra V"; break;
 			default: str = "Default";
 			
 		}
 		
-		j = new JLabel(str);
+		j = new JLabel(str,JLabel.CENTER);
 		return j;
 		
 	}
@@ -729,12 +749,11 @@ public class Interfaz extends JFrame{
 
 	
 	/** FUNCIONES PARA EDITAR INFORMACIÓN DE LA INTERFAZ**/
-	// EDITAR JORNADA Y AÑO
+	
+	/** Actualiza la información de Temporada y Jornadas del título*/
 	public void setJornadaAño(int jornada_p, int jornada_s, int año)
 	{
-		// Font("Titulo fuente", "Atributos", "Tamaño"
-		//if (año == 0)
-		//	año = 2000;
+		// Font("Titulo fuente", "Atributos", "Tamaño")
 		jlab_jornada.setFont(new Font("Verdana", Font.BOLD, 22));
 		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada 1ºDiv : "+jornada_p+" ; Jornada 2ºDiv : "+jornada_s);
 	}
