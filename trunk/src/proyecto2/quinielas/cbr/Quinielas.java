@@ -72,23 +72,25 @@ public class Quinielas implements StandardCBRApplication {
 	
 	/* METODOS */	
 	@Override
-	public void configure() throws ExecutionException {
-		try{
+	public void configure() {
 		// Crear el conector con la base de casos
 		connector = new ConnectorQuinielas();
 		// La organización en memoria será lineal y cacheada (para que en la evaluación no esté
 		// cambiando el medio de persistencia constantemente
 		// caseBase = new LinealCaseBase();
-		caseBase = new CachedLinealCaseBase();
-		} catch (Exception e){
-			throw new ExecutionException(e);
-		}	
+		caseBase = new CachedLinealCaseBase();	
 	}
 
 	@Override
 	public CBRCaseBase preCycle() throws ExecutionException {		
 		// Cargar los casos desde el conector a la base de casos
-		caseBase.init(connector);		
+		try {
+			caseBase.init(connector);
+			if(caseBase.getCases().isEmpty())
+				throw new ExecutionException("Fichero de clasificaciones vacio");
+		} catch (ExecutionException e) {
+			throw e;
+		}
 		return caseBase;
 	}
 
@@ -170,33 +172,33 @@ public class Quinielas implements StandardCBRApplication {
                 pre = 1.0;
         else 
                 pre = 0.0;
-        // Los println realentizan mucho la ejecución
-    /*  System.out.print("********* ");
+        /*
+        System.out.print("********* ");
         System.out.print("Resultado: "+sol.getSolucion().toString()+" - "+"Prediccion: "+prediccion.getResultado() + " -> Confianza= " + "[ " + prediccion.getConfianza() + " ]");
         System.out.println(" *********");
-     */
+        */
         Evaluator.getEvaluationReport().addDataToSeries("Aciertos", pre);
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
 	}
 	
-	public void configCBR () {		
+	public void configCBR () throws ExecutionException {		
 		try {
 			//Configuración
 			configure();		
 			//Preciclo
 			preCycle();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ExecutionException e) {
+			throw e;
 		}
 	}
 	
 	// Este método ejecuta una consulta pedida por el usuario mediante la interfaz
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
-			String[][][] clasificaciones) {
+			String[][][] clasificaciones) throws ExecutionException {
 		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar con la jornada pedida por el usuario
 		jornada = jornada - 1;
 		int jornadaActual;
-		try{			
+		try {			
 			//Crear un objeto que almacena la consulta
 			CBRQuery query = new CBRQuery();	
 			// Si nos piden la jornada 1, entonces los equipos están con todos sus valores a 0
@@ -257,8 +259,9 @@ public class Quinielas implements StandardCBRApplication {
 				for(int i =0;i<clasifLocal.length;i++)clasifLocal[i]=0;
 				for(int i =0;i<clasifVisitante.length;i++)clasifVisitante[i]=0;
 			}
-		} catch (Exception e) {			
+		} catch (ExecutionException e) {			
 			e.printStackTrace();
+			throw e;
 		}
 		ArrayList<Prediccion> listaDevolucion = new ArrayList<Prediccion>();
 		Iterator<Prediccion> iterador = listaPredicciones.iterator();

@@ -11,6 +11,7 @@ import java.util.Collection;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CaseBaseFilter;
 import jcolibri.cbrcore.Connector;
+import jcolibri.exception.ExecutionException;
 import jcolibri.exception.InitializingException;
 
 /**
@@ -105,15 +106,8 @@ public class ConnectorQuinielas implements Connector {
 				
 			}
 			br.close();
-			// Lanzamos una excepcion en caso de estar el fichero vacio
-			if (i == 0) {
-				Exception e = new Exception("Fichero vacio");
-				throw e;
-			}
 		} catch (Exception e) {
-			System.err.println("Error caso: "+i);
-			System.err.println(e.getMessage());
-			e.printStackTrace();
+			System.err.println("Error caso: "+i);					
 		}
 		System.out.println("Conector. Casos cargados: "+i);
 		return list;
