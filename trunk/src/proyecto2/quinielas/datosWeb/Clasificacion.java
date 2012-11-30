@@ -40,6 +40,37 @@ public class Clasificacion {
 	public String getEq() {
 		return eq;
 	}
-	
+
+	public int getPos() {
+		return pos;
+	}
+
+	public int getPj() {
+		return pj;
+	}
+
+	public int getPg() {
+		return pg;
+	}
+
+	public int getPe() {
+		return pe;
+	}
+
+	public int getPp() {
+		return pp;
+	}
+
+	public int getGf() {
+		return gf;
+	}
+
+	public int getGc() {
+		return gc;
+	}
+
+	public int getPtos() {
+		return ptos;
+	}
 	
 }
