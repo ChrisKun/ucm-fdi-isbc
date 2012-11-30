@@ -104,6 +104,7 @@ public class Principal {
 		// PASO 1. LANZAR EL PARSER
 		ParserWeb parser = new ParserWeb();
 		barra = new BarraProgreso(BarraProgreso.MODOPARSER,0);
+		/*
 		try {
 			parser.main(args);
 			
@@ -111,7 +112,8 @@ public class Principal {
 			barra.cerrarVentana();
 			e.printStackTrace();
 			return;
-		}
+		}*/
+		parser.ejecutarParser();
 		
 		// PASO 2. CONFIGURAR 
 		Config c = new Config();

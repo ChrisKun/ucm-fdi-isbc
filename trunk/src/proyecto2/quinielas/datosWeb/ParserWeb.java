@@ -22,6 +22,20 @@ import org.jsoup.select.Elements;
 
 public class ParserWeb {
 
+	public int getUltimaTemporada() {
+		return ultimaTemporada;
+	}
+
+
+	public int getUltimaJornadaPrimera() {
+		return ultimaJornadaPrimera;
+	}
+
+
+	public int getUltimaJornadaSegunda() {
+		return ultimaJornadaSegunda;
+	}
+
 	private final static String rutaDatos = 
 			"."+File.separatorChar+
 			"src"+File.separatorChar+
@@ -81,13 +95,17 @@ public class ParserWeb {
 				anyadirJornada("segunda",i,j);
 			}
 		}
-		for (int j=ultimaJornadaPrimera;j<=ultimaJornadaPrimera;j++){
+		for (int j=inicioJornPrim;j<=ultimaJornadaPrimera;j++){
 			anyadirJornada("primera",ultimaTemporada,j);
 		}
-		for (int j=ultimaJornadaSegunda;j<=ultimaJornadaSegunda;j++){
+		for (int j=inicioJornSeg;j<=ultimaJornadaSegunda;j++){
 			anyadirJornada("segunda",ultimaTemporada,j);
 		}
 
+		  
+	    ultimaJornadaPrimera++;
+	    ultimaJornadaSegunda++;
+	    
 		try {
 			guardarFicheros();
 		} catch (Exception e) {
@@ -224,9 +242,7 @@ public class ParserWeb {
 		} catch (IOException e) {
 			System.err.println("No se puede acceder a la pagina principal de Segunda division");
 		}
-  
-	    ultimaJornadaPrimera++;
-	    ultimaJornadaSegunda++;
+
   }
 	
 	public void cargarFicheros() throws IOException, ClassNotFoundException{
@@ -269,6 +285,7 @@ public class ParserWeb {
 		
 		//
 		//	Generar el fichero de 'infoMarca.txt'
+		fstream = new FileWriter(rutaDatos+File.separatorChar+"infoMarca.txt");
 		out = new BufferedWriter(fstream);
 		for (String s: jornadas){
 			out.write(s+"\n");

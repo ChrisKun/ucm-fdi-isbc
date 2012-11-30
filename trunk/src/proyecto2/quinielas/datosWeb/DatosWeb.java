@@ -1,6 +1,5 @@
 package proyecto2.quinielas.datosWeb;
 
-import java.io.IOException;
 
 public class DatosWeb {
 

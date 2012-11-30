@@ -1,7 +1,10 @@
 package proyecto2.quinielas.datosWeb;
 
-public class Clasificacion {
+import java.io.Serializable;
 
+public class Clasificacion implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private int pos;
 	private String eq;
 	private int pj,pg,pe,pp;
