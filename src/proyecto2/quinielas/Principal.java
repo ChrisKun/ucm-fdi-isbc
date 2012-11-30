@@ -104,34 +104,34 @@ public class Principal {
 		// PASO 1. LANZAR EL PARSER
 		ParserWeb parser = new ParserWeb();
 		barra = new BarraProgreso(BarraProgreso.MODOPARSER,0);
-		/*
-		try {
-			parser.main(args);
-			
-		} catch (IOException e) {
-			barra.cerrarVentana();
-			e.printStackTrace();
-			return;
-		}*/
-		parser.ejecutarParser();
 		
+		try {
+			parser.ejecutarParser();			
+		} catch (Exception e) {
+			barra.cerrarVentana();
+			e.getMessage();
+			return;
+		}		
 		// PASO 2. CONFIGURAR 
-		Config c = new Config();
+		//Config c = new Config();
 		Quinielas q = new Quinielas(principal.getListaPesos());
 		try {
 			// Hacemos el configure() y el preciclo()
 			q.configCBR();
 		} catch (ExecutionException e){
-			e.printStackTrace();
 			barra.cerrarVentana();
 			e.getMessage();
 			return;
 		}
-		
+		barra.cerrarVentana();
+		/*
 		// PASO 3. LLAMAR A LA INTERFAZ
 		barra.cerrarVentana(); //cerramos la ventana
 		i = new Interfaz(principal.getListaPesos(),c,q);
 		//ValidacionCruzada validador = new ValidacionCruzada(); 
+		 * 
+		 * 
+		 */
 	}
 	
 	public static BarraProgreso getBarra() {
