@@ -3,6 +3,7 @@ package proyecto2.quinielas.cbr;
 import proyecto2.quinielas.cbr.SolucionQuinielas.UnoXDos;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,12 +12,11 @@ import java.util.Collection;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CaseBaseFilter;
 import jcolibri.cbrcore.Connector;
-import jcolibri.exception.ExecutionException;
 import jcolibri.exception.InitializingException;
 
 /**
- * Carga los casos desde el fichero obtenido en http://www.terra.es/personal3/olbapordep/
- * @author juanan
+ * 
+ * Carga de infoMarca.txt todas las clasificiaciones desde el año de inicio
  *
  */
 public class ConnectorQuinielas implements Connector {
@@ -45,25 +45,24 @@ public class ConnectorQuinielas implements Connector {
 
 	}
 
-	@Override
+	/**
+	 * Método que inserta todos los casos en la base de casos
+	 */
 	public Collection<CBRCase> retrieveAllCases() {
 	
 		ArrayList<CBRCase> list = new ArrayList<CBRCase>();
 		int i=0;
-		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(".\\src\\proyecto2\\quinielas\\datos\\infoMarca.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("."+File.separatorChar+"src"+File.separatorChar+"proyecto2"+File.separatorChar+
+					"quinielas"+File.separatorChar+"datos"+File.separatorChar+"infoMarca.txt"));
 			String line = null;
-			while((line=br.readLine())!=null){
-				
+			while((line=br.readLine())!=null){				
 				String[] tokens = line.split(",");
 				// Medida de seguridad frente a posibles errores en el archivo de texto
 			    if (tokens.length < 22) {
 			    	// System.err.println("Falta informacion en: " + line);
 			    	continue;
-			    }
-			    
-				
+			    }				
 				DescripcionQuinielas desc = new DescripcionQuinielas();
 				
 				desc.setId(String.valueOf(i));
@@ -117,11 +116,11 @@ public class ConnectorQuinielas implements Connector {
 	public Collection<CBRCase> retrieveSomeCases(CaseBaseFilter filter) {
 		return null;
 	}
-	
+	/*
 	public static void main(String[] args)
 	{
 		ConnectorQuinielas cq = new ConnectorQuinielas();
 		cq.retrieveAllCases();
 	}
-
+	*/
 }
