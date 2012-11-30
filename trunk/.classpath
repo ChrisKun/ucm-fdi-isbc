@@ -21,6 +21,5 @@
 	<classpathentry kind="lib" path="lib/databaseconnector/jta.jar"/>
 	<classpathentry kind="lib" path="lib/databaseconnector/mysql-connector-java-3.0.11-stable-bin.jar"/>
 	<classpathentry kind="lib" path="lib/evaluation/Chart2D.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jCOLIBRI2"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

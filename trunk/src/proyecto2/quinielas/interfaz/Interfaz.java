@@ -53,7 +53,7 @@ import junit.awtui.ProgressBar;
 public class Interfaz extends JFrame{
 	
 	/**
-	 * 
+	 * TODO eleccion de votacion
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -731,11 +731,11 @@ public class Interfaz extends JFrame{
 		int numVueltas = 0;
 		int numVueltasDefecto = 1;
 		String str = null;
-		if (nomb == "N-fold")
+		if (nomb == "LeaveOneOut")
 		{
 			
 		}
-		else if (nomb == "Hold-Out")
+		else if (nomb == "Hold-Out") //TODO
 		{
 			ValidacionCruzada vc = new ValidacionCruzada();
 			str = JOptionPane.showInputDialog(null, "Número de casos (si no introduce algo aceptable se usará el valor por defecto ("+numCasosDefecto+")", "Introduce el número de casos",JOptionPane.QUESTION_MESSAGE);
@@ -901,7 +901,7 @@ public class Interfaz extends JFrame{
 			}
 		}	
 			// Creamos el nuevo hilo con los partidos y lo ejecutamos
-		MiThread m = new MiThread(partidosPrimera,partidosSegunda);
+		ThreadConsulta m = new ThreadConsulta(partidosPrimera,partidosSegunda);
 		m.start();
 		// Mientras, creamos una ventana con una barra de progreso para indicarnos el porcentaje de la consulta
 		if (partidosPrimera != null)
@@ -1005,12 +1005,12 @@ public class Interfaz extends JFrame{
 	}
 	
 	/** Clase interna para ejecutar el hilo de la consulta*/
-	class MiThread extends Thread 
+	class ThreadConsulta extends Thread 
 	{
 		private ArrayList<String> partidosPrimera;
 		private ArrayList<String> partidosSegunda;
 		
-		public MiThread(ArrayList<String> pP, ArrayList<String> pS){
+		public ThreadConsulta(ArrayList<String> pP, ArrayList<String> pS){
 			partidosPrimera = pP;
 			partidosSegunda = pS;
 		}
@@ -1026,5 +1026,35 @@ public class Interfaz extends JFrame{
 			actualizarDatos(respuestaPrimera, respuestaSegunda);
 		}
 	}
+	
+	/** Clase interna para ejecutar el hilo de eficiencia */
+	class ThreadEficiencia extends Thread
+	{
+		/** Constantes para el tipo de evaluacion de eficiencia */
+		public static final int M_LEAVEONEOUT_EV = 0;
+		public static final int M_HOLDOUT_EV = 1;
+		/** Atributos privados para la consulta de eficiencia */
+		private ValidacionCruzada vc;
+		private int modo;
+		private int nCasos;
+		private int nVueltas;
+		
+		public ThreadEficiencia(int modo, int numeroCasos, int numeroVueltas)
+		{
+			this.modo = modo;
+			vc = new ValidacionCruzada();
+		}
+		
+		public void run()
+		{
+			switch (modo)
+			{
+			 	case M_HOLDOUT_EV: vc.HoldOutEvaluation(datosPesos, nCasos, nVueltas); break;
+			}
+		}
+		
+	}
+	
+	
 
 }
