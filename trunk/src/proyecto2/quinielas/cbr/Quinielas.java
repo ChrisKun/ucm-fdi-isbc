@@ -6,10 +6,9 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
-import proyecto1.viajes.TravelDescription;
-import proyecto1.viajes.TravelRecommender;
 import proyecto2.quinielas.Config;
 import proyecto2.quinielas.interfaz.BarraProgreso;
+import proyecto2.quinielas.datosWeb.Clasificacion;
 
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.casebase.LinealCaseBase;
@@ -51,12 +50,15 @@ public class Quinielas implements StandardCBRApplication {
 	double[] listaPesos;
 	// Booleano que indica si estamos ejecutando una evaluación o no
 	boolean esValidacion;
+	// Booleano que indica el tipo de votación que ha pedido el usuario
+	boolean media;
 	
 	/* CONSTRUCTORAS */
 	public Quinielas (double[] listaPesos) {
 		this.listaPesos = listaPesos;
 		listaPredicciones = new ArrayList<Prediccion>();
 		esValidacion = false;
+		media = false;
 	}
 	
 	public Quinielas (boolean esEvaluacion, double[] listaPesos) {
@@ -81,7 +83,10 @@ public class Quinielas implements StandardCBRApplication {
 		caseBase = new CachedLinealCaseBase();	
 	}
 
-	@Override
+	/**
+	 * Ejecuta el preciclo
+	 * @throws ExecutionException
+	 */
 	public CBRCaseBase preCycle() throws ExecutionException {		
 		// Cargar los casos desde el conector a la base de casos
 		try {
@@ -94,7 +99,11 @@ public class Quinielas implements StandardCBRApplication {
 		return caseBase;
 	}
 
-	@Override
+	/**
+	 * Ejecuta el ciclo
+	 * @param query
+	 * @throws ExecutionException 
+	 */
 	public void cycle(CBRQuery query) throws ExecutionException {
 		// Para configurar el KNN se utiliza un objeto NNConfig
 		NNConfig simConfig = new NNConfig();
@@ -102,60 +111,76 @@ public class Quinielas implements StandardCBRApplication {
 		// Fijamos la función de similitud global
 		simConfig.setDescriptionSimFunction(new Average());		
 		
-		// Fijamos las funciones de similitud locales		
-		simConfig.addMapping(new Attribute("temporada", DescripcionQuinielas.class), new Interval(13));
-		simConfig.addMapping(new Attribute("local", DescripcionQuinielas.class), new Equal());
-		simConfig.addMapping(new Attribute("visitante", DescripcionQuinielas.class), new Equal());
-		simConfig.addMapping(new Attribute("puntosLocal", DescripcionQuinielas.class), new Interval(126));
-		simConfig.addMapping(new Attribute("pgLocal", DescripcionQuinielas.class), new Interval(42));
-		simConfig.addMapping(new Attribute("peLocal", DescripcionQuinielas.class), new Interval(42));
-		simConfig.addMapping(new Attribute("ppLocal", DescripcionQuinielas.class), new Interval(42));
-		simConfig.addMapping(new Attribute("puntosVisitante", DescripcionQuinielas.class), new Interval(126));
-		simConfig.addMapping(new Attribute("pgVisitante", DescripcionQuinielas.class), new Interval(42));
-		simConfig.addMapping(new Attribute("peVisitante", DescripcionQuinielas.class), new Interval(42));
-		simConfig.addMapping(new Attribute("ppVisitante", DescripcionQuinielas.class), new Interval(42));
-		simConfig.addMapping(new Attribute("posLocal", DescripcionQuinielas.class), new Interval(22));
-		simConfig.addMapping(new Attribute("posVisitante", DescripcionQuinielas.class),	new Interval(22));
-		simConfig.addMapping(new Attribute("gfavorLocal", DescripcionQuinielas.class), new Interval(130));
-		simConfig.addMapping(new Attribute("gcontraLocal", DescripcionQuinielas.class), new Interval(120));
-		simConfig.addMapping(new Attribute("gfavorVisitante", DescripcionQuinielas.class), new Interval(130));
-		simConfig.addMapping(new Attribute("gcontraVisitante", DescripcionQuinielas.class), new Interval(120));
+		// Fijamos las funciones de similitud locales	
+		try {
+			simConfig.addMapping(new Attribute("temporada", DescripcionQuinielas.class), new Interval(13));
+			simConfig.addMapping(new Attribute("local", DescripcionQuinielas.class), new Equal());
+			simConfig.addMapping(new Attribute("visitante", DescripcionQuinielas.class), new Equal());
+			simConfig.addMapping(new Attribute("puntosLocal", DescripcionQuinielas.class), new Interval(126));
+			simConfig.addMapping(new Attribute("pgLocal", DescripcionQuinielas.class), new Interval(42));
+			simConfig.addMapping(new Attribute("peLocal", DescripcionQuinielas.class), new Interval(42));
+			simConfig.addMapping(new Attribute("ppLocal", DescripcionQuinielas.class), new Interval(42));
+			simConfig.addMapping(new Attribute("puntosVisitante", DescripcionQuinielas.class), new Interval(126));
+			simConfig.addMapping(new Attribute("pgVisitante", DescripcionQuinielas.class), new Interval(42));
+			simConfig.addMapping(new Attribute("peVisitante", DescripcionQuinielas.class), new Interval(42));
+			simConfig.addMapping(new Attribute("ppVisitante", DescripcionQuinielas.class), new Interval(42));
+			simConfig.addMapping(new Attribute("posLocal", DescripcionQuinielas.class), new Interval(22));
+			simConfig.addMapping(new Attribute("posVisitante", DescripcionQuinielas.class),	new Interval(22));
+			simConfig.addMapping(new Attribute("gfavorLocal", DescripcionQuinielas.class), new Interval(130));
+			simConfig.addMapping(new Attribute("gcontraLocal", DescripcionQuinielas.class), new Interval(120));
+			simConfig.addMapping(new Attribute("gfavorVisitante", DescripcionQuinielas.class), new Interval(130));
+			simConfig.addMapping(new Attribute("gcontraVisitante", DescripcionQuinielas.class), new Interval(120));
+		} catch (Exception e){
+			ExecutionException ex = new ExecutionException("Fallo al fijar las funciones de similitud");
+			throw ex;
+		}
 		
 		// Asignamos pesos
-		simConfig.setWeight(new Attribute("temporada", DescripcionQuinielas.class), listaPesos[0]);
-		simConfig.setWeight(new Attribute("local", DescripcionQuinielas.class), listaPesos[1]);
-		simConfig.setWeight(new Attribute("visitante", DescripcionQuinielas.class), listaPesos[2]);
-		simConfig.setWeight(new Attribute("puntosLocal", DescripcionQuinielas.class), listaPesos[3]);
-		simConfig.setWeight(new Attribute("pgLocal", DescripcionQuinielas.class), listaPesos[4]);
-		simConfig.setWeight(new Attribute("peLocal", DescripcionQuinielas.class), listaPesos[5]);
-		simConfig.setWeight(new Attribute("ppLocal", DescripcionQuinielas.class), listaPesos[6]);
-		simConfig.setWeight(new Attribute("puntosVisitante", DescripcionQuinielas.class), listaPesos[7]);
-		simConfig.setWeight(new Attribute("pgVisitante", DescripcionQuinielas.class), listaPesos[8]);
-		simConfig.setWeight(new Attribute("peVisitante", DescripcionQuinielas.class), listaPesos[9]);
-		simConfig.setWeight(new Attribute("ppVisitante", DescripcionQuinielas.class), listaPesos[10]);
-		simConfig.setWeight(new Attribute("posLocal", DescripcionQuinielas.class), listaPesos[11]);
-		simConfig.setWeight(new Attribute("posVisitante", DescripcionQuinielas.class), listaPesos[12]);
-		simConfig.setWeight(new Attribute("gfavorLocal", DescripcionQuinielas.class), listaPesos[13]);
-		simConfig.setWeight(new Attribute("gcontraLocal", DescripcionQuinielas.class), listaPesos[14]);
-		simConfig.setWeight(new Attribute("gfavorVisitante", DescripcionQuinielas.class), listaPesos[15]);
-		simConfig.setWeight(new Attribute("gcontraVisitante", DescripcionQuinielas.class), listaPesos[16]);
+		try {
+			simConfig.setWeight(new Attribute("temporada", DescripcionQuinielas.class), listaPesos[0]);
+			simConfig.setWeight(new Attribute("local", DescripcionQuinielas.class), listaPesos[1]);
+			simConfig.setWeight(new Attribute("visitante", DescripcionQuinielas.class), listaPesos[2]);
+			simConfig.setWeight(new Attribute("puntosLocal", DescripcionQuinielas.class), listaPesos[3]);
+			simConfig.setWeight(new Attribute("pgLocal", DescripcionQuinielas.class), listaPesos[4]);
+			simConfig.setWeight(new Attribute("peLocal", DescripcionQuinielas.class), listaPesos[5]);
+			simConfig.setWeight(new Attribute("ppLocal", DescripcionQuinielas.class), listaPesos[6]);
+			simConfig.setWeight(new Attribute("puntosVisitante", DescripcionQuinielas.class), listaPesos[7]);
+			simConfig.setWeight(new Attribute("pgVisitante", DescripcionQuinielas.class), listaPesos[8]);
+			simConfig.setWeight(new Attribute("peVisitante", DescripcionQuinielas.class), listaPesos[9]);
+			simConfig.setWeight(new Attribute("ppVisitante", DescripcionQuinielas.class), listaPesos[10]);
+			simConfig.setWeight(new Attribute("posLocal", DescripcionQuinielas.class), listaPesos[11]);
+			simConfig.setWeight(new Attribute("posVisitante", DescripcionQuinielas.class), listaPesos[12]);
+			simConfig.setWeight(new Attribute("gfavorLocal", DescripcionQuinielas.class), listaPesos[13]);
+			simConfig.setWeight(new Attribute("gcontraLocal", DescripcionQuinielas.class), listaPesos[14]);
+			simConfig.setWeight(new Attribute("gfavorVisitante", DescripcionQuinielas.class), listaPesos[15]);
+			simConfig.setWeight(new Attribute("gcontraVisitante", DescripcionQuinielas.class), listaPesos[16]);
+		} catch (Exception e){
+			ExecutionException ex = new ExecutionException("Fallo al asignar pesos");
+			throw ex;
+		}
 		
-		// Ejecutamos la recuperación del vecino más próximo (usando el método en paralelo)
-		// Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
-		Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(caseBase.getCases(), query, simConfig);
-		// Seleccionamos los K mejores casos
-		eval = SelectCases.selectTopKRR(eval, K);
-		
-		// for (RetrievalResult nse : eval) System.out.println(nse.toString());
-		
-		// Seleccionamos metodo de votacion
-		// TODO Permitir al usuario usar tipo de votacion???
-		Votacion votacion = new Votacion();
-		Prediccion prediccion = votacion.mediaPonderada(eval);		
-		
-		// Si estamos haciendo una validación no añadimos la prediccion a la lista de predicciones
-		if (esValidacion) validacion(query, prediccion);
-		else listaPredicciones.add(prediccion);
+		try {
+			// Ejecutamos la recuperación del vecino más próximo (usando el método en paralelo)
+			Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(caseBase.getCases(), query, simConfig);
+			// Seleccionamos los K mejores casos
+			eval = SelectCases.selectTopKRR(eval, K);
+					
+			// Seleccionamos metodo de votacion
+			Votacion votacion = new Votacion();
+			Prediccion prediccion;
+			if (media == true) {
+				prediccion = votacion.mediaPonderada(eval);		
+			} else
+				prediccion = votacion.media(eval);	
+			
+			// Si estamos haciendo una validación, no añadimos la prediccion a la lista de predicciones
+			if (esValidacion) validacion(query, prediccion);
+			else listaPredicciones.add(prediccion);
+			
+		} catch (Exception e) {
+			ExecutionException ex = new ExecutionException("Fallo al ejecutar el algoritmo KNN / media");
+			throw ex;
+		}
 	}
 
 	@Override
@@ -163,6 +188,11 @@ public class Quinielas implements StandardCBRApplication {
 		this.caseBase.close();
 	}
 	
+	/**
+	 * Añade la información de cada consulta en los métodos de validación
+	 * @param query
+	 * @param prediccion
+	 */
 	public void validacion(CBRQuery query, Prediccion prediccion) {
         CBRCase caso = (CBRCase)query;
         SolucionQuinielas sol = (SolucionQuinielas)caso.getSolution();
@@ -181,6 +211,10 @@ public class Quinielas implements StandardCBRApplication {
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
 	}
 	
+	/**
+	 * Ejecuta el configure() y el preciclo()
+	 * @throws ExecutionException
+	 */
 	public void configCBR () throws ExecutionException {		
 		try {
 			//Configuración
@@ -192,9 +226,20 @@ public class Quinielas implements StandardCBRApplication {
 		}
 	}
 	
-	// Este método ejecuta una consulta pedida por el usuario mediante la interfaz
+	/**
+	 *  Ejecuta una consulta pedida por el usuario mediante la interfaz
+	 * @param equipos
+	 * @param temporada
+	 * @param jornada
+	 * @param listaPesos
+	 * @param clasificaciones
+	 * @param media True = media normal / False = media ponderada
+	 * @return ArrayList<Prediccion> listaPredicciones
+	 * @throws ExecutionException
+	 */
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
-			String[][][] clasificaciones) throws ExecutionException {
+			ArrayList<Clasificacion> clasificaciones, boolean media) throws ExecutionException {
+		this.media = media;
 		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar con la jornada pedida por el usuario
 		jornada = jornada - 1;
 		int jornadaActual;
@@ -263,6 +308,7 @@ public class Quinielas implements StandardCBRApplication {
 			e.printStackTrace();
 			throw e;
 		}
+		
 		ArrayList<Prediccion> listaDevolucion = new ArrayList<Prediccion>();
 		Iterator<Prediccion> iterador = listaPredicciones.iterator();
 		while (iterador.hasNext()) {
