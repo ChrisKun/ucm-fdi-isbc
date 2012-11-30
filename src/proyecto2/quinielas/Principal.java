@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import jcolibri.exception.ExecutionException;
+
 import proyecto2.quinielas.cbr.DescripcionQuinielas;
 import proyecto2.quinielas.cbr.Prediccion;
 import proyecto2.quinielas.cbr.Quinielas;
@@ -106,14 +108,23 @@ public class Principal {
 			parser.main(args);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			barra.cerrarVentana();
 			e.printStackTrace();
+			return;
 		}
 		
 		// PASO 2. CONFIGURAR 
 		Config c = new Config();
 		Quinielas q = new Quinielas(principal.getListaPesos());
-		q.configCBR();
+		try {
+			// Hacemos el configure() y el preciclo()
+			q.configCBR();
+		} catch (ExecutionException e){
+			e.printStackTrace();
+			barra.cerrarVentana();
+			e.getMessage();
+			return;
+		}
 		
 		// PASO 3. LLAMAR A LA INTERFAZ
 		barra.cerrarVentana(); //cerramos la ventana
