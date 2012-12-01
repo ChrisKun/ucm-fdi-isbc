@@ -113,8 +113,7 @@ public class Principal {
 			return;
 		}		
 		// PASO 2. CONFIGURAR 
-		//Config c = new Config();
-		Quinielas q = new Quinielas(principal.getListaPesos());
+		Quinielas q = new Quinielas(principal.getListaPesos(),parser.getClasPorJornPrim(),parser.getClasPorJornSeg());
 		try {
 			// Hacemos el configure() y el preciclo()
 			q.configCBR();

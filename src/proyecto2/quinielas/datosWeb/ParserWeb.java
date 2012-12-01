@@ -304,21 +304,13 @@ public class ParserWeb {
 		
 		outStream.close();
 	}
-	
-	/**
-	 * 
-	 * @param liga Un '1' para primera y un '2' para segunda
-	 * @param anyo El año del que quieras obtener la clasificación
-	 * @param jornada La jornada de la que quieres la clasificación
-	 * @return
-	 */
-	public ArrayList<Clasificacion> getClasificacion(int liga, int anyo, int jornada){
-		String indice = "A"+anyo+"J"+jornada;
-		if (liga == 1)
-			return clasPorJornPrim.get(indice);
-		else if (liga == 2)
-			return clasPorJornSeg.get(indice);
-		else
-			return null;
+
+
+	public HashMap<String, ArrayList<Clasificacion>> getClasPorJornPrim() {
+		return clasPorJornPrim;
 	}
+
+	public HashMap<String, ArrayList<Clasificacion>> getClasPorJornSeg() {
+		return clasPorJornSeg;
+	}	
 }
