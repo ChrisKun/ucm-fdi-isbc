@@ -41,6 +41,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import jcolibri.exception.ExecutionException;
+
 import proyecto2.quinielas.Principal;
 import proyecto2.quinielas.cbr.Prediccion;
 import proyecto2.quinielas.cbr.Quinielas;
@@ -82,6 +84,7 @@ public class Interfaz extends JFrame{
 	 private int selTemporada;
 	 private int selJornadaPrimera;
 	 private int selJornadaSegunda;
+	 private boolean tipoMediaNormal;
 	
 	
 	/** Elementos del panel superior de información que tienen que modificarse */
@@ -146,6 +149,7 @@ public class Interfaz extends JFrame{
 		selTemporada = ParserWeb.TEMPORADAINICIAL;
 		selJornadaPrimera = 1;
 		selJornadaSegunda = 1;
+		tipoMediaNormal = true; // TODO Hacer una opción en el menú que sea tipo de media
 		
 		// Configuración de la ventana
 		this.setVisible(true);
@@ -479,24 +483,23 @@ public class Interfaz extends JFrame{
 		    	  actualizarEquiposPrimeraOSegunda();
 		    	  }
 		      });
-		
 		if (modo_partido == 0)
 			rbutt_primera.setSelected(true);
 		else
 			rbutt_segunda.setSelected(true);
-		
-		// Creamos la relación lógica entre los botones
+		/* Creamos la relación lógica entre los botones */
 		bg.add(rbutt_primera);
 		bg.add(rbutt_segunda);
-		
-		// Añadimos los botones al panel
+		/* Añadimos los botones al panel */
 		p.add(rbutt_primera);
 		p.add(rbutt_segunda);
 		return p;
 	}
 	
-	/** Crea los ComboBox con los equipos disponibles teniendo en cuenta si son partidos
+	/**
+	 * Crea los desplegables con los equipos disponibles teniendo en cuenta si son partidos
 	 * de primera o de segunda y si el modo de la tabla es de un partido o de varios
+	 * @param numFilas numero de filas de la tabla que depende del numero de partidos que haya
 	 */
 	private void inicializarDesplegablesEquipoTabla(int numFilas)
 	{
@@ -524,12 +527,7 @@ public class Interfaz extends JFrame{
 	private void setEquiposComboBox(int num, ParserWeb p, boolean primeraDivision)
 	{
 		int jor; // auxiliar para recorrer las jornadas
-		//int n = selTemporada - p.getAnyoInicio(); // Temporada seleccionada actualmente //TODO c.getSeleccionTemporada();
-		
-	//	if (c.getSeleccionTemporada()>=2000) //TODO
-		//	n = n - 2000;
-		
-		ArrayList<Clasificacion> lineaClasificacion = null;
+		ArrayList<Clasificacion> listaClasificacion = null;
 		// Leer de la tabla de datos
 		HashMap<String, ArrayList<Clasificacion>> clasificacion; // Almacenamiento temporal para el acceso a datos
 		String[] eq; // Elementos posibles en el ComboBox
@@ -554,14 +552,14 @@ public class Interfaz extends JFrame{
 		{
 			jor = 1;
 			//lineaClasificacion = clasificacion[n][ind][i];
-			lineaClasificacion = clasificacion.get("A"+selTemporada+"J"+jor);
+			listaClasificacion = clasificacion.get("A"+selTemporada+"J"+jor);
 			
-			while (lineaClasificacion == null) // Sólo en caso de que no haya informacion en la jornada 1
+			while (listaClasificacion == null) // Sólo en caso de que no haya informacion en la jornada 1
 			{
-				lineaClasificacion = clasificacion.get("A"+selTemporada+"J"+jor);
+				listaClasificacion = clasificacion.get("A"+selTemporada+"J"+jor);
 				jor++;
 			}	
-			eq[i] = lineaClasificacion.get(i).getEq(); // TODO eq[i] = (lineaClasificacion.split(",")[0]);
+			eq[i] = listaClasificacion.get(i).getEq(); // TODO eq[i] = (lineaClasificacion.split(",")[0]);
 		}
 		/* Ahora con la lista de todos los equipos, creamos el JComboBox */
 		comboBoxLocales[num] = new JComboBox(eq);
@@ -596,7 +594,10 @@ public class Interfaz extends JFrame{
 		}
 	}
 
-	/** Inicializa los campos de texto de los resultados **/
+	/** 
+	 * Inicializa los campos de texto de los resultados
+	 * @param numFilas número de filas que depende del número de partidos
+	 */
 	private void inicializarResultados(int numFilas)
 	{
 		resultados = new JTextField[numFilas];
@@ -610,7 +611,10 @@ public class Interfaz extends JFrame{
 		}
 	}
 	
-	/** Inicializa los campos de la medida de confianza (JProgressBar)*/
+	/** 
+	 * Inicializa los campos de la medida de confianza
+	 * @param numFilas número de filas que depende del número de partidos
+	 */
 	private void inicializarConfianza(int numFilas)
 	{
 		// Creamos el número de campos que va a tener (1 o 15)
@@ -626,8 +630,10 @@ public class Interfaz extends JFrame{
 		}
 	}
 	
-	/** Metodo que devuelve el JPanel donde estan los pesos para modificar
-	 * y también los botones de Consulta y Poner Pesos por defecto
+	/**
+	 * Método que devuelve un panel que contiene el subpanel con los pesos modificables y otro subpanel con
+	 * los botones para la consulta y reiniciar pesos.
+	 * @return JPanel
 	 */
 	private JPanel getPanelLogYPesos()
 	{
@@ -641,7 +647,10 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	/** SUBPANEL con los botones de consultar y poner pesos a default **/
+	/**
+	 * Subpanel que completa el panel de pesos y botones auxiliares y que contiene los botones.
+	 * @return JPanel
+	 */
 	private JPanel getSubPanelBotones()
 	{
 		JPanel p = new JPanel();
@@ -666,8 +675,10 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	/** Creamos el panel completo de los pesos, que tendra un Grid Layout, en donde cada celda habra
-	 * una etiqueta con el nombre del peso, un Slider y un campo no editable que muestre el valor del peso
+	/**
+	 * Devuelve el subpanel de pesos para incluirlo en el subpanel de pesos y botones auxiliares. Este subpanel de pesos
+	 * está distribuido con una rejilla y en cada celda habrá otro subpanel.
+	 * @return JPanel
 	 */
 	private JPanel getPanelCompletoPesos()
 	{
@@ -680,28 +691,32 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
+	/**
+	 * Devuelve un subpanel que contiene un nombre del peso, un slider para modificar el peso y un campo
+	 * de texto no modificable que muestra el valor
+	 * @param quePeso de que tipo de peso queremos obtener el subpanel
+	 * @return JPanel
+	 */
 	private JPanel getPanelPeso(int quePeso)
 	{
-		// Creamos el panel
+		/* Creamos el panel */
 		JPanel panelPesos = new JPanel();
-		JPanel subPanel = new JPanel(); // subPanel con la información del peso y el JSlider
+		JPanel subPanel = new JPanel(); //subPanel con la información del peso y el JSlider
 		panelPesos.setLayout(new BorderLayout());
 		subPanel.setLayout(new GridLayout(1,2));
-		// Añadimos la etiqueta con el nombre del peso
+		/* Añadimos la etiqueta con el nombre del peso */
 		panelPesos.add(getJLabelNombrePeso(quePeso),BorderLayout.NORTH);
 		
-		// Añadimos el JSlider con los datos correspondientes
+		/* Añadimos el JSlider con los datos correspondientes */
 		sliderPesos[quePeso] = new JSlider(JSlider.HORIZONTAL, 0, 1000, (int)(datosPesos[quePeso]*1000));
-		sliderPesos[quePeso].setPaintLabels(true); // Pintar las etiquetas
-		sliderPesos[quePeso].setPaintTrack(true); // Pintar por donde va el Slider
-		// Asociamos los valores 0 y 1 a los valores 0 y 1000 de la JSlider para darle más precisión
+		sliderPesos[quePeso].setPaintLabels(true); 	// Pintar las etiquetas
+		sliderPesos[quePeso].setPaintTrack(true); 	// Pintar por donde va el Slider
+		/* Asociamos los valores 0 y 1 a los valores 0 y 1000 de la JSlider para darle más precisión */
 		Hashtable labelTable = new Hashtable();
 		labelTable.put( new Integer( 0 ), new JLabel("0") );
 		labelTable.put( new Integer( 1000 ), new JLabel("1") );
 		sliderPesos[quePeso].setLabelTable( labelTable );
-		// Espaciados
-		//sliderPesos[quePeso].setMaximumSize(new Dimension(10,5));
-		// Listener
+		/* Listener */
 		sliderPesos[quePeso].addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				  JSlider source = (JSlider)e.getSource();
@@ -717,9 +732,9 @@ public class Interfaz extends JFrame{
 					  }
 				  }
 			}});
-		
-		subPanel.add(sliderPesos[quePeso]); //añadimos el Slider
-		// Creamos los campos que contienen el valor numerico del peso
+		/* Añadimos el Slider */
+		subPanel.add(sliderPesos[quePeso]);
+		/* Creamos los campos que contienen el valor númerico del peso */
 		campoPesos[quePeso] = new JTextField(""+datosPesos[quePeso]); // Datos iniciales
 		campoPesos[quePeso].setEditable(false);
 		subPanel.add(campoPesos[quePeso]);
@@ -728,6 +743,11 @@ public class Interfaz extends JFrame{
 		
 	}
 	
+	/**
+	 * Método auxiliar que devuelve la etiqueta asociada a un tipo de peso
+	 * @param quePeso tipo de peso del que queremos la etiqueta (TEMPORADA, LOCAL, etc)
+	 * @return JLabel
+	 */
 	private JLabel getJLabelNombrePeso(int quePeso)
 	{
 		String str = "Default";
@@ -761,7 +781,10 @@ public class Interfaz extends JFrame{
 		
 	}
 
-	/** Panel con la información de la temporada y las jornadas */
+	/**
+	 * Subpanel con la información de la temporada y las jornadas
+	 * @return JPanel
+	 */
 	private JPanel getJLabelTemporadaJornada()
 	{
 
@@ -772,9 +795,12 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	/** METODOS QUE EDITAN LA INFORMACION DE LA INTERFAZ (Y ACCIONES DE LISTENERS) 
-	 * @param arg **/ 
-	
+
+	 /**
+	  * MÉTODO LISTENER
+	  * Se encarga de efectuar las acciones que se solicitan desde el menú
+	  * @param arg
+	  */
 	private void accionesMenu(ActionEvent arg)
 	{
 		JMenuItem it = (JMenuItem) arg.getSource();
@@ -825,7 +851,13 @@ public class Interfaz extends JFrame{
 		}
 	}
 	
-	/** Actualiza la información de Temporada y Jornadas del título*/
+	/**
+	 * MÉTODO LISTENER
+	 * Actualiza la información de Temporada y Jornadas del título
+	 * @param jornada_p Jornada de primera división
+	 * @param jornada_s Jornada de segunda división
+	 * @param año Año de la temporada
+	 */
 	private void setJornadaAño(int jornada_p, int jornada_s, int año)
 	{
 		// Font("Titulo fuente", "Atributos", "Tamaño")
@@ -889,6 +921,10 @@ public class Interfaz extends JFrame{
 	    actualizarListaPartidos();
 	}
 
+	/**
+	 * MÉTODO LISTENER
+	 * Actualiza la lista de partidos dependiendo del modo seleccionado (uno o más partidos)
+	 */
 	private void actualizarListaPartidos()
 	{
 		panelPrincipal.remove(panelTabla);
@@ -906,6 +942,9 @@ public class Interfaz extends JFrame{
 		panelPrincipal.validate();
 	}
 	
+	/**
+	 * Actualiza los equipos en modo un partido para primera o segunda división
+	 */
 	private void actualizarEquiposPrimeraOSegunda()
 	{
 		panelPrincipal.remove(panelTabla);
@@ -917,6 +956,10 @@ public class Interfaz extends JFrame{
 		panelPrincipal.validate();
 	}
 	
+	/**
+	 * Actualiza el número de partidos de primera división para el modo de todos los partidos
+	 * @param e
+	 */
 	private void  actualizarNumeroPartidos(ActionEvent e)
 	{
 		JComboBox cb = (JComboBox)e.getSource();
@@ -1078,11 +1121,21 @@ public class Interfaz extends JFrame{
 		
 		public void run() 
 		{
-			if (partidosPrimera != null)
-				//respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
-			if (partidosSegunda != null)
-				//respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
-			//q.querysCBR(equipos, temporada, jornada, listaPesos, liga, media)
+			if (partidosPrimera != null){
+				try {
+					respuestaPrimera = q.querysCBR(partidosPrimera,selTemporada,selJornadaPrimera,datosPesos, PRIMERA_DIVISION-1, tipoMediaNormal);
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+			}
+			if (partidosSegunda != null){
+				try {
+					respuestaSegunda = q.querysCBR(partidosSegunda,selTemporada,selJornadaSegunda,datosPesos, SEGUNDA_DIVISION-1, tipoMediaNormal);
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			interfaz.setEnabled(true);
 			Principal.getBarra().cerrarVentana();
 			actualizarDatos(respuestaPrimera, respuestaSegunda);
@@ -1116,7 +1169,4 @@ public class Interfaz extends JFrame{
 		}
 		
 	}
-	
-	
-
 }
