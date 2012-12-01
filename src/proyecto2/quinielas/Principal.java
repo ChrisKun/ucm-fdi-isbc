@@ -17,10 +17,16 @@ import proyecto2.quinielas.interfaz.Interfaz;
 
 public class Principal {
 	
-	//TODO prueba
+	// Barra de progreso, para la actualización y para la consulta
 	private static BarraProgreso barra; //Ventana auxiliar con la ProgressBar
 	
-	// Constantes para que sea más comodo operar
+	/* CONSTANTES PARA QUINIELAS*/ 
+	public static final int JORNADASPRIMERA = 38;
+	public static final int JORNADASSEGUNDA = 42;
+	public static final int NUMEROEQUIPOSPRIMERA = 20;
+	public static final int NUMEROEQUIPOSSEGUNDA = 22;
+	
+	/* CONSTANTES PARA PESOS */
 	public final static int TEMPORADA = 0;
 	public final static int LOCAL = 1;
 	public final static int VISITANTE = 2;
@@ -39,7 +45,7 @@ public class Principal {
 	public final static int GFAVORVISITANTE = 15;
 	public final static int GCONTRAVISITANTE = 16;
 	
-	// Pesos por defecto
+	/* CONSTANTES DE PESOS POR DEFECTO */
 	public final static double PESOTEMPORADA = 0.4;
 	public final static double PESOLOCAL = 0.02;
 	public final static double PESOVISITANTE = 0.02;
@@ -123,14 +129,10 @@ public class Principal {
 			return;
 		}
 		barra.cerrarVentana();
-		/*
+		
 		// PASO 3. LLAMAR A LA INTERFAZ
 		barra.cerrarVentana(); //cerramos la ventana
-		i = new Interfaz(principal.getListaPesos(),c,q);
-		//ValidacionCruzada validador = new ValidacionCruzada(); 
-		 * 
-		 * 
-		 */
+		i = new Interfaz(principal.getListaPesos(),q,parser);
 	}
 	
 	public static BarraProgreso getBarra() {

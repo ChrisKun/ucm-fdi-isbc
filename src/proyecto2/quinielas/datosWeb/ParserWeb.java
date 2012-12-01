@@ -19,8 +19,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import proyecto2.quinielas.interfaz.BarraProgreso;
+
 
 public class ParserWeb {
+	
+	public static int TEMPORADAINICIAL = 2000; // TODO Añadido para usar en interfaz tambien... (RAUL)
 
 	public int getUltimaTemporada() {
 		return ultimaTemporada;
@@ -49,7 +53,7 @@ public class ParserWeb {
 	private ArrayList<String> paginasError;
 	private ArrayList<String> partidosPorJugar;
 	
-	int anyoInicio = 2000;
+	int anyoInicio = 2000; // TODO Si quieres, usa aqui la constante
 	int ultimaTemporada = 2012;
 	int inicioJornPrim=1;
 	int inicioJornSeg=1;
@@ -90,16 +94,20 @@ public class ParserWeb {
 		for (int i=anyoInicio;i<ultimaTemporada;i++){
 			for (int j=1;j<=38;j++){
 				anyadirJornada("primera",i,j);
+				BarraProgreso.aumentarBarraProgreso(); //Para aumentar la barra de progreso
 			}
 			for (int j=1;j<=42;j++){
 				anyadirJornada("segunda",i,j);
+				BarraProgreso.aumentarBarraProgreso();
 			}
 		}
 		for (int j=inicioJornPrim;j<=ultimaJornadaPrimera;j++){
 			anyadirJornada("primera",ultimaTemporada,j);
+			BarraProgreso.aumentarBarraProgreso();
 		}
 		for (int j=inicioJornSeg;j<=ultimaJornadaSegunda;j++){
 			anyadirJornada("segunda",ultimaTemporada,j);
+			BarraProgreso.aumentarBarraProgreso();
 		}
 
 		  
@@ -312,5 +320,10 @@ public class ParserWeb {
 
 	public HashMap<String, ArrayList<Clasificacion>> getClasPorJornSeg() {
 		return clasPorJornSeg;
+	}
+
+
+	public int getAnyoInicio() {
+		return anyoInicio;
 	}	
 }
