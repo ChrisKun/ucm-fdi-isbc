@@ -100,6 +100,21 @@ public class Quinielas implements StandardCBRApplication {
 	}
 
 	/**
+	 * Ejecuta el configure() y el preciclo()
+	 * @throws ExecutionException
+	 */
+	public void configCBR () throws ExecutionException {		
+		try {
+			//Configuración
+			configure();		
+			//Preciclo
+			preCycle();
+		} catch (ExecutionException e) {
+			throw e;
+		}
+	}
+	
+	/**
 	 * Ejecuta el ciclo
 	 * @param query
 	 * @throws ExecutionException 
@@ -173,10 +188,9 @@ public class Quinielas implements StandardCBRApplication {
 			else
 				prediccion = votacion.media(eval);	
 			
-			// Si estamos haciendo una validación, no añadimos la prediccion a la lista de predicciones
+			// Si estamos haciendo una validación, NO añadimos la prediccion a la lista de predicciones
 			if (esValidacion) validacion(query, prediccion);
-			else listaPredicciones.add(prediccion);
-			
+			else listaPredicciones.add(prediccion);			
 		} catch (Exception e) {
 			ExecutionException ex = new ExecutionException("Fallo al ejecutar el algoritmo KNN / media");
 			throw ex;
@@ -210,35 +224,20 @@ public class Quinielas implements StandardCBRApplication {
         Evaluator.getEvaluationReport().addDataToSeries("Aciertos", pre);
         Evaluator.getEvaluationReport().addDataToSeries("Confianza", prediccion.getConfianza());
 	}
-	
-	/**
-	 * Ejecuta el configure() y el preciclo()
-	 * @throws ExecutionException
-	 */
-	public void configCBR () throws ExecutionException {		
-		try {
-			//Configuración
-			configure();		
-			//Preciclo
-			preCycle();
-		} catch (ExecutionException e) {
-			throw e;
-		}
-	}
-	
+		
 	/**
 	 *  Ejecuta una consulta pedida por el usuario mediante la interfaz
 	 * @param equipos
 	 * @param temporada
 	 * @param jornada
 	 * @param listaPesos
-	 * @param clasificaciones
-	 * @param media True = media normal / False = media ponderada
+	 * @param liga - 1 o 2
+	 * @param media - True = media normal / False = media ponderada
 	 * @return ArrayList<Prediccion> listaPredicciones
 	 * @throws ExecutionException
 	 */
-	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos,
-			ArrayList<Clasificacion> clasificaciones, boolean media) throws ExecutionException {
+	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos, int liga, boolean media) throws ExecutionException {
+		
 		this.media = media;
 		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar con la jornada pedida por el usuario
 		jornada = jornada - 1;
