@@ -104,7 +104,7 @@ public class Principal {
 	public static void main (String args[]) {
 		// Configuración de pesos
 		Principal principal = new Principal();
-		Interfaz i;
+		//Interfaz i;
 		principal.iniciaPesos();
 		
 		// PASO 1. LANZAR EL PARSER
@@ -132,7 +132,7 @@ public class Principal {
 		
 		// PASO 3. LLAMAR A LA INTERFAZ
 		barra.cerrarVentana(); //cerramos la ventana
-		i = new Interfaz(principal.getListaPesos(),q,parser);
+		new Interfaz(principal.getListaPesos(),q,parser);
 	}
 	
 	public static BarraProgreso getBarra() {
