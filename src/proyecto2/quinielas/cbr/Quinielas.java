@@ -252,7 +252,7 @@ public class Quinielas implements StandardCBRApplication {
 	 * @param liga - 1 o 2
 	 * @param media - True = media normal / False = media ponderada
 	 * @return ArrayList<Prediccion> listaPredicciones
-	 * @throws ExecutionException - Devuelve null si ha fallado algo
+	 * @throws ExecutionException
 	 */
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos, int liga, boolean media) throws ExecutionException {
 		// Ponemos la media como la pida el usuario
@@ -320,8 +320,8 @@ public class Quinielas implements StandardCBRApplication {
 			// Limpiamos la lista de predicciones
 			listaPredicciones.clear();
 			return listaDevolucion;
-		} catch (Exception e) {
-			return null;
+		} catch (ExecutionException e) {
+			throw e;			
 		}
 	}	
 }
