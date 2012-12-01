@@ -41,11 +41,12 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import proyecto2.quinielas.Config;
 import proyecto2.quinielas.Principal;
 import proyecto2.quinielas.cbr.Prediccion;
 import proyecto2.quinielas.cbr.Quinielas;
 import proyecto2.quinielas.cbr.ValidacionCruzada;
+import proyecto2.quinielas.datosWeb.Clasificacion;
+import proyecto2.quinielas.datosWeb.ParserWeb;
 
 import junit.awtui.ProgressBar;
 
@@ -57,25 +58,30 @@ public class Interfaz extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/** Constantes */
+	/* Constantes */
 	public final static int LOCAL = 0;
 	public final static int VISITANTE = 1;
 	public final static int RESULTADO = 2;
 	public final static int NUM_EQU = 15;
 	public final static int MODOUNPARTIDO = 0;
 	
-	/** Configuracion de pantalla */
+	/* Configuracion de pantalla */
 	public final static int W = 840;
 	public final static int H = 600;
 	
-	/** Número de jornadas totales para primera y segunda división */
-	public final static int PRIMERA_DIVISION = 0;
+	/* Número de jornadas totales para primera y segunda división */
+	public final static int PRIMERA_DIVISION = 0; 
 	public final static int SEGUNDA_DIVISION = 1;
 	
-	/** Modo de la tabla (0) para un partido y (1) para todos	 */
+	/* Modo de la tabla (0) para un partido y (1) para todos	 */
 	private static int modo_tabla = 0; // modo de un partido (0) o modo de una jornada con los 15 partidos(1) a rellenar
 	private static int modo_partido = 0;
 	private static int num_partidos_primera = 10;
+	
+	/* Elementos para la seleccion de temporada y jornadas */
+	 private int selTemporada;
+	 private int selJornadaPrimera;
+	 private int selJornadaSegunda;
 	
 	
 	/** Elementos del panel superior de información que tienen que modificarse */
@@ -97,8 +103,6 @@ public class Interfaz extends JFrame{
 	/** Panel principal (se modifica cuando se cambia de tabla */
 	private JPanel panelPrincipal;
 	
-	/** Datos de configuración */
-	private Config conf;
 	
 	// Datos de la tabla
 	ArrayList<Prediccion> respuestaPrimera;
@@ -112,11 +116,19 @@ public class Interfaz extends JFrame{
 	//Quinielas
 	private Quinielas q;
 	
+	//Información del parser
+	ParserWeb parser;
+	
 	//Interfaz
 	private Interfaz interfaz;
 	
-	
-	public Interfaz(double[] ds, Config c, Quinielas q)
+	/**
+	 * CONSTRUCTORA
+	 * @param ds lista de pesos
+	 * @param q quinielas con información para consultar
+	 * @param p información recolectada por el ParserWeb
+	 */
+	public Interfaz(double[] ds,Quinielas q,ParserWeb p)
 	{
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		 int width = pantalla.width;
@@ -127,9 +139,13 @@ public class Interfaz extends JFrame{
 		setDatosPesos(ds);
 		campoPesos = new JTextField[datosPesos.length];
 		sliderPesos = new JSlider[datosPesos.length];
-		conf = c;
 		this.q = q;
+		parser = p;
 		interfaz = this;
+		
+		selTemporada = ParserWeb.TEMPORADAINICIAL;
+		selJornadaPrimera = 1;
+		selJornadaSegunda = 1;
 		
 		// Configuración de la ventana
 		this.setVisible(true);
@@ -188,6 +204,11 @@ public class Interfaz extends JFrame{
 		return barraMenuPrincipal;
 	}
 	
+	/**
+	 * Se encargar de devolver el panel Principal que se construye a través de tres subpaneles: El subpanel del título,
+	 * el subpanel con la tabla de equipos y resultados y por último, el subpanel con los pesos y los botones auxiliares.
+	 * @return JPanel
+	 */
 	private JPanel getPanelPrincipal()
 	{
 		panelPrincipal = new JPanel();
@@ -199,22 +220,25 @@ public class Interfaz extends JFrame{
 		return panelPrincipal;
 	}
 	
-	/** PANEL INFORMACIÓN:
-	 * Muestra la temporada actual y la jornada.
-	 * A través de un desplegable permite seleccionar la temporada y la jornada a consultar.
-	 * A través de un RadioButton permite seleccionar un partido o una jornada a rellenar.
-	**/
+
+	/**
+	 * Se encarga de devolver el subpanel superior con el título, y la selección de temporada y jornadas.
+	 * @return JPanel
+	 */
 	private JPanel getPanelInformacion()
 	{
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(3,1));
-		p.add(getJLabelTemporadaJornada()); //En la parte superior
-		p.add(getSeleccionTemporadaJornada()); //En la parte de media
+		p.add(getJLabelTemporadaJornada()); 	//En la parte superior
+		p.add(getSeleccionTemporadaJornada()); 	//En la parte de media
 		p.add(getSeleccionUnoVariosPartidos()); //En la parte inferior
 		return p;
 	}
 	
-	// Subpanel del panel información para seleccionar uno o la jornada completa para rellenar
+	/** Se encarga de devolver un subpanel (contenido en el subpanel del título) que permite seleccionar entre
+	 * uno o varios partidos, actualizando los equipos.
+	 * @return JPanel
+	 */
 	private JPanel getSeleccionUnoVariosPartidos()
 	{
 		JPanel p = new JPanel();
@@ -222,7 +246,7 @@ public class Interfaz extends JFrame{
 		JLabel label = new JLabel("Rellenar: ");
 		p.add(label);
 		// Botones de selección
-		ButtonGroup bg = new ButtonGroup(); //grupo de botones: solo seleccionable 1
+		ButtonGroup bg = new ButtonGroup(); 	//grupo de botones: solo seleccionable 1 al mismo tiempo
 		rbutt_uno = new JRadioButton("Sólo un partido");
 		rbutt_var = new JRadioButton("Todos los partidos");
 		
@@ -268,7 +292,11 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
-	// Subpanel de Temporada y Jornada con ComboBox desplegables
+	/** 
+	 *  Subpanel que está contenido en el subpanel de título y se encarga de construir la parte donde se permite
+	 *  seleccionar con desplegables la temporada y las jornadas
+	 * @return JPanel
+	 */
 	private JPanel getSeleccionTemporadaJornada()
 	{
 		JPanel p = new JPanel();
@@ -291,12 +319,17 @@ public class Interfaz extends JFrame{
 		return p;
 	}
 	
+	/**
+	 * Obtiene la información sobre las temporadas y construye un desplegable que se añadirá al subpanel
+	 * de título
+	 * @return JComboBox
+	 */
 	private JComboBox getDesplegableTemporada()
 	{
-		int num_temporadas = conf.getUltimaTemporada() - 2000 + 1;
-		String[] nom_temp = new String[num_temporadas];
+		int num_temporadas = parser.getUltimaTemporada() - parser.TEMPORADAINICIAL + 1;
+		String[] nom_temp = new String[num_temporadas]; // Elementos que contendra el JComboBox
 		for (int i = 0; i <num_temporadas; i++)
-			nom_temp[i] = (2000+i)+"-"+(2000+(i+1));
+			nom_temp[i] = (parser.TEMPORADAINICIAL+i)+"-"+(parser.TEMPORADAINICIAL+(i+1)); // Formato "2000-2001" para temporada 2000
 		
 		JComboBox b = new JComboBox(nom_temp);
 		b.addActionListener(new ActionListener() {
@@ -307,25 +340,30 @@ public class Interfaz extends JFrame{
 		return b;
 	}
 	
+	/**
+	 * Devuelve en un JComboBox las jornadas que se pueden seleccionar de primera o de segunda (teniendo en cuenta
+	 * que si es la temporada actual, actualizar las jornadas máximas
+	 * @param division (PRIMERA_DIVISION o SEGUNDA_DIVISION)
+	 * @return JComboBox
+	 */
 	private JComboBox getDesplegableJornada(int division)
 	{
 		int n_max = 0; //número máximo de la jornada
-		switch (division)
-		{
-			case PRIMERA_DIVISION: n_max = conf.JORNADASPRIMERA; break;
-			case SEGUNDA_DIVISION: n_max = conf.JORNADASSEGUNDA; break;
-		}
-		
-		// Actualizamos el valor si es la temporada actual:
-		// Como máximo se muestra la jornada actual + 1
-		if (conf.getSeleccionTemporada() == conf.getUltimaTemporada())
-		{
-			switch (division)
-			{
-				case PRIMERA_DIVISION: n_max = conf.getUltimaJornadaPrimera(); break;
-				case SEGUNDA_DIVISION: n_max = conf.getUltimaJornadaSegunda(); break;
+		/* Comprobamos si se ha seleccionado la temporada actual para restringir el número
+		   de jornadas */
+		if (selTemporada == parser.getUltimaTemporada()) {
+			switch (division){
+				case PRIMERA_DIVISION: n_max = parser.getUltimaJornadaPrimera(); break;
+				case SEGUNDA_DIVISION: n_max = parser.getUltimaJornadaSegunda(); break;
 			}
 		}
+		else{
+			switch (division){
+			case PRIMERA_DIVISION: n_max = Principal.JORNADASPRIMERA; break;
+			case SEGUNDA_DIVISION: n_max = Principal.JORNADASSEGUNDA; break;
+			}
+		}
+		/* Creamos el Desplegable de la temporada correspondiente */
 		comboBox_jornada[division] = new JComboBox();	
 		
 		comboBox_jornada[division].addActionListener(new ActionListener() {
@@ -333,13 +371,21 @@ public class Interfaz extends JFrame{
 		    		actualizarJornada(e); 
 		    	      }
 		      });
+		/* Ponemos el número de elementos que tendrá */
 		setNumElemComboBoxJornada(n_max,division);	
 		return comboBox_jornada[division];
 	}
 	
-	/** Selecciona el número de elementos que tendra el desplegable de la jornada */
+	/**
+	 * Selecciona el número de elementos que tendra el desplegable de la jornada correspondiente 
+	 * (de primera o segunda división)
+	 * @param n número de elementos máximos que puede tener una jornada
+	 * @param division
+	 */
 	private void setNumElemComboBoxJornada(int n,int division)
 	{
+		/* Eliminamos todos los elementos que tuviese el desplegable y metemos hasta los que
+		 * indica el parámetro n */
 		comboBox_jornada[division].removeAllItems();
 		for (int i = 0; i < n; i++)
 		{
@@ -348,17 +394,17 @@ public class Interfaz extends JFrame{
 	}
 	
 	/**
-	 * Tabla que permite introducir al usuario los equipos de la query. También tiene
+	 * Construcción de la tabla que permite introducir al usuario los equipos de la query. También tiene
 	 * dos columnas adicionales donde se muestra el resultado de la solución y la medida de 
 	 * confianza.
+	 * @param modo Modo de la tabla (0 = 1 partido, 1 = Todos los partidos [15])
+	 * @return JPanel donde esta construida la tabla
 	 */
 	private JPanel getJPanelTabla(int modo)
 	{
-		// Numero de filas que tendra nuestra "tabla" (por defecto 16)
-		int numF; 
-		// Si el modo es el de un solo partido, serán 2
-		switch (modo)
-		{
+		int numF;  // Numero de filas que tendra nuestra "tabla" (por defecto 16)
+		// Si el modo es el de un solo partido, serán 2 filas, una para la cabecera y otra para el contenido
+		switch (modo){
 			case MODOUNPARTIDO: numF = 2; break;
 			default: numF = NUM_EQU+1; break;
 		}
@@ -384,11 +430,12 @@ public class Interfaz extends JFrame{
 			j.setFont(new Font(j.getFont().getFontName(), Font.BOLD, 18));
 			p.add(j);
 			
-		}	
+		}
+		// Ahora creamos el resto de elementos que tendra la tabla
 		inicializarDesplegablesEquipoTabla(numF-1);
 		inicializarResultados(numF-1);
 		inicializarConfianza(numF-1);
-		
+		// Añadimos los elementos creados anteriormente a la tabla
 		for (int i = 0; i < numF-1; i++)
 		{
 			p.add(comboBoxLocales[i]);
@@ -396,7 +443,7 @@ public class Interfaz extends JFrame{
 			p.add(resultados[i]);
 			p.add(confianza[i]);
 		}
-		
+		// Añadimos este panel con la tabla al subpanel que contiene la tabla y otra información
 		panelTabla.add(p,BorderLayout.CENTER);
 		
 		//Y Ahora, si esta el modo 0, añadimos un panel inferior con la información de primera o segunda division
@@ -405,6 +452,11 @@ public class Interfaz extends JFrame{
 		return panelTabla;
 	}
 	
+	/**
+	 * Subpanel que contiene los elementos que permiten seleccionar entre un partido de primera o un partido de segunda
+	 * división. NOTA: Sólo está disponible si el modo de la tabla es de un partido.
+	 * @return JPanel
+	 */
 	private JPanel getPanelPrimeraOSegunda()
 	{
 		JPanel p = new JPanel();
@@ -440,7 +492,6 @@ public class Interfaz extends JFrame{
 		// Añadimos los botones al panel
 		p.add(rbutt_primera);
 		p.add(rbutt_segunda);
-		
 		return p;
 	}
 	
@@ -453,81 +504,86 @@ public class Interfaz extends JFrame{
 		comboBoxVisitantes = new JComboBox[numFilas];
 		
 		if (numFilas < NUM_EQU) // Modo de un solo partido
-			setEquiposComboBox(0,conf,(modo_partido == 0));
+			setEquiposComboBox(0,parser,(modo_partido == 0));
 		else //modo de todos los partidos
 		{
-			for (int i = 0; i < numFilas; i++)
+			for (int i = 0; i < numFilas; i++) 
 			{
-				setEquiposComboBox(i,conf,(i<num_partidos_primera));
+				/* Tenemos en cuenta el número de partidos que se muestran de primera y de segunda */
+				setEquiposComboBox(i,parser,(i<num_partidos_primera));
 			}
 		}
 	}
 	
-	/** Rellena un ComboBox con los equipos que juegan en esa temporada y division*/ 
-	private void setEquiposComboBox(int num, Config c, boolean primeraDivision)
+	/**
+	 * Rellena un ComboBox con los equipos que juegan en esa temporada y division 
+	 * @param num comboBox que rellenamos
+	 * @param p información recogida por el parser web
+	 * @param primeraDivision (TRUE = primera división, FALSE = segunda división)
+	 */
+	private void setEquiposComboBox(int num, ParserWeb p, boolean primeraDivision)
 	{
-		int ind; // auxiliar para recorrer las jornadas
-		int n = c.getSeleccionTemporada();
+		int jor; // auxiliar para recorrer las jornadas
+		//int n = selTemporada - p.getAnyoInicio(); // Temporada seleccionada actualmente //TODO c.getSeleccionTemporada();
 		
-		if (c.getSeleccionTemporada()>=2000)
-			n = n - 2000;
+	//	if (c.getSeleccionTemporada()>=2000) //TODO
+		//	n = n - 2000;
 		
-		String lineaClasificacion = null;
+		ArrayList<Clasificacion> lineaClasificacion = null;
 		// Leer de la tabla de datos
-		String[][][] clasificacion; // Almacenamiento temporal para el acceso a datos
+		HashMap<String, ArrayList<Clasificacion>> clasificacion; // Almacenamiento temporal para el acceso a datos
 		String[] eq; // Elementos posibles en el ComboBox
+		int numEquipos; // Numero de equipos que hay (varian entre primera y segunda division)
 		
-		// Datos para segunda division
-		int numEquipos = c.NUMEROEQUIPOSSEGUNDA;
-		clasificacion = c.getClasificacionesSegunda();
+		// Datos para segunda division (Así inicializamos las variables)
+		numEquipos = Principal.NUMEROEQUIPOSSEGUNDA;
+		clasificacion = parser.getClasPorJornSeg();
 		
 		// Datos para primera division
 		if (primeraDivision)
 		{
-			numEquipos = c.NUMEROEQUIPOSPRIMERA;
-			clasificacion = c.getClasificacionesPrimera();
+			numEquipos = Principal.NUMEROEQUIPOSPRIMERA;
+			clasificacion = parser.getClasPorJornPrim();
 		}
-		
+		/* Creamos el array de String que contrendra el nombre de los equipos, que luego servirá para construir
+		   el desplegable con los equipos */
 		eq = new String[numEquipos];
 		
-		// Rellenamos para los equipos de primera divisón
+		// Rellenamos ahora ese array de String intermedio
 		for (int i = 0; i < numEquipos; i++)
 		{
-			ind = 0;
-			lineaClasificacion = clasificacion[n][ind][i];
+			jor = 1;
+			//lineaClasificacion = clasificacion[n][ind][i];
+			lineaClasificacion = clasificacion.get("A"+selTemporada+"J"+jor);
 			
-			while (lineaClasificacion == null) // Sólo en caso de que no haya informacion en la temporada 0
+			while (lineaClasificacion == null) // Sólo en caso de que no haya informacion en la jornada 1
 			{
-				lineaClasificacion = clasificacion[n][ind][i];
-				ind++;
-			}
-		
-			eq[i] = (lineaClasificacion.split(",")[0]);
+				lineaClasificacion = clasificacion.get("A"+selTemporada+"J"+jor);
+				jor++;
+			}	
+			eq[i] = lineaClasificacion.get(i).getEq(); // TODO eq[i] = (lineaClasificacion.split(",")[0]);
 		}
-		
-		
-		// Ahora con la lista de todos los equipos, creamos el JComboBox
+		/* Ahora con la lista de todos los equipos, creamos el JComboBox */
 		comboBoxLocales[num] = new JComboBox(eq);
-		
-		// Selecciona un equipo aleatorio
+		/* Selecciona un equipo aleatorio */
 		comboBoxLocales[num].setSelectedIndex((int) (Math.random() * eq.length));
-		
-		 //Y le añadimos el listener para cuando el usuario modifique algo se reinicie la confinanza
+		/* Y le añadimos el listener para cuando el usuario modifique algo se reinicie la confianza */
 		comboBoxLocales[num].addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
 		    		reiniciarConfianzaYResultado();
 		    	      }
 		});
+		/* Hacemos lo mismo con los desplegables de los equipos visitantes */
 		comboBoxVisitantes[num] = new JComboBox(eq);
-		// Selecciona un equipo aleatorio
+		/* Selecciona un equipo aleatorio */
 		comboBoxVisitantes[num].setSelectedIndex((int) (Math.random() * eq.length));
-		
+		/* Y le añadimos el listener para cuando el usuario modifique algo se reinicie la confianza */
 		comboBoxVisitantes[num].addActionListener(new ActionListener() {
 		      public void actionPerformed( ActionEvent e) {
 		    		reiniciarConfianzaYResultado();
 		    	      }
 		});
-		// Ahora ponemos un color distinto para los ComboBox (diferenciamos los de primera division y los de segunda
+		/* Ahora ponemos un color distinto para los ComboBox (diferenciamos los de primera division y los de segunda) */
 		if (primeraDivision)
 		{
 			comboBoxLocales[num].setBackground(Color.WHITE);
@@ -660,9 +716,6 @@ public class Interfaz extends JFrame{
 						  campoPesos[i].setText(""+datosPesos[i]);
 					  }
 				  }
-				  
-				  
-				
 			}});
 		
 		subPanel.add(sliderPesos[quePeso]); //añadimos el Slider
@@ -714,7 +767,7 @@ public class Interfaz extends JFrame{
 
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
-		setJornadaAño(conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
+		setJornadaAño(selJornadaPrimera, selJornadaSegunda,selTemporada);
 		p.add(jlab_jornada);
 		return p;
 	}
@@ -780,7 +833,11 @@ public class Interfaz extends JFrame{
 		jlab_jornada.setText("Temporada: "+año+"-"+(año+1)+" ; Jornada 1ºDiv : "+jornada_p+" ; Jornada 2ºDiv : "+jornada_s);
 	}
 
-	/** Actualiza la jornada actual seleccionada en el ComboBox de jornada correspondiente**/
+	/**
+	 * MÉTODO LISTENER
+	 * Actualiza la jornada actual seleccionada en el ComboBox de jornada correspondiente
+	 * @param e
+	 */
 	private void actualizarJornada(ActionEvent e)
 	{
 		int n_jornada = 1;
@@ -791,39 +848,43 @@ public class Interfaz extends JFrame{
 	    	n_jornada = Integer.parseInt(newSelection);
 	    	// Comprobamos que el ComboBox modificado es el de primera o el de segunda division
 	    	if (cb == comboBox_jornada[PRIMERA_DIVISION])
-	    		conf.setSeleccionJornadaPrimera(n_jornada);
+	    		selJornadaPrimera = n_jornada;
 	    	else
-	    		conf.setSeleccionJornadaSegunda(n_jornada);
+	    		selJornadaSegunda = n_jornada;
 	    		
 	    }
 	    // Actualizamos la información del título
-	    setJornadaAño(conf.getSeleccionJornadaPrimera(),conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
+	    setJornadaAño(selJornadaPrimera,selJornadaSegunda,selTemporada);
 	}
 	
-	/** Se encarga de leer la modificacion del ComboBox de la temporada y actualizar el valor correspondiente*/
+	/**
+	 * MÉTODO LISTENER
+	 *  Se encarga de leer la modificacion del ComboBox de la temporada y actualizar los valores y jornadas
+	 * @param e
+	 */
 	private void actualizarTemporada(ActionEvent e)
 	{	
 		JComboBox cb = (JComboBox)e.getSource();
 	    String newSelection = (String)cb.getSelectedItem();
 	    // Nos quedamos solo con los 4 primeros digitos de la temporada (las temporadas las almacenamos como enteros) 
-	    conf.setSeleccionTemporada(Integer.parseInt(newSelection.substring(0, 4)));
-	    // Comprobamos si es la temporada actual, para actualizar los valores de los ComboBox de jornadas a su
-	    // valor máximo correspondiente (el de la jornada actual para ambos)
-		if (conf.getSeleccionTemporada().equals(conf.getUltimaTemporada()))
+	    selTemporada = Integer.parseInt(newSelection.substring(0, 4));
+	    /* Comprobamos si es la temporada actual, para actualizar los valores de los ComboBox de jornadas a su
+	       valor máximo correspondiente (el de la jornada actual para ambos) */
+		if (selTemporada == parser.getUltimaTemporada())
 		{
-			setNumElemComboBoxJornada(conf.getUltimaJornadaPrimera(),PRIMERA_DIVISION);
-			setNumElemComboBoxJornada(conf.getUltimaJornadaSegunda(),SEGUNDA_DIVISION);
+			setNumElemComboBoxJornada(parser.getUltimaJornadaPrimera(),PRIMERA_DIVISION);
+			setNumElemComboBoxJornada(parser.getUltimaJornadaSegunda(),SEGUNDA_DIVISION);
 		}
 		else
 		{
-			setNumElemComboBoxJornada(Config.JORNADASPRIMERA,PRIMERA_DIVISION);
-			setNumElemComboBoxJornada(Config.JORNADASSEGUNDA,SEGUNDA_DIVISION);
+			setNumElemComboBoxJornada(Principal.JORNADASPRIMERA,PRIMERA_DIVISION);
+			setNumElemComboBoxJornada(Principal.JORNADASSEGUNDA,SEGUNDA_DIVISION);
 		}
 		// Ponemos a 1 la seleccion de jornadas para que no haya problemas
-		conf.setSeleccionJornadaPrimera(1);
-		conf.setSeleccionJornadaSegunda(1);
+		selJornadaPrimera = 1;
+		selJornadaSegunda = 1;
 		// Actualizamos el título
-	    setJornadaAño(conf.getSeleccionJornadaPrimera(), conf.getSeleccionJornadaSegunda(),conf.getSeleccionTemporada());
+	    setJornadaAño(selJornadaPrimera, selJornadaSegunda, selTemporada);
 	    // Actualizamos la lista de partidos y sus equipos
 	    actualizarListaPartidos();
 	}
@@ -1018,9 +1079,10 @@ public class Interfaz extends JFrame{
 		public void run() 
 		{
 			if (partidosPrimera != null)
-				respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
+				//respuestaPrimera = q.querysCBR(partidosPrimera,conf.getSeleccionTemporada(),conf.getSeleccionJornadaPrimera(),datosPesos,conf.getClasificacionesPrimera());
 			if (partidosSegunda != null)
-				respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
+				//respuestaSegunda = q.querysCBR(partidosSegunda,conf.getSeleccionTemporada(),conf.getSeleccionJornadaSegunda(),datosPesos,conf.getClasificacionesSegunda());
+			//q.querysCBR(equipos, temporada, jornada, listaPesos, liga, media)
 			interfaz.setEnabled(true);
 			Principal.getBarra().cerrarVentana();
 			actualizarDatos(respuestaPrimera, respuestaSegunda);
