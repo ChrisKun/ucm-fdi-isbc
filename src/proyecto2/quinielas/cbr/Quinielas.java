@@ -165,12 +165,12 @@ public class Quinielas implements StandardCBRApplication {
 			// Seleccionamos los K mejores casos
 			eval = SelectCases.selectTopKRR(eval, K);
 					
-			// Seleccionamos metodo de votacion
+			// Seleccionamos metodo de votacion (media vs. media ponderada)
 			Votacion votacion = new Votacion();
 			Prediccion prediccion;
-			if (media == true) {
+			if (media == true)
 				prediccion = votacion.mediaPonderada(eval);		
-			} else
+			else
 				prediccion = votacion.media(eval);	
 			
 			// Si estamos haciendo una validación, no añadimos la prediccion a la lista de predicciones
@@ -304,8 +304,7 @@ public class Quinielas implements StandardCBRApplication {
 				for(int i =0;i<clasifLocal.length;i++)clasifLocal[i]=0;
 				for(int i =0;i<clasifVisitante.length;i++)clasifVisitante[i]=0;
 			}
-		} catch (ExecutionException e) {			
-			e.printStackTrace();
+		} catch (ExecutionException e) {	
 			throw e;
 		}
 		
