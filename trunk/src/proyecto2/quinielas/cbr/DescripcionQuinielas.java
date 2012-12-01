@@ -1,5 +1,6 @@
 package proyecto2.quinielas.cbr;
 
+import proyecto2.quinielas.datosWeb.Clasificacion;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
@@ -31,24 +32,24 @@ public class DescripcionQuinielas implements CaseComponent {
 	private Integer gcontraVisitante;
 
 	// Constructor que inicializa desde dos String que contienen la información de ambos equipos
-	public DescripcionQuinielas(Integer temporada,String local, Integer[] clasifLocal, String visitante, Integer[] clasifVisitante) {
+	public DescripcionQuinielas(Integer temporada,String local, Clasificacion clasifLocal, String visitante, Clasificacion clasifVisitante) {
 		this.temporada = temporada;
 		this.local = local;
 		this.visitante = visitante;
-		this.posLocal = clasifLocal[0];		
-		this.pgLocal = clasifLocal[1];
-		this.peLocal = clasifLocal[2];
-		this.ppLocal = clasifLocal[3];
-		this.gfavorLocal = clasifLocal[4];
-		this.gcontraLocal = clasifLocal[5];
-		this.puntosLocal = clasifLocal[6];
-		this.posVisitante = clasifVisitante[0];		
-		this.pgVisitante = clasifVisitante[1];
-		this.peVisitante = clasifVisitante[2];
-		this.ppVisitante = clasifVisitante[3];
-		this.gfavorVisitante = clasifVisitante[4];
-		this.gcontraVisitante = clasifVisitante[5];
-		this.puntosVisitante = clasifVisitante[6];
+		this.posLocal = clasifLocal.getPos();		
+		this.pgLocal = clasifLocal.getPg();
+		this.peLocal = clasifLocal.getPe();
+		this.ppLocal = clasifLocal.getPp();
+		this.gfavorLocal = clasifLocal.getGf();
+		this.gcontraLocal = clasifLocal.getGc();
+		this.puntosLocal = clasifLocal.getPtos();
+		this.posVisitante = clasifVisitante.getPos();	
+		this.pgVisitante = clasifVisitante.getPg();
+		this.peVisitante = clasifVisitante.getPe();
+		this.ppVisitante = clasifVisitante.getPp();
+		this.gfavorVisitante = clasifVisitante.getGf();
+		this.gcontraVisitante = clasifVisitante.getGc();
+		this.puntosVisitante = clasifVisitante.getPtos();
 	}
 	
 	@Override

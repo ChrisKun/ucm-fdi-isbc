@@ -2,16 +2,13 @@ package proyecto2.quinielas.cbr;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.swing.JOptionPane;
-
-import proyecto2.quinielas.Config;
 import proyecto2.quinielas.interfaz.BarraProgreso;
 import proyecto2.quinielas.datosWeb.Clasificacion;
 
 import jcolibri.casebase.CachedLinealCaseBase;
-import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
@@ -20,7 +17,6 @@ import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.evaluation.Evaluator;
 import jcolibri.exception.ExecutionException;
-import jcolibri.method.gui.formFilling.ObtainQueryWithFormMethod;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.ParallelNNScoringMethod;
@@ -44,6 +40,9 @@ public class Quinielas implements StandardCBRApplication {
 	Connector connector;
 	CBRCaseBase caseBase;
 	
+	// HashMaps con las clasificaciones de ambas ligas
+	HashMap<String,ArrayList<Clasificacion>> clasPorJornPrim;
+	HashMap<String,ArrayList<Clasificacion>> clasPorJornSeg;
 	// ArrayList que contiene los resultados
 	ArrayList<Prediccion> listaPredicciones;
 	// Array que contiene la lista de pesos
@@ -54,8 +53,10 @@ public class Quinielas implements StandardCBRApplication {
 	boolean media;
 	
 	/* CONSTRUCTORAS */
-	public Quinielas (double[] listaPesos) {
+	public Quinielas (double[] listaPesos, HashMap<String,ArrayList<Clasificacion>> clasPorJornPrim, HashMap<String,ArrayList<Clasificacion>> clasPorJornSeg) {
 		this.listaPesos = listaPesos;
+		this.clasPorJornPrim = clasPorJornPrim;
+		this.clasPorJornSeg = clasPorJornSeg;
 		listaPredicciones = new ArrayList<Prediccion>();
 		esValidacion = false;
 		media = false;
@@ -67,9 +68,26 @@ public class Quinielas implements StandardCBRApplication {
 		esValidacion = true;
 	}
 	
-	/* GETTERS/SETTERS */
+	/* GETTERS */
 	public ArrayList<Prediccion> getListaPredicciones (){
 		return this.listaPredicciones;
+	}
+	
+	/**
+	 * 
+	 * @param liga Un '1' para primera y un '2' para segunda
+	 * @param anyo El año del que quieras obtener la clasificación
+	 * @param jornada La jornada de la que quieres la clasificación
+	 * @return
+	 */
+	public ArrayList<Clasificacion> getClasificacion(int liga, int anyo, int jornada){
+		String indice = "A"+anyo+"J"+jornada;
+		if (liga == 1)
+			return clasPorJornPrim.get(indice);
+		else if (liga == 2)
+			return clasPorJornSeg.get(indice);
+		else
+			return null;
 	}
 	
 	/* METODOS */	
@@ -234,63 +252,57 @@ public class Quinielas implements StandardCBRApplication {
 	 * @param liga - 1 o 2
 	 * @param media - True = media normal / False = media ponderada
 	 * @return ArrayList<Prediccion> listaPredicciones
-	 * @throws ExecutionException
+	 * @throws ExecutionException - Devuelve null si ha fallado algo
 	 */
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos, int liga, boolean media) throws ExecutionException {
-		
+		// Ponemos la media como la pida el usuario
 		this.media = media;
 		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar con la jornada pedida por el usuario
-		jornada = jornada - 1;
-		int jornadaActual;
-		try {			
-			//Crear un objeto que almacena la consulta
-			CBRQuery query = new CBRQuery();	
-			// Si nos piden la jornada 1, entonces los equipos están con todos sus valores a 0
-			Integer[] clasifLocal = {0,0,0,0,0,0,0};
-			Integer[] clasifVisitante = {0,0,0,0,0,0,0};			
-			// Iteramos los partidos pedidos
-			Iterator<String> iterador = equipos.iterator();
-
-			String[] tokens = null;
-			String[] tokensLocal = null;
-			String[] tokensVisitante = null;			
-			
-			// Buscamos para cada par de equipos del arrayList su clasificacion
-			while (iterador.hasNext()) {	
-				// jornadaActual indica la jornada que vamos a buscar
-				jornadaActual = jornada-1;
-				// Sacamos los nombres de ambos equipos tokens[0] = local, tokens[1] = visitante
-				tokens = iterador.next().split(",");
+		// Guardamos la jornada a consultar (una menos que la pasada por parámetro), como podemos tener jornadas mal parseadas, este valor puede variar
+		int jornadaConsulta = jornada - 2;
+		//Crear un objeto que almacena la consulta
+		CBRQuery query = new CBRQuery();	
+		// Estructuras para almacenar las clasificaciones
+		ArrayList<Clasificacion> clasificaciones;
+		Clasificacion clasifLocal = null;
+		Clasificacion clasifVisitante = null;
+		// Tokenizamos cada par de equipos
+		String[] tokens = null;		
+		// Buscamos para cada par de equipos su clasificacion
+		try {
+			for (String e: equipos) {	
+				tokens = e.split(",");
 				// Rellenamos la clasificacion en caso de que la jornada sea mayor que la primera	
-				// ya que los datos para predecir la primera jornada sería la jornada 0, que es tener las estadisticas a 0
-				if (jornadaActual >  -1) {	
-					tokensLocal = null;
-					tokensVisitante = null;
+				if (jornadaConsulta >  -1) {	
 					// Buscamos la clasifiacion de cada uno en la temporada pedida, pero en la jornada ANTERIOR con información disponible
-					while (tokensLocal == null && tokensVisitante == null && jornadaActual > -1) {
-						for (String i: clasificaciones[temporada-2000][jornadaActual]) {		
+					while (clasifLocal == null && clasifVisitante == null) {
+						if ((clasificaciones = getClasificacion(liga,temporada,jornadaConsulta)) == null && jornadaConsulta > -1) {
+							jornadaConsulta--;
+							continue;
+						}
+						for (Clasificacion i: clasificaciones) {		
 							// Buscamos la clasificación del local
-							if ((i != null)	&& i.startsWith(tokens[0]) && tokensLocal == null) {
-								tokensLocal = i.split((","));
+							if (i.getEq() == tokens[0]) {
+								clasifLocal = i;
 							}
 							// Buscamos la clasificación del visitante
-							if ((i != null)	&& i.startsWith(tokens[1]) && tokensVisitante == null) {
-								tokensVisitante = i.split((","));
+							if (i.getEq() == tokens[1]) {
+								clasifVisitante = i;
 							}
-							// Si encontramos ambos, paramos
-							if (tokensLocal != null && tokensVisitante != null) break;
-						}
-						// Rellenamos los valores de las clasificaciones si no es nula la info
-						if (tokensLocal != null && tokensVisitante != null) {
-							for (int i = 0;i<tokensLocal.length-2;i++) {
-								clasifLocal[i] = Integer.valueOf(tokensLocal[i+1]);
-								clasifVisitante[i] = Integer.valueOf(tokensVisitante[i+1]);
-							}
-						} else {
-							jornadaActual--;
+							// Si encontramos ambos, paramos. Si no seguimos buscando en jornadas anteriores
+							if (clasifLocal != null && clasifVisitante != null) break;
+							else jornadaConsulta--;
 						}
 					}
-				}
+					// Si la jornada es la primera, los equipos tienen sus clasificaciones a 0
+				} 
+				// Si alguna de las clasificaciones está a null es porque, o bien no se ha encontrado o porque estamos pidiendo predicciones
+				// de la primera jornada
+				if (clasifLocal == null) 
+					clasifLocal = new Clasificacion(0,tokens[0],0,0,0,0,0,0,0);
+				if (clasifVisitante == null)
+					clasifVisitante = new Clasificacion(0,tokens[1],0,0,0,0,0,0,0);
+	
 				// Rellenamos la query con los valores apropiados
 				query.setDescription(new DescripcionQuinielas(Integer.valueOf(temporada),tokens[0],clasifLocal,tokens[1],clasifVisitante));
 				
@@ -299,21 +311,17 @@ public class Quinielas implements StandardCBRApplication {
 				System.out.println("Ejecutado ciclo para el partido: "+tokens[0]+" vs. "+tokens[1]);
 				
 				BarraProgreso.aumentarBarraProgreso(); // Interfaz para la barra de progreso
-				
-				for(int i =0;i<clasifLocal.length;i++)clasifLocal[i]=0;
-				for(int i =0;i<clasifVisitante.length;i++)clasifVisitante[i]=0;
 			}
-		} catch (ExecutionException e) {	
-			throw e;
+			// Copiamos los valores, ya que si no al llamar luego a los partidos de segunda, liamos la información
+			ArrayList<Prediccion> listaDevolucion = new ArrayList<Prediccion>();
+			for (Prediccion p: listaPredicciones) {
+					listaDevolucion.add(p);
+			}
+			// Limpiamos la lista de predicciones
+			listaPredicciones.clear();
+			return listaDevolucion;
+		} catch (Exception e) {
+			return null;
 		}
-		
-		ArrayList<Prediccion> listaDevolucion = new ArrayList<Prediccion>();
-		Iterator<Prediccion> iterador = listaPredicciones.iterator();
-		while (iterador.hasNext()) {
-				listaDevolucion.add(iterador.next());
-		}
-		// Limpiamos la lista de predicciones
-		listaPredicciones.clear();
-		return listaDevolucion;
 	}	
 }
