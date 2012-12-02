@@ -116,6 +116,7 @@ public class Principal {
 		} catch (Exception e) {
 			barra.cerrarVentana();
 			e.getMessage();
+			e.printStackTrace();
 			return;
 		}		
 		// PASO 2. CONFIGURAR 
@@ -127,8 +128,7 @@ public class Principal {
 			barra.cerrarVentana();
 			e.getMessage();
 			return;
-		}
-		barra.cerrarVentana();
+		}		
 		
 		// PASO 3. LLAMAR A LA INTERFAZ
 		barra.cerrarVentana(); //cerramos la ventana
