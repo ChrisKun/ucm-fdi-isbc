@@ -5,10 +5,18 @@ import java.util.Collection;
 import proyecto2.quinielas.cbr.SolucionQuinielas.UnoXDos;
 
 import jcolibri.method.retrieve.RetrievalResult;
-
+/**
+ * 
+ * Clase que contiene los dos metodos de votacion
+ *
+ */
 public class Votacion {
 
-	// Metodo que implementa la media
+	/**
+	 *  Metodo que implementa la media
+	 * @param eval
+	 * @return Prediccion
+	 */
 	public Prediccion media (Collection<RetrievalResult> eval) {
 		// resQuini[0] = 'X', resQuini[1] = '1', resQuini[2] = '2'
 			int [] resQuini = new int[3];
@@ -43,7 +51,11 @@ public class Votacion {
 			return prediccion;
 	}
 	
-	// Metodo que implementa la media ponderada
+	/**
+	 *  Metodo que implementa la media ponderada
+	 * @param eval
+	 * @return Prediccion
+	 */
 	public Prediccion mediaPonderada(Collection<RetrievalResult> eval) {
 		// resQuini[0] = 'X', resQuini[1] = '1', resQuini[2] = '2'
 		double [] resQuini = new double[3];
