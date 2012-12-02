@@ -3,8 +3,6 @@ package proyecto2.quinielas.cbr;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-
 import proyecto2.quinielas.interfaz.BarraProgreso;
 import proyecto2.quinielas.datosWeb.Clasificacion;
 
