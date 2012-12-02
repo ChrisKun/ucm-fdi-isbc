@@ -94,20 +94,20 @@ public class ParserWeb {
 		for (int i=anyoInicio;i<ultimaTemporada;i++){
 			for (int j=1;j<=38;j++){
 				anyadirJornada("primera",i,j);
-				BarraProgreso.aumentarBarraProgreso(); //Para aumentar la barra de progreso
+				//BarraProgreso.aumentarBarraProgreso(); //Para aumentar la barra de progreso
 			}
 			for (int j=1;j<=42;j++){
 				anyadirJornada("segunda",i,j);
-				BarraProgreso.aumentarBarraProgreso();
+				//BarraProgreso.aumentarBarraProgreso();
 			}
 		}
 		for (int j=inicioJornPrim;j<=ultimaJornadaPrimera;j++){
 			anyadirJornada("primera",ultimaTemporada,j);
-			BarraProgreso.aumentarBarraProgreso();
+			//BarraProgreso.aumentarBarraProgreso();
 		}
 		for (int j=inicioJornSeg;j<=ultimaJornadaSegunda;j++){
 			anyadirJornada("segunda",ultimaTemporada,j);
-			BarraProgreso.aumentarBarraProgreso();
+			//BarraProgreso.aumentarBarraProgreso();
 		}
 
 		  
@@ -155,26 +155,37 @@ public class ParserWeb {
 		}
 		ArrayList<Partido> partidos = new ArrayList<Partido>();
 		String[] res; int res1 = 0, res2 = 0;
-		//TODO cambiar esta guarreria!!!
+
 		int n = 4;
-    //numPartidos*n-1;
-		//TODO Parsear uno por uno los resultados de los partidos
-		for (int i=0;i<=numPartidos*n-1;i=i+n){
+		int fronteraDatos = numPartidos*n;
+    	//TODO Parsear uno por uno los resultados de los partidos
+		for (int i=0;i<fronteraDatos;i=i+n){
 			//Procesar info de UN partido
+
+			System.out.println("----------------");
+			System.out.println(info.get(i));
+			System.out.println(info.get(i+1));
+			System.out.println(info.get(i+2));
+			System.out.println(info.get(i+3));
+			
 			try{
 				res = info.get(i+1).split("-");
 				res1 = Integer.parseInt(res[0]);
 				res2 = Integer.parseInt(res[1]);
+				partidos.add(new Partido(info.get(i), info.get(i+2), res1, res2));
 			} catch (Exception e){
 				partidosPorJugar.add(info.get(i+1) +","+info.get(i)+","+info.get(i+2));
-				n = 3;
+			}			
+			
+			if (!info.get(i+3).equals("Ampliar")) {
+				i--; fronteraDatos--;				
 			}
-			partidos.add(new Partido(info.get(i), info.get(i+2), res1, res2));
+			
 		}
 		
 		//TODO Parsear una por una la clasificacion de un equipo
 		ArrayList<Clasificacion> clasificacion = new ArrayList<Clasificacion>();
-		for (int i=numPartidos*n;i<=numEquipos*9+numPartidos*n-1;i=i+9){
+		for (int i=fronteraDatos;i<fronteraDatos+numEquipos*9;i=i+9){
 			//Procesar clasificacion de UN equipo
 			//procesarClasificacion(String clasificacion)
 			clasificacion.add(new Clasificacion(
