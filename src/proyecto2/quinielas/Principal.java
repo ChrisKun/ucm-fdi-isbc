@@ -1,16 +1,9 @@
 package proyecto2.quinielas;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 import jcolibri.exception.ExecutionException;
 
 import proyecto2.quinielas.cbr.DescripcionQuinielas;
-import proyecto2.quinielas.cbr.Prediccion;
 import proyecto2.quinielas.cbr.Quinielas;
-import proyecto2.quinielas.cbr.ValidacionCruzada;
 import proyecto2.quinielas.datosWeb.ParserWeb;
 import proyecto2.quinielas.interfaz.BarraProgreso;
 import proyecto2.quinielas.interfaz.Interfaz;
@@ -47,8 +40,8 @@ public class Principal {
 	
 	/* CONSTANTES DE PESOS POR DEFECTO */
 	public final static double PESOTEMPORADA = 0.4;
-	public final static double PESOLOCAL = 0.02;
-	public final static double PESOVISITANTE = 0.02;
+	public final static double PESOLOCAL = 0.2;//0.02;
+	public final static double PESOVISITANTE = 0.2;//0.02;
 	public final static double PESOPUNTOSLOCAL = 0.2;
 	public final static double PESOPGLOCAL = 0.1;
 	public final static double PESOPELOCAL = 0.025;
