@@ -259,8 +259,6 @@ public class Quinielas implements StandardCBRApplication {
 	 */
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos, int liga, boolean media) throws ExecutionException {
 		// Ponemos la media como la pida el usuario
-		// TODO Quitar esto cuando Raul arregle lo de restar 1
-		liga = liga +2;
 		this.media = media;
 		// Consultamos la jornada anterior para saber como estaban los equipos antes de jugar
 		int jornadaConsulta = jornada - 1;
