@@ -79,7 +79,12 @@ public class Quinielas implements StandardCBRApplication {
 	 * @return
 	 */
 	public ArrayList<Clasificacion> getClasificacion(int liga, int anyo, int jornada){
-		String indice = "A"+anyo+"J"+jornada;
+		String indice = "A"+anyo;
+		if (jornada < 10)
+			indice = indice+"J0"+jornada;
+		else 
+			indice = indice+"J"+jornada;
+		
 		if (liga == 1)
 			return clasPorJornPrim.get(indice);
 		else if (liga == 2)
@@ -254,10 +259,11 @@ public class Quinielas implements StandardCBRApplication {
 	 */
 	public ArrayList<Prediccion> querysCBR (ArrayList<String> equipos, int temporada, int jornada, double[] listaPesos, int liga, boolean media) throws ExecutionException {
 		// Ponemos la media como la pida el usuario
+		// TODO Quitar esto cuando Raul arregle lo de restar 1
+		liga = liga +2;
 		this.media = media;
-		// Como las jornadas se almacenan en el array empezando en 0, tenemos que restar 1 para cuadrar con la jornada pedida por el usuario
-		// Guardamos la jornada a consultar (una menos que la pasada por parámetro), como podemos tener jornadas mal parseadas, este valor puede variar
-		int jornadaConsulta = jornada - 2;
+		// Consultamos la jornada anterior para saber como estaban los equipos antes de jugar
+		int jornadaConsulta = jornada - 1;
 		//Crear un objeto que almacena la consulta
 		CBRQuery query = new CBRQuery();	
 		// Estructuras para almacenar las clasificaciones
@@ -274,23 +280,25 @@ public class Quinielas implements StandardCBRApplication {
 				if (jornadaConsulta >  -1) {	
 					// Buscamos la clasifiacion de cada uno en la temporada pedida, pero en la jornada ANTERIOR con información disponible
 					while (clasifLocal == null && clasifVisitante == null) {
-						if ((clasificaciones = getClasificacion(liga,temporada,jornadaConsulta)) == null && jornadaConsulta > -1) {
+						if ((clasificaciones = getClasificacion(liga,temporada,jornadaConsulta)) == null && jornadaConsulta > 0) {
 							jornadaConsulta--;
 							continue;
 						}
+						if (clasificaciones == null) break;
 						for (Clasificacion i: clasificaciones) {		
 							// Buscamos la clasificación del local
-							if (i.getEq() == tokens[0]) {
+							if (i.getEq().equals(tokens[0])) {
 								clasifLocal = i;
 							}
 							// Buscamos la clasificación del visitante
-							if (i.getEq() == tokens[1]) {
+							if (i.getEq().equals(tokens[1])) {
 								clasifVisitante = i;
 							}
 							// Si encontramos ambos, paramos. Si no seguimos buscando en jornadas anteriores
-							if (clasifLocal != null && clasifVisitante != null) break;
-							else jornadaConsulta--;
+							if (clasifLocal != null && clasifVisitante != null) break;							
 						}
+						// Por si hay que buscar algún equipo en jornadas anteriores
+						if (clasifLocal == null || clasifVisitante == null) jornadaConsulta--;
 					}
 					// Si la jornada es la primera, los equipos tienen sus clasificaciones a 0
 				} 
