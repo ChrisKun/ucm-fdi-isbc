@@ -1123,14 +1123,14 @@ public class Interfaz extends JFrame{
 		{
 			if (partidosPrimera != null){
 				try {
-					respuestaPrimera = q.querysCBR(partidosPrimera,selTemporada,selJornadaPrimera,datosPesos, PRIMERA_DIVISION-1, tipoMediaNormal);
+					respuestaPrimera = q.querysCBR(partidosPrimera,selTemporada,selJornadaPrimera,datosPesos, PRIMERA_DIVISION+1, tipoMediaNormal);
 				} catch (ExecutionException e) {
 					e.printStackTrace();
 				}
 			}
 			if (partidosSegunda != null){
 				try {
-					respuestaSegunda = q.querysCBR(partidosSegunda,selTemporada,selJornadaSegunda,datosPesos, SEGUNDA_DIVISION-1, tipoMediaNormal);
+					respuestaSegunda = q.querysCBR(partidosSegunda,selTemporada,selJornadaSegunda,datosPesos, SEGUNDA_DIVISION+1, tipoMediaNormal);
 				} catch (ExecutionException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

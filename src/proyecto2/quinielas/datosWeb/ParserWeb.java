@@ -94,20 +94,20 @@ public class ParserWeb {
 		for (int i=anyoInicio;i<ultimaTemporada;i++){
 			for (int j=1;j<=38;j++){
 				anyadirJornada("primera",i,j);
-				//BarraProgreso.aumentarBarraProgreso(); //Para aumentar la barra de progreso
+				BarraProgreso.aumentarBarraProgreso(); //Para aumentar la barra de progreso
 			}
 			for (int j=1;j<=42;j++){
 				anyadirJornada("segunda",i,j);
-				//BarraProgreso.aumentarBarraProgreso();
+				BarraProgreso.aumentarBarraProgreso();
 			}
 		}
 		for (int j=inicioJornPrim;j<=ultimaJornadaPrimera;j++){
 			anyadirJornada("primera",ultimaTemporada,j);
-			//BarraProgreso.aumentarBarraProgreso();
+			BarraProgreso.aumentarBarraProgreso();
 		}
 		for (int j=inicioJornSeg;j<=ultimaJornadaSegunda;j++){
 			anyadirJornada("segunda",ultimaTemporada,j);
-			//BarraProgreso.aumentarBarraProgreso();
+			BarraProgreso.aumentarBarraProgreso();
 		}
 
 		  
