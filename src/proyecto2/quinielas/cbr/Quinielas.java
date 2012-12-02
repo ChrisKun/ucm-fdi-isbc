@@ -253,7 +253,7 @@ public class Quinielas implements StandardCBRApplication {
 	 * @param jornada
 	 * @param listaPesos
 	 * @param liga - 1 o 2
-	 * @param media - True = media normal / False = media ponderada
+	 * @param media - True = media ponderada / False = media normal
 	 * @return ArrayList<Prediccion> listaPredicciones
 	 * @throws ExecutionException
 	 */
