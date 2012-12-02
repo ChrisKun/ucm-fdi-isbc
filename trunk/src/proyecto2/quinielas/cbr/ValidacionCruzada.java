@@ -28,14 +28,14 @@ public class ValidacionCruzada {
 	}
 	
 	//TODO
-    public void HoldOutEvaluation(double[] listaPesos, int numeroCasos, int numeroVueltas)
+    public void HoldOutEvaluation(double[] listaPesos, int numeroCasos, int numeroVueltas, boolean media)
     {
 	    //SwingProgressBar shows the progress
 	    jcolibri.util.ProgressController.clear();
 	    jcolibri.util.ProgressController.register(new jcolibri.test.main.SwingProgressBar(), HoldOutEvaluator.class);
 	       
 	    HoldOutEvaluator eval = new HoldOutEvaluator();
-	    eval.init(new Quinielas(true, listaPesos));
+	    eval.init(new Quinielas(true, listaPesos, media));
 	    // Configurar % de casos que cogemos y nº de vueltas
 	    eval.HoldOut(numeroCasos,numeroVueltas);
 	    
@@ -46,14 +46,14 @@ public class ValidacionCruzada {
     }
     
     //TODO
-    public void LeaveOneOutEvaluation(double[] listaPesos)
+    public void LeaveOneOutEvaluation(double[] listaPesos, boolean media)
     {
 		//SwingProgressBar shows the progress
 		jcolibri.util.ProgressController.clear();
 		jcolibri.util.ProgressController.register(new jcolibri.test.main.SwingProgressBar(), LeaveOneOutEvaluator.class);
 		
 		LeaveOneOutEvaluator eval = new LeaveOneOutEvaluator();
-		eval.init(new Quinielas(true, listaPesos));
+		eval.init(new Quinielas(true, listaPesos, media));
 		eval.LeaveOneOut();		
 
 	    this.MediaAciertos();
@@ -63,14 +63,14 @@ public class ValidacionCruzada {
     }
     
     //TODO
-    public void SameSplitEvaluation(double[] listaPesos, int numeroCasos)
+    public void SameSplitEvaluation(double[] listaPesos, int numeroCasos, boolean media)
     {
 		//SwingProgressBar shows the progress
 		jcolibri.util.ProgressController.clear();
 		jcolibri.util.ProgressController.register(new jcolibri.test.main.SwingProgressBar(), SameSplitEvaluator.class);
 		            
 		SameSplitEvaluator eval = new SameSplitEvaluator();
-		eval.init(new Quinielas(true, listaPesos));
+		eval.init(new Quinielas(true, listaPesos, media));
 		// Configurar el % de testeo y el nombre del fichero de salida
 		eval.generateSplit(numeroCasos, "split1.txt");
 		eval.HoldOutfromFile("split1.txt");
@@ -84,9 +84,11 @@ public class ValidacionCruzada {
     public static void main (String[] args) {
     	ValidacionCruzada v = new ValidacionCruzada();
     	Principal p = new Principal();
-    	v.HoldOutEvaluation(p.getListaPesos(),15,1);
-    	v.LeaveOneOutEvaluation(p.getListaPesos());
-    	v.SameSplitEvaluation(p.getListaPesos(),14);
+    	// Poner el valor que queramos para hacer media ponderada o normal (true = ponderada)
+    	boolean media = true;
+    	v.HoldOutEvaluation(p.getListaPesos(),15,1, media);
+    	v.LeaveOneOutEvaluation(p.getListaPesos(), media);
+    	v.SameSplitEvaluation(p.getListaPesos(),10, media);
     }
 
 }

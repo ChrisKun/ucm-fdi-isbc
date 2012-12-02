@@ -60,10 +60,17 @@ public class Quinielas implements StandardCBRApplication {
 		media = false;
 	}
 	
-	public Quinielas (boolean esEvaluacion, double[] listaPesos) {
+	/**
+	 * 
+	 * @param esEvaluacion
+	 * @param listaPesos
+	 * @param media - True = media ponderada / False = media normal
+	 */
+	public Quinielas (boolean esEvaluacion, double[] listaPesos, boolean media) {
 		// listaPredicciones = new ArrayList<Prediccion>();
 		this.listaPesos = listaPesos;
 		esValidacion = true;
+		this.media = media;
 	}
 	
 	/* GETTERS */
