@@ -120,6 +120,7 @@ public class Principal {
 		} catch (ExecutionException e){
 			barra.cerrarVentana();
 			e.getMessage();
+			e.printStackTrace();
 			return;
 		}		
 		
