@@ -28,6 +28,13 @@ public class ValidacionCruzada {
 	}
 	
 	//TODO
+	/**
+	 * 
+	 * @param listaPesos
+	 * @param numeroCasos
+	 * @param numeroVueltas
+	 * @param media - True = media ponderada / False = media normal
+	 */
     public void HoldOutEvaluation(double[] listaPesos, int numeroCasos, int numeroVueltas, boolean media)
     {
 	    //SwingProgressBar shows the progress
@@ -46,6 +53,11 @@ public class ValidacionCruzada {
     }
     
     //TODO
+    /**
+     * 
+     * @param listaPesos
+     * @param media - True = media ponderada / False = media normal
+     */
     public void LeaveOneOutEvaluation(double[] listaPesos, boolean media)
     {
 		//SwingProgressBar shows the progress
@@ -63,6 +75,12 @@ public class ValidacionCruzada {
     }
     
     //TODO
+    /**
+     * 
+     * @param listaPesos
+     * @param numeroCasos
+     * @param media - True = media ponderada / False = media normal
+     */
     public void SameSplitEvaluation(double[] listaPesos, int numeroCasos, boolean media)
     {
 		//SwingProgressBar shows the progress
@@ -85,7 +103,7 @@ public class ValidacionCruzada {
     	ValidacionCruzada v = new ValidacionCruzada();
     	Principal p = new Principal();
     	// Poner el valor que queramos para hacer media ponderada o normal (true = ponderada)
-    	boolean media = true;
+    	boolean media = false;
     	v.HoldOutEvaluation(p.getListaPesos(),15,1, media);
     	v.LeaveOneOutEvaluation(p.getListaPesos(), media);
     	v.SameSplitEvaluation(p.getListaPesos(),10, media);
