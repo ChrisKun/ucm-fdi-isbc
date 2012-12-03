@@ -84,7 +84,7 @@ public class Interfaz extends JFrame{
 	 private int selTemporada;
 	 private int selJornadaPrimera;
 	 private int selJornadaSegunda;
-	 private boolean tipoMediaNormal;
+	 private boolean tipoMediaPonderada;
 	
 	
 	/** Elementos del panel superior de información que tienen que modificarse */
@@ -149,7 +149,7 @@ public class Interfaz extends JFrame{
 		selTemporada = ParserWeb.TEMPORADAINICIAL;
 		selJornadaPrimera = 1;
 		selJornadaSegunda = 1;
-		tipoMediaNormal = true; // TODO Hacer una opción en el menú que sea tipo de media
+		tipoMediaPonderada = false;
 		
 		// Configuración de la ventana
 		this.setVisible(true);
@@ -165,47 +165,68 @@ public class Interfaz extends JFrame{
 
 	}
 
+	/****** METODOS PARA CONSTRUIR EL MENU DE LA INTERFAZ ******/
+	
+	/**
+	 * Método que obtiene la barra del menú principal, que se va construyendo con los distintos menus
+	 * @return JMenuBar
+	 */
 	private JMenuBar getMenuPrincipal()
 	{
-		/** FALTA ACTION LISTENER Y COMPLETAR MENU **/
+		ListenerMenu listener = new ListenerMenu();
+		// Creamos un unico listener para todos los elementos del menú
 		JMenuBar barraMenuPrincipal = new JMenuBar();
-		// Menu archivo
-		JMenu menuArchivo = new JMenu("Archivo");
-		barraMenuPrincipal.add(menuArchivo);
-			// Elementos del menu archivo
-			JMenuItem it_salir = new JMenuItem("Salir");
-			menuArchivo.add(it_salir);
-		
-		// Menu eficiencia
-		JMenu menuEficiencia = new JMenu("Eficiencia");
-			// Elementos del menu eficiencia
-			JMenuItem itNFold = new JMenuItem("N-fold");
-			// Añadimos el listener al item correspondiente
-			itNFold.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent arg) {
-					accionesMenu(arg);
-				}
-
-			});
-			menuEficiencia.add(itNFold);
-			
-			JMenuItem itHoldOut = new JMenuItem("Hold-Out");
-			itHoldOut.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent arg) {
-					accionesMenu(arg);
-				}
-
-			});
-			menuEficiencia.add(itHoldOut);
-			
-			JMenuItem itLeaveOneOut = new JMenuItem("Leave-One-Out");
-			menuEficiencia.add(itLeaveOneOut);
-		barraMenuPrincipal.add(menuEficiencia);
-		// Menu sobre
-		JMenu menuSobre = new JMenu("Sobre");
-		barraMenuPrincipal.add(menuSobre);
-		
+		// Menu Archivo: Sobre, Salir
+		barraMenuPrincipal.add(getMenuArchivo(listener));
+		// Menu Eficiencia: Opciones para medir la eficiencia
+		barraMenuPrincipal.add(getMenuEficiencia(listener));
+		// Menu Configuración: Con dos submenus: uno para la media y otro para la validacion
+		//barraMenuPrincipal.add(getMenuConfiguracion());
 		return barraMenuPrincipal;
+	}
+	
+	/**
+	 * Método que obtiene el menú Archivo, con las opciones de Sobre (sobre la aplicación) y Salir, que sale de la
+	 * aplicación
+	 * @return JMenu Archivo
+	 */
+	private JMenu getMenuArchivo(ListenerMenu l)
+	{
+		JMenu menu = new JMenu("Archivo");
+		// Elementos del menú Archivo:
+			// Item Menu
+			JMenuItem itemSobre = new JMenuItem("Sobre");
+			// Listener del item: Muestra información sobre el programa
+			itemSobre.addActionListener(l);
+			// Item Salir
+			JMenuItem itemSalir = new JMenuItem("Salir");
+			// Listener del item: Sale del programa
+			itemSalir.addActionListener(l);
+		// Por último, los añadimos al menú
+		menu.add(itemSobre);
+		menu.add(itemSalir);
+		return menu;
+	}
+	
+	/****** METODOS PARA CONSTRUIR LOS PANELES DE LA INTERFAZ ******/
+	
+	private JMenu getMenuEficiencia(ListenerMenu l)
+	{
+		JMenu menu = new JMenu("Eficiencia");
+		// Elementos del menú Eficiencia
+			//Item HoldOutEvaluation
+			JMenuItem itemHoldOut = new JMenuItem("Hold Out Evaluation"); //TODO
+			itemHoldOut.addActionListener(l);
+			//Item LeaveOneOutEvaluation
+			JMenuItem itemLeaveOne = new JMenuItem("Leave One Out Evaluation");
+			itemLeaveOne.addActionListener(l);
+			//Item SameSplitEvaluation
+			JMenuItem itemSameSplit = new JMenuItem("Same Split Evaluation");
+			itemSameSplit.addActionListener(l);
+		menu.add(itemHoldOut);
+		menu.add(itemLeaveOne);
+		menu.add(itemSameSplit);			
+		return menu;
 	}
 	
 	/**
@@ -712,7 +733,7 @@ public class Interfaz extends JFrame{
 		sliderPesos[quePeso].setPaintLabels(true); 	// Pintar las etiquetas
 		sliderPesos[quePeso].setPaintTrack(true); 	// Pintar por donde va el Slider
 		/* Asociamos los valores 0 y 1 a los valores 0 y 1000 de la JSlider para darle más precisión */
-		Hashtable labelTable = new Hashtable();
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put( new Integer( 0 ), new JLabel("0") );
 		labelTable.put( new Integer( 1000 ), new JLabel("1") );
 		sliderPesos[quePeso].setLabelTable( labelTable );
@@ -793,62 +814,6 @@ public class Interfaz extends JFrame{
 		setJornadaAño(selJornadaPrimera, selJornadaSegunda,selTemporada);
 		p.add(jlab_jornada);
 		return p;
-	}
-	
-
-	 /**
-	  * MÉTODO LISTENER
-	  * Se encarga de efectuar las acciones que se solicitan desde el menú
-	  * @param arg
-	  */
-	private void accionesMenu(ActionEvent arg)
-	{
-		JMenuItem it = (JMenuItem) arg.getSource();
-		String nomb = it.getText();
-		int numCasos = 0;
-		int numCasosDefecto = 15;
-		int numVueltas = 0;
-		int numVueltasDefecto = 1;
-		String str = null;
-		if (nomb == "LeaveOneOut")
-		{
-			
-		}
-		else if (nomb == "Hold-Out") //TODO
-		{
-			ValidacionCruzada vc = new ValidacionCruzada();
-			str = JOptionPane.showInputDialog(null, "Número de casos (si no introduce algo aceptable se usará el valor por defecto ("+numCasosDefecto+")", "Introduce el número de casos",JOptionPane.QUESTION_MESSAGE);
-			if (str != null)
-			{
-				try{
-				numCasos = Integer.parseInt(str);
-				}
-				catch (Exception e)
-				{
-					numCasos = numCasosDefecto;
-				}
-				if (numCasos < 0)
-					numCasos = numCasosDefecto;
-			}
-			str = JOptionPane.showInputDialog(null, "Introducir numero de vueltas (por defecto 1)", ""+numVueltasDefecto, JOptionPane.QUESTION_MESSAGE);
-			
-			if (str != null)
-			{
-				numVueltas = Integer.parseInt(str);
-				if (numVueltas < 0)
-					numVueltas = numVueltasDefecto;
-			}
-			// TODO Hacerlo en otro hilo a parte...
-			vc.HoldOutEvaluation(datosPesos, numCasos, numVueltas);
-		}
-		else if (nomb == "Leave-One-Out")
-		{
-			
-		}
-		else //accion por defecto -> Salir
-		{
-			
-		}
 	}
 	
 	/**
@@ -1108,6 +1073,8 @@ public class Interfaz extends JFrame{
 		
 	}
 	
+	/****** CLASES INTERNAS PARA EJECUTAR OTROS HILOS ******/
+	
 	/** Clase interna para ejecutar el hilo de la consulta*/
 	class ThreadConsulta extends Thread 
 	{
@@ -1123,14 +1090,14 @@ public class Interfaz extends JFrame{
 		{
 			if (partidosPrimera != null){
 				try {
-					respuestaPrimera = q.querysCBR(partidosPrimera,selTemporada,selJornadaPrimera,datosPesos, PRIMERA_DIVISION+1, tipoMediaNormal);
+					respuestaPrimera = q.querysCBR(partidosPrimera,selTemporada,selJornadaPrimera,datosPesos, PRIMERA_DIVISION+1, tipoMediaPonderada);
 				} catch (ExecutionException e) {
 					e.printStackTrace();
 				}
 			}
 			if (partidosSegunda != null){
 				try {
-					respuestaSegunda = q.querysCBR(partidosSegunda,selTemporada,selJornadaSegunda,datosPesos, SEGUNDA_DIVISION+1, tipoMediaNormal);
+					respuestaSegunda = q.querysCBR(partidosSegunda,selTemporada,selJornadaSegunda,datosPesos, SEGUNDA_DIVISION+1, tipoMediaPonderada);
 				} catch (ExecutionException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1157,6 +1124,8 @@ public class Interfaz extends JFrame{
 		public ThreadEficiencia(int modo, int numeroCasos, int numeroVueltas)
 		{
 			this.modo = modo;
+			this.nCasos = numeroCasos;
+			this.nVueltas = numeroVueltas;
 			vc = new ValidacionCruzada();
 		}
 		
@@ -1164,9 +1133,79 @@ public class Interfaz extends JFrame{
 		{
 			switch (modo)
 			{
-			 	case M_HOLDOUT_EV: vc.HoldOutEvaluation(datosPesos, nCasos, nVueltas); break;
+				case M_LEAVEONEOUT_EV: vc.LeaveOneOutEvaluation(datosPesos, tipoMediaPonderada); break;
+			 	case M_HOLDOUT_EV: vc.HoldOutEvaluation(datosPesos, nCasos, nVueltas, tipoMediaPonderada); break;
+			 	
 			}
+			interfaz.setEnabled(true);
 		}
 		
+	}
+	
+	/****** CLASE INTERNA PARA LISTENER DE MENÚ ******/
+	
+	/**
+	 *  Clase interna para unificar todas las acciones del menú 
+	 */
+	class ListenerMenu implements ActionListener
+	{
+		public void actionPerformed(ActionEvent arg0) {
+			JMenuItem it = (JMenuItem) arg0.getSource();
+			String str = it.getText();
+			ThreadEficiencia te;
+			int numCasos = 1;
+			int numVueltas = 15;
+			
+			if (str.equals("Sobre"))
+			{
+				JOptionPane.showMessageDialog(null, "Quinielas V.01 \n Álvaro Pérez \n Xavier Gallofré \n Raúl Bueno", "Sobre...", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if(str.equals("Salir"))
+			{
+				System.exit(0);
+			}
+			else if(str.equals("Hold Out Evaluation"))
+			{
+				str = JOptionPane.showInputDialog(null, "Introduce número de casos", "Hold Out Evaluation: número de casos",JOptionPane.QUESTION_MESSAGE);
+				
+				if (str != null)
+					try{
+						numCasos = Integer.parseInt(str);
+					}
+					catch(Exception e){
+						numCasos = 1;
+						JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
+					}
+				if (numCasos < 0)
+					numCasos = -numCasos;
+				
+				str = JOptionPane.showInputDialog(null, "Introduce número de vueltas", "Hold Out Evaluation: número de vueltas",JOptionPane.QUESTION_MESSAGE);
+				
+				if (str != null)
+					try{
+						numVueltas = Integer.parseInt(str);
+					}
+					catch(Exception e){
+						numVueltas = 15;
+						JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
+					}
+				if (numVueltas < 0)
+					numVueltas = -numVueltas;
+				interfaz.setEnabled(false);
+				//Ejecutamos en un hilo a parte con los datos recibidos por el usuario
+				te = new ThreadEficiencia(ThreadEficiencia.M_HOLDOUT_EV, numCasos, numVueltas);
+				te.start();
+			}
+			else if(str.equals("Leave One Out Evaluation"))
+			{
+				te = new ThreadEficiencia(ThreadEficiencia.M_LEAVEONEOUT_EV, numCasos, numVueltas);
+				te.start();
+			}
+			else if(str.equals("Same Split Evaluation"))
+			{
+				
+			}
+			
+		}
 	}
 }
