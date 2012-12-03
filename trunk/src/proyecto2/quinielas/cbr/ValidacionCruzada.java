@@ -99,14 +99,40 @@ public class ValidacionCruzada {
 		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quinielas - SameSplitEvaluation", false);
     }
     
+    //TODO
+    /**
+     * 
+     * @param listaPesos
+     * @param numeroConjuntos
+     * @param numeroVueltas
+     * @param media - True = media ponderada / False = media normal
+     */
+    public void NFoldEvaluation(double[] listaPesos, int numeroConjuntos, int numeroVueltas, boolean media)
+    {
+		//SwingProgressBar shows the progress
+		jcolibri.util.ProgressController.clear();
+		jcolibri.util.ProgressController.register(new jcolibri.test.main.SwingProgressBar(), NFoldEvaluator.class);
+		            
+		NFoldEvaluator eval = new NFoldEvaluator();
+		eval.init(new Quinielas(true, listaPesos, media));
+		// Configurar % de conjuntos que cogemos y nº de vueltas
+		eval.NFoldEvaluation(numeroConjuntos, numeroVueltas);
+			    
+	    this.MediaAciertos();
+		
+		System.out.println(Evaluator.getEvaluationReport());
+		jcolibri.evaluation.tools.EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Quinielas - NFoldEvaluation", false);
+    }
+    
     public static void main (String[] args) {
     	ValidacionCruzada v = new ValidacionCruzada();
     	Principal p = new Principal();
     	// Poner el valor que queramos para hacer media ponderada o normal (true = ponderada)
     	boolean media = false;
-    	v.HoldOutEvaluation(p.getListaPesos(),15,1, media);
-    	v.LeaveOneOutEvaluation(p.getListaPesos(), media);
-    	v.SameSplitEvaluation(p.getListaPesos(),10, media);
+    	//v.HoldOutEvaluation(p.getListaPesos(),15,1, media);
+    	//v.LeaveOneOutEvaluation(p.getListaPesos(), media);
+    	//v.SameSplitEvaluation(p.getListaPesos(),10, media);
+    	v.NFoldEvaluation(p.getListaPesos(),10,1, media);
     }
 
 }
