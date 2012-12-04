@@ -30,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -84,7 +85,7 @@ public class Interfaz extends JFrame{
 	 private int selTemporada;
 	 private int selJornadaPrimera;
 	 private int selJornadaSegunda;
-	 private boolean tipoMediaPonderada;
+	 private boolean tipoVotacionPonderada;
 	
 	
 	/** Elementos del panel superior de información que tienen que modificarse */
@@ -106,6 +107,9 @@ public class Interfaz extends JFrame{
 	/** Panel principal (se modifica cuando se cambia de tabla */
 	private JPanel panelPrincipal;
 	
+	/** Elementos del menu que se modifican */
+	JRadioButtonMenuItem itemMBasica;
+	JRadioButtonMenuItem itemMPonderada; 
 	
 	// Datos de la tabla
 	ArrayList<Prediccion> respuestaPrimera;
@@ -149,11 +153,11 @@ public class Interfaz extends JFrame{
 		selTemporada = ParserWeb.TEMPORADAINICIAL;
 		selJornadaPrimera = 1;
 		selJornadaSegunda = 1;
-		tipoMediaPonderada = false;
+		tipoVotacionPonderada = false;
 		
 		// Configuración de la ventana
 		this.setVisible(true);
-		this.setTitle("Quinielas"); //TODO Poner icono?
+		this.setTitle("Quinielas");
 		this.setSize(W, H);
 		
 
@@ -181,7 +185,7 @@ public class Interfaz extends JFrame{
 		// Menu Eficiencia: Opciones para medir la eficiencia
 		barraMenuPrincipal.add(getMenuEficiencia(listener));
 		// Menu Configuración: Con dos submenus: uno para la media y otro para la validacion
-		//barraMenuPrincipal.add(getMenuConfiguracion());
+		barraMenuPrincipal.add(getMenuConfiguracion());
 		return barraMenuPrincipal;
 	}
 	
@@ -208,14 +212,12 @@ public class Interfaz extends JFrame{
 		return menu;
 	}
 	
-	/****** METODOS PARA CONSTRUIR LOS PANELES DE LA INTERFAZ ******/
-	
 	private JMenu getMenuEficiencia(ListenerMenu l)
 	{
 		JMenu menu = new JMenu("Eficiencia");
 		// Elementos del menú Eficiencia
 			//Item HoldOutEvaluation
-			JMenuItem itemHoldOut = new JMenuItem("Hold Out Evaluation"); //TODO
+			JMenuItem itemHoldOut = new JMenuItem("Hold Out Evaluation"); 
 			itemHoldOut.addActionListener(l);
 			//Item LeaveOneOutEvaluation
 			JMenuItem itemLeaveOne = new JMenuItem("Leave One Out Evaluation");
@@ -223,11 +225,46 @@ public class Interfaz extends JFrame{
 			//Item SameSplitEvaluation
 			JMenuItem itemSameSplit = new JMenuItem("Same Split Evaluation");
 			itemSameSplit.addActionListener(l);
+			//Item N-Fold
+			JMenuItem itemNFold = new JMenuItem("N-Fold Evaluation");
+			itemNFold.addActionListener(l);
 		menu.add(itemHoldOut);
 		menu.add(itemLeaveOne);
 		menu.add(itemSameSplit);			
+		menu.add(itemNFold);
 		return menu;
 	}
+	
+	private JMenu getMenuConfiguracion()
+	{
+		JMenu menu = new JMenu("Configuración");
+		JMenu subMenu = new JMenu("Tipo de votación");
+		//Items del menú
+			itemMBasica = new JRadioButtonMenuItem("Básica");
+			itemMBasica.addActionListener(new ActionListener() {
+			      public void actionPerformed(ActionEvent e) {
+			    	  tipoVotacionPonderada = false;
+			    	  }
+			      });
+			itemMPonderada = new JRadioButtonMenuItem("Ponderada");
+			itemMPonderada.addActionListener(new ActionListener() {
+			      public void actionPerformed(ActionEvent e) {
+			    	  tipoVotacionPonderada = true;
+			    	  }
+			      });
+		//Ahora creamos el grupo de botones para que no haya dos seleccionados al mismo tiempo
+			ButtonGroup group = new ButtonGroup();
+			group.add(itemMBasica);
+			group.add(itemMPonderada);
+		// Por defecto seleccionado
+		itemMBasica.setSelected(true);
+		subMenu.add(itemMBasica);
+		subMenu.add(itemMPonderada);
+		menu.add(subMenu);
+		return menu;
+	}
+	
+	/****** METODOS PARA CONSTRUIR LOS PANELES DE LA INTERFAZ ******/
 	
 	/**
 	 * Se encargar de devolver el panel Principal que se construye a través de tres subpaneles: El subpanel del título,
@@ -351,10 +388,10 @@ public class Interfaz extends JFrame{
 	 */
 	private JComboBox getDesplegableTemporada()
 	{
-		int num_temporadas = parser.getUltimaTemporada() - parser.TEMPORADAINICIAL + 1;
+		int num_temporadas = parser.getUltimaTemporada() - ParserWeb.TEMPORADAINICIAL + 1;
 		String[] nom_temp = new String[num_temporadas]; // Elementos que contendra el JComboBox
 		for (int i = 0; i <num_temporadas; i++)
-			nom_temp[i] = (parser.TEMPORADAINICIAL+i)+"-"+(parser.TEMPORADAINICIAL+(i+1)); // Formato "2000-2001" para temporada 2000
+			nom_temp[i] = (ParserWeb.TEMPORADAINICIAL+i)+"-"+(ParserWeb.TEMPORADAINICIAL+(i+1)); // Formato "2000-2001" para temporada 2000
 		
 		JComboBox b = new JComboBox(nom_temp);
 		b.addActionListener(new ActionListener() {
@@ -572,7 +609,6 @@ public class Interfaz extends JFrame{
 		for (int i = 0; i < numEquipos; i++)
 		{
 			jor = 1;
-			//lineaClasificacion = clasificacion[n][ind][i];
 			listaClasificacion = clasificacion.get("A"+selTemporada+"J"+jor);
 			
 			while (listaClasificacion == null) // Sólo en caso de que no haya informacion en la jornada 1
@@ -580,7 +616,7 @@ public class Interfaz extends JFrame{
 				listaClasificacion = clasificacion.get("A"+selTemporada+"J"+jor);
 				jor++;
 			}	
-			eq[i] = listaClasificacion.get(i).getEq(); // TODO eq[i] = (lineaClasificacion.split(",")[0]);
+			eq[i] = listaClasificacion.get(i).getEq();
 		}
 		/* Ahora con la lista de todos los equipos, creamos el JComboBox */
 		comboBoxLocales[num] = new JComboBox(eq);
@@ -1090,16 +1126,17 @@ public class Interfaz extends JFrame{
 		{
 			if (partidosPrimera != null){
 				try {
-					respuestaPrimera = q.querysCBR(partidosPrimera,selTemporada,selJornadaPrimera,datosPesos, PRIMERA_DIVISION+1, tipoMediaPonderada);
+					respuestaPrimera = q.querysCBR(partidosPrimera,selTemporada,selJornadaPrimera,datosPesos, PRIMERA_DIVISION+1, tipoVotacionPonderada);
 				} catch (ExecutionException e) {
+					JOptionPane.showMessageDialog(null, "Ha habido un error ejecutando los casos", "Atención", JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				}
 			}
 			if (partidosSegunda != null){
 				try {
-					respuestaSegunda = q.querysCBR(partidosSegunda,selTemporada,selJornadaSegunda,datosPesos, SEGUNDA_DIVISION+1, tipoMediaPonderada);
+					respuestaSegunda = q.querysCBR(partidosSegunda,selTemporada,selJornadaSegunda,datosPesos, SEGUNDA_DIVISION+1, tipoVotacionPonderada);
 				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Ha habido un error ejecutando los casos", "Atención", JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				}
 			}
@@ -1115,6 +1152,8 @@ public class Interfaz extends JFrame{
 		/** Constantes para el tipo de evaluacion de eficiencia */
 		public static final int M_LEAVEONEOUT_EV = 0;
 		public static final int M_HOLDOUT_EV = 1;
+		public static final int M_SAMESPLIT = 2;
+		public static final int M_NFOLD = 3;
 		/** Atributos privados para la consulta de eficiencia */
 		private ValidacionCruzada vc;
 		private int modo;
@@ -1133,9 +1172,10 @@ public class Interfaz extends JFrame{
 		{
 			switch (modo)
 			{
-				case M_LEAVEONEOUT_EV: vc.LeaveOneOutEvaluation(datosPesos, tipoMediaPonderada); break;
-			 	case M_HOLDOUT_EV: vc.HoldOutEvaluation(datosPesos, nCasos, nVueltas, tipoMediaPonderada); break;
-			 	
+				case M_LEAVEONEOUT_EV: vc.LeaveOneOutEvaluation(datosPesos, tipoVotacionPonderada); break;
+			 	case M_HOLDOUT_EV: vc.HoldOutEvaluation(datosPesos, nCasos, nVueltas, tipoVotacionPonderada); break;
+			 	case M_SAMESPLIT: vc.SameSplitEvaluation(datosPesos, nCasos,tipoVotacionPonderada); break;
+			 	case M_NFOLD: vc.NFoldEvaluation(datosPesos, nCasos, nVueltas, tipoVotacionPonderada); break;			 	
 			}
 			interfaz.setEnabled(true);
 		}
@@ -1166,29 +1206,30 @@ public class Interfaz extends JFrame{
 			}
 			else if(str.equals("Hold Out Evaluation"))
 			{
-				str = JOptionPane.showInputDialog(null, "Introduce número de casos", "Hold Out Evaluation: número de casos",JOptionPane.QUESTION_MESSAGE);
-				
-				if (str != null)
-					try{
-						numCasos = Integer.parseInt(str);
-					}
-					catch(Exception e){
-						numCasos = 1;
-						JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
-					}
+				str = JOptionPane.showInputDialog(null, "Introduce número de casos (se hará el valor absoluto)", "Hold Out Evaluation: número de casos",JOptionPane.QUESTION_MESSAGE);
+				if (str == null) // Si se hace cancelar, no se hace nada
+					return;
+				try{
+					numCasos = Integer.parseInt(str);
+				}
+				catch(Exception e){
+					numCasos = 1;
+					JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
+				}
 				if (numCasos < 0)
 					numCasos = -numCasos;
 				
-				str = JOptionPane.showInputDialog(null, "Introduce número de vueltas", "Hold Out Evaluation: número de vueltas",JOptionPane.QUESTION_MESSAGE);
+				str = JOptionPane.showInputDialog(null, "Introduce número de vueltas (se hará el valor absoluto)", "Hold Out Evaluation: número de vueltas",JOptionPane.QUESTION_MESSAGE);
 				
-				if (str != null)
-					try{
-						numVueltas = Integer.parseInt(str);
-					}
-					catch(Exception e){
-						numVueltas = 15;
-						JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
-					}
+				if (str == null)
+					return;
+				try{
+					numVueltas = Integer.parseInt(str);
+				}
+				catch(Exception e){
+					numVueltas = 15;
+					JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
+				}
 				if (numVueltas < 0)
 					numVueltas = -numVueltas;
 				interfaz.setEnabled(false);
@@ -1198,12 +1239,62 @@ public class Interfaz extends JFrame{
 			}
 			else if(str.equals("Leave One Out Evaluation"))
 			{
+				interfaz.setEnabled(false);
 				te = new ThreadEficiencia(ThreadEficiencia.M_LEAVEONEOUT_EV, numCasos, numVueltas);
 				te.start();
 			}
 			else if(str.equals("Same Split Evaluation"))
 			{
+				str = JOptionPane.showInputDialog(null, "Introduce número de casos (se hará el valor absoluto)", "Same Split Evaluation: número de casos",JOptionPane.QUESTION_MESSAGE);
 				
+				if (str == null)
+					return;
+				try{
+					numCasos = Integer.parseInt(str);
+				}
+				catch(Exception e){
+					numCasos = 1;
+					JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
+				}
+				if (numCasos < 0)
+					numCasos = -numCasos;
+				
+				interfaz.setEnabled(false);
+				te = new ThreadEficiencia(ThreadEficiencia.M_SAMESPLIT, numCasos, numVueltas);
+				te.start();				
+			}
+			else if(str.equals("N-Fold Evaluation"))
+			{
+				str = JOptionPane.showInputDialog(null, "Introduce número de conjuntos (se hará el valor absoluto)", "N-Fold Evaluation: número de conjuntos",JOptionPane.QUESTION_MESSAGE);
+				
+				if (str == null)
+					return;
+				try{
+					numCasos = Integer.parseInt(str);
+				}
+				catch(Exception e){
+					numCasos = 1;
+					JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
+				}
+				if (numCasos < 0)
+					numCasos = -numCasos;
+				
+				str = JOptionPane.showInputDialog(null, "Introduce número de vueltas (se hará el valor absoluto)", "N-Fold Evaluation: número de vueltas",JOptionPane.QUESTION_MESSAGE);
+				
+				if (str == null)
+					return;
+				try{
+					numVueltas = Integer.parseInt(str);
+				}
+				catch(Exception e){
+					numVueltas = 15;
+					JOptionPane.showMessageDialog(null, "No has introducido un valor correcto, se asignará el valor por defecto");
+				}
+				if (numVueltas < 0)
+					numVueltas = -numVueltas;
+				interfaz.setEnabled(false);
+				te = new ThreadEficiencia(ThreadEficiencia.M_NFOLD, numCasos, numVueltas);
+				te.start();
 			}
 			
 		}
