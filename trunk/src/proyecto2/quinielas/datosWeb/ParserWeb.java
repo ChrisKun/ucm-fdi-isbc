@@ -24,7 +24,7 @@ import proyecto2.quinielas.interfaz.BarraProgreso;
 
 public class ParserWeb {
 	
-	public static int TEMPORADAINICIAL = 2000; // TODO Añadido para usar en interfaz tambien... (RAUL)
+	public static int TEMPORADAINICIAL = 2000;
 
 	public int getUltimaTemporada() {
 		return ultimaTemporada;
@@ -53,7 +53,7 @@ public class ParserWeb {
 	private ArrayList<String> paginasError;
 	private ArrayList<String> partidosPorJugar;
 	
-	int anyoInicio = 2000; // TODO Si quieres, usa aqui la constante
+	int anyoInicio = 2000; 
 	int ultimaTemporada = 2012;
 	int inicioJornPrim=1;
 	int inicioJornSeg=1;
@@ -236,7 +236,6 @@ public class ParserWeb {
 		  
 		    out.close();
 		} catch (IOException e){
-			//TODO Comprobar que hay un fichero llamado datos.txt
 			System.err.println("No existe el fichero 'config.txt'");
 		}
   }
