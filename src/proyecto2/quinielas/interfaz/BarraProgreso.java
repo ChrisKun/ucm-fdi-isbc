@@ -15,20 +15,17 @@ public class BarraProgreso extends JFrame{
 	private static int valorProgeso;
 	private static int maxValorProgreso;
 	
-	public final static int VALORMAXJORNADA = 1000;
 	public final static int MODOPARSER = 0;
+	public final static int MODONFOLDEVALUATOR = 1;
 	
 	
 	public BarraProgreso(int modo, int valorMax)
 	{
 		ventana = this;
 		
-		maxValorProgreso = valorMax; //modo consulta
-		if (modo == MODOPARSER)
-			maxValorProgreso = VALORMAXJORNADA; // modo actualización parser
-			
-		
+		maxValorProgreso = valorMax; //modo consulta y actualizacion			
 		valorProgeso = 0;
+		
 		this.setTitle("Por favor, espere");
 		this.setContentPane(getPanelPrincipal(modo));
 		this.setVisible(true);
@@ -36,7 +33,7 @@ public class BarraProgreso extends JFrame{
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	    int height = pantalla.height;
 	    int width = pantalla.width;
-	    this.setBounds(width/2 - 75, height/2 - 50, 150, 100);	
+	    this.setBounds(width/2 - 75, height/2 - 50, 150, 100);
 	}
 	
 	private JPanel getPanelPrincipal(int modo)
@@ -48,8 +45,19 @@ public class BarraProgreso extends JFrame{
 		JLabel l = new JLabel(str);
 		p.add(l, BorderLayout.NORTH);
 		pb = new JProgressBar();
-		pb.setStringPainted(true);
-		pb.setMaximum(maxValorProgreso);
+		/* Mostrar barra indeterminada sólo cuando se hace evualuación de NFOLD */
+		if (modo == MODONFOLDEVALUATOR)
+		{
+			pb.setIndeterminate(true);
+			pb.setStringPainted(false);
+		}
+		else
+		{
+			pb.setMaximum(maxValorProgreso);
+			pb.setStringPainted(true);
+		}
+		
+		
 		p.add(pb);
 		return p;
 	}
