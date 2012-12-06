@@ -102,7 +102,7 @@ public class Principal {
 		
 		// PASO 1. LANZAR EL PARSER
 		ParserWeb parser = new ParserWeb();
-		barra = new BarraProgreso(BarraProgreso.MODOPARSER,0);
+		barra = new BarraProgreso(BarraProgreso.MODOPARSER,(parser.getUltimaTemporada()-ParserWeb.TEMPORADAINICIAL)*(JORNADASPRIMERA+JORNADASSEGUNDA));
 		
 		try {
 			parser.ejecutarParser();			

@@ -264,7 +264,7 @@ public class Interfaz extends JFrame{
 		return menu;
 	}
 	
-	/****** METODOS PARA CONSTRUIR LOS PANELES DE LA INTERFAZ ******/
+	/****** METODOS PARA CONSTRUIR LOS PANELES DE LA INTERFAZ Y SUS ELEMENTOS ******/
 	
 	/**
 	 * Se encargar de devolver el panel Principal que se construye a través de tres subpaneles: El subpanel del título,
@@ -277,7 +277,7 @@ public class Interfaz extends JFrame{
 		panelPrincipal.setLayout(new BorderLayout());
 		panelPrincipal.add(getPanelInformacion(), BorderLayout.NORTH);
 		panelPrincipal.add(getJPanelTabla(modo_tabla), BorderLayout.CENTER);
-		panelPrincipal.add(getPanelLogYPesos(), BorderLayout.SOUTH);
+		panelPrincipal.add(getPanelBotonesYPesos(), BorderLayout.SOUTH);
 		panelPrincipal.validate();
 		return panelPrincipal;
 	}
@@ -439,23 +439,6 @@ public class Interfaz extends JFrame{
 	}
 	
 	/**
-	 * Selecciona el número de elementos que tendra el desplegable de la jornada correspondiente 
-	 * (de primera o segunda división)
-	 * @param n número de elementos máximos que puede tener una jornada
-	 * @param division
-	 */
-	private void setNumElemComboBoxJornada(int n,int division)
-	{
-		/* Eliminamos todos los elementos que tuviese el desplegable y metemos hasta los que
-		 * indica el parámetro n */
-		comboBox_jornada[division].removeAllItems();
-		for (int i = 0; i < n; i++)
-		{
-			comboBox_jornada[division].addItem(""+(i+1));
-		}
-	}
-	
-	/**
 	 * Construcción de la tabla que permite introducir al usuario los equipos de la query. También tiene
 	 * dos columnas adicionales donde se muestra el resultado de la solución y la medida de 
 	 * confianza.
@@ -555,28 +538,6 @@ public class Interfaz extends JFrame{
 	}
 	
 	/**
-	 * Crea los desplegables con los equipos disponibles teniendo en cuenta si son partidos
-	 * de primera o de segunda y si el modo de la tabla es de un partido o de varios
-	 * @param numFilas numero de filas de la tabla que depende del numero de partidos que haya
-	 */
-	private void inicializarDesplegablesEquipoTabla(int numFilas)
-	{
-		comboBoxLocales = new JComboBox[numFilas];
-		comboBoxVisitantes = new JComboBox[numFilas];
-		
-		if (numFilas < NUM_EQU) // Modo de un solo partido
-			setEquiposComboBox(0,parser,(modo_partido == 0));
-		else //modo de todos los partidos
-		{
-			for (int i = 0; i < numFilas; i++) 
-			{
-				/* Tenemos en cuenta el número de partidos que se muestran de primera y de segunda */
-				setEquiposComboBox(i,parser,(i<num_partidos_primera));
-			}
-		}
-	}
-	
-	/**
 	 * Rellena un ComboBox con los equipos que juegan en esa temporada y division 
 	 * @param num comboBox que rellenamos
 	 * @param p información recogida por el parser web
@@ -651,48 +612,12 @@ public class Interfaz extends JFrame{
 		}
 	}
 
-	/** 
-	 * Inicializa los campos de texto de los resultados
-	 * @param numFilas número de filas que depende del número de partidos
-	 */
-	private void inicializarResultados(int numFilas)
-	{
-		resultados = new JTextField[numFilas];
-		
-		for (int i = 0; i < numFilas; i++)
-		{
-			resultados[i] = new JTextField("N/D");
-			resultados[i].setEditable(false);
-			// Centramos el texto del JTextField
-			resultados[i].setHorizontalAlignment(SwingConstants.CENTER);
-		}
-	}
-	
-	/** 
-	 * Inicializa los campos de la medida de confianza
-	 * @param numFilas número de filas que depende del número de partidos
-	 */
-	private void inicializarConfianza(int numFilas)
-	{
-		// Creamos el número de campos que va a tener (1 o 15)
-		confianza = new JProgressBar[numFilas];
-		
-		for (int i = 0; i < numFilas; i++)
-		{
-			confianza[i] = new JProgressBar();
-			// Se muestre el texto encima de la barra
-			confianza[i].setStringPainted(true);
-			// Como al inicio no hay datos, ponemos un "No disponible"
-			confianza[i].setString("N/D");
-		}
-	}
-	
 	/**
 	 * Método que devuelve un panel que contiene el subpanel con los pesos modificables y otro subpanel con
 	 * los botones para la consulta y reiniciar pesos.
 	 * @return JPanel
 	 */
-	private JPanel getPanelLogYPesos()
+	private JPanel getPanelBotonesYPesos()
 	{
 		// Definición del panel
 		JPanel p = new JPanel();
@@ -797,7 +722,6 @@ public class Interfaz extends JFrame{
 		subPanel.add(campoPesos[quePeso]);
 		panelPesos.add(subPanel,BorderLayout.CENTER);
 		return panelPesos;
-		
 	}
 	
 	/**
@@ -851,6 +775,87 @@ public class Interfaz extends JFrame{
 		p.add(jlab_jornada);
 		return p;
 	}
+	
+	/****** MÉTODOS AUXILIARES ******/
+	
+	/** 
+	 * Inicializa los campos de la medida de confianza
+	 * @param numFilas número de filas que depende del número de partidos
+	 */
+	private void inicializarConfianza(int numFilas)
+	{
+		// Creamos el número de campos que va a tener (1 o 15)
+		confianza = new JProgressBar[numFilas];
+		
+		for (int i = 0; i < numFilas; i++)
+		{
+			confianza[i] = new JProgressBar();
+			// Se muestre el texto encima de la barra
+			confianza[i].setStringPainted(true);
+			// Como al inicio no hay datos, ponemos un "No disponible"
+			confianza[i].setString("N/D");
+		}
+	}
+	
+	/** 
+	 * Inicializa los campos de texto de los resultados
+	 * @param numFilas número de filas que depende del número de partidos
+	 */
+	private void inicializarResultados(int numFilas)
+	{
+		resultados = new JTextField[numFilas];
+		
+		for (int i = 0; i < numFilas; i++)
+		{
+			resultados[i] = new JTextField("N/D");
+			resultados[i].setEditable(false);
+			// Centramos el texto del JTextField
+			resultados[i].setHorizontalAlignment(SwingConstants.CENTER);
+		}
+	}
+	
+
+	/**
+	 * Crea los desplegables con los equipos disponibles teniendo en cuenta si son partidos
+	 * de primera o de segunda y si el modo de la tabla es de un partido o de varios
+	 * @param numFilas numero de filas de la tabla que depende del numero de partidos que haya
+	 */
+	private void inicializarDesplegablesEquipoTabla(int numFilas)
+	{
+		comboBoxLocales = new JComboBox[numFilas];
+		comboBoxVisitantes = new JComboBox[numFilas];
+		
+		if (numFilas < NUM_EQU) // Modo de un solo partido
+			setEquiposComboBox(0,parser,(modo_partido == 0));
+		else //modo de todos los partidos
+		{
+			for (int i = 0; i < numFilas; i++) 
+			{
+				/* Tenemos en cuenta el número de partidos que se muestran de primera y de segunda */
+				setEquiposComboBox(i,parser,(i<num_partidos_primera));
+			}
+		}
+	}
+	
+	
+	/**
+	 * Selecciona el número de elementos que tendra el desplegable de la jornada correspondiente 
+	 * (de primera o segunda división)
+	 * @param n número de elementos máximos que puede tener una jornada
+	 * @param division
+	 */
+	private void setNumElemComboBoxJornada(int n,int division)
+	{
+		/* Eliminamos todos los elementos que tuviese el desplegable y metemos hasta los que
+		 * indica el parámetro n */
+		comboBox_jornada[division].removeAllItems();
+		for (int i = 0; i < n; i++)
+		{
+			comboBox_jornada[division].addItem(""+(i+1));
+		}
+	}
+	
+	/****** MÉTODOS QUE IMPLEMENTAN LAS ACCIONES DE LOS LISTENER ******/
 	
 	/**
 	 * MÉTODO LISTENER
@@ -1097,8 +1102,7 @@ public class Interfaz extends JFrame{
 	}
 	
 	/** Reinicia los valores de los campos de resultados y confianza*/
-	private void reiniciarConfianzaYResultado() 
-	{
+	private void reiniciarConfianzaYResultado() {
 		for (int i = 0; i < resultados.length; i++){
 			resultados[i].setText("N/D");
 			resultados[i].repaint();
@@ -1106,14 +1110,12 @@ public class Interfaz extends JFrame{
 			confianza[i].setString("N/D");
 			confianza[i].repaint();
 		}
-		
 	}
 	
 	/****** CLASES INTERNAS PARA EJECUTAR OTROS HILOS ******/
 	
 	/** Clase interna para ejecutar el hilo de la consulta*/
-	class ThreadConsulta extends Thread 
-	{
+	class ThreadConsulta extends Thread {
 		private ArrayList<String> partidosPrimera;
 		private ArrayList<String> partidosSegunda;
 		
@@ -1122,8 +1124,7 @@ public class Interfaz extends JFrame{
 			partidosSegunda = pS;
 		}
 		
-		public void run() 
-		{
+		public void run() {
 			if (partidosPrimera != null){
 				try {
 					respuestaPrimera = q.querysCBR(partidosPrimera,selTemporada,selJornadaPrimera,datosPesos, PRIMERA_DIVISION+1, tipoVotacionPonderada);
@@ -1147,8 +1148,7 @@ public class Interfaz extends JFrame{
 	}
 	
 	/** Clase interna para ejecutar el hilo de eficiencia */
-	class ThreadEficiencia extends Thread
-	{
+	class ThreadEficiencia extends Thread{
 		/** Constantes para el tipo de evaluacion de eficiencia */
 		public static final int M_LEAVEONEOUT_EV = 0;
 		public static final int M_HOLDOUT_EV = 1;
@@ -1160,24 +1160,23 @@ public class Interfaz extends JFrame{
 		private int nCasos;
 		private int nVueltas;
 		
-		public ThreadEficiencia(int modo, int numeroCasos, int numeroVueltas)
-		{
+		public ThreadEficiencia(int modo, int numeroCasos, int numeroVueltas){
 			this.modo = modo;
 			this.nCasos = numeroCasos;
 			this.nVueltas = numeroVueltas;
 			vc = new ValidacionCruzada();
 		}
 		
-		public void run()
-		{
-			switch (modo)
-			{
+		public void run(){
+			switch (modo){
 				case M_LEAVEONEOUT_EV: vc.LeaveOneOutEvaluation(datosPesos, tipoVotacionPonderada); break;
 			 	case M_HOLDOUT_EV: vc.HoldOutEvaluation(datosPesos, nCasos, nVueltas, tipoVotacionPonderada); break;
 			 	case M_SAMESPLIT: vc.SameSplitEvaluation(datosPesos, nCasos,tipoVotacionPonderada); break;
 			 	case M_NFOLD: vc.NFoldEvaluation(datosPesos, nCasos, nVueltas, tipoVotacionPonderada); break;			 	
 			}
 			interfaz.setEnabled(true);
+			if (modo == M_NFOLD)
+				Principal.getBarra().cerrarVentana();
 		}
 		
 	}
@@ -1293,6 +1292,7 @@ public class Interfaz extends JFrame{
 				if (numVueltas < 0)
 					numVueltas = -numVueltas;
 				interfaz.setEnabled(false);
+				Principal.setBarra(new BarraProgreso(BarraProgreso.MODONFOLDEVALUATOR,0));
 				te = new ThreadEficiencia(ThreadEficiencia.M_NFOLD, numCasos, numVueltas);
 				te.start();
 			}
