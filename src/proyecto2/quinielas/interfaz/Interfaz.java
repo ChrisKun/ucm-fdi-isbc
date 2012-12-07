@@ -1019,7 +1019,7 @@ public class Interfaz extends JFrame{
 		if (partidosSegunda != null)
 			numMax = numMax + partidosSegunda.size();
 		interfaz.setEnabled(false);
-		Principal.setBarra(new BarraProgreso(1,numMax));
+		Principal.setBarra(new BarraProgreso(0,numMax));
 	}
 	
 	/** Restablece los valores de los pesos a default*/
@@ -1077,13 +1077,13 @@ public class Interfaz extends JFrame{
 			{
 				resultados[0].setText(""+respuestaPrimera.get(0).getResultado()); 
 				confianza[0].setValue((int) (respuestaPrimera.get(0).getConfianza()*100));
-				confianza[0].setString((""+respuestaPrimera.get(0).getConfianza()*100).substring(0, 5)+"%");
+				confianza[0].setString((""+respuestaPrimera.get(0).getConfianza()*100)+"%");
 			}
 			else // de segunda división
 			{
 				resultados[0].setText(""+respuestaSegunda.get(0).getResultado()); 
 				confianza[0].setValue((int) (respuestaSegunda.get(0).getConfianza()*100));
-				confianza[0].setString((""+respuestaSegunda.get(0).getConfianza()*100).substring(0, 5)+"%");
+				confianza[0].setString((""+respuestaSegunda.get(0).getConfianza()*100)+"%");
 			}
 		}
 		else // todos los partidos -> 10 de primera y 5 de segunda
@@ -1091,12 +1091,12 @@ public class Interfaz extends JFrame{
 			for (int i = 0; i < num_partidos_primera; i++){
 				resultados[i].setText(""+respuestaPrimera.get(i).getResultado()); 
 				confianza[i].setValue((int) (respuestaPrimera.get(i).getConfianza()*100));
-				confianza[i].setString((""+respuestaPrimera.get(i).getConfianza()*100).substring(0, 5)+"%");
+				confianza[i].setString((""+respuestaPrimera.get(i).getConfianza()*100)+"%");
 			}
 			for (int i = 0; i < NUM_EQU - num_partidos_primera; i++){
 				resultados[i+num_partidos_primera].setText(""+respuestaSegunda.get(i).getResultado()); 
 				confianza[i+num_partidos_primera].setValue((int) (respuestaSegunda.get(i).getConfianza()*100));
-				confianza[i+num_partidos_primera].setString((""+respuestaSegunda.get(i).getConfianza()*100).substring(0, 5)+"%");
+				confianza[i+num_partidos_primera].setString((""+respuestaSegunda.get(i).getConfianza()*100)+"%");
 			}
 		}
 	}

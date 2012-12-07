@@ -53,6 +53,7 @@ public class BarraProgreso extends JFrame{
 		}
 		else
 		{
+			pb.setIndeterminate(false);
 			pb.setMaximum(maxValorProgreso);
 			pb.setStringPainted(true);
 		}
