@@ -1077,13 +1077,20 @@ public class Interfaz extends JFrame{
 			{
 				resultados[0].setText(""+respuestaPrimera.get(0).getResultado()); 
 				confianza[0].setValue((int) (respuestaPrimera.get(0).getConfianza()*100));
-				confianza[0].setString((""+respuestaPrimera.get(0).getConfianza()*100)+"%");
+				if (tipoVotacionPonderada)
+					confianza[0].setString((""+respuestaPrimera.get(0).getConfianza()*100).substring(0,5)+"%");
+				else
+					confianza[0].setString((""+respuestaPrimera.get(0).getConfianza()*100)+"%");
 			}
 			else // de segunda división
 			{
 				resultados[0].setText(""+respuestaSegunda.get(0).getResultado()); 
 				confianza[0].setValue((int) (respuestaSegunda.get(0).getConfianza()*100));
-				confianza[0].setString((""+respuestaSegunda.get(0).getConfianza()*100)+"%");
+				if (tipoVotacionPonderada)
+					confianza[0].setString((""+respuestaSegunda.get(0).getConfianza()*100).substring(0,5)+"%");
+				else
+					confianza[0].setString((""+respuestaSegunda.get(0).getConfianza()*100)+"%");
+				
 			}
 		}
 		else // todos los partidos -> 10 de primera y 5 de segunda
@@ -1091,12 +1098,30 @@ public class Interfaz extends JFrame{
 			for (int i = 0; i < num_partidos_primera; i++){
 				resultados[i].setText(""+respuestaPrimera.get(i).getResultado()); 
 				confianza[i].setValue((int) (respuestaPrimera.get(i).getConfianza()*100));
-				confianza[i].setString((""+respuestaPrimera.get(i).getConfianza()*100)+"%");
+				if (tipoVotacionPonderada)
+				{
+					String str = ""+respuestaPrimera.get(i).getConfianza()*100;
+					if (str.length()>5)
+						str = str.substring(0,5);
+					str = str+"%";
+					confianza[i].setString(str);
+				}
+				else
+					confianza[i].setString((""+respuestaPrimera.get(i).getConfianza()*100)+"%");
 			}
 			for (int i = 0; i < NUM_EQU - num_partidos_primera; i++){
 				resultados[i+num_partidos_primera].setText(""+respuestaSegunda.get(i).getResultado()); 
 				confianza[i+num_partidos_primera].setValue((int) (respuestaSegunda.get(i).getConfianza()*100));
-				confianza[i+num_partidos_primera].setString((""+respuestaSegunda.get(i).getConfianza()*100)+"%");
+				if (tipoVotacionPonderada)
+				{
+					String str = ""+respuestaSegunda.get(i).getConfianza()*100;
+					if (str.length()>5)
+						str = str.substring(0,5);
+					str = str+"%";
+					confianza[i+num_partidos_primera].setString(str);
+				}
+				else
+					confianza[i+num_partidos_primera].setString((""+respuestaSegunda.get(i).getConfianza()*100)+"%");
 			}
 		}
 	}
