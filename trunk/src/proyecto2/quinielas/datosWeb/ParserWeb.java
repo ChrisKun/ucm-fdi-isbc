@@ -140,7 +140,6 @@ public class ParserWeb {
 		String anyo2 = String.valueOf(anyo+1).substring(2);
 		String dir = "http://www.marca.com/estadisticas/futbol/"+categoria+"/"+anyo+"_"+anyo2+"/jornada_"+jorn+"/";
 
-		System.out.println(dir);
 		
 		try {
 			doc = Jsoup.connect(dir).get();
@@ -161,13 +160,7 @@ public class ParserWeb {
     	//TODO Parsear uno por uno los resultados de los partidos
 		for (int i=0;i<fronteraDatos;i=i+n){
 			//Procesar info de UN partido
-
-			System.out.println("----------------");
-			System.out.println(info.get(i));
-			System.out.println(info.get(i+1));
-			System.out.println(info.get(i+2));
-			System.out.println(info.get(i+3));
-			
+		
 			try{
 				res = info.get(i+1).split("-");
 				res1 = Integer.parseInt(res[0]);
