@@ -1,4 +1,4 @@
-package proyecto2.quinielas.algGen;
+package quinielas.algGen;
 
 import org.jgap.Chromosome;
 import org.jgap.Configuration;

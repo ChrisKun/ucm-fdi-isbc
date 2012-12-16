@@ -1,4 +1,4 @@
-package proyecto2.quinielas.algGen;
+package quinielas.algGen;
 /**
  * Evaluates the goodness of an individual
  * @author Juan A. Recio

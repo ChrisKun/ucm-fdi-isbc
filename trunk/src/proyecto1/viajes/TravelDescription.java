@@ -1,4 +1,4 @@
-package proyecto1.viajes;
+package viajes;
 
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;

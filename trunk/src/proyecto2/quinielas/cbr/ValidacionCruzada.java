@@ -1,8 +1,8 @@
-package proyecto2.quinielas.cbr;
+package quinielas.cbr;
 
 import java.util.Vector;
 
-import proyecto2.quinielas.Principal;
+import quinielas.Principal;
 
 import jcolibri.evaluation.Evaluator;
 import jcolibri.evaluation.evaluators.*;

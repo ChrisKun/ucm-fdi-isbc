@@ -1,6 +1,6 @@
-package proyecto2.quinielas.cbr;
+package quinielas.cbr;
 
-import proyecto2.quinielas.cbr.SolucionQuinielas.UnoXDos;
+import quinielas.cbr.SolucionQuinielas.UnoXDos;
 
 import java.io.BufferedReader;
 import java.io.File;

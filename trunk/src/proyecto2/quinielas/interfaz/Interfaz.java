@@ -1,4 +1,4 @@
-package proyecto2.quinielas.interfaz;
+package quinielas.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -44,12 +44,12 @@ import javax.swing.table.TableModel;
 
 import jcolibri.exception.ExecutionException;
 
-import proyecto2.quinielas.Principal;
-import proyecto2.quinielas.cbr.Prediccion;
-import proyecto2.quinielas.cbr.Quinielas;
-import proyecto2.quinielas.cbr.ValidacionCruzada;
-import proyecto2.quinielas.datosWeb.Clasificacion;
-import proyecto2.quinielas.datosWeb.ParserWeb;
+import quinielas.Principal;
+import quinielas.cbr.Prediccion;
+import quinielas.cbr.Quinielas;
+import quinielas.cbr.ValidacionCruzada;
+import quinielas.datosWeb.Clasificacion;
+import quinielas.datosWeb.ParserWeb;
 
 import junit.awtui.ProgressBar;
 

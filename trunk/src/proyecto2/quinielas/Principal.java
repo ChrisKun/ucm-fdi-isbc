@@ -1,12 +1,12 @@
-package proyecto2.quinielas;
+package quinielas;
 
 import jcolibri.exception.ExecutionException;
 
-import proyecto2.quinielas.cbr.DescripcionQuinielas;
-import proyecto2.quinielas.cbr.Quinielas;
-import proyecto2.quinielas.datosWeb.ParserWeb;
-import proyecto2.quinielas.interfaz.BarraProgreso;
-import proyecto2.quinielas.interfaz.Interfaz;
+import quinielas.cbr.DescripcionQuinielas;
+import quinielas.cbr.Quinielas;
+import quinielas.datosWeb.ParserWeb;
+import quinielas.interfaz.BarraProgreso;
+import quinielas.interfaz.Interfaz;
 
 public class Principal {
 	

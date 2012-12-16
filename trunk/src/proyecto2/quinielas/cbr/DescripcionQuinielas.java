@@ -1,6 +1,6 @@
-package proyecto2.quinielas.cbr;
+package quinielas.cbr;
 
-import proyecto2.quinielas.datosWeb.Clasificacion;
+import quinielas.datosWeb.Clasificacion;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
