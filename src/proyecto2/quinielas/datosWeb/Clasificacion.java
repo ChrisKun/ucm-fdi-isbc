@@ -1,4 +1,4 @@
-package proyecto2.quinielas.datosWeb;
+package quinielas.datosWeb;
 
 import java.io.Serializable;
 

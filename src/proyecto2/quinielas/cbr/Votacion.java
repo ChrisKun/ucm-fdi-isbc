@@ -1,8 +1,8 @@
-package proyecto2.quinielas.cbr;
+package quinielas.cbr;
 
 import java.util.Collection;
 
-import proyecto2.quinielas.cbr.SolucionQuinielas.UnoXDos;
+import quinielas.cbr.SolucionQuinielas.UnoXDos;
 
 import jcolibri.method.retrieve.RetrievalResult;
 /**

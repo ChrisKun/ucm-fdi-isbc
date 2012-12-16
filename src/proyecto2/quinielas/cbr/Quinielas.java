@@ -1,10 +1,10 @@
-package proyecto2.quinielas.cbr;
+package quinielas.cbr;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import proyecto2.quinielas.interfaz.BarraProgreso;
-import proyecto2.quinielas.datosWeb.Clasificacion;
+import quinielas.interfaz.BarraProgreso;
+import quinielas.datosWeb.Clasificacion;
 
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;

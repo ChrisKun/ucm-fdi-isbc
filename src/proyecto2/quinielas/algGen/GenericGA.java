@@ -1,4 +1,4 @@
-package proyecto2.quinielas.algGen;
+package quinielas.algGen;
 
 import java.util.ArrayList;
 import java.util.Collection;

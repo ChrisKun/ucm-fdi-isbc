@@ -1,4 +1,4 @@
-package proyecto1.viajes;
+package viajes;
 
 import java.util.ArrayList;
 import java.util.Collection;

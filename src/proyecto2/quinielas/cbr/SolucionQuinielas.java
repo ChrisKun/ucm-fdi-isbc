@@ -1,4 +1,4 @@
-package proyecto2.quinielas.cbr;
+package quinielas.cbr;
 
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;

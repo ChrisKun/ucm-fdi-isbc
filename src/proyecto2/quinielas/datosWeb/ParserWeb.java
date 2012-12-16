@@ -1,4 +1,4 @@
-package proyecto2.quinielas.datosWeb;
+package quinielas.datosWeb;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,7 +19,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import proyecto2.quinielas.interfaz.BarraProgreso;
+import quinielas.interfaz.BarraProgreso;
 
 
 public class ParserWeb {
