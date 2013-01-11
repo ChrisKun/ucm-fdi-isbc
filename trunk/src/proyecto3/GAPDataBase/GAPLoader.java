@@ -5,49 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class GAPLoader {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		ConfigurableHSQLDBserver.initInMemory("GAP", false);
-		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
-		
-	    try {
-			Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
-			Statement st = conn.createStatement();
-			st.execute("select * from \"Prenda\"");
-			ResultSet rs = st.getResultSet();
-			while(rs.next())
-			{
-				Product p = new Product();
-				p.setName(rs.getString(1));
-				p.setUrl(rs.getString(2));
-				p.setCategory(rs.getString(3));
-				p.setDivision(rs.getString(4));
-				p.setId(rs.getInt(5));
-				p.setPrice(rs.getString(6));
-				
-				
-				extractDescription(p, conn);
-				extractImages(p,conn);
-				extractRatings(p,conn);
-				extractReviews(p, conn);
-				System.out.println(p);
-			}
-			st.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		ConfigurableHSQLDBserver.shutDown();
-		System.exit(0);
-
-	}
 	
 	private static void extractReviews(Product p, Connection conn) throws SQLException {
 		Statement st = conn.createStatement();
@@ -149,6 +109,74 @@ public class GAPLoader {
 		p.setComposition(rs.getString(5));
 		st.close();
 		
+	}
+	
+	public static ArrayList<Product> extractProducts(){
+		ConfigurableHSQLDBserver.initInMemory("GAP", false);
+		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
+		ArrayList<Product> products = new ArrayList<Product>();
+	    try {	    	
+			Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			st.execute("select * from \"Prenda\"");
+			ResultSet rs = st.getResultSet();
+			while(rs.next())
+			{
+				Product p = new Product();
+				p.setName(rs.getString(1));
+				p.setUrl(rs.getString(2));
+				p.setCategory(rs.getString(3));
+				p.setDivision(rs.getString(4));
+				p.setId(rs.getInt(5));
+				p.setPrice(rs.getString(6));
+				
+				extractDescription(p, conn);
+				extractImages(p,conn);
+				extractRatings(p,conn);
+				extractReviews(p, conn);
+				products.add(p);
+				//System.out.println(p);
+			}
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		ConfigurableHSQLDBserver.shutDown();
+		return products;
+	}
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		ConfigurableHSQLDBserver.initInMemory("GAP", false);
+		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
+		try {	    	
+			Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			st.execute("select * from \"Prenda\"");
+			ResultSet rs = st.getResultSet();
+			while(rs.next())
+			{
+				Product p = new Product();
+				p.setName(rs.getString(1));
+				p.setUrl(rs.getString(2));
+				p.setCategory(rs.getString(3));
+				p.setDivision(rs.getString(4));
+				p.setId(rs.getInt(5));
+				p.setPrice(rs.getString(6));
+				
+				extractDescription(p, conn);
+				extractImages(p,conn);
+				extractRatings(p,conn);
+				extractReviews(p, conn);
+				//System.out.println(p);
+			}
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		ConfigurableHSQLDBserver.shutDown();
+		System.exit(0);
 	}
 
 }
