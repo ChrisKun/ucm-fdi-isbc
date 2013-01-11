@@ -32,11 +32,15 @@ public class Conector implements Connector {
 	@Override
 	public Collection<CBRCase> retrieveAllCases() {		
 		ArrayList<CBRCase> casos = new ArrayList<CBRCase>();
-		ArrayList<Product> productos = GAPLoader.extractProducts();
-		for (Product p: productos) {
-			CBRCase caso = new CBRCase();
-			caso.setDescription((CaseComponent) p);
-			casos.add(caso);
+		try{
+			ArrayList<Product> productos = GAPLoader.extractProducts();
+			for (Product p: productos) {
+				CBRCase caso = new CBRCase();
+				caso.setDescription((CaseComponent) p);
+				casos.add(caso);
+			}
+		} catch (Exception e) {
+				e.printStackTrace();
 		}
 		return casos;
 	}

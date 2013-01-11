@@ -19,9 +19,7 @@ public class Recomendador implements StandardCBRApplication {
 	public void configure() throws ExecutionException {
 		try {
 		// Crear el conector con la base de casos
-		connector = new DataBaseConnector();
-		// Inicializar el conector con su archivo xml de configuración
-		connector.initFromXMLfile(jcolibri.util.FileIO.findFile("proyecto3/Cbr/databaseconfig.xml"));
+		connector = new Conector();
 		// La organizacion en memoria sera lineal
 		caseBase = new LinealCaseBase();	
 		} catch (Exception e) {
