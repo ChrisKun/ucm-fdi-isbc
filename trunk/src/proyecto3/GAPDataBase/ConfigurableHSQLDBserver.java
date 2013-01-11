@@ -85,7 +85,8 @@ public class ConfigurableHSQLDBserver
      * 
      * @param databaseName is the name of the data base
      * @param showLog indicates if log comments must be shown
-     * @param directory where the data base must be created or loaded from. This directory must exist.
+     * @param directory where the data base 
+     * must be created or loaded from. This directory must exist.
      */
     public static void initInFileSystem(String databaseName, boolean showLog, String directory)
     {
