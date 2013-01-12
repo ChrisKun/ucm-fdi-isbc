@@ -163,12 +163,9 @@ public class GAPLoader {
 				p.setCategory(rs.getString(3));
 				p.setDivision(rs.getString(4));
 				p.setId(rs.getInt(5));
-				p.setPrice(rs.getString(6));
+				p.setPrice(rs.getString(6));	
 				
 				extractDescription(p, conn);
-				extractImages(p,conn);
-				extractRatings(p,conn);
-				extractReviews(p, conn);
 				//System.out.println(p);
 			}
 			st.close();
