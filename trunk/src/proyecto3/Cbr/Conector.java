@@ -8,7 +8,6 @@ import GAPDataBase.*;
 
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CaseBaseFilter;
-import jcolibri.cbrcore.CaseComponent;
 import jcolibri.cbrcore.Connector;
 import jcolibri.exception.InitializingException;
 
@@ -36,7 +35,8 @@ public class Conector implements Connector {
 			ArrayList<Product> productos = GAPLoader.extractProducts();
 			for (Product p: productos) {
 				CBRCase caso = new CBRCase();
-				caso.setDescription((CaseComponent) p);
+				Prenda prenda = new Prenda(p);
+				caso.setDescription(prenda);
 				casos.add(caso);
 			}
 		} catch (Exception e) {
