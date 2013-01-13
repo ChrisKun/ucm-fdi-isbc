@@ -53,22 +53,9 @@ public class VentanaPrincipal extends JFrame {
 		JPanel p = new JPanel();
 		
 		p.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		JButton tmp;
-		tmp = getBoton("Cesta");
-		tmp.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO X: La idea sería mirar como funciona JInternalFrame, pero la idea
-				//		seria generar un frame, que no pudiese salirse de la aplicacion
-				new VentanaCesta();
-			}
-		});
-		p.add(tmp);
+		p.add(getBoton("Cesta"));
 		p.add(getBoton("Perfil"));
 		p.add(getBoton("Ayuda"));
-		
-		
 		return p;
 	}
 	
@@ -81,15 +68,21 @@ public class VentanaPrincipal extends JFrame {
 				"Men", "ToddlerBoy", "ToddlerGirl", "Women"};
 		// X: Tal como esta en la carpeta de imagenes, luego hay subcarpetas. Habria que 
 		//		ver como hacemos los submenus.
-		JList<String> list = new JList<String>(categorias);
+		JList list = new JList(categorias);
 		JScrollPane scrollList = new JScrollPane(list);
 		//p.add(list);
 		return scrollList;
 	}
 	
+	/**
+	 * Devuelve un botón para la interfaz, ya con el action listener incluido
+	 * @param str
+	 * @return
+	 */
 	private JButton getBoton(String str)
 	{
 		JButton jb = new JButton();
+		jb.setName(str);
 		jb.setText(str);
 		
 		if (str.equals("Ayuda"))
@@ -100,6 +93,7 @@ public class VentanaPrincipal extends JFrame {
 			jb.setToolTipText(str);
 		}
 		//action Listener
+		jb.addActionListener(new ListenerVentana());
 		return jb;
 	}
 
@@ -107,6 +101,29 @@ public class VentanaPrincipal extends JFrame {
 	{
 		VentanaPrincipal p = new VentanaPrincipal();
 		p.setVisible(true);
+	}
+	
+	private class ListenerVentana implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton b = (JButton) e.getSource();
+			
+			//Opciones
+			if (b.getName().equals("Cesta"))
+			{
+				new VentanaCesta();
+			}
+			else if (b.getName().equals("Perfil"))
+			{
+				
+			}
+			else if (b.getName().equals("Ayuda"))
+			{
+				
+			}
+		}		
 	}
 
 }
