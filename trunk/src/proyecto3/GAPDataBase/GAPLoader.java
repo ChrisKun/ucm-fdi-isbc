@@ -111,6 +111,10 @@ public class GAPLoader {
 		
 	}
 	
+	/**
+	 * Funcion propia que solo devuelva la informacion mas relevante de los productos
+	 * @return
+	 */
 	public static ArrayList<Product> extractProducts(){
 		ConfigurableHSQLDBserver.initInMemory("GAP", false);
 		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
@@ -131,9 +135,6 @@ public class GAPLoader {
 				p.setPrice(rs.getString(6));
 				
 				extractDescription(p, conn);
-				extractImages(p,conn);
-				extractRatings(p,conn);
-				extractReviews(p, conn);
 				products.add(p);
 				//System.out.println(p);
 			}
