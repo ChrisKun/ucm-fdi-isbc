@@ -27,14 +27,16 @@ public class Product {
 	}
 
 
+
 	@Override
 	public String toString() {
-		return  id + " | " + name + " | " + url + " | " + category + " | " + division + " | "
-				+ composition + " | " + washing + " | " + importation + " | "
-				+ overview + " | " + price;
+		return  id + "," + name + "," + url + "," + category + "," + division + ","
+				+ composition + "," + washing + "," + importation + ","
+				+ overview + "," + sizeAndFiting + ",\n\t" + imageInfo + ",\n\t"
+				+ reviews + ",\n\t" + ratings + ",\n\t" + price;
 	}
-	
-	
+
+
 
 	public String getPrice() {
 		return price;
