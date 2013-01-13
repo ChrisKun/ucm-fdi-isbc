@@ -3,7 +3,7 @@ package Interfaz;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
-public class VentanaCesta extends JInternalFrame{
+public class VentanaCesta extends JFrame{//JInternalFrame{
 
 	public VentanaCesta(){
 		this.setBounds(20,20,100,100);
