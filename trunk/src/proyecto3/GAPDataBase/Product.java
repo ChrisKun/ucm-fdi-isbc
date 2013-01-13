@@ -37,7 +37,7 @@ public class Product {
 	}
 
 
-
+	
 	public String getPrice() {
 		return price;
 	}
