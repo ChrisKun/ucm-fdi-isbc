@@ -107,8 +107,7 @@ public class GAPLoader {
 		p.setWashing(rs.getString(3));
 		p.setImportation(rs.getString(4));
 		p.setComposition(rs.getString(5));
-		st.close();
-		
+		st.close();		
 	}
 	
 	/**
@@ -138,7 +137,7 @@ public class GAPLoader {
 				products.add(p);
 				//System.out.println(p);
 			}
-			st.close();
+			//st.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

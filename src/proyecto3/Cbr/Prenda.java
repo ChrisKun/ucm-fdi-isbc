@@ -9,17 +9,13 @@ public class Prenda implements CaseComponent {
 	private String categoria;
 	private String division;
 	private Float precio;
-	private String lavado;
-	private Integer compras;
-	private Integer likes;
 
+	
 	public Prenda (Product p) {
 		this.id = p.getId();
 		this.categoria = p.getCategory();
 		this.division = p.getDivision();
-		this.precio = Float.valueOf(p.getPrice().replaceAll("[a-z]|[A-Z]",""));
-		this.lavado = p.getWashing();
-		
+		this.precio = Float.valueOf(p.getPrice().replaceAll("[a-z]|[A-Z]",""));		
 	}
 	
 	public Attribute getIdAttribute() {
@@ -48,17 +44,5 @@ public class Prenda implements CaseComponent {
 	}
 	public void setPrecio(Float precio) {
 		this.precio = precio;
-	}
-	public String getLavado() {
-		return lavado;
-	}
-	public void setLavado(String lavado) {
-		this.lavado = lavado;
-	}
-	public void setCompras(Integer compras) {
-		this.compras = compras;
-	}
-	public void setLikes(Integer likes) {
-		this.likes = likes;
 	}
 }
