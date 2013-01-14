@@ -1,9 +1,15 @@
 package Cbr;
 
+import GAPDataBase.GAPLoader;
 import GAPDataBase.Product;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
+/**
+ * Clase que Define los atributos de cada query
+ * @author Alvaro
+ *
+ */
 public class Prenda implements CaseComponent {
 	private Integer id;
 	private String categoria;
@@ -12,6 +18,14 @@ public class Prenda implements CaseComponent {
 
 	
 	public Prenda (Product p) {
+		this.id = p.getId();
+		this.categoria = p.getCategory();
+		this.division = p.getDivision();
+		this.precio = Float.valueOf(p.getPrice().replaceAll("[a-z]|[A-Z]",""));		
+	}
+	
+	public Prenda (Integer id) {
+		Product p = GAPLoader.extractInfoProductById(id);
 		this.id = p.getId();
 		this.categoria = p.getCategory();
 		this.division = p.getDivision();
