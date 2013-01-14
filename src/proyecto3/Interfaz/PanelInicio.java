@@ -1,33 +1,54 @@
 package Interfaz;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
-import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 public class PanelInicio extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//private JScrollPane panelReview;
 	private JTextArea textoReview; // Texto de la parte de la review. Atributo porque ha de ser modificable.
 	private JLabel imagen; //imagen que se muestra en el inicio. Atributo porque ha de ser modificable.
 	
 	public PanelInicio()
 	{
-		this.setLayout(new BorderLayout());
-		this.add(getZonaImagen() , BorderLayout.CENTER);
-		this.add(getZonaReview(), BorderLayout.SOUTH);
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints(); // para las dimensiones de las celdas del gridBag
+		gbc.weightx = 0.5; //aspecto que debe mantener el objeto con respecto a la columna en la que se encuentra
+		gbc.weighty = 0.5; //aspecto que debe mantener el objeto con respecto a la fila en la que se encuentra
+		gbc.gridwidth = 3; // ancho en celdas que ocupará el componente
+		gbc.gridheight = 1; // largo en celdas que ocupara el componente
+		gbc.gridx = 0; //celda en la que se colocará el componente
+		gbc.gridy = 2;
+		gbc.insets = new Insets(1,1,1,1); //bordes de cada componente new Insets (arriba,izquierda,abajo,derecha);
+		//this.add(getZonaImagen() , gbc );
+		this.add(getZonaReview(),gbc);
+		
+		gbc.weightx = 0.9; //aspecto que debe mantener el objeto con respecto a la columna en la que se encuentra
+		gbc.weighty = 0.9; //aspecto que debe mantener el objeto con respecto a la fila en la que se encuentra
+		gbc.gridwidth = 1; // ancho en celdas que ocupará el componente
+		gbc.gridheight = 2; // largo en celdas que ocupara el componente
+		gbc.gridx = 2; //celda en la que se colocará el componente
+		gbc.gridy = 0;
+		gbc.insets = new Insets(1,1,1,1); //bordes de cada componente new Insets (arriba,izquierda,abajo,derecha);
+		this.add(getZonaImagen() , gbc );
 		/*
 		 * NOTA: No debería ser un lugar donde mostrar información del producto?
 		JButton jb = new JButton();
@@ -53,26 +74,15 @@ public class PanelInicio extends JPanel{
 	
 	private JPanel getZonaImagen() 
 	{
-		imagen = new JLabel();
-	    File file = new File("src/proyecto3/images/help.png");
-        BufferedImage read;
-		try {
-			read = ImageIO.read(file);
+		JPanel pImagen = new JPanel();
+		Border blackline = BorderFactory.createEtchedBorder();
+		pImagen.setBorder(blackline);
+		pImagen.getBorder();
+		pImagen.setBackground(Color.white);
 		
-		
-        Image scaledInstance = read.getScaledInstance(200, 100, Image.SCALE_DEFAULT);
-        imagen.setIcon(new ImageIcon(scaledInstance));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-		JPanel panelImagen = new JPanel();
-		panelImagen.setBackground(Color.white);
-		panelImagen.setPreferredSize(new Dimension(20,30));
-		panelImagen.setSize(new Dimension(20,30));
-		
-		panelImagen.add(imagen, BorderLayout.CENTER);
-		return panelImagen;
+		imagen = new JLabel("imagen");
+		imagen.setPreferredSize(new Dimension(200,250));
+		pImagen.add(imagen);
+		return pImagen;
 	}
 }
