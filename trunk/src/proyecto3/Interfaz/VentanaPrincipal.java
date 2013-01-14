@@ -30,7 +30,7 @@ public class VentanaPrincipal extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.setContentPane(getPanelPrincipal());
-		
+		this.setMinimumSize(new Dimension(720,480));
 	}
 	
 	private Container getPanelPrincipal() {
