@@ -6,41 +6,64 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import Cbr.RecomendadorPerfil;
-import GAPDataBase.GAPLoader;
-import GAPDataBase.Product;
 
+import Cbr.Recomendador;
+import Encriptacion.StringMD;
+
+/**
+ * Clase que almacena la informacion de cada usuario
+ * @author Alvaro
+ *
+ */
 public class Usuario {
-	String nombre;
-	String contraseña;
-	ArrayList<Product> productosComprados;
+	
+	private String nombre;
+	private String contraseña;
+	// Lista con las ID's de los productos comprados
+	private ArrayList<Integer> productosComprados;
+	// Seguridad usada en la encriptacion
+	private final String SEGURIDAD = "MD5";
+	// Directorio de la carpeta usuarios
+	public static final String DIR = "Usuarios"+File.separatorChar;
+	
+	public Usuario (String nombre, String contraseña) {
+		this.nombre = nombre;
+		this.contraseña = StringMD.getStringMessageDigest(contraseña, SEGURIDAD);
+		productosComprados = new ArrayList<Integer>();
+	}
 	
 	public String getNombre() {
 		return nombre;
 	}
 
-	public ArrayList<Product> getProductosComprados() {
+	/**
+	 * Devuelve los ID's de los productos del usuario
+	 * @return
+	 */
+	public ArrayList<Integer> getProductosComprados() {
 		return productosComprados;
 	}
 
-	public void añadeProductoComprado(Product producto) {
+	/**
+	 * Añade un ID de producto nuevo
+	 * @param producto
+	 */
+	public void añadeProductoComprado(Integer producto) {
 		if (!productosComprados.contains(producto))
 			productosComprados.add(producto);
 	}
 	
-	public Usuario(String nombre, String contraseña) throws Exception {
-		this.nombre = nombre;
-		this.contraseña = contraseña;
-		this.productosComprados = new ArrayList<Product>();
-	}
-	
-	private void cargaUsuario(String nombre, String contraseña) throws Exception {
+	/**
+	 * Carga los datos del usuario en caso de estar almacenados
+	 * @return
+	 * @throws Exception
+	 */
+	public void cargaUsuario() throws Exception {
 		  File archivo = null;
 	      FileReader fr = null;
 	      BufferedReader br = null;
-
 	      try {
-	         archivo = new File("Usuarios"+File.separatorChar+nombre+File.separatorChar+"Datos.txt");
+	         archivo = new File(DIR+nombre+File.separatorChar+"Datos.txt");
 	         if (!archivo.exists()) {	     		
 		     	throw new Exception("No existe el fichero de datos");
 	         } else {
@@ -60,37 +83,26 @@ public class Usuario {
 	      }
 	}
 	
+	/**
+	 * Carga los productos del usuario en caso de estar almacenados
+	 * @throws Exception
+	 */
 	private void cargaProductos() throws Exception {
 		 File archivo = null;
 	     FileReader fr = null;
 	     BufferedReader br = null;
 	     String linea;
 	     try {
-	         archivo = new File("Usuarios"+File.separatorChar+nombre+File.separatorChar+"Compras.txt");
+	         archivo = new File(DIR+nombre+File.separatorChar+"Compras.txt");
 	         if (!archivo.exists()) {	     
 	        	 throw new Exception("No existe el fichero de compras");
 	         } else {
 	             fr = new FileReader (archivo);
 	             br = new BufferedReader(fr);
 	        	 while((linea = br.readLine()) != null) {
-	        		 Product producto = new Product();
-	        		 producto.setId(Integer.valueOf(linea));
-	        		 productosComprados.add(producto);
+	        		 productosComprados.add(Integer.valueOf(linea));
 	        	 }
-	             fr.close();  
-	         }	
-	         archivo = new File("Usuarios"+File.separatorChar+nombre+File.separatorChar+"Favoritos.txt");
-	         if (!archivo.exists()) {	     
-	        	 throw new Exception("No existe el fichero de compras");
-	         } else {
-	             fr = new FileReader (archivo);
-	             br = new BufferedReader(fr);
-	        	 while((linea = br.readLine()) != null) {
-	        		 Product producto = new Product();
-	        		 producto.setId(Integer.valueOf(linea));
-	        		 productosComprados.add(producto);
-	        	 }
-	         }	
+	         }		        
 	     } catch (Exception e) {
 	    	 throw e;
 	     } finally {
@@ -104,22 +116,27 @@ public class Usuario {
 	 */
 	public void guardaUsuario() throws Exception{
 		// Creamos el directorio en caso de no existir
-		File directorio = new File("Usuarios"+File.separatorChar+nombre);
+		File directorio = new File(DIR);
 		directorio.mkdirs();
 		String direccion;
 		try {
 			// Guardamos la informacion personal
-			direccion = directorio.getPath()+File.separatorChar+"Datos.txt";
+			direccion = DIR+File.separatorChar+"Datos.txt";
 			guardaDatos(direccion);
 			// Guardamos las compras
-			direccion = directorio.getPath()+File.separatorChar+"Compras.txt";
+			direccion = DIR+"Compras.txt";
 			guardaProductos(direccion, this.productosComprados);			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-		
+	
+	/**
+	 * Guarda los datos personales del usuario
+	 * @param direccion
+	 * @throws Exception
+	 */
 	private void guardaDatos(String direccion) throws Exception {
 		FileWriter fichero = null;
         PrintWriter pw = null;
@@ -127,26 +144,29 @@ public class Usuario {
         {
             fichero = new FileWriter(direccion);
             pw = new PrintWriter(fichero);            
-            
-            pw.println(contraseña);
-            
+            pw.println(this.contraseña);            
         } catch (Exception e) {
            throw new Exception("Error al guardar los datos personales");
         } finally {
               fichero.close();
         }
-
 	}
 
-	private void guardaProductos(String direccion, ArrayList<Product> productos) throws Exception {
+	/**
+	 * Guarda los productos comprados del usuario
+	 * @param direccion
+	 * @param productos
+	 * @throws Exception
+	 */
+	private void guardaProductos(String direccion, ArrayList<Integer> productos) throws Exception {
         FileWriter fichero = null;
         PrintWriter pw = null;
         try
         {
             fichero = new FileWriter(direccion);
             pw = new PrintWriter(fichero);
-            for (Product p: productos) {
-            	pw.println(p.getId());
+            for (Integer p: productos) {
+            	pw.println(p);
             }
         } catch (Exception e) {
            throw new Exception("Error al guardar los productos");
@@ -162,18 +182,12 @@ public class Usuario {
 	
 	public static void main(String args[]) {		
 		try{
-			Usuario usuario = new Usuario("Pedro Gomez Serrano","holaquease123");
-			int i = 0;
-			ArrayList<Product> productos = GAPLoader.extractProducts();
-			for (Product p: productos) {
-				if (i>6) usuario.añadeProductoComprado(p);
-				if (i>20)break;
-				i++;
-			}
-			RecomendadorPerfil recomendador = new RecomendadorPerfil();
-			recomendador.configure();
-			recomendador.preCycle();
-			recomendador.recomendados(usuario);
+			Usuario usuario = UsuarioFunciones.cargaUsuario("Pedro Gomez Serrano","holaquease123");	
+			ArrayList<Integer> lista;
+			Recomendador recomendador = new Recomendador();
+			lista = recomendador.recomendadosPorUsuario(usuario);
+			lista = recomendador.recomendadosPorMasComprados();
+			lista = recomendador.recomendadosPorProducto(245996);
 			recomendador.postCycle();
 			usuario.guardaUsuario();
 		} catch (Exception e) {

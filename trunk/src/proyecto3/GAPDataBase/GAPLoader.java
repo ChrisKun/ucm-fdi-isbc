@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class GAPLoader {
-	
+
 	private static void extractReviews(Product p, Connection conn) throws SQLException {
 		Statement st = conn.createStatement();
 		st.execute("select \"ID_Rw\" from \"Prenda_Reviews\" where \"PID\"="+p.getId());
@@ -110,21 +110,18 @@ public class GAPLoader {
 		st.close();		
 	}
 	
-	/**
-	 * Funcion propia que solo devuelva la informacion mas relevante de los productos
-	 * @return
-	 */
+	// TODO: Ver si está bien esto
 	public static ArrayList<Product> extractProducts(){
 		ConfigurableHSQLDBserver.initInMemory("GAP", false);
 		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
 		ArrayList<Product> products = new ArrayList<Product>();
-	    try {	    	
-			Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+	    try {	   
+	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", ""); 	
 			Statement st = conn.createStatement();
 			st.execute("select * from \"Prenda\"");
 			ResultSet rs = st.getResultSet();
 			while(rs.next())
-			{
+			{			
 				Product p = new Product();
 				p.setName(rs.getString(1));
 				p.setUrl(rs.getString(2));
@@ -137,13 +134,41 @@ public class GAPLoader {
 				products.add(p);
 				//System.out.println(p);
 			}
-			//st.close();
+			st.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		ConfigurableHSQLDBserver.shutDown();
+		//ConfigurableHSQLDBserver.shutDown();
 		return products;
 	}
+	
+	// TODO: Ver si está bien esto
+	public static Product extractInfoProductById(Integer id){
+		ConfigurableHSQLDBserver.initInFileSystem("GAP", false,"Base");
+		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
+		Product p = new Product();
+	    try {	    	
+	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			st.execute("select * from \"Prenda\" where PID=" + id);
+			ResultSet rs = st.getResultSet();	
+			
+			p.setName(rs.getString(1));
+			p.setUrl(rs.getString(2));
+			p.setCategory(rs.getString(3));
+			p.setDivision(rs.getString(4));
+			p.setId(rs.getInt(5));
+			p.setPrice(rs.getString(6));
+			extractDescription(p, conn);
+
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		//ConfigurableHSQLDBserver.shutDown();
+		return p;
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -166,6 +191,9 @@ public class GAPLoader {
 				p.setPrice(rs.getString(6));	
 				
 				extractDescription(p, conn);
+				extractImages(p, conn);
+				extractRatings(p, conn);
+				extractReviews(p, conn);
 				//System.out.println(p);
 			}
 			st.close();

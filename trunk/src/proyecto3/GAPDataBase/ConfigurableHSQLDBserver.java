@@ -131,7 +131,7 @@ public class ConfigurableHSQLDBserver
 	    org.apache.commons.logging.LogFactory.getLog(ConfigurableHSQLDBserver.class).warn("Server must be initialized before loading SQL files.");
 	    return;
 	}
-
+	
 	try
 	{
 	    Class.forName("org.hsqldb.jdbcDriver");
