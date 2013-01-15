@@ -114,11 +114,6 @@ public class GAPLoader {
 	
 	// TODO: Ver si está bien esto
 	public static ArrayList<Product> extractProducts(){
-		ConfigurableHSQLDBserver.initInMemory("GAP", false);
-		if (!loaded) {
-			ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
-			loaded = true;
-		}
 		ArrayList<Product> products = new ArrayList<Product>();
 	    try {	   
 	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", ""); 	
@@ -149,11 +144,6 @@ public class GAPLoader {
 	
 	// TODO: Ver si está bien esto
 	public static Product extractInfoProductById(Integer id){
-		ConfigurableHSQLDBserver.initInMemory("GAP", false);
-		if (!loaded) {
-			ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
-			loaded = true;
-		}
 		Product p = new Product();
 	    try {	    	
 	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
@@ -175,6 +165,11 @@ public class GAPLoader {
 		}		
 		//ConfigurableHSQLDBserver.shutDown();
 		return p;
+	}
+	
+	public static void initDataBase(){
+		ConfigurableHSQLDBserver.initInMemory("GAP", false);
+		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");		
 	}
 	
 	public static void shutDownDataBase() {

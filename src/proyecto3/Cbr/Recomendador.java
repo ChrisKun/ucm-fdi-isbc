@@ -181,7 +181,7 @@ public class Recomendador implements StandardCBRApplication {
 		File[] usuarios = directorio.listFiles();
 		for (File usuario: usuarios) {
 			try {
-				archivo = new File(Usuario.DIR+usuario.getName()+File.separatorChar+"Compras.txt");	
+				archivo = new File(Usuario.DIR+File.separatorChar+usuario.getName()+File.separatorChar+"Compras.txt");	
 				// Si no existe el fichero de compras no podemos leer y lo notificamos
 				if (!archivo.exists())
 					throw new Exception("El usuario "+usuario.getName()+" No tiene fichero de compras");
