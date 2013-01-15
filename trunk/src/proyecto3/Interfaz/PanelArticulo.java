@@ -31,11 +31,14 @@ public class PanelArticulo extends JPanel{
 	 * seguida en el archivo "VentanaArticulo.png" de la memoria.
 	 */
 	public PanelArticulo(){
+		//Al crear este panel necesitamos llamar al recomendador automaticamente
+		//	y mostrar los articulos recuperados
+		
 		this.setLayout(new BorderLayout());
 		this.add(getPanelRecomendador(), BorderLayout.SOUTH);
 		this.add(getPanelReviews(), BorderLayout.EAST); // TODO Pendiente de aprobación
-		
 		this.add(getPanelCentral());
+		
 	}
 
 	/**
