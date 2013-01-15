@@ -112,7 +112,10 @@ public class GAPLoader {
 		st.close();		
 	}
 	
-	// TODO: Ver si está bien esto
+	/**
+	 * Devuelve la informacion de los productos
+	 * @return
+	 */
 	public static ArrayList<Product> extractProducts(){
 		ArrayList<Product> products = new ArrayList<Product>();
 	    try {	   
@@ -142,7 +145,11 @@ public class GAPLoader {
 		return products;
 	}
 	
-	// TODO: Ver si está bien esto
+	/**
+	 * Devuelve la informacion del producto que tenga la id pasado como parametro
+	 * @param id
+	 * @return
+	 */
 	public static Product extractInfoProductById(Integer id){
 		Product p = new Product();
 	    try {	    	

@@ -65,7 +65,7 @@ public class Recomendador implements StandardCBRApplication {
 		// Añadimos las funciones de similitud
 		simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new Average());		
-		simConfig.addMapping(new Attribute("categoria", Prenda.class), new Equal());
+		simConfig.addMapping(new Attribute("categoria", Prenda.class), new ComparaCategoria());
 		simConfig.addMapping(new Attribute("division", Prenda.class), new Equal());
 		simConfig.addMapping(new Attribute("precio", Prenda.class), new Interval(500));
 		// TODO: Asignar pesos si hace falta
@@ -149,7 +149,7 @@ public class Recomendador implements StandardCBRApplication {
 		    try {
 				this.cycle(query);
 			} catch (ExecutionException e) {
-				throw e;
+				throw new Exception(e.getMessage());
 			}
 		}
 		// Comprobamos que ninguno de los productos similares sea alguno que haya comprado el usuario
@@ -197,7 +197,7 @@ public class Recomendador implements StandardCBRApplication {
 	            	}
 	            }
 			} catch (Exception e) {
-				throw e;
+				throw new Exception(e.getMessage());
 			} finally {
 				br.close();
 			}

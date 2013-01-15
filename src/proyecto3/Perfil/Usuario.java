@@ -176,15 +176,15 @@ public class Usuario {
 	public static void main(String args[]) {		
 		try{
 			GAPLoader.initDataBase();
-			Usuario usuario = UsuarioFunciones.cargaUsuario("Pedroy","112");	
-			/*Usuario usuario = UsuarioFunciones.creaUsuario("Pedroy", "112");
+			//Usuario usuario = UsuarioFunciones.cargaUsuario("Pedro Gomez Serrano","112");	
+			Usuario usuario = UsuarioFunciones.creaUsuario("Pedro", "112");
 			ArrayList<Product> productos = GAPLoader.extractProducts();
 			int i = 0;
 			for(Product p: productos) {
 				if (i<9) usuario.añadeProductoComprado(p.getId());
 				else break;
 				i++;
-			}*/
+			}
 			usuario.guardaUsuario();
 			ArrayList<Integer> lista;
 			Recomendador recomendador = new Recomendador();
