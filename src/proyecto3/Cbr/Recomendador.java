@@ -153,11 +153,12 @@ public class Recomendador implements StandardCBRApplication {
 			}
 		}
 		// Comprobamos que ninguno de los productos similares sea alguno que haya comprado el usuario
+		ArrayList<Integer> productosDevueltos = new ArrayList<Integer>();
 		for (Integer id: productosSimilares) {
-			if (usuario.getProductosComprados().contains(id)) 
-				productosSimilares.remove((Object)id);
+			if (!usuario.getProductosComprados().contains(id)) 
+				productosDevueltos.add(id);
 		}
-		return productosSimilares;		
+		return productosDevueltos;		
 	}	
 	
 	/**

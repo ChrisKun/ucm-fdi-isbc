@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class GAPLoader {
 
+	private static boolean loaded = false;
+	
 	private static void extractReviews(Product p, Connection conn) throws SQLException {
 		Statement st = conn.createStatement();
 		st.execute("select \"ID_Rw\" from \"Prenda_Reviews\" where \"PID\"="+p.getId());
@@ -113,7 +115,10 @@ public class GAPLoader {
 	// TODO: Ver si está bien esto
 	public static ArrayList<Product> extractProducts(){
 		ConfigurableHSQLDBserver.initInMemory("GAP", false);
-		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
+		if (!loaded) {
+			ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
+			loaded = true;
+		}
 		ArrayList<Product> products = new ArrayList<Product>();
 	    try {	   
 	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", ""); 	
@@ -144,15 +149,18 @@ public class GAPLoader {
 	
 	// TODO: Ver si está bien esto
 	public static Product extractInfoProductById(Integer id){
-		ConfigurableHSQLDBserver.initInFileSystem("GAP", false,"Base");
-		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
+		ConfigurableHSQLDBserver.initInMemory("GAP", false);
+		if (!loaded) {
+			ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");
+			loaded = true;
+		}
 		Product p = new Product();
 	    try {	    	
 	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
 			Statement st = conn.createStatement();
 			st.execute("select * from \"Prenda\" where PID=" + id);
 			ResultSet rs = st.getResultSet();	
-			
+			rs.next();
 			p.setName(rs.getString(1));
 			p.setUrl(rs.getString(2));
 			p.setCategory(rs.getString(3));
@@ -167,6 +175,10 @@ public class GAPLoader {
 		}		
 		//ConfigurableHSQLDBserver.shutDown();
 		return p;
+	}
+	
+	public static void shutDownDataBase() {
+		ConfigurableHSQLDBserver.shutDown();
 	}
 	
 	/**

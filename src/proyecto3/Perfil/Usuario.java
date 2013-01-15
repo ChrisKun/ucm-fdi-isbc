@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import Cbr.Recomendador;
 import Encriptacion.StringMD;
+import GAPDataBase.GAPLoader;
+import GAPDataBase.Product;
 
 /**
  * Clase que almacena la informacion de cada usuario
@@ -121,10 +123,10 @@ public class Usuario {
 		String direccion;
 		try {
 			// Guardamos la informacion personal
-			direccion = DIR+File.separatorChar+"Datos.txt";
+			direccion = DIR+File.separatorChar+this.getNombre()+File.separatorChar+"Datos.txt";
 			guardaDatos(direccion);
 			// Guardamos las compras
-			direccion = DIR+"Compras.txt";
+			direccion = DIR+this.getNombre()+File.separatorChar+"Compras.txt";
 			guardaProductos(direccion, this.productosComprados);			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -182,7 +184,17 @@ public class Usuario {
 	
 	public static void main(String args[]) {		
 		try{
-			Usuario usuario = UsuarioFunciones.cargaUsuario("Pedro Gomez Serrano","holaquease123");	
+		
+			//Usuario usuario = UsuarioFunciones.cargaUsuario("Pedro","112");	
+			Usuario usuario = UsuarioFunciones.creaUsuario("Pedro", "112");
+			ArrayList<Product> productos = GAPLoader.extractProducts();
+			int i = 0;
+			for(Product p: productos) {
+				if (i<9) usuario.añadeProductoComprado(p.getId());
+				else break;
+				i++;
+			}
+			//usuario.guardaUsuario();
 			ArrayList<Integer> lista;
 			Recomendador recomendador = new Recomendador();
 			lista = recomendador.recomendadosPorUsuario(usuario);
@@ -192,6 +204,8 @@ public class Usuario {
 			usuario.guardaUsuario();
 		} catch (Exception e) {
 				e.printStackTrace();
+		} finally {
+			GAPLoader.shutDownDataBase();
 		}
 		
 	}
