@@ -44,7 +44,7 @@ public class VentanaPrincipal extends JFrame {
 		panelP.add(getPanelIzquierdo(), BorderLayout.WEST);
 		
 		// Panel de inicio NOTA: Es el panel que variará
-		PanelInicio p = new PanelInicio();
+		JPanel p = new PanelExplorador();//PanelInicio();
 		panelP.add(p);
 		return panelP;		
 	}
