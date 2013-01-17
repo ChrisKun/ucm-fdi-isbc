@@ -73,7 +73,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		 JSlider source = (JSlider)e.getSource();
-		   
+		  barraPrecioMin.setMaximum(barraPrecioMax.getValue());
 		
 	}
 	
