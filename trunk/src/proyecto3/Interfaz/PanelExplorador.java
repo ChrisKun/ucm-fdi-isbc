@@ -1,13 +1,17 @@
 package Interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.Hashtable;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -43,6 +47,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		JPanel p = new JPanel(new GridLayout(1,2));
 		p.add(getSubPanelFiltradoLavado());
 		p.add(getSubPanelFiltradoPrecio());
+		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Opciones de filtrado"));
 		return p;
 	}
 	
@@ -53,18 +58,39 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 			
 	private JPanel getSubPanelFiltradoPrecio(){
 		JPanel panel = new JPanel(new GridLayout(2,2));
+		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Filtrado de precio"));
 		barraPrecioMax = new JSlider(JSlider.HORIZONTAL, MIN, MAX, precioMaximo);
 		barraPrecioMin = new JSlider(JSlider.HORIZONTAL,MIN, precioMaximo, precioMinimo);
 		barraPrecioMax.addChangeListener(this);
 		barraPrecioMax.setPaintTicks(true);
+		barraPrecioMax.setMajorTickSpacing(5000);
+		barraPrecioMin.setMajorTickSpacing(5000);
 		barraPrecioMax.setPaintLabels(true);
 		barraPrecioMin.setPaintTicks(true);
 		barraPrecioMin.setPaintLabels(true);
+		barraPrecioMin.addChangeListener(this);
 		panel.add(getSubPanelFiltradoPrecioMax());
 		panel.add(barraPrecioMax);
+		panel.add(getSubPanelFiltradoPrecioMin());
 		panel.add(barraPrecioMin);
 		//JSlider precio = new JSlider(JSlider.HORIZONTAL,FPS_MIN, FPS_MAX, FPS_INIT);
 		//JSlider
+		
+
+		//Create the label table
+		Hashtable labelTable = new Hashtable();
+		labelTable.put( MIN, new JLabel(""+MIN/100));
+		labelTable.put( MAX, new JLabel(""+MAX/100));
+		//labelTable.put( new Integer( FPS_MAX ), new JLabel("Fast") );
+		barraPrecioMax.setLabelTable( labelTable );
+		
+		Hashtable labelTable2 = new Hashtable();
+		labelTable2.put( MIN, new JLabel(""+MIN/100));
+		labelTable2.put( precioMaximo, new JLabel(""+precioMaximo/100));
+		//labelTable.put( new Integer( FPS_MAX ), new JLabel("Fast") );
+		barraPrecioMin.setLabelTable( labelTable2 );
+		
+		
 		return panel;
 	}
 	
@@ -77,8 +103,8 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	{
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
-		JLabel l = new JLabel("Precio máximo: ");
-		etiquetaPrecioMax = new JTextField(""+precioMaximo);
+		JLabel l = new JLabel("Precio máx.: ");
+		etiquetaPrecioMax = new JTextField(((double) precioMaximo/100)+"   ");
 		etiquetaPrecioMax.setEditable(false);
 		JLabel l2 = new JLabel("€");
 		
@@ -88,13 +114,55 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		return p;
 	}
 	
+	private JPanel getSubPanelFiltradoPrecioMin()
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout());
+		JLabel l = new JLabel("Precio mín.: ");
+		etiquetaPrecioMin = new JTextField((double) precioMinimo/100+"   ");
+		etiquetaPrecioMin.setEditable(false);
+		JLabel l2 = new JLabel("€");
+		
+		p.add(l);
+		p.add(etiquetaPrecioMin);
+		p.add(l2);
+		return p;
+	}
+	
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		 JSlider source = (JSlider)e.getSource();
-		 precioMaximo = barraPrecioMax.getValue();
-		  barraPrecioMin.setMaximum(precioMaximo);
-		  etiquetaPrecioMax.setText(""+((double) precioMaximo/100));
-		
+		 
+		 if (source == barraPrecioMax)
+		 {
+			 precioMaximo = barraPrecioMax.getValue();
+			 barraPrecioMin.setMaximum(precioMaximo);
+			 etiquetaPrecioMax.setText(""+((double) precioMaximo/100));
+			 
+			 Hashtable labelTable2 = new Hashtable();
+				labelTable2.put( MIN, new JLabel(""+MIN/100));
+				labelTable2.put( precioMaximo, new JLabel(""+((double)precioMaximo/100)));
+				//labelTable.put( new Integer( FPS_MAX ), new JLabel("Fast") );
+				barraPrecioMin.setLabelTable( labelTable2 );
+			 
+			 if (precioMaximo < precioMinimo)
+			 {
+				 precioMinimo = precioMaximo;
+				 etiquetaPrecioMin.setText(""+((double) precioMinimo/100));
+			 }
+		 }
+		 else if (source == barraPrecioMin)
+		 {
+			precioMinimo = barraPrecioMin.getValue();
+			//barraPrecioMin.setMaximum(precioMinimo);
+			etiquetaPrecioMin.setText(""+((double) precioMinimo/100));
+			
+			Hashtable labelTable2 = new Hashtable();
+			labelTable2.put( MIN, new JLabel(""+MIN/100));
+			labelTable2.put( precioMaximo, new JLabel(""+((double)precioMaximo/100)));
+			//labelTable.put( new Integer( FPS_MAX ), new JLabel("Fast") );
+			barraPrecioMin.setLabelTable( labelTable2 );
+		 }
 	}
 	
 }
