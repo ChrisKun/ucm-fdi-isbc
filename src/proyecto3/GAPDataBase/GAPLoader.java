@@ -174,6 +174,29 @@ public class GAPLoader {
 		return p;
 	}
 	
+	/**
+	 * Dado <code>pId</code> devuelve la imagen correspondiente al producto de la base de datos
+	 * @param pId Codigo Id del producto
+	 * @return
+	 */
+	public static String extractImagePathByPId(Integer pId){
+		String pathFile = "";
+	    try {	    	
+	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			st.execute("select file from \"Imagen\" where \"Im_ID\"=" + pId);
+			ResultSet rs = st.getResultSet();	
+			rs.next();
+			pathFile = rs.getString(1);
+
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		//ConfigurableHSQLDBserver.shutDown();
+		return pathFile;
+	}
+	
 	public static void initDataBase(){
 		ConfigurableHSQLDBserver.initInMemory("GAP", false);
 		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");		

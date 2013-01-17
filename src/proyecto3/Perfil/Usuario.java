@@ -144,6 +144,33 @@ public class Usuario {
 	}
 	
 	/**
+	 * Carga los productos del usuario en caso de estar almacenados
+	 * @throws Exception
+	 */
+	private void cargaProductos() throws Exception {
+		 File archivo = null;
+	     FileReader fr = null;
+	     BufferedReader br = null;
+	     String linea;
+	     try {
+	         archivo = new File(DIR+nombre+File.separatorChar+"Compras.txt");
+	         if (!archivo.exists()) {	     
+	        	 throw new Exception("No existe el fichero de compras");
+	         } else {
+	             fr = new FileReader (archivo);
+	             br = new BufferedReader(fr);
+	        	 while((linea = br.readLine()) != null) {
+	        		 productosComprados.add(Integer.valueOf(linea));
+	        	 }
+	         }		        
+	     } catch (Exception e) {
+	    	 throw e;
+	     } finally {
+	    	 fr.close();
+	     }
+	}
+
+	/**
 	 * Guarda la información del usuario
 	 * @throws Exception
 	 */
