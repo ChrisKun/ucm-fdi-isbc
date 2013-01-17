@@ -5,7 +5,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +21,10 @@ import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+
+import GAPDataBase.GAPLoader;
+import GAPDataBase.ImageInfo;
+import GAPDataBase.Product;
 
 public class PanelInicio extends JPanel{
 	
@@ -80,7 +89,17 @@ public class PanelInicio extends JPanel{
 		pImagen.getBorder();
 		pImagen.setBackground(Color.white);
 		
-		imagen = new JLabel("imagen");
+		GAPLoader.initDataBase();
+		int pId = 915129052;
+		String pathFile = GAPLoader.extractImagePathByPId(pId);
+		/*
+		try {
+			BufferedImage image = ImageIO.read(new File(pathFile));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		imagen = new JLabel(new ImageIcon(pathFile));
 		imagen.setPreferredSize(new Dimension(200,250));
 		pImagen.add(imagen);
 		return pImagen;
