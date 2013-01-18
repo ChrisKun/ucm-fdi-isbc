@@ -2,21 +2,37 @@ package Interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class PanelExplorador extends JPanel implements ChangeListener {
 
+	//TODO
+	/*
+	 * - Boton para hacer consulta aplicando filtros...
+	 * - Si no hay resultados, no mostrar nada
+	 * - Los botones avanzar y retroceder solo estaran disponibles cuando los resultados sean mayores que X elementos 
+	 *   (de momento X = 8)
+	 */
 	private static final int MAX = 25000;
 	private static final int MIN = 0;
 	private int precioMinimo;
@@ -26,14 +42,14 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	private JTextField etiquetaPrecioMax;
 	private JTextField etiquetaPrecioMin;
 	
-	//2 slider -> el precio marcado por el slider del precio maximo acota el precio máximo que alcanza el precio min
-	/*
-	 *   precio max 0|-----|50-----|200
-	 *   precio min 0|--|35--|50
-	 *   rango de precios -> [35-50]
-	 * 
-	 * 
-	 */
+	// A la hora de hacer consulta, se comprobara el boton seleccionado y el rango de precios
+	JRadioButton botonMano;
+	JRadioButton botonMaquina;
+	
+	JButton avanzar;
+	JButton retroceder;
+	
+	
 	
 	public PanelExplorador(){
 		precioMinimo = 10000;
@@ -41,21 +57,60 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		this.setLayout(new BorderLayout());
 		this.add(getPanelFiltrado(), BorderLayout.NORTH);
 		this.add(getPanelArticulos(), BorderLayout.CENTER);
+		this.add(getPanelAvanzarRetroceder(),BorderLayout.SOUTH);
+	}
+
+	private Component getPanelAvanzarRetroceder() {
+		JPanel p = new JPanel();
+		p.setLayout(new GridBagLayout());
+		avanzar = new JButton("AVZ");
+		retroceder = new JButton("RET");
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		
+		p.add(avanzar,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		
+		p.add(retroceder,c);
+		return p;
 	}
 
 	private JPanel getPanelFiltrado() {
 		JPanel p = new JPanel(new GridLayout(1,2));
 		p.add(getSubPanelFiltradoLavado());
 		p.add(getSubPanelFiltradoPrecio());
-		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Opciones de filtrado"));
+		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Opciones de filtrado",TitledBorder.CENTER,TitledBorder.DEFAULT_JUSTIFICATION,new Font("Arial", Font.BOLD, 14)));
 		return p;
 	}
 	
 	private JPanel getPanelArticulos() {
 		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(2,4));
+		anyadirArticulos(p,8);
 		return p;
 	}
 			
+	private void anyadirArticulos(JPanel p, int numElem) {
+		JLabel j; 
+		
+		//j.setIcon()
+		for (int i = 0; i < numElem; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
+		{
+			j = new JLabel();
+			j.setBackground(Color.black);
+			j.setPreferredSize(new Dimension(200,250));
+			j.setBorder(BorderFactory.createBevelBorder(0));
+			p.add(j);
+		}
+	}
+
 	private JPanel getSubPanelFiltradoPrecio(){
 		JPanel panel = new JPanel(new GridLayout(2,2));
 		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Filtrado de precio"));
@@ -96,6 +151,22 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	
 	private JPanel getSubPanelFiltradoLavado(){
 		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Filtrado por lavado"));
+		
+		//creacion de los botones
+		botonMano = new JRadioButton("Lavado a Mano");
+		botonMaquina = new JRadioButton("Lavado a Máquina");
+		
+		//grupo para los botones
+		ButtonGroup group = new ButtonGroup();
+		group.add(botonMano);
+		group.add(botonMaquina);
+		
+		panel.add(botonMano);
+		panel.add(botonMaquina);
+		
+		
 		return panel;
 	}
 	
@@ -128,7 +199,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		p.add(l2);
 		return p;
 	}
-	
+
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		 JSlider source = (JSlider)e.getSource();
