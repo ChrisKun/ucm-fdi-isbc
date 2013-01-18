@@ -95,7 +95,7 @@ public class Usuario {
 	     FileReader fr = null;
 	     BufferedReader br = null;
 	     try {
-		     archivo = new File(DIR+nombre+File.separatorChar+"Datos.txt");
+		     archivo = new File(DIR+File.separatorChar+nombre+File.separatorChar+"Datos.txt");
 	         if (!archivo.exists()) {	     		
 		     	throw new Exception("No existe el fichero de datos");
 	         } else {
@@ -124,7 +124,7 @@ public class Usuario {
 	     BufferedReader br = null;
 	     String linea;
 	     
-         archivo = new File(DIR+nombre+File.separatorChar+"Compras.txt");
+         archivo = new File(DIR+File.separatorChar+nombre+File.separatorChar+"Compras.txt");
          if (!archivo.exists()) {	     
         	 throw new Exception("No existe el fichero de compras");
          } else {
@@ -141,34 +141,7 @@ public class Usuario {
         	 }
          }		        
     	
-	}
-	
-	/**
-	 * Carga los productos del usuario en caso de estar almacenados
-	 * @throws Exception
-	 */
-	private void cargaProductos() throws Exception {
-		 File archivo = null;
-	     FileReader fr = null;
-	     BufferedReader br = null;
-	     String linea;
-	     try {
-	         archivo = new File(DIR+nombre+File.separatorChar+"Compras.txt");
-	         if (!archivo.exists()) {	     
-	        	 throw new Exception("No existe el fichero de compras");
-	         } else {
-	             fr = new FileReader (archivo);
-	             br = new BufferedReader(fr);
-	        	 while((linea = br.readLine()) != null) {
-	        		 productosComprados.add(Integer.valueOf(linea));
-	        	 }
-	         }		        
-	     } catch (Exception e) {
-	    	 throw e;
-	     } finally {
-	    	 fr.close();
-	     }
-	}
+	}	
 
 	/**
 	 * Guarda la información del usuario
@@ -243,16 +216,16 @@ public class Usuario {
 	public static void main(String args[]) {		
 		try{
 			GAPLoader.initDataBase();
-			//Usuario usuario = UsuarioFunciones.cargaUsuario("Pedro Gomez Serrano","112");	
-			Usuario usuario = Usuario.creaUsuario("Pedro", "112");
+			Usuario usuario = Usuario.cargaUsuario("Pedro","112");	
+			/*Usuario usuario = Usuario.creaUsuario("Pedro", "112");
 			ArrayList<Product> productos = GAPLoader.extractProducts();
 			int i = 0;
 			for(Product p: productos) {
 				if (i<9) usuario.añadeProductoComprado(p.getId());
 				else break;
 				i++;
-			}
-			usuario.guardaUsuario();
+			}*/
+			//usuario.guardaUsuario();
 			ArrayList<Integer> lista;
 			Recomendador recomendador = new Recomendador();
 			lista = recomendador.recomendadosPorUsuario(usuario);
