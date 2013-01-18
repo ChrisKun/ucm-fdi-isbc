@@ -64,7 +64,7 @@ public class Usuario {
 	 */
 	public static Usuario creaUsuario(String nombre, String contraseña) throws Exception {
 		File directorio = new File(DIR+File.separatorChar+nombre);
-		if (directorio.exists()) throw new Exception("El usuario ya existe");
+		if (directorio.exists()) throw new Exception("El nombre de usuario ya existe");
 		return new Usuario(nombre,contraseña);
 	}
 	
@@ -77,11 +77,7 @@ public class Usuario {
 	 */
 	public static Usuario cargaUsuario(String nombre, String contraseña) throws Exception {
 		Usuario usuario = new Usuario(nombre,contraseña);
-		try {
-			usuario.cargaUsuario();
-		} catch (Exception e) {
-			throw e;
-		}
+		usuario.cargaUsuario();
 		return usuario;
 	}	
 		
@@ -94,24 +90,20 @@ public class Usuario {
 		 File archivo = null;
 	     FileReader fr = null;
 	     BufferedReader br = null;
-	     try {
-		     archivo = new File(DIR+File.separatorChar+nombre+File.separatorChar+"Datos.txt");
-	         if (!archivo.exists()) {	     		
-		     	throw new Exception("No existe el fichero de datos");
-	         } else {
-		        fr = new FileReader(archivo);
-		        br = new BufferedReader(fr);	
-		        if ((br.readLine()).equals(contraseña)) {
-		        cargaProductos(); 
-		        } else {
-		        	throw new Exception("No concuerda la contraseña con la almacenada");
-		        }	       
-	         } 
-	     } catch (Exception e) {
-        	 throw new Exception(e.getMessage());
-         } finally {
-        	   fr.close(); 
-         }     
+	     archivo = new File(DIR+File.separatorChar+nombre+File.separatorChar+"Datos.txt");
+         if (!archivo.exists()) {        	
+	     	throw new Exception("No existe el fichero de datos");
+         } else {
+	        fr = new FileReader(archivo);
+	        br = new BufferedReader(fr);	
+	        if ((br.readLine()).equals(contraseña)) {
+	        	cargaProductos(); 
+	        } else {
+	        	fr.close(); 
+	        	throw new Exception("No concuerda la contraseña con la almacenada");
+	        }
+        	fr.close(); 
+         }    
 	}
 	
 	/**
@@ -128,19 +120,13 @@ public class Usuario {
          if (!archivo.exists()) {	     
         	 throw new Exception("No existe el fichero de compras");
          } else {
-        	 try {
 	             fr = new FileReader (archivo);
 	             br = new BufferedReader(fr);
 	        	 while((linea = br.readLine()) != null) {
 	        		 productosComprados.add(Integer.valueOf(linea));
 	        	 }
-        	 } catch (Exception e) {
-        		 throw new Exception(e.getMessage());
-        	 } finally {
         		 fr.close();
-        	 }
-         }		        
-    	
+        	 }  
 	}	
 
 	/**
@@ -152,17 +138,12 @@ public class Usuario {
 		File directorio = new File(DIR+File.separatorChar+this.getNombre());
 		directorio.mkdirs();
 		String direccion;
-		try {
-			// Guardamos la informacion personal
-			direccion = directorio.getPath()+File.separatorChar+"Datos.txt";
-			guardaDatos(direccion);
-			// Guardamos las compras
-			direccion = directorio.getPath()+File.separatorChar+"Compras.txt";
-			guardaProductos(direccion, this.productosComprados);			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+		// Guardamos la informacion personal
+		direccion = directorio.getPath()+File.separatorChar+"Datos.txt";
+		guardaDatos(direccion);
+		// Guardamos las compras
+		direccion = directorio.getPath()+File.separatorChar+"Compras.txt";
+		guardaProductos(direccion, this.productosComprados);			
 	}
 	
 	/**
@@ -204,12 +185,7 @@ public class Usuario {
         } catch (Exception e) {
            throw new Exception("Error al guardar los productos");
         } finally {
-           try {
-           if (null != fichero)
               fichero.close();
-           } catch (Exception e2) {
-              throw new Exception("Error al cerrar el fichero de productos");
-           }
         }
     }
 	
@@ -217,14 +193,15 @@ public class Usuario {
 		try{
 			GAPLoader.initDataBase();
 			Usuario usuario = Usuario.cargaUsuario("Pedro","112");	
-			/*Usuario usuario = Usuario.creaUsuario("Pedro", "112");
+			//Usuario usuari1o = Usuario.cargaUsuario("Pedaro","112");	
+			//Usuario usuario2 = Usuario.creaUsuario("Pedro", "112");/*
 			ArrayList<Product> productos = GAPLoader.extractProducts();
 			int i = 0;
 			for(Product p: productos) {
 				if (i<9) usuario.añadeProductoComprado(p.getId());
 				else break;
 				i++;
-			}*/
+			}
 			//usuario.guardaUsuario();
 			ArrayList<Integer> lista;
 			Recomendador recomendador = new Recomendador();
