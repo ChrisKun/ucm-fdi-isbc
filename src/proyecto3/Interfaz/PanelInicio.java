@@ -32,11 +32,12 @@ public class PanelInicio extends JPanel{
 	//private JScrollPane panelReview;
 	private JTextArea textoReview; // Texto de la parte de la review. Atributo porque ha de ser modificable.
 	private JLabel imagen; //imagen que se muestra en el inicio. Atributo porque ha de ser modificable.
-	private int pIdActual;
+	private Integer pIdActual;
 	
 	public PanelInicio()
 	{
-		pIdActual = 915129052;
+		pIdActual = 915129;
+		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints(); // para las dimensiones de las celdas del gridBag
 		gbc.weightx = 0.5; //aspecto que debe mantener el objeto con respecto a la columna en la que se encuentra
@@ -76,8 +77,8 @@ public class PanelInicio extends JPanel{
 		JScrollPane panelReview = new JScrollPane(textoReview);
 		panelReview.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		String productName = GAPLoader.extractInfoProductById(pIdActual).getName();
-		System.out.println(productName);
-		textoReview.setText(productName);
+		String productOverview = GAPLoader.extractInfoProductById(pIdActual).getOverview();
+		textoReview.setText(productName+": "+productOverview);
 		textoReview.setEditable(false);
 		return panelReview;
 	}
@@ -90,13 +91,6 @@ public class PanelInicio extends JPanel{
 		pImagen.getBorder();
 		pImagen.setBackground(Color.white);
 		String pathFile = GAPLoader.extractImagePathByPId(pIdActual);
-		/*
-		try {
-			BufferedImage image = ImageIO.read(new File(pathFile));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		imagen = new JLabel(new ImageIcon(pathFile));
 		imagen.setPreferredSize(new Dimension(200,250));
 		pImagen.add(imagen);

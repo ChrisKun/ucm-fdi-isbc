@@ -184,8 +184,12 @@ public class GAPLoader {
 	    try {	    	
 	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
 			Statement st = conn.createStatement();
-			st.execute("select file from \"Imagen\" where \"Im_ID\"=" + pId);
+			st.execute("select \"ID_Im\" from \"Prenda_imagen\" where \"PID\"="+pId);
 			ResultSet rs = st.getResultSet();	
+			rs.next();
+			int Im_Id = rs.getInt(1);
+			st.execute("select file from \"Imagen\" where \"Im_ID\"=" + Im_Id);
+			rs = st.getResultSet();
 			rs.next();
 			pathFile = rs.getString(1);
 
