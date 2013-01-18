@@ -155,7 +155,7 @@ public class GAPLoader {
 	    try {	    	
 	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
 			Statement st = conn.createStatement();
-			st.execute("select * from \"Prenda\" where PID=" + id);
+			st.execute("select * from \"Prenda\" where \"PID\"=" + id);
 			ResultSet rs = st.getResultSet();	
 			rs.next();
 			p.setName(rs.getString(1));
@@ -195,6 +195,27 @@ public class GAPLoader {
 		}		
 		//ConfigurableHSQLDBserver.shutDown();
 		return pathFile;
+	}
+	
+	public static ArrayList<Integer> extractPIdsByPriceRange(Integer min, Integer max){
+	
+		ArrayList<Integer> products = new ArrayList<Integer>();
+	    try {	    	
+	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			//TODO X: Problema, precio viene en un string con USD
+			st.execute("select \"PID\" from \"Prenda\" where precio > " + min +" and precio < " + max );
+			ResultSet rs = st.getResultSet();	
+			while(rs.next()){
+				products.add(rs.getInt(1));
+			}
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		//ConfigurableHSQLDBserver.shutDown();
+		return products;
+
 	}
 	
 	public static void initDataBase(){

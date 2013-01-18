@@ -1,8 +1,8 @@
 package Interfaz;
 
-import javax.swing.JInternalFrame;
+import javax.swing.JFrame;
 
-public class VentanaPerfil extends JInternalFrame{
+public class VentanaPerfil extends JFrame{
 
 	public VentanaPerfil(){
 		this.setBounds(20,20,100,100);
