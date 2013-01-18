@@ -26,7 +26,7 @@ public class Usuario {
 	// Seguridad usada en la encriptacion
 	private final String SEGURIDAD = "MD5";
 	// Directorio de la carpeta usuarios
-	public static final String DIR = "Usuarios";
+	public static String DIR = "Usuarios";
 	
 	private Usuario (String nombre, String contraseña) {
 		this.nombre = nombre;
@@ -63,7 +63,7 @@ public class Usuario {
 	}
 	
 	/**
-	 * Crea un usuario
+	 * Crea un usuario y su directorio
 	 * @param nombre
 	 * @param contraseña
 	 * @return
@@ -71,7 +71,10 @@ public class Usuario {
 	 */
 	public static Usuario creaUsuario(String nombre, String contraseña) throws Exception {
 		File directorio = new File(DIR+File.separatorChar+nombre);
-		if (directorio.exists()) throw new Exception("El nombre de usuario ya existe");
+		if (directorio.exists())
+			throw new Exception("El nombre de usuario ya existe");
+		else 
+			directorio.mkdirs();
 		return new Usuario(nombre,contraseña);
 	}
 	
@@ -141,9 +144,7 @@ public class Usuario {
 	 * @throws Exception
 	 */
 	public void guardaUsuario() throws Exception{
-		// Creamos el directorio en caso de no existir
 		File directorio = new File(DIR+File.separatorChar+this.getNombre());
-		directorio.mkdirs();
 		String direccion;
 		// Guardamos la informacion personal
 		direccion = directorio.getPath()+File.separatorChar+"Datos.txt";
