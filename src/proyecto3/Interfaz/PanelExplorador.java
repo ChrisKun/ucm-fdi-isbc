@@ -72,21 +72,41 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		c.gridx = 0;
 		c.gridy = 0;
 		
-		p.add(avanzar,c);
+		p.add(retroceder,c);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
 		
-		p.add(retroceder,c);
+		p.add(avanzar,c);
 		return p;
 	}
 
 	private JPanel getPanelFiltrado() {
-		JPanel p = new JPanel(new GridLayout(1,2));
-		p.add(getSubPanelFiltradoLavado());
-		p.add(getSubPanelFiltradoPrecio());
+		JPanel p = new JPanel(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		 gbc.gridx = 2;
+		 gbc.gridy = 0;
+		 
+		 //gbc.gridwidth = 4;
+		 p.add(getSubPanelFiltradoLavado(),gbc);
+		
+		 gbc.gridx = 0;
+		 gbc.gridy = 0;
+		 gbc.gridheight = 2;
+		 gbc.gridwidth = 1;
+		// gbc.gridwidth = 1;
+		//p.add(getSubPanelFiltradoLavado());
+		p.add(getSubPanelFiltradoPrecio(),gbc);
 		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Opciones de filtrado",TitledBorder.CENTER,TitledBorder.DEFAULT_JUSTIFICATION,new Font("Arial", Font.BOLD, 14)));
+		
+		
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		JButton j = new JButton("Aplicar Filtros");
+		p.add(j,gbc);
+		
 		return p;
 	}
 	
@@ -98,13 +118,12 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	}
 			
 	private void anyadirArticulos(JPanel p, int numElem) {
-		JLabel j; 
+		JButton j; 
 		
 		//j.setIcon()
 		for (int i = 0; i < numElem; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
 		{
-			j = new JLabel();
-			j.setBackground(Color.black);
+			j = new JButton();
 			j.setPreferredSize(new Dimension(200,250));
 			j.setBorder(BorderFactory.createBevelBorder(0));
 			p.add(j);
@@ -156,6 +175,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		
 		//creacion de los botones
 		botonMano = new JRadioButton("Lavado a Mano");
+		botonMano.setSelected(true);
 		botonMaquina = new JRadioButton("Lavado a Máquina");
 		
 		//grupo para los botones
