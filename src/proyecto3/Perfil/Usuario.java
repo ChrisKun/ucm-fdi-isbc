@@ -47,12 +47,19 @@ public class Usuario {
 	}
 
 	/**
-	 * Añade un ID de producto nuevo
+	 * Añade un ID de producto nuevo y guarda la informacion del usuario
 	 * @param producto
 	 */
 	public void añadeProductoComprado(Integer producto) {
-		if (!productosComprados.contains(producto))
+		if (!productosComprados.contains(producto)) {
 			productosComprados.add(producto);
+			try {
+				// Guardamos el usuario para no preocuparnos de poder perder la informacion
+				this.guardaUsuario();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
