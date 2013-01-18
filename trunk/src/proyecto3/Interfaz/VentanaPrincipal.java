@@ -33,7 +33,7 @@ public class VentanaPrincipal extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.setContentPane(getPanelPrincipal());
-		this.setMinimumSize(new Dimension(720,480));
+		this.setMinimumSize(new Dimension(W,H));
 	}
 	
 	private Container getPanelPrincipal() {
@@ -47,8 +47,8 @@ public class VentanaPrincipal extends JFrame {
 		panelP.add(getPanelIzquierdo(), BorderLayout.WEST);
 		
 		// Panel de inicio NOTA: Es el panel que variará
-		//JPanel p = new PanelExplorador();
-		JPanel p = new PanelInicio();
+		JPanel p = new PanelExplorador();
+		//JPanel p = new PanelInicio();
 		panelP.add(p);
 		return panelP;		
 	}
