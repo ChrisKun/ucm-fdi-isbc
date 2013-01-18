@@ -15,6 +15,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import GAPDataBase.GAPLoader;
+
 public class VentanaPrincipal extends JFrame {
 	
 	/* Configuracion de pantalla */
@@ -23,6 +25,7 @@ public class VentanaPrincipal extends JFrame {
 	
 	public VentanaPrincipal()
 	{
+		GAPLoader.initDataBase();
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = pantalla.width;
 		int height = pantalla.height;
@@ -44,7 +47,8 @@ public class VentanaPrincipal extends JFrame {
 		panelP.add(getPanelIzquierdo(), BorderLayout.WEST);
 		
 		// Panel de inicio NOTA: Es el panel que variará
-		JPanel p = new PanelExplorador(); //PanelInicio(); // 
+		//JPanel p = new PanelExplorador();
+		JPanel p = new PanelInicio();
 		panelP.add(p);
 		return panelP;		
 	}
@@ -117,7 +121,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 			else if (b.getName().equals("Perfil"))
 			{
-				
+				new VentanaPerfil();
 			}
 			else if (b.getName().equals("Ayuda"))
 			{

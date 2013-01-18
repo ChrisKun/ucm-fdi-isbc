@@ -28,16 +28,15 @@ import GAPDataBase.Product;
 
 public class PanelInicio extends JPanel{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	//private JScrollPane panelReview;
 	private JTextArea textoReview; // Texto de la parte de la review. Atributo porque ha de ser modificable.
 	private JLabel imagen; //imagen que se muestra en el inicio. Atributo porque ha de ser modificable.
+	private int pIdActual;
 	
 	public PanelInicio()
 	{
+		pIdActual = 915129052;
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints(); // para las dimensiones de las celdas del gridBag
 		gbc.weightx = 0.5; //aspecto que debe mantener el objeto con respecto a la columna en la que se encuentra
@@ -76,7 +75,9 @@ public class PanelInicio extends JPanel{
 		textoReview.setLineWrap(true);
 		JScrollPane panelReview = new JScrollPane(textoReview);
 		panelReview.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		textoReview.setText("Coger de la base de datos...");
+		String productName = GAPLoader.extractInfoProductById(pIdActual).getName();
+		System.out.println(productName);
+		textoReview.setText(productName);
 		textoReview.setEditable(false);
 		return panelReview;
 	}
@@ -88,10 +89,7 @@ public class PanelInicio extends JPanel{
 		pImagen.setBorder(blackline);
 		pImagen.getBorder();
 		pImagen.setBackground(Color.white);
-		
-		GAPLoader.initDataBase();
-		int pId = 915129052;
-		String pathFile = GAPLoader.extractImagePathByPId(pId);
+		String pathFile = GAPLoader.extractImagePathByPId(pIdActual);
 		/*
 		try {
 			BufferedImage image = ImageIO.read(new File(pathFile));
