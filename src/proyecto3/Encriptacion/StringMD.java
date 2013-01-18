@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- *
+ * Clase de un señor majisimo que la tenia subida a internet :)
  * @author Herman Alonso Barrates Víquez
  */
 public class StringMD {
