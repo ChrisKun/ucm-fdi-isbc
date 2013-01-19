@@ -46,22 +46,14 @@ public class Recomendador implements StandardCBRApplication {
      */
     public Recomendador() throws Exception {
     	super();
-    	try {
-			this.inicio();
-		} catch (ExecutionException e) {
-			throw e;
-		}
+		this.inicio();
     }
     
 	public void configure() throws ExecutionException {
-		try {
 		// Crear el conector con la base de casos
 		connector = new Conector();
 		// La organizacion en memoria sera lineal
 		caseBase = new LinealCaseBase();	
-		} catch (Exception e) {
-			throw new ExecutionException(e);
-		} 		
 		// Añadimos las funciones de similitud
 		simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new Average());		
@@ -73,13 +65,9 @@ public class Recomendador implements StandardCBRApplication {
 
 	public CBRCaseBase preCycle() throws ExecutionException {
 		// Cargar los casos desde el conector a la base de casos
-		try {
-			caseBase.init(connector);
-			if(caseBase.getCases().isEmpty())
-				throw new ExecutionException("Base de datos vacia");
-		} catch (ExecutionException e) {
-			throw e;
-		}
+		caseBase.init(connector);
+		if(caseBase.getCases().isEmpty())
+			throw new ExecutionException("Base de datos vacia");
 		return caseBase;
 	}
 		
@@ -109,12 +97,8 @@ public class Recomendador implements StandardCBRApplication {
 	 * @throws ExecutionException
 	 */
 	private void inicio() throws ExecutionException {
-		try {
-			this.configure();
-			this.preCycle();
-		} catch (ExecutionException e) {
-			throw e;
-		}
+		this.configure();
+		this.preCycle();
 	}
 	
 	/**
@@ -127,11 +111,7 @@ public class Recomendador implements StandardCBRApplication {
 		productosSimilares = new ArrayList<Integer>();	
 	    CBRQuery query = new CBRQuery();
 	    query.setDescription(new Prenda(idProducto));
-	    try {
-			this.cycle(query);
-		} catch (ExecutionException e) {
-			throw e;
-		}
+		this.cycle(query);
 		return productosSimilares;		
 	}
 	
@@ -146,11 +126,7 @@ public class Recomendador implements StandardCBRApplication {
 		for (Integer idProducto: usuario.getProductosComprados()) {
 		    CBRQuery query = new CBRQuery();
 		    query.setDescription(new Prenda(idProducto));
-		    try {
-				this.cycle(query);
-			} catch (ExecutionException e) {
-				throw new Exception(e.getMessage());
-			}
+			this.cycle(query);
 		}
 		// Comprobamos que ninguno de los productos similares sea alguno que haya comprado el usuario
 		ArrayList<Integer> productosDevueltos = new ArrayList<Integer>();
@@ -180,27 +156,25 @@ public class Recomendador implements StandardCBRApplication {
 		// Listamos todos los usuarios
 		File[] usuarios = directorio.listFiles();
 		for (File usuario: usuarios) {
-			try {
-				archivo = new File(Usuario.DIR+File.separatorChar+usuario.getName()+File.separatorChar+"Compras.txt");	
-				// Si no existe el fichero de compras no podemos leer y lo notificamos
-				if (!archivo.exists())
-					throw new Exception("El usuario "+usuario.getName()+" No tiene fichero de compras");
-				fr = new FileReader (archivo);
-	            br = new BufferedReader(fr);
-	            while((linea = br.readLine()) != null) {
-	            	try {
-	            	if (!productosSimilares.contains(Integer.valueOf(linea))) 
-	            			productosSimilares.add(Integer.valueOf(linea));
-	            	// Si hay problema de lectura del fichero lo notificamos
-	            	} catch (Exception e) {
-	            		throw new Exception("El usuario "+usuario.getName()+" tiene el fichero de compras corrupto");
-	            	}
-	            }
-			} catch (Exception e) {
-				throw new Exception(e.getMessage());
-			} finally {
-				br.close();
-			}
+			archivo = new File(Usuario.DIR+File.separatorChar+usuario.getName()+File.separatorChar+"Compras.txt");	
+			// Si no existe el fichero de compras no podemos leer y lo notificamos
+			if (!archivo.exists())
+				throw new Exception("El usuario "+usuario.getName()+" No tiene fichero de compras");
+			fr = new FileReader (archivo);
+            br = new BufferedReader(fr);
+            while((linea = br.readLine()) != null) {
+            	try {
+            	if (!productosSimilares.contains(Integer.valueOf(linea))) 
+            			productosSimilares.add(Integer.valueOf(linea));
+            	// Si hay problema de lectura del fichero lo notificamos
+            	} catch (Exception e) {
+            		fr.close();
+            		br.close();
+            		throw new Exception("El usuario "+usuario.getName()+" tiene el fichero de compras corrupto");
+            	}
+            }
+            fr.close();
+			br.close();
 		}
 		return productosSimilares;		
 	}		
