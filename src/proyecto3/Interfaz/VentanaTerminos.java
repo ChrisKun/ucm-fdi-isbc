@@ -1,19 +1,26 @@
 package Interfaz;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 
 public class VentanaTerminos extends JFrame{
 	
 	public final static int W = 300;
-	public final static int H = 200;
+	public final static int H = 400;
 	private VentanaPerfil vP;
 	
 	
@@ -30,12 +37,31 @@ public class VentanaTerminos extends JFrame{
 		this.setTitle("Términos y condiciones");
 		vP = p;
 		
+		this.setContentPane(getPanelPrincipal());
+		
 		this.addWindowListener(new WindowAdapter(){
 			  public void windowClosing(WindowEvent we){
 				  vP.setEnabled(true);
 				  dispose();
 			  }
 			  });
+		
 	}
+
+
+
+	private JPanel getPanelPrincipal() {
+		JPanel p = new JPanel();
+		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Por favor, lea atentamente"));
+		JTextArea j = new JTextArea();
+		j.setPreferredSize(new Dimension(W-30,H-70));
+		j.setText("1. Álvaro es calva \n 2. Maldito ISBC \n 3. Maldito PLG \n 4.\n 5.\n 6.\n 7.\n 8.\n 9.\n 10.\n 11.\n 12.\n");
+		j.setEditable(false);
+		JScrollPane listScroller = new JScrollPane(j);
+		p.add(listScroller);
+		return p;
+	}
+	
+	
 
 }
