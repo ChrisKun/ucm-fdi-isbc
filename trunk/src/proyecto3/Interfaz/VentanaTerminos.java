@@ -55,7 +55,8 @@ public class VentanaTerminos extends JFrame{
 		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Por favor, lea atentamente"));
 		JTextArea j = new JTextArea();
 		j.setPreferredSize(new Dimension(W-30,H-70));
-		j.setText("1. Álvaro es calva \n 2. Maldito ISBC \n 3. Maldito PLG \n 4.\n 5.\n 6.\n 7.\n 8.\n 9.\n 10.\n 11.\n 12.\n");
+		j.setText("1. Acepto que miraré con buenos ojos la práctica \n 2. Acepto que Raúl Bueno Sevilla no es buena gente \n 3. Acepto que el punto 2 es mentira a medias \n" +
+				"4. \n 5.\n 6.\n 7.\n 8.\n 9.\n 10.\n 11.\n 12.\n");
 		j.setEditable(false);
 		JScrollPane listScroller = new JScrollPane(j);
 		p.add(listScroller);
