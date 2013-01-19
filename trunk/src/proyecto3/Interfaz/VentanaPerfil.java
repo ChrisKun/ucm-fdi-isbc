@@ -1,15 +1,20 @@
 package Interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.font.TextAttribute;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,6 +31,7 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 	public final static int W = 450;
 	public final static int H = 200;
 	private VentanaPrincipal vP;
+	private VentanaPerfil vPerf;
 	
 	private JTextField loginNombre;
 	private JPasswordField loginPass;
@@ -44,6 +50,7 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		this.setResizable(false);
 		this.setTitle("Perfil");
 		vP = ventana;
+		vPerf = this;
 		
 		this.setContentPane(getPanelPrincipalPerfil());
 		
@@ -99,11 +106,24 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Registrar"));
 		
 		JLabel j = new JLabel("¿No tienes cuenta? Registrate a continuacion: ");
-		JLabel s = new JLabel("NOTA: Registrarse conlleva aceptar los términos y condiciones");
+		
+		JPanel subPanelCondiciones = new JPanel();
+		subPanelCondiciones.setLayout(new FlowLayout());
+		
+		JLabel s = new JLabel("NOTA: Registrarse conlleva aceptar ");
+		JLabel r = new JLabel("los términos y condiciones.");
+		r.setFont(new Font(s.getFont().getFontName(), Font.BOLD, s.getFont().getSize()));
+		r.setForeground(Color.BLUE);
+		
+		r.addMouseListener(new ListernerMouse());
+		
+		subPanelCondiciones.add(s);
+		subPanelCondiciones.add(r);
+		
 		
 		p.add(j, BorderLayout.NORTH);
 		p.add(getSubPanelRegistrar(), BorderLayout.CENTER);
-		p.add(s,BorderLayout.SOUTH);
+		p.add(subPanelCondiciones,BorderLayout.SOUTH);
 		
 		
 		return p;
@@ -146,6 +166,42 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		}
 		else if (b == botonReg)
 		{
+			
+		}
+		
+	}
+	
+	private class ListernerMouse implements MouseListener
+	{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			new VentanaTerminos(vPerf);
+			vPerf.setEnabled(false);
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
 			
 		}
 		
