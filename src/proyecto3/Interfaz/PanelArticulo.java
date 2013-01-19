@@ -190,7 +190,7 @@ public class PanelArticulo extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Necesito poder actualizar el panel con el Id del boton
 				// 		Es decir, quitar el panel actual y crear uno nuevo con este Id
-				actualizaPId(pId);
+				//actualizaPId(pId);
 				//new PanelArticulo(pId);
 			}
 		});
