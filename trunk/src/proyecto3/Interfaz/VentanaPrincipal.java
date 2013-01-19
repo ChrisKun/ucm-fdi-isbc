@@ -1,9 +1,13 @@
 package Interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+
+import sistema.SistemaTienda;
 
 import GAPDataBase.GAPLoader;
 
@@ -23,9 +30,12 @@ public class VentanaPrincipal extends JFrame {
 	public final static int W = 720;
 	public final static int H = 480;
 	
+	
+	
 	public VentanaPrincipal()
 	{
 		GAPLoader.initDataBase();
+		SistemaTienda.init();
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = pantalla.width;
 		int height = pantalla.height;
@@ -47,15 +57,16 @@ public class VentanaPrincipal extends JFrame {
 		panelP.add(getPanelIzquierdo(), BorderLayout.WEST);
 		
 		// Panel de inicio NOTA: Es el panel que variará
-		JPanel p = new PanelExplorador();
+		//JPanel p = new PanelExplorador();
 		//JPanel p = new PanelInicio();
+		JPanel p = new PanelArticulo(170831);
 		panelP.add(p);
 		return panelP;		
 	}
 
 	private JPanel getPanelSuperior() {
 		JPanel p = new JPanel();
-		
+		p.setBackground(Color.GREEN);
 		p.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		p.add(getBoton("Cesta"));
 		p.add(getBoton("Perfil"));

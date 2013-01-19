@@ -4,16 +4,30 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
+import sistema.SistemaTienda;
+
+import GAPDataBase.GAPLoader;
+import GAPDataBase.Product;
 
 /**
  * Este Panel va a ser la vista en la que ofrecemos la información de un articulo
@@ -24,23 +38,34 @@ import javax.swing.border.Border;
  */
 public class PanelArticulo extends JPanel{
 
+	private Integer pIdActual;
 	private JLabel imagen; //imagen que se muestra en el inicio. Atributo porque ha de ser modificable.
 	
 	/**
 	 * En esta clase vamos a construir un panel que corresponde a la distribucion
 	 * seguida en el archivo "VentanaArticulo.png" de la memoria.
 	 */
-	public PanelArticulo(){
+	public PanelArticulo(Integer pIdActual){
 		//Al crear este panel necesitamos llamar al recomendador automaticamente
 		//	y mostrar los articulos recuperados
 		
+		this.pIdActual = pIdActual;
 		this.setLayout(new BorderLayout());
 		this.add(getPanelRecomendador(), BorderLayout.SOUTH);
-		this.add(getPanelReviews(), BorderLayout.EAST); // TODO Pendiente de aprobación
+		//this.add(getPanelReviews(), BorderLayout.EAST); // TODO Pendiente de aprobación
 		this.add(getPanelCentral());
 		
 	}
 
+	private void actualizaPId(Integer pId){
+		this.pIdActual = pId;
+		this.setLayout(new BorderLayout());
+		this.add(getPanelRecomendador(), BorderLayout.SOUTH);
+		//this.add(getPanelReviews(), BorderLayout.EAST); // TODO Pendiente de aprobación
+		this.add(getPanelCentral());
+	
+	}
+	
 	/**
 	 * En este panel vamos a mostrar la imagen y las propiedades del producto.
 	 * Es un JPanel organizado con un GridBagLayout
@@ -78,14 +103,25 @@ public class PanelArticulo extends JPanel{
 	 * En este panel mostramos las propiedades del articulo que estamos mostrando
 	 * @return El panel con las propiedades
 	 */
-	private JScrollPane getZonaPropiedades() {
-		JTextArea textoReview = new JTextArea("");
+	private JPanel getZonaPropiedades() {
+		
+		JPanel panel = new JPanel();
+		String propiedades = "";
+		JTextArea textoReview = new JTextArea("",6,20);
 		textoReview.setLineWrap(true);
 		JScrollPane panelReview = new JScrollPane(textoReview);
-		panelReview.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		textoReview.setText("Propiedades");
+		panelReview.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Detalles del producto",TitledBorder.CENTER,TitledBorder.DEFAULT_JUSTIFICATION,new Font("Arial", Font.BOLD, 14)));
+		panel.add(textoReview);
+		Product p = GAPLoader.extractInfoProductById(pIdActual);
+		propiedades = propiedades + "Nombre: " + p.getName()+"\n";
+		propiedades = propiedades + "Materiales: " + p.getComposition()+"\n";
+		propiedades = propiedades + "Lavado: " + p.getWashing()+"\n";
+		propiedades = propiedades + "Precio: " + p.getPrice()+"\n";
+		textoReview.setText(propiedades);
 		textoReview.setEditable(false);
-		return panelReview;
+		return panel;
 	}
 
 	/**
@@ -98,8 +134,8 @@ public class PanelArticulo extends JPanel{
 		pImagen.setBorder(blackline);
 		pImagen.getBorder();
 		pImagen.setBackground(Color.white);
-		
-		imagen = new JLabel("imagen");
+		String pathFile = GAPLoader.extractImagePathByPId(pIdActual);
+		imagen = new JLabel(new ImageIcon(pathFile));
 		imagen.setPreferredSize(new Dimension(200,250));
 		pImagen.add(imagen);
 		return pImagen;
@@ -110,16 +146,57 @@ public class PanelArticulo extends JPanel{
 	 * En caso de no caber en la pantalla usariamos un scroll horizontal
 	 * @return El panel del recomendador de prendas
 	 */
-	private JScrollPane getPanelRecomendador() {
+	private JPanel getPanelRecomendador() {
 		// TODO Panel con los articulos que recomendamos
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout(FlowLayout.LEFT));
+		ArrayList<Integer> recomendados = new ArrayList<Integer>();
+		try {
+			recomendados = SistemaTienda.recomendador.recomendadosPorProducto(pIdActual);
+		} catch (Exception e) {
+			// TODO Que hacer si no recomienda nada?
+			e.printStackTrace();		
+		}
+		
+		for (Integer n: recomendados){
+			p.add(getBoton(n));
+		}
+		/*
 		JTextArea textoReview = new JTextArea("",5,50);
 		textoReview.setLineWrap(true);
 		JScrollPane panelReview = new JScrollPane(textoReview);
-		panelReview.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		panelReview.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		textoReview.setText("Casos rescatados de la Base de Casos");
 		textoReview.setEditable(false);
-		return panelReview;
+		*/
+		return p;
 	}
+	
+	/**
+	 * Devuelve un botón para la interfaz, ya con el action listener incluido
+	 * @param str
+	 * @return
+	 */
+	private JButton getBoton(Integer pId)
+	{
+		JButton jb = new JButton();
+		jb.setName(pId.toString());
+		jb.setText(pId.toString());
+		
+		//action Listener
+		jb.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Necesito poder actualizar el panel con el Id del boton
+				// 		Es decir, quitar el panel actual y crear uno nuevo con este Id
+				actualizaPId(pId);
+				//new PanelArticulo(pId);
+			}
+		});
+		return jb;
+	}
+
 	
 	/**
 	 * En este panel, pendiente de revision, mostrariamos los reviews de la gente, y la
@@ -128,6 +205,7 @@ public class PanelArticulo extends JPanel{
 	 */
 	private JScrollPane getPanelReviews() {
 		// TODO Panel con las opiniones y valoraciones
+		
 		JTextArea textoReview = new JTextArea("");
 		textoReview.setLineWrap(true);
 		JScrollPane panelReview = new JScrollPane(textoReview);

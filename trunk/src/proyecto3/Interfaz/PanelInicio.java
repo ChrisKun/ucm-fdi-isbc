@@ -22,6 +22,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import sistema.SistemaTienda;
+
 import GAPDataBase.GAPLoader;
 import GAPDataBase.ImageInfo;
 import GAPDataBase.Product;
@@ -36,7 +38,16 @@ public class PanelInicio extends JPanel{
 	
 	public PanelInicio()
 	{
-		pIdActual = 915129;
+		pIdActual = 170831;
+		ArrayList<Integer> pIdActuales = new ArrayList<Integer>();
+		try {
+			pIdActuales = SistemaTienda.recomendador.recomendadosPorProducto(pIdActual);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			pIdActuales.add(pIdActual);
+		}
+		pIdActual = pIdActuales.get(0);
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints(); // para las dimensiones de las celdas del gridBag
