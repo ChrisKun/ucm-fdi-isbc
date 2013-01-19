@@ -63,6 +63,24 @@ public class Usuario {
 	}
 	
 	/**
+	 * Elimina el producto de la lista de productos comprados (siempre y cuando exista)
+	 * @param producto
+	 */
+	public void eliminaProductoComprado(Integer producto) {
+		if (productosComprados.contains(producto)) {
+			int pos = 0;
+			for (Integer i: productosComprados) {
+				if (i.equals(producto)) {
+					productosComprados.remove(pos);
+					break;
+				} else {
+					pos++;
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Crea un usuario y su directorio
 	 * @param nombre
 	 * @param contraseña
@@ -203,6 +221,7 @@ public class Usuario {
 			Usuario usuario = Usuario.cargaUsuario("Pedro","112");	
 			//Usuario usuari1o = Usuario.cargaUsuario("Pedaro","112");	
 			//Usuario usuario2 = Usuario.creaUsuario("Pedro", "112");/*
+			usuario.eliminaProductoComprado(317265);
 			ArrayList<Product> productos = GAPLoader.extractProducts();
 			int i = 0;
 			for(Product p: productos) {
