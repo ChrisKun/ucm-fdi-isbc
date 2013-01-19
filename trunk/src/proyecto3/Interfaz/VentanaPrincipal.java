@@ -12,9 +12,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -30,6 +32,7 @@ public class VentanaPrincipal extends JFrame {
 	public final static int W = 720;
 	public final static int H = 480;
 	private VentanaPrincipal vP;
+	private JLabel labelInicio;
 	
 	
 	
@@ -68,14 +71,33 @@ public class VentanaPrincipal extends JFrame {
 
 	private JPanel getPanelSuperior() {
 		JPanel p = new JPanel();
-		p.setBackground(Color.GREEN);
+		p.setLayout(new BorderLayout());
+		p.setBorder(BorderFactory.createBevelBorder(0));
+		//p.setBackground(Color.GREEN);
+		p.add(getSubPanelMenu(),BorderLayout.EAST);
+		p.add(getSubPanelTextoInicio(), BorderLayout.WEST);
+		
+		return p;
+	}
+	
+	
+	
+	private JPanel getSubPanelTextoInicio() {
+		JPanel p = new JPanel();
+		labelInicio = new JLabel("¡Bienvenido, invitado!");
+		p.add(labelInicio);
+		return p;
+	}
+
+	private JPanel getSubPanelMenu() {
+		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		p.add(getBoton("Cesta"));
 		p.add(getBoton("Perfil"));
 		p.add(getBoton("Ayuda"));
 		return p;
 	}
-	
+
 	private JScrollPane getPanelIzquierdo() {
 		// X: Fijate que he cambiado el JPanel por un JScrollPane, ya que podemos tener el 
 		//		efecto de un panel entero con un scroll. Se aceptan sugerencias jeje
@@ -136,7 +158,8 @@ public class VentanaPrincipal extends JFrame {
 			}
 			else if (b.getName().equals("Perfil"))
 			{
-				new VentanaPerfil();
+				new VentanaPerfil(vP);
+				vP.setEnabled(false);
 			}
 			else if (b.getName().equals("Ayuda"))
 			{
