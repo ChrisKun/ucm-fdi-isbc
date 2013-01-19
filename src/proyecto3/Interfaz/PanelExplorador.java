@@ -14,6 +14,7 @@ import java.util.Hashtable;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -113,17 +114,21 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	private JPanel getPanelArticulos() {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(2,4));
-		anyadirArticulos(p,8);
+		anyadirArticulos(p,4);
 		return p;
 	}
 			
 	private void anyadirArticulos(JPanel p, int numElem) {
-		JButton j; 
+		JComponent j = null;
 		
 		//j.setIcon()
-		for (int i = 0; i < numElem; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
+		for (int i = 0; i < 8; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
 		{
-			j = new JButton();
+			if (i >= numElem) //se acabaron los elementos, rellenamos con Jlabel
+				j = new JLabel();
+			else
+				j = new JButton();
+			
 			j.setPreferredSize(new Dimension(200,250));
 			j.setBorder(BorderFactory.createBevelBorder(0));
 			p.add(j);

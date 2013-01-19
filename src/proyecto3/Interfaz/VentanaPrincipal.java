@@ -29,6 +29,7 @@ public class VentanaPrincipal extends JFrame {
 	/* Configuracion de pantalla */
 	public final static int W = 720;
 	public final static int H = 480;
+	private VentanaPrincipal vP;
 	
 	
 	
@@ -44,6 +45,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		this.setContentPane(getPanelPrincipal());
 		this.setMinimumSize(new Dimension(W,H));
+		vP = this;
 	}
 	
 	private Container getPanelPrincipal() {
@@ -128,7 +130,9 @@ public class VentanaPrincipal extends JFrame {
 			//Opciones
 			if (b.getName().equals("Cesta"))
 			{
-				new VentanaCesta();
+				new VentanaCesta(vP);
+				vP.setEnabled(false);
+				
 			}
 			else if (b.getName().equals("Perfil"))
 			{
