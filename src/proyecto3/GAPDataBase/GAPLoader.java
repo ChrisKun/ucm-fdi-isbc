@@ -283,7 +283,12 @@ public class GAPLoader {
 	
 	}
 	
-	public static String[] recopilaCategorias(String[] divisiones){
+	/**
+	 * Devuelve para cada una de las divisiones sus categorias.
+	 * @param divisiones Las divisiones en las que esta subdividido el catalogo
+	 * @return Una matriz con las categorias correspondientes a las divisiones por fila
+	 */
+	private static String[][] recopilaCategorias(String[] divisiones){
 		ArrayList<String[]> categorias = new ArrayList<String[]>();
 		Set<String> categoriasPorDiv = new HashSet<String>();
 		String tmp;
@@ -304,14 +309,25 @@ public class GAPLoader {
 				}
 			}
 			categorias.add(categoriasPorDiv.toArray(new String[categoriasPorDiv.size()]));
+			if (categoriasPorDiv.size() > maxCat) maxCat = categoriasPorDiv.size();
+			st.close();
 		} catch(Exception e) {
 			
 		}
 		}
-		String[][] ret = new String[divisiones.length][categorias.size()];
-		System.out.println(categorias);
-		return null;	
+		String[][] ret = new String[divisiones.length][maxCat];
+		for (int i=0;i<divisiones.length;i++){
+			for(int j=0;j<categorias.get(i).length;j++){
+				ret[i][j] = categorias.get(i)[j];
+			}
+		}
+		
+		return ret;	
 	}	
+	
+	public static String[][] recopilaCategorias(){
+		return recopilaCategorias(recopilaDivisiones());
+	}
 	
 	public static void initDataBase(){
 		ConfigurableHSQLDBserver.initInMemory("GAP", false);

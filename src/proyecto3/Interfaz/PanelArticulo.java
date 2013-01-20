@@ -107,7 +107,7 @@ public class PanelArticulo extends JPanel {
 		panelReview.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Detalles del producto",TitledBorder.CENTER,TitledBorder.DEFAULT_JUSTIFICATION,new Font("Arial", Font.BOLD, 14)));
-		panel.add(textoReview);
+		panel.add(textoReview, BorderLayout.NORTH);
 		Product p = GAPLoader.extractInfoProductById(pIdActual);
 		propiedades = propiedades + "Nombre: " + p.getName()+"\n";
 		propiedades = propiedades + "Materiales: " + p.getComposition()+"\n";
@@ -115,6 +115,18 @@ public class PanelArticulo extends JPanel {
 		propiedades = propiedades + "Precio: " + p.getPrice()+"\n";
 		textoReview.setText(propiedades);
 		textoReview.setEditable(false);
+		
+		JButton botonComprar = new JButton("botonComprar");
+		botonComprar.setText("Comprar Articulo");
+		botonComprar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				SistemaTienda.productosCesta.add(pIdActual);				
+			}
+		});
+		panel.add(botonComprar, BorderLayout.SOUTH);
+		
 		return panel;
 	}
 

@@ -42,7 +42,8 @@ public class VentanaPrincipal extends JFrame {
 	public VentanaPrincipal()
 	{
 		GAPLoader.initDataBase();
-		SistemaTienda.init();
+		System.out.println(GAPLoader.recopilaCategorias());
+		new SistemaTienda();
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = pantalla.width;
 		int height = pantalla.height;
@@ -65,15 +66,9 @@ public class VentanaPrincipal extends JFrame {
 		panelPrincipal.add(getPanelIzquierdo(), BorderLayout.WEST);
 		
 		// Panel de inicio NOTA: Es el panel que variará
-		//JPanel pE = new PanelExplorador();
-		//panelCambia = new PanelInicio(vP);
-		panelCambia = new PanelArticulo(/*170831*/144459, this);
+		panelCambia = new PanelInicio(this);
 		
-		//panelP.add(pE);
-		//panelP.add(pI);
 		panelPrincipal.add(panelCambia);
-		
-		//pA.setVisible(false);
 		
 		return panelPrincipal;		
 	}
@@ -82,7 +77,6 @@ public class VentanaPrincipal extends JFrame {
 		JPanel p = new JPanel();
 		p.setLayout(new BorderLayout());
 		p.setBorder(BorderFactory.createBevelBorder(0));
-		//p.setBackground(Color.GREEN);
 		p.add(getSubPanelMenu(),BorderLayout.EAST);
 		p.add(getSubPanelTextoInicio(), BorderLayout.WEST);
 		
@@ -144,10 +138,10 @@ public class VentanaPrincipal extends JFrame {
 		
 		//JPanel p = new JPanel();
 		String[] divisiones = GAPLoader.recopilaDivisiones();
-		GAPLoader.recopilaCategorias(divisiones);
+		//GAPLoader.recopilaCategorias();
 		// X: Tal como esta en la carpeta de imagenes, luego hay subcarpetas. Habria que 
 		//		ver como hacemos los submenus.
-		JList list = new JList(divisiones);
+		JList<String> list = new JList<String>(divisiones);
 		JScrollPane scrollList = new JScrollPane(list);
 		//p.add(list);
 		return scrollList;

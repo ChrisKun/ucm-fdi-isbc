@@ -1,10 +1,13 @@
 package Interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +43,7 @@ public class PanelInicio extends JPanel{
 	public PanelInicio(VentanaPrincipal vP)
 	{
 		this.vP = vP;
-		pIdActual = 170831;
+		pIdActual = 149612;
 		ArrayList<Integer> pIdActuales = new ArrayList<Integer>();
 		try {
 			pIdActuales = SistemaTienda.recomendador.recomendadosPorProducto(pIdActual);
@@ -107,6 +110,17 @@ public class PanelInicio extends JPanel{
 		imagen = new JLabel(new ImageIcon(pathFile));
 		imagen.setPreferredSize(new Dimension(200,250));
 		pImagen.add(imagen);
+		JButton botonIrArticulo = new JButton("IrArticulo");
+		botonIrArticulo.setText("Ir al Articulo");
+		botonIrArticulo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				vP.cambiarPanel(new PanelArticulo(pIdActual, vP));
+			}
+		});
+		pImagen.add(botonIrArticulo, BorderLayout.EAST);
 		return pImagen;
 	}
 }
