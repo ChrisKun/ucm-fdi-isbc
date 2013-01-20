@@ -11,6 +11,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Vector;
 
@@ -44,17 +46,26 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 	private JButton retCat;
 	private static boolean viendoCategorias = false;
 	private JList list;
+	private String[] valoresLista;
 	private static String[][] categorias;
 	
 	public VentanaPrincipal()
 	{
 		GAPLoader.initDataBase();
 		new SistemaTienda();
+		valoresLista = GAPLoader.recopilaDivisiones();
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = pantalla.width;
 		int height = pantalla.height;
 		this.setBounds(width/2 - W/2, height/2 - H/2, W, H);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we){
+				GAPLoader.shutDownDataBase();
+				System.exit(0);
+			}
+		});
 		
 		this.setContentPane(getPanelPrincipal());
 		this.setMinimumSize(new Dimension(W,H));
@@ -163,9 +174,7 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 
 	private JScrollPane getPanelCategoria() {
 		
-		String[] divisiones = GAPLoader.recopilaDivisiones();
-		
-		list = new JList(divisiones);
+		list = new JList(valoresLista);
 		list.addListSelectionListener(this);
 		JScrollPane scrollList = new JScrollPane(list);
 		return scrollList;
@@ -258,13 +267,15 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 				   
 				   for (int j = 0; j < categorias[i].length; j++)
 				   {
-					   if (categorias[i][j] != null)
-						   cat.add(categorias[i][j]);
+					   if (categorias[i][j] != null) cat.add(categorias[i][j]);
 				   }
 				   vP.cambiarPanel(new PanelExplorador(vP,(String) list.getSelectedValue()));
-				   list = new JList(categorias[i]);
-				   list.clearSelection();
-			}	
+				   valoresLista = categorias[i];
+				   vP.validate();
+			} else {
+				//list.clearSelection();
+				
+			}
 		} else {
 			
 		}
