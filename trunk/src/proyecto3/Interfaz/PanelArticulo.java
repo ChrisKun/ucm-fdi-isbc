@@ -8,12 +8,14 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -56,15 +58,6 @@ public class PanelArticulo extends JPanel {
 		//this.add(getPanelReviews(), BorderLayout.EAST); // TODO Pendiente de aprobación
 		this.add(getPanelCentral());
 		
-	}
-
-	private void actualizaPId(Integer pId){
-		this.pIdActual = pId;
-		this.setLayout(new BorderLayout());
-		this.add(getPanelRecomendador(), BorderLayout.SOUTH);
-		//this.add(getPanelReviews(), BorderLayout.EAST); // TODO Pendiente de aprobación
-		this.add(getPanelCentral());
-	
 	}
 	
 	/**
@@ -182,10 +175,17 @@ public class PanelArticulo extends JPanel {
 	{
 		JButton jb = new JButton();
 		jb.setName(pId.toString());
-		jb.setText(pId.toString());
+		//jb.setText(pId.toString()); // Cambiado por la imagen
 		//cambiamos el nombre, que es lo que se hara en el action listener
 		jb.setName(pId.toString());
-		//this.pId = pId;
+		Icon icon = new ImageIcon(GAPLoader.extractImagePathByPId(pId));
+		
+		Image img = ((ImageIcon) icon).getImage() ;  
+		Image newimg = img.getScaledInstance( 75, 75,  java.awt.Image.SCALE_SMOOTH ) ;  
+		icon = new ImageIcon( newimg );
+		
+		jb.setIcon(icon);
+		jb.setMaximumSize(new Dimension(20, 20));
 		//action Listener
 		jb.addActionListener(new ActionListener(){
 
