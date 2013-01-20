@@ -36,19 +36,20 @@ import GAPDataBase.Product;
  * @author Xavi
  *
  */
-public class PanelArticulo extends JPanel{
+public class PanelArticulo extends JPanel {
 
 	private Integer pIdActual;
 	private JLabel imagen; //imagen que se muestra en el inicio. Atributo porque ha de ser modificable.
+	private VentanaPrincipal vP; //referencia a la ventana principal para poder modificar el panel
 	
 	/**
 	 * En esta clase vamos a construir un panel que corresponde a la distribucion
 	 * seguida en el archivo "VentanaArticulo.png" de la memoria.
 	 */
-	public PanelArticulo(Integer pIdActual){
+	public PanelArticulo(Integer pIdActual, VentanaPrincipal vP){
 		//Al crear este panel necesitamos llamar al recomendador automaticamente
 		//	y mostrar los articulos recuperados
-		
+		this.vP = vP;
 		this.pIdActual = pIdActual;
 		this.setLayout(new BorderLayout());
 		this.add(getPanelRecomendador(), BorderLayout.SOUTH);
@@ -182,18 +183,20 @@ public class PanelArticulo extends JPanel{
 		JButton jb = new JButton();
 		jb.setName(pId.toString());
 		jb.setText(pId.toString());
-		
+		//cambiamos el nombre, que es lo que se hara en el action listener
+		jb.setName(pId.toString());
+		//this.pId = pId;
 		//action Listener
-		jb.addActionListener(new ActionListener() {
-			
+		jb.addActionListener(new ActionListener(){
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Necesito poder actualizar el panel con el Id del boton
-				// 		Es decir, quitar el panel actual y crear uno nuevo con este Id
-				//actualizaPId(pId);
-				//new PanelArticulo(pId);
+			public void actionPerformed(ActionEvent arg0) {
+				JButton b = (JButton) arg0.getSource();
+				//podemos coger el nombre del boton (no el texto que se muestra)
+				vP.cambiarPanel(new PanelArticulo(Integer.parseInt(b.getName()),vP));
 			}
-		});
+			
+		}); //cambiado para que pille el pId
 		return jb;
 	}
 

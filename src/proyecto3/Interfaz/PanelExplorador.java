@@ -43,6 +43,8 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	private JTextField etiquetaPrecioMax;
 	private JTextField etiquetaPrecioMin;
 	
+	private VentanaPrincipal vP; //para hacer cambios en la interfaz
+	
 	// A la hora de hacer consulta, se comprobara el boton seleccionado y el rango de precios
 	JRadioButton botonMano;
 	JRadioButton botonMaquina;

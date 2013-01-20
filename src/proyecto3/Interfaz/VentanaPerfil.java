@@ -162,11 +162,11 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		
 		if (b == botonLogin)
 		{
-			
+			//TODO comprobar en la base de datos
 		}
 		else if (b == botonReg)
 		{
-			
+			// TODO añadir a la base de datos
 		}
 		
 	}
