@@ -179,7 +179,8 @@ public class VentanaPrincipal extends JFrame {
 			}
 			else if (b.getName().equals("Ayuda"))
 			{
-				//TODO Gif baile
+				new VentanaAyuda(vP);
+				vP.setEnabled(false);
 			}
 		}		
 	}
