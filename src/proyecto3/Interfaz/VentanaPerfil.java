@@ -18,20 +18,31 @@ import java.awt.font.TextAttribute;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
+import Perfil.Usuario;
+
+import sistema.SistemaTienda;
+
 public class VentanaPerfil extends JFrame implements ActionListener{
 
 	public final static int W = 450;
 	public final static int H = 200;
+	private static boolean logeado = false;
+	
 	private VentanaPrincipal vP;
 	private VentanaPerfil vPerf;
+	
+	private JPanel panelSinUsuario;
+	private JPanel panelConUsuario;
 	
 	private JTextField loginNombre;
 	private JPasswordField loginPass;
@@ -39,6 +50,7 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 	private JPasswordField regPass;
 	private JButton botonLogin;
 	private JButton botonReg;
+	private JButton botonSalir;
 	
 	public VentanaPerfil(VentanaPrincipal ventana){
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -52,7 +64,13 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		vP = ventana;
 		vPerf = this;
 		
-		this.setContentPane(getPanelPrincipalPerfil());
+		if (!logeado){
+			panelSinUsuario = getPanelPrincipalPerfil();
+			this.add(panelSinUsuario);
+		} else {
+			panelConUsuario = getPanelLogeado();
+			this.add(panelConUsuario);
+		}
 		
 		this.addWindowListener(new WindowAdapter(){
 			  public void windowClosing(WindowEvent we){
@@ -129,6 +147,19 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		return p;
 	}
 
+	private JPanel getPanelLogeado(){
+		JPanel p = new JPanel();
+		p.setLayout(new BorderLayout());
+		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Has iniciado sesion"));
+		JLabel nombreUsuario = new JLabel("Usuario: "+ SistemaTienda.usuarioActual.getNombre());
+		p.add(nombreUsuario, BorderLayout.NORTH);
+		botonSalir = new JButton("Salir");
+		botonSalir.setText("Salir");
+		botonSalir.addActionListener(this);
+		p.add(botonSalir, BorderLayout.SOUTH);
+		return p;
+	}
+	
 	private Component getSubPanelRegistrar() {
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
@@ -163,10 +194,54 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		if (b == botonLogin)
 		{
 			//TODO comprobar en la base de datos
+			try {
+				Usuario usuario = Usuario.cargaUsuario(loginNombre.getText(), String.copyValueOf(loginPass.getPassword()));
+				SistemaTienda.usuarioActual = usuario;
+				this.remove(panelSinUsuario);
+				panelConUsuario = getPanelLogeado();
+				this.add(panelConUsuario);
+				this.validate();
+				logeado = true;
+			} catch (Exception e) {
+				// Error al hacer login
+				JOptionPane.showMessageDialog(null,"Inserta un nombre de usuario y una pass validos"); 
+			}
 		}
 		else if (b == botonReg)
 		{
 			// TODO añadir a la base de datos
+			try {
+				SistemaTienda.usuarioActual = Usuario.creaUsuario(regNombre.getText(), String.copyValueOf(regPass.getPassword()));
+				SistemaTienda.usuarioActual.guardaUsuario();
+				this.remove(panelSinUsuario);
+				panelConUsuario = getPanelLogeado();
+				this.add(panelConUsuario);
+				this.validate();
+				logeado = true;
+			} catch (Exception e) {
+				// Error al registrar
+				if (regNombre.getText().compareTo("") == 0){
+					JOptionPane.showMessageDialog(null,"Inserta un nombre");
+				} else {
+					JOptionPane.showMessageDialog(null,"Este usuario ya esta registrado");	
+				}
+				 
+			}
+		}
+		else if (b == botonSalir){			
+			try {
+				JOptionPane.showMessageDialog(null,"Gracias por su compra");
+				SistemaTienda.usuarioActual.guardaUsuario();
+				this.remove(panelConUsuario);
+				panelSinUsuario = getPanelPrincipalPerfil();
+				this.add(panelSinUsuario);
+				this.validate();
+				logeado = false;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			SistemaTienda.usuarioActual = null;
 		}
 		
 	}
