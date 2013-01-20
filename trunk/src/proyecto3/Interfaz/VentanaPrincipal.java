@@ -32,6 +32,8 @@ public class VentanaPrincipal extends JFrame {
 	public final static int W = 720;
 	public final static int H = 480;
 	private VentanaPrincipal vP;
+	private JPanel panelCambia;
+	private JPanel panelPrincipal;
 	private JLabel labelInicio;
 	
 	
@@ -52,27 +54,27 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private Container getPanelPrincipal() {
-		JPanel panelP = new JPanel();
-		panelP.setLayout(new BorderLayout());		
+		panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(new BorderLayout());		
 		
 		// Panel Superior: Con información
-		panelP.add(getPanelSuperior(), BorderLayout.NORTH);
+		panelPrincipal.add(getPanelSuperior(), BorderLayout.NORTH);
 		
 		// Panel Occidental: 
-		panelP.add(getPanelIzquierdo(), BorderLayout.WEST);
+		panelPrincipal.add(getPanelIzquierdo(), BorderLayout.WEST);
 		
 		// Panel de inicio NOTA: Es el panel que variará
 		//JPanel pE = new PanelExplorador();
 		//JPanel pI = new PanelInicio();
-		JPanel pA = new PanelArticulo(/*170831*/144459);
+		panelCambia = new PanelArticulo(/*170831*/144459, this);
 		
 		//panelP.add(pE);
 		//panelP.add(pI);
-		panelP.add(pA);
+		panelPrincipal.add(panelCambia);
 		
 		//pA.setVisible(false);
 		
-		return panelP;		
+		return panelPrincipal;		
 	}
 
 	private JPanel getPanelSuperior() {
@@ -141,6 +143,14 @@ public class VentanaPrincipal extends JFrame {
 		jb.addActionListener(new ListenerVentana());
 		return jb;
 	}
+	
+	public void cambiarPanel(JPanel p)
+	{
+		panelPrincipal.remove(panelCambia);
+		panelCambia = p;
+		panelPrincipal.add(panelCambia);
+		panelPrincipal.validate();
+	}
 
 	public static void main (String[] args)
 	{
@@ -169,9 +179,10 @@ public class VentanaPrincipal extends JFrame {
 			}
 			else if (b.getName().equals("Ayuda"))
 			{
-				
+				//TODO Gif baile
 			}
 		}		
 	}
+	
 
 }

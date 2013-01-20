@@ -35,9 +35,11 @@ public class PanelInicio extends JPanel{
 	private JTextArea textoReview; // Texto de la parte de la review. Atributo porque ha de ser modificable.
 	private JLabel imagen; //imagen que se muestra en el inicio. Atributo porque ha de ser modificable.
 	private Integer pIdActual;
+	private VentanaPrincipal vP; //referencia a la ventana principal para modificar el panel
 	
-	public PanelInicio()
+	public PanelInicio(JPanel panel, VentanaPrincipal vP)
 	{
+		this.vP = vP;
 		pIdActual = 170831;
 		ArrayList<Integer> pIdActuales = new ArrayList<Integer>();
 		try {
