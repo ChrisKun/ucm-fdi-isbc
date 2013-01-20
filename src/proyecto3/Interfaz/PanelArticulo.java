@@ -127,6 +127,8 @@ public class PanelArticulo extends JPanel {
 				SistemaTienda.productosCesta.add(pIdActual);				
 			}
 		});
+		if (SistemaTienda.usuarioActual == null){
+		}
 		panel.add(botonComprar, BorderLayout.SOUTH);
 		
 		return panel;

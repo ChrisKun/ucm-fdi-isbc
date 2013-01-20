@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -23,12 +24,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import sistema.SistemaTienda;
 
 import GAPDataBase.GAPLoader;
 
-public class VentanaPrincipal extends JFrame {
+public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 	
 	/* Configuracion de pantalla */
 	public final static int W = 720;
@@ -39,8 +42,9 @@ public class VentanaPrincipal extends JFrame {
 	private JLabel labelInicio;
 	private JButton homeCat;
 	private JButton retCat;
-	private JList divisiones;
-	
+	private static boolean viendoCategorias = false;
+	private JList list;
+	private static String[][] categorias;
 	
 	public VentanaPrincipal()
 	{
@@ -55,6 +59,7 @@ public class VentanaPrincipal extends JFrame {
 		this.setContentPane(getPanelPrincipal());
 		this.setMinimumSize(new Dimension(W,H));
 		vP = this;
+		categorias = GAPLoader.recopilaCategorias();
 	}
 	
 	private Container getPanelPrincipal() {
@@ -133,15 +138,16 @@ public class VentanaPrincipal extends JFrame {
 		retCat = new JButton();
 		retCat.setToolTipText("Retroceder una categoría");
 		retCat.setPreferredSize(new Dimension(32,32));
+		/*
 		retCat.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				vP.cambiarPanel(new PanelExplorador(vP,(String) divisiones.getSelectedValue()));
+				vP.cambiarPanel(new PanelExplorador(vP,(String) list.getSelectedValue()));
 			}
 		});
-		
+		*/
 		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"home_cat.png");
 		homeCat.setIcon(icon);
 		
@@ -156,15 +162,12 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private JScrollPane getPanelCategoria() {
-		// X: Fijate que he cambiado el JPanel por un JScrollPane, ya que podemos tener el 
-		//		efecto de un panel entero con un scroll. Se aceptan sugerencias jeje
 		
-		//GAPLoader.recopilaCategorias();
-		// X: Tal como esta en la carpeta de imagenes, luego hay subcarpetas. Habria que 
-		//		ver como hacemos los submenus.
-		divisiones = new JList(GAPLoader.recopilaDivisiones());
-		divisiones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane scrollList = new JScrollPane(divisiones);
+		String[] divisiones = GAPLoader.recopilaDivisiones();
+		
+		list = new JList(divisiones);
+		list.addListSelectionListener(this);
+		JScrollPane scrollList = new JScrollPane(list);
 		return scrollList;
 	}
 	
@@ -244,5 +247,28 @@ public class VentanaPrincipal extends JFrame {
 		}		
 	}
 	
+	public void valueChanged(ListSelectionEvent e) {
+		if (!viendoCategorias){
+			if (e.getValueIsAdjusting() == true) {
 
+				   int i = list.getSelectedIndex();
+				   
+				   //int n = categorias[i].length;
+				   Vector<String> cat = new Vector<String>();
+				   
+				   for (int j = 0; j < categorias[i].length; j++)
+				   {
+					   if (categorias[i][j] != null)
+						   cat.add(categorias[i][j]);
+				   }
+				   vP.cambiarPanel(new PanelExplorador(vP,(String) list.getSelectedValue()));
+				   list = new JList(categorias[i]);
+				   list.clearSelection();
+			}	
+		} else {
+			
+		}
+		
+		
+	}
 }
