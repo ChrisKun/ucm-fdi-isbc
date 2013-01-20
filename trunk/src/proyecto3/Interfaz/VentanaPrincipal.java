@@ -112,8 +112,33 @@ public class VentanaPrincipal extends JFrame {
 		p.add(getBoton("Ayuda"));
 		return p;
 	}
+	
+	private JPanel getPanelIzquierdo()
+	{
+		JPanel p = new JPanel();
+		p.setBorder(BorderFactory.createBevelBorder(0));
+		p.setLayout(new BorderLayout());
+		p.add(getPanelCategoria(), BorderLayout.CENTER);
+		p.add(getSubPanelBotonCategoria(), BorderLayout.SOUTH);
+		return p;
+	}
+	
+	private JPanel getSubPanelBotonCategoria()
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout());
+		
+		JButton h = new JButton("H");
+		h.setToolTipText("Volver a todas las categorías");
+		JButton re = new JButton("R");
+		re.setToolTipText("Retroceder una categoría");
+		
+		p.add(h);
+		p.add(re);
+		return p;
+	}
 
-	private JScrollPane getPanelIzquierdo() {
+	private JScrollPane getPanelCategoria() {
 		// X: Fijate que he cambiado el JPanel por un JScrollPane, ya que podemos tener el 
 		//		efecto de un panel entero con un scroll. Se aceptan sugerencias jeje
 		
