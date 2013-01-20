@@ -40,6 +40,9 @@ public class Recomendador implements StandardCBRApplication {
     /** Productos similares */
     ArrayList<Integer> productosSimilares;
     
+    /** Numbero de productos devueltos */
+    Integer numeroCasos;
+    
     /**
      * Crea el recomendador y hace los metodos configure() y preCycle()
      * @throws ExecutionException
@@ -76,7 +79,7 @@ public class Recomendador implements StandardCBRApplication {
 		// Ejecutamos la recuperación del vecino más próximo
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
 		// Cogemos los 3 mejores casos
-		eval = SelectCases.selectTopKRR(eval, 4);
+		eval = SelectCases.selectTopKRR(eval, this.numeroCasos);
 		Integer id;
 		for (RetrievalResult r: eval) {
 			// Añadimos la id del producto en caso de NO estar ya añadido y NO ser el mismo que pedimos
@@ -108,6 +111,7 @@ public class Recomendador implements StandardCBRApplication {
 	 * @throws Exception
 	 */
 	public ArrayList<Integer> recomendadosPorProducto(Integer idProducto) throws Exception {	
+		this.numeroCasos = 6;
 		productosSimilares = new ArrayList<Integer>();	
 	    CBRQuery query = new CBRQuery();
 	    query.setDescription(new Prenda(idProducto));
@@ -122,6 +126,7 @@ public class Recomendador implements StandardCBRApplication {
 	 * @throws Exception
 	 */
 	public ArrayList<Integer> recomendadosPorUsuario(Usuario usuario) throws Exception {	
+		this.numeroCasos = 4;
 		productosSimilares = new ArrayList<Integer>();	
 		for (Integer idProducto: usuario.getProductosComprados()) {
 		    CBRQuery query = new CBRQuery();
