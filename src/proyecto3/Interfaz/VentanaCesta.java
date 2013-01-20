@@ -16,10 +16,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EtchedBorder;
+
+import GAPDataBase.GAPLoader;
 
 import sistema.SistemaTienda;
 
@@ -35,29 +38,37 @@ public class VentanaCesta extends JFrame implements ActionListener{
 	private JList listaProductos;
 	private JButton eliminar;
 	private JButton cancelar;
+	private JButton comprar;
 	private VentanaPrincipal vP;
 	
-	
+	private float precioTotal;
 	
 	public VentanaCesta(VentanaPrincipal ventana){
-		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = pantalla.width;
-		int height = pantalla.height;
-		this.setBounds(width/2 - W/2, height/2 - H/2, W, H);
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); //TODO cerrar esta ventana debe activar la que la ha llamado.
-		this.setVisible(true);
-		this.setResizable(false);
-		this.setTitle("Cesta");
 		
-		this.setContentPane(getPanelPrincipalCesta());
-		vP = ventana;
-		
-		this.addWindowListener(new WindowAdapter(){
-			  public void windowClosing(WindowEvent we){
-				  vP.setEnabled(true);
-				  dispose();
-			  }
-			  });
+		if (SistemaTienda.usuarioActual == null) {
+			JOptionPane.showMessageDialog(null,"Debes hacer login para poder comprar");
+			vP.setEnabled(true);
+			dispose();
+		} else {
+			Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+			int width = pantalla.width;
+			int height = pantalla.height;
+			this.setBounds(width/2 - W/2, height/2 - H/2, W, H);
+			this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); //TODO cerrar esta ventana debe activar la que la ha llamado.
+			this.setVisible(true);
+			this.setResizable(false);
+			this.setTitle("Cesta");
+			
+			this.setContentPane(getPanelPrincipalCesta());
+			vP = ventana;
+			
+			this.addWindowListener(new WindowAdapter(){
+				  public void windowClosing(WindowEvent we){
+					  vP.setEnabled(true);
+					  dispose();
+				  }
+			});
+		}
 	}
 
 	private JPanel getPanelPrincipalCesta() {
@@ -73,7 +84,13 @@ public class VentanaCesta extends JFrame implements ActionListener{
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
 		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Precio total: "));
-		JLabel l = new JLabel("247,23"+" €"); //TODO calcular precio
+		precioTotal = 0;
+		for(Integer id :SistemaTienda.productosCesta){
+			String str_price = GAPLoader.extractInfoProductById(id).getPrice();
+			float precio = Float.valueOf(str_price.replaceAll("[a-z]|[A-Z]",""));
+			precioTotal += precio;
+		}
+		JLabel l = new JLabel(precioTotal+" €"); //TODO calcular precio
 		p.add(l);
 		return p;
 	}
@@ -95,8 +112,13 @@ public class VentanaCesta extends JFrame implements ActionListener{
 		if (listModel.getSize() == 0)
 			eliminar.setEnabled(false);
 		
+		comprar = new JButton("Comprar");
+		comprar.addActionListener(this);
+		comprar.setToolTipText("Compra los articulos seleccionados");
+		
 		p.add(eliminar);
 		p.add(cancelar);
+		p.add(comprar);
 		p.add(pagar);
 		
 		return p;
@@ -156,6 +178,13 @@ public class VentanaCesta extends JFrame implements ActionListener{
 			vP.setEnabled(true);
 			this.dispose();
 		}
-		
+		else if (b == comprar)
+		{
+			SistemaTienda.usuarioActual.añadeProductosComprados(SistemaTienda.productosCesta);
+			SistemaTienda.productosCesta.clear();
+			JOptionPane.showMessageDialog(null,"Gracias por su compra!");
+			vP.setEnabled(true);
+			dispose();
+		}
 	}
 }

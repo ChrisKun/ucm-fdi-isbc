@@ -9,10 +9,17 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -24,6 +31,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import GAPDataBase.GAPLoader;
 
 public class PanelExplorador extends JPanel implements ChangeListener {
 
@@ -38,10 +47,17 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	private static final int MIN = 0;
 	private int precioMinimo;
 	private int precioMaximo;
+	private String divisionActual;
+	private String categoriaActual;
+	private static int numArticulos = 0;
+	private static int pagActual = 1;
+	private static int numPaginas = 1;
+	
 	private JSlider barraPrecioMin;
 	private JSlider barraPrecioMax;
 	private JTextField etiquetaPrecioMax;
 	private JTextField etiquetaPrecioMin;
+	
 	
 	private VentanaPrincipal vP; //para hacer cambios en la interfaz
 	
@@ -54,7 +70,9 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	
 	
 	
-	public PanelExplorador(){
+	public PanelExplorador(VentanaPrincipal vP, String division){
+		this.vP = vP;
+		divisionActual = division;
 		precioMinimo = 10000;
 		precioMaximo = 20000;
 		this.setLayout(new BorderLayout());
@@ -63,6 +81,8 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		this.add(getPanelAvanzarRetroceder(),BorderLayout.SOUTH);
 	}
 
+	
+	
 	private Component getPanelAvanzarRetroceder() {
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
@@ -116,20 +136,40 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	private JPanel getPanelArticulos() {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(2,4));
-		anyadirArticulos(p,4);
+		anyadirArticulos(p,8);
 		return p;
 	}
 			
 	private void anyadirArticulos(JPanel p, int numElem) {
 		JComponent j = null;
-		
+		ArrayList<Integer> articulos = GAPLoader.extractPIdsByDivision(divisionActual);
+		numPaginas = articulos.size()/8;
 		//j.setIcon()
-		for (int i = 0; i < 8; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
+		for (int i = (pagActual-1)*8; i < 8; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
 		{
-			if (i >= numElem) //se acabaron los elementos, rellenamos con Jlabel
+			if (i >= numElem){ //se acabaron los elementos, rellenamos con Jlabel
 				j = new JLabel();
-			else
-				j = new JButton();
+			} else {
+				Integer pId = articulos.get(i);
+				j = new JButton(pId.toString());
+				j.setName(pId.toString());
+				Icon icon = new ImageIcon(GAPLoader.extractImagePathByPId(pId));
+				
+				Image img = ((ImageIcon) icon).getImage() ;  
+				Image newimg = img.getScaledInstance( 180, 130,  java.awt.Image.SCALE_SMOOTH ) ;  
+				icon = new ImageIcon( newimg );
+				
+				((JButton) j).setIcon(icon);
+				((JButton) j).addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						JButton b = (JButton) arg0.getSource();
+						//podemos coger el nombre del boton (no el texto que se muestra)
+						vP.cambiarPanel(new PanelArticulo(vP, Integer.parseInt(b.getName())));
+					}
+				});
+			}
 			
 			j.setPreferredSize(new Dimension(200,250));
 			j.setBorder(BorderFactory.createBevelBorder(0));

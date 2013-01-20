@@ -224,13 +224,13 @@ public class GAPLoader {
 
 	}
 	
-	public static ArrayList<Integer> extractPIdsByCategoria(String categoria){
+	public static ArrayList<Integer> extractPIdsByDivision(String division){
 		ArrayList<Integer> productos = new ArrayList<Integer>();
 		
 		try {	    	
 	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
 			Statement st = conn.createStatement();
-			st.execute("select \"PID\" from \"Prenda\" where \"categoria\"='"+categoria+"'");
+			st.execute("select \"PID\" from \"Prenda\" where division='"+division+"'");
 			ResultSet rs = st.getResultSet();	
 			while(rs.next()){
 				productos.add(rs.getInt(1));
