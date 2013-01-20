@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GAPLoader {
 
@@ -222,6 +224,95 @@ public class GAPLoader {
 
 	}
 	
+	public static ArrayList<Integer> extractPIdsByCategoria(String categoria){
+		ArrayList<Integer> productos = new ArrayList<Integer>();
+		
+		try {	    	
+	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			st.execute("select \"PID\" from \"Prenda\" where \"categoria\"='"+categoria+"'");
+			ResultSet rs = st.getResultSet();	
+			while(rs.next()){
+				productos.add(rs.getInt(1));
+			}			
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		return productos;
+	}
+	
+	public static ArrayList<Integer> extractPIdsByWashing(String washing){
+		ArrayList<Integer> productos = new ArrayList<Integer>();
+		
+		try {	    	
+	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			st.execute("select \"PID\" from \"Prenda_Description\" where \"ID_Des\" IN "+
+						"(select \"ID_Des\" from \"Description\" where washing like '%"+washing+"%')");
+			ResultSet rs = st.getResultSet();	
+			while(rs.next()){
+				productos.add(rs.getInt(1));
+			}			
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		return productos;
+	}
+	
+	public static String[] recopilaDivisiones(){
+		ArrayList<String> divisiones = new ArrayList<String>();
+
+		try{
+			Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			st.execute("select distinct division from \"Prenda\"");
+			ResultSet rs = st.getResultSet();	
+			while(rs.next()){
+				divisiones.add(rs.getString(1));	
+			}	
+		} catch(Exception e) {
+			
+		}
+    	
+		String[] ret = divisiones.toArray(new String[divisiones.size()]);
+		return ret;
+	
+	}
+	
+	public static String[] recopilaCategorias(String[] divisiones){
+		ArrayList<String[]> categorias = new ArrayList<String[]>();
+		Set<String> categoriasPorDiv = new HashSet<String>();
+		String tmp;
+		int maxCat = 0;
+		for (int i=0;i<divisiones.length;i++){
+		try{
+			categoriasPorDiv.clear();
+			Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
+			Statement st = conn.createStatement();
+			st.execute("select distinct categoria from \"Prenda\" where division ='"+divisiones[i]+"'");
+			ResultSet rs = st.getResultSet();	
+			
+			while(rs.next()){
+				tmp = rs.getString(1);
+				String[] cats = tmp.split(";");
+				for(int j=0;j<cats.length;j++){
+					categoriasPorDiv.add(cats[j]);
+				}
+			}
+			categorias.add(categoriasPorDiv.toArray(new String[categoriasPorDiv.size()]));
+		} catch(Exception e) {
+			
+		}
+		}
+		String[][] ret = new String[divisiones.length][categorias.size()];
+		System.out.println(categorias);
+		return null;	
+	}	
+	
 	public static void initDataBase(){
 		ConfigurableHSQLDBserver.initInMemory("GAP", false);
 		ConfigurableHSQLDBserver.loadSQLFile("proyecto3/GAPDataBase/dump-v1.sql");		
@@ -262,6 +353,7 @@ public class GAPLoader {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
+		
 		ConfigurableHSQLDBserver.shutDown();
 		System.exit(0);
 	}
