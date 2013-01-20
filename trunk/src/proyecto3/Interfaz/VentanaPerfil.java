@@ -154,7 +154,7 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		JLabel nombreUsuario = new JLabel("Usuario: "+ SistemaTienda.usuarioActual.getNombre());
 		p.add(nombreUsuario, BorderLayout.NORTH);
 		botonSalir = new JButton("Salir");
-		botonSalir.setText("Salir");
+		botonSalir.setText("Logout");
 		botonSalir.addActionListener(this);
 		p.add(botonSalir, BorderLayout.SOUTH);
 		return p;

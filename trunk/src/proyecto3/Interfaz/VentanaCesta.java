@@ -1,8 +1,6 @@
 package Interfaz;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -16,7 +14,6 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -24,12 +21,18 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EtchedBorder;
 
-public class VentanaCesta extends JFrame implements ActionListener{//JInternalFrame{
+import sistema.SistemaTienda;
 
+public class VentanaCesta extends JFrame implements ActionListener{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6623729610448537507L;
 	public final static int W = 300;
 	public final static int H = 200;
-	private DefaultListModel listModel;
-	private JList listaProductos;
+	private DefaultListModel<Integer> listModel;
+	private JList<Integer> listaProductos;
 	private JButton eliminar;
 	private JButton cancelar;
 	private VentanaPrincipal vP;
@@ -104,25 +107,12 @@ public class VentanaCesta extends JFrame implements ActionListener{//JInternalFr
 		p.setLayout(new BorderLayout());
 		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Mi carrito"));
 		
-		listModel = new DefaultListModel();
-	
-		listModel.addElement("Elemento 1");
-		listModel.addElement("Elemento 2");
-		listModel.addElement("Elemento 3");
-		listModel.addElement("Elemento 1");
-		listModel.addElement("Elemento 2");
-		listModel.addElement("Elemento 3");
-		listModel.addElement("Elemento 1");
-		listModel.addElement("Elemento 2");
-		listModel.addElement("Elemento 3");
-		listModel.addElement("Elemento 1");
-		listModel.addElement("Elemento 2");
-		listModel.addElement("Elemento 3");
-		listModel.addElement("Elemento 1");
-		listModel.addElement("Elemento 2");
-		listModel.addElement("Elemento 3");
-
-		listaProductos = new JList(listModel);
+		
+		listModel = new DefaultListModel<Integer>();
+		for(Integer id: SistemaTienda.productosCesta){
+			listModel.addElement(id);
+		}
+		listaProductos = new JList<Integer>(listModel);
 		listaProductos.setLayoutOrientation(JList.VERTICAL);
 		// Solo se puede seleccionar un producto para eliminar
 		listaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -147,7 +137,7 @@ public class VentanaCesta extends JFrame implements ActionListener{//JInternalFr
 			
 			 int index = listaProductos.getSelectedIndex();
 			 listModel.remove(index);
-			 
+			 SistemaTienda.productosCesta.remove(index);
 
 			 if (listModel.getSize() <= 0) 
 				 eliminar.setEnabled(false);
