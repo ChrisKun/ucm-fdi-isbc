@@ -47,18 +47,20 @@ public class Usuario {
 	}
 
 	/**
-	 * Añade un ID de producto nuevo y guarda la informacion del usuario
+	 * Añade los ids de los productos, siempre y cuando no no los tenga el usuario
+	 * AL finalizar guarda el usuario por seguridad
 	 * @param producto
 	 */
-	public void añadeProductoComprado(Integer producto) {
-		if (!productosComprados.contains(producto)) {
-			productosComprados.add(producto);
-			try {
-				// Guardamos el usuario para no preocuparnos de poder perder la informacion
-				this.guardaUsuario();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	public void añadeProductosComprados(ArrayList<Integer> ids) {
+		for (Integer id: ids) {
+			if (!productosComprados.contains(id))
+				productosComprados.add(id);				
+		}
+		try {
+			// Guardamos el usuario para no preocuparnos de poder perder la informacion
+			this.guardaUsuario();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -213,36 +215,5 @@ public class Usuario {
         } finally {
               fichero.close();
         }
-    }
-	/*
-	public static void main(String args[]) {		
-		try{
-			GAPLoader.initDataBase();
-			Usuario usuario = Usuario.cargaUsuario("Pedro","112");	
-			//Usuario usuari1o = Usuario.cargaUsuario("Pedaro","112");	
-			//Usuario usuario2 = Usuario.creaUsuario("Pedro", "112");/*
-			usuario.eliminaProductoComprado(317265);
-			ArrayList<Product> productos = GAPLoader.extractProducts();
-			int i = 0;
-			for(Product p: productos) {
-				if (i<9) usuario.añadeProductoComprado(p.getId());
-				else break;
-				i++;
-			}
-			//usuario.guardaUsuario();
-			ArrayList<Integer> lista;
-			Recomendador recomendador = new Recomendador();
-			lista = recomendador.recomendadosPorUsuario(usuario);
-			lista = recomendador.recomendadosPorMasComprados();
-			lista = recomendador.recomendadosPorProducto(245996);
-			recomendador.postCycle();			
-		} catch (Exception e) {
-			e.getLocalizedMessage();
-			e.printStackTrace();
-		} finally {
-			GAPLoader.shutDownDataBase();
-		}
-		
-	}
-	*/
+    }	
 }
