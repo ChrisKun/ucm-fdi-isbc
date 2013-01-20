@@ -31,8 +31,8 @@ public class VentanaCesta extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 6623729610448537507L;
 	public final static int W = 300;
 	public final static int H = 200;
-	private DefaultListModel<Integer> listModel;
-	private JList<Integer> listaProductos;
+	private DefaultListModel listModel;
+	private JList listaProductos;
 	private JButton eliminar;
 	private JButton cancelar;
 	private VentanaPrincipal vP;
@@ -108,11 +108,11 @@ public class VentanaCesta extends JFrame implements ActionListener{
 		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Mi carrito"));
 		
 		
-		listModel = new DefaultListModel<Integer>();
+		listModel = new DefaultListModel();
 		for(Integer id: SistemaTienda.productosCesta){
 			listModel.addElement(id);
 		}
-		listaProductos = new JList<Integer>(listModel);
+		listaProductos = new JList(listModel);
 		listaProductos.setLayoutOrientation(JList.VERTICAL);
 		// Solo se puede seleccionar un producto para eliminar
 		listaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

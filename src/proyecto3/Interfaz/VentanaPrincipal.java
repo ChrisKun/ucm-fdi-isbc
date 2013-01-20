@@ -36,7 +36,8 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel panelCambia;
 	private JPanel panelPrincipal;
 	private JLabel labelInicio;
-	
+	private JButton homeCat;
+	private JButton retCat;
 	
 	
 	public VentanaPrincipal()
@@ -125,21 +126,23 @@ public class VentanaPrincipal extends JFrame {
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
 		
-		JButton h = new JButton();
-		h.setToolTipText("Volver a todas las categorías");
-		h.setPreferredSize(new Dimension(32,32));
-		JButton re = new JButton();
-		re.setToolTipText("Retroceder una categoría");
-		re.setPreferredSize(new Dimension(32,32));
+		homeCat = new JButton();
+		homeCat.setToolTipText("Volver a todas las categorías");
+		homeCat.setPreferredSize(new Dimension(32,32));
+		retCat = new JButton();
+		retCat.setToolTipText("Retroceder una categoría");
+		retCat.setPreferredSize(new Dimension(32,32));
 		
 		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"home_cat.png");
-		h.setIcon(icon);
+		homeCat.setIcon(icon);
 		
 		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"back_cat.png");
-		re.setIcon(icon);
+		retCat.setIcon(icon);
 		
-		p.add(h);
-		p.add(re);
+		retCat.setEnabled(false);
+		
+		p.add(homeCat);
+		p.add(retCat);
 		return p;
 	}
 
@@ -152,7 +155,7 @@ public class VentanaPrincipal extends JFrame {
 		//GAPLoader.recopilaCategorias();
 		// X: Tal como esta en la carpeta de imagenes, luego hay subcarpetas. Habria que 
 		//		ver como hacemos los submenus.
-		JList<String> list = new JList<String>(divisiones);
+		JList list = new JList(divisiones);
 		JScrollPane scrollList = new JScrollPane(list);
 		//p.add(list);
 		return scrollList;
