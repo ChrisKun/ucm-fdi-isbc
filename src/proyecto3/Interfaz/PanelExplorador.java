@@ -47,8 +47,8 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	private static final int MIN = 0;
 	private int precioMinimo;
 	private int precioMaximo;
-	private String divisionActual;
-	private String categoriaActual;
+	private static String divisionActual;
+	private static String categoriaActual;
 	private static int numArticulos = 0;
 	private static int pagActual = 1;
 	private static int numPaginas = 1;
@@ -72,7 +72,11 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	
 	public PanelExplorador(VentanaPrincipal vP, String division){
 		this.vP = vP;
-		divisionActual = division;
+		if (divisionActual != division){
+			divisionActual = division;
+			pagActual = 1;
+		}
+		
 		precioMinimo = 10000;
 		precioMaximo = 20000;
 		this.setLayout(new BorderLayout());
@@ -80,14 +84,34 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		this.add(getPanelArticulos(), BorderLayout.CENTER);
 		this.add(getPanelAvanzarRetroceder(),BorderLayout.SOUTH);
 	}
-
-	
 	
 	private Component getPanelAvanzarRetroceder() {
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
 		avanzar = new JButton("AVZ");
 		retroceder = new JButton("RET");
+		if (pagActual == numPaginas) avanzar.setEnabled(false);
+		if (pagActual == 1) retroceder.setEnabled(false);
+		
+		avanzar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pagActual++;
+				retroceder.setEnabled(true);
+				vP.cambiarPanel(new PanelExplorador(vP, divisionActual));
+			}
+		});
+		
+		retroceder.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pagActual--;
+				avanzar.setEnabled(true);
+				vP.cambiarPanel(new PanelExplorador(vP, divisionActual));
+			}
+		});
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -143,11 +167,12 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	private void anyadirArticulos(JPanel p, int numElem) {
 		JComponent j = null;
 		ArrayList<Integer> articulos = GAPLoader.extractPIdsByDivision(divisionActual);
-		numPaginas = articulos.size()/8;
+		numArticulos = articulos.size();
+		numPaginas = articulos.size()/numElem +1;
 		//j.setIcon()
-		for (int i = (pagActual-1)*8; i < 8; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
+		for (int i = (pagActual-1)*numElem; i < pagActual*numElem; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
 		{
-			if (i >= numElem){ //se acabaron los elementos, rellenamos con Jlabel
+			if (i >= numArticulos){ //se acabaron los elementos, rellenamos con Jlabel
 				j = new JLabel();
 			} else {
 				Integer pId = articulos.get(i);

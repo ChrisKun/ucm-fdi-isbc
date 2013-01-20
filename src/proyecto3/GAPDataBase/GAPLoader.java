@@ -274,6 +274,7 @@ public class GAPLoader {
 			while(rs.next()){
 				divisiones.add(rs.getString(1));	
 			}	
+			st.close();
 		} catch(Exception e) {
 			
 		}
