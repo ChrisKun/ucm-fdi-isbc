@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -47,9 +48,10 @@ public class VentanaAyuda extends JFrame {
 
 	private JPanel getPanelPrincipal() {
 		JPanel p = new JPanel();
+		char slash = File.separatorChar;
 		p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Esperemos que le sea útil"));
 		JLabel l = new JLabel();
-		ImageIcon icon = new ImageIcon("src/proyecto3/images/help_src.gif");
+		ImageIcon icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"help_src.gif");
 		l.setIcon(icon);
 		p.add(l);
 		return p;

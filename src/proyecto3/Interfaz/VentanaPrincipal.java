@@ -11,6 +11,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -128,6 +129,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	private JButton getBoton(String str)
 	{
+		char slash = File.separatorChar;
 		JButton jb = new JButton();
 		jb.setName(str);
 		jb.setText(str);
@@ -135,7 +137,7 @@ public class VentanaPrincipal extends JFrame {
 		if (str.equals("Ayuda"))
 		{
 			jb.setText("");
-			ImageIcon icon = new ImageIcon("src/proyecto3/images/help.png");
+			ImageIcon icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"help.png");
 			jb.setIcon(icon);
 			jb.setToolTipText(str);
 		}
