@@ -119,13 +119,24 @@ public class VentanaPrincipal extends JFrame {
 	
 	private JPanel getSubPanelBotonCategoria()
 	{
+		ImageIcon icon = null;
+		char slash = File.separatorChar;
+		
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
 		
-		JButton h = new JButton("H");
+		JButton h = new JButton();
 		h.setToolTipText("Volver a todas las categorías");
-		JButton re = new JButton("R");
+		h.setPreferredSize(new Dimension(32,32));
+		JButton re = new JButton();
 		re.setToolTipText("Retroceder una categoría");
+		re.setPreferredSize(new Dimension(32,32));
+		
+		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"home_cat.png");
+		h.setIcon(icon);
+		
+		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"back_cat.png");
+		re.setIcon(icon);
 		
 		p.add(h);
 		p.add(re);
