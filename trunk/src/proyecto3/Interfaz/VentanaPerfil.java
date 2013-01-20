@@ -207,6 +207,8 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 				// Error al hacer login
 				JOptionPane.showMessageDialog(null,"Inserta un nombre de usuario y una pass validos"); 
 			}
+			vP.setEnabled(true);
+			dispose();
 		}
 		else if (b == botonReg)
 		{
@@ -229,6 +231,8 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 				}
 				 
 			}
+			vP.setEnabled(true);
+			dispose();
 		}
 		else if (b == botonSalir){			
 			try {
@@ -245,6 +249,8 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 				e.printStackTrace();
 			}
 			SistemaTienda.usuarioActual = null;
+			vP.setEnabled(true);
+			dispose();
 		}
 		
 	}

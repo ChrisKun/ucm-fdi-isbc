@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 
 import sistema.SistemaTienda;
@@ -38,12 +39,12 @@ public class VentanaPrincipal extends JFrame {
 	private JLabel labelInicio;
 	private JButton homeCat;
 	private JButton retCat;
+	private JList divisiones;
 	
 	
 	public VentanaPrincipal()
 	{
 		GAPLoader.initDataBase();
-		System.out.println(GAPLoader.recopilaCategorias());
 		new SistemaTienda();
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = pantalla.width;
@@ -132,6 +133,14 @@ public class VentanaPrincipal extends JFrame {
 		retCat = new JButton();
 		retCat.setToolTipText("Retroceder una categoría");
 		retCat.setPreferredSize(new Dimension(32,32));
+		retCat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				vP.cambiarPanel(new PanelExplorador(vP,(String) divisiones.getSelectedValue()));
+			}
+		});
 		
 		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"home_cat.png");
 		homeCat.setIcon(icon);
@@ -139,7 +148,7 @@ public class VentanaPrincipal extends JFrame {
 		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"back_cat.png");
 		retCat.setIcon(icon);
 		
-		retCat.setEnabled(false);
+		//retCat.setEnabled(false);
 		
 		p.add(homeCat);
 		p.add(retCat);
@@ -150,14 +159,12 @@ public class VentanaPrincipal extends JFrame {
 		// X: Fijate que he cambiado el JPanel por un JScrollPane, ya que podemos tener el 
 		//		efecto de un panel entero con un scroll. Se aceptan sugerencias jeje
 		
-		//JPanel p = new JPanel();
-		String[] divisiones = GAPLoader.recopilaDivisiones();
 		//GAPLoader.recopilaCategorias();
 		// X: Tal como esta en la carpeta de imagenes, luego hay subcarpetas. Habria que 
 		//		ver como hacemos los submenus.
-		JList list = new JList(divisiones);
-		JScrollPane scrollList = new JScrollPane(list);
-		//p.add(list);
+		divisiones = new JList(GAPLoader.recopilaDivisiones());
+		divisiones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scrollList = new JScrollPane(divisiones);
 		return scrollList;
 	}
 	

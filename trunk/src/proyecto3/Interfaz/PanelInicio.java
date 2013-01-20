@@ -43,10 +43,17 @@ public class PanelInicio extends JPanel{
 	public PanelInicio(VentanaPrincipal vP)
 	{
 		this.vP = vP;
-		pIdActual = 149612;
+		pIdActual = 794756;
 		ArrayList<Integer> pIdActuales = new ArrayList<Integer>();
 		try {
-			pIdActuales = SistemaTienda.recomendador.recomendadosPorProducto(pIdActual);
+			if (SistemaTienda.usuarioActual == null){
+				pIdActuales = SistemaTienda.recomendador.recomendadosPorMasComprados();
+			} else {
+				pIdActuales = SistemaTienda.recomendador.recomendadosPorUsuario(SistemaTienda.usuarioActual);
+			}
+			if (pIdActuales.size() == 0){
+				pIdActuales = SistemaTienda.recomendador.recomendadosPorProducto(pIdActual);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,7 +124,7 @@ public class PanelInicio extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				vP.cambiarPanel(new PanelArticulo(pIdActual, vP));
+				vP.cambiarPanel(new PanelArticulo(vP, pIdActual));
 			}
 		});
 		pImagen.add(botonIrArticulo, BorderLayout.EAST);

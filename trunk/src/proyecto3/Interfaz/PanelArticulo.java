@@ -47,8 +47,10 @@ public class PanelArticulo extends JPanel {
 	/**
 	 * En esta clase vamos a construir un panel que corresponde a la distribucion
 	 * seguida en el archivo "VentanaArticulo.png" de la memoria.
+	 * @param vP Frame principal
+	 * @param pIdActual Id del producto que vamos a mostrar
 	 */
-	public PanelArticulo(Integer pIdActual, VentanaPrincipal vP){
+	public PanelArticulo(VentanaPrincipal vP, Integer pIdActual){
 		//Al crear este panel necesitamos llamar al recomendador automaticamente
 		//	y mostrar los articulos recuperados
 		this.vP = vP;
@@ -205,7 +207,7 @@ public class PanelArticulo extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				JButton b = (JButton) arg0.getSource();
 				//podemos coger el nombre del boton (no el texto que se muestra)
-				vP.cambiarPanel(new PanelArticulo(Integer.parseInt(b.getName()),vP));
+				vP.cambiarPanel(new PanelArticulo(vP, Integer.parseInt(b.getName())));
 			}
 			
 		}); //cambiado para que pille el pId
