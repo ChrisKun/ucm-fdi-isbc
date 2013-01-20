@@ -63,12 +63,12 @@ public class VentanaPrincipal extends JFrame {
 		
 		// Panel de inicio NOTA: Es el panel que variará
 		//JPanel pE = new PanelExplorador();
-		JPanel pI = new PanelInicio();
-		//JPanel pA = new PanelArticulo(170831);
+		//JPanel pI = new PanelInicio();
+		JPanel pA = new PanelArticulo(/*170831*/144459);
 		
 		//panelP.add(pE);
-		panelP.add(pI);
-		//panelP.add(pA);
+		//panelP.add(pI);
+		panelP.add(pA);
 		
 		//pA.setVisible(false);
 		
@@ -109,11 +109,11 @@ public class VentanaPrincipal extends JFrame {
 		//		efecto de un panel entero con un scroll. Se aceptan sugerencias jeje
 		
 		//JPanel p = new JPanel();
-		String[] categorias = {"Body", "Boys", "GapFit", "Girls", "InfantBoy", "InfantGirl", "Maternity", 
-				"Men", "ToddlerBoy", "ToddlerGirl", "Women"};
+		String[] divisiones = GAPLoader.recopilaDivisiones();
+		GAPLoader.recopilaCategorias(divisiones);
 		// X: Tal como esta en la carpeta de imagenes, luego hay subcarpetas. Habria que 
 		//		ver como hacemos los submenus.
-		JList list = new JList(categorias);
+		JList list = new JList(divisiones);
 		JScrollPane scrollList = new JScrollPane(list);
 		//p.add(list);
 		return scrollList;
