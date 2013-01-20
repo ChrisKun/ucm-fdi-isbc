@@ -214,7 +214,7 @@ public class Usuario {
               fichero.close();
         }
     }
-	
+	/*
 	public static void main(String args[]) {		
 		try{
 			GAPLoader.initDataBase();
@@ -244,4 +244,5 @@ public class Usuario {
 		}
 		
 	}
+	*/
 }
