@@ -37,7 +37,7 @@ public class PanelInicio extends JPanel{
 	private Integer pIdActual;
 	private VentanaPrincipal vP; //referencia a la ventana principal para modificar el panel
 	
-	public PanelInicio(JPanel panel, VentanaPrincipal vP)
+	public PanelInicio(VentanaPrincipal vP)
 	{
 		this.vP = vP;
 		pIdActual = 170831;
