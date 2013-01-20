@@ -40,6 +40,7 @@ public class VentanaCesta extends JFrame implements ActionListener{
 	private JButton cancelar;
 	private JButton comprar;
 	private VentanaPrincipal vP;
+	private JLabel precio;
 	
 	private float precioTotal;
 	
@@ -90,16 +91,16 @@ public class VentanaCesta extends JFrame implements ActionListener{
 			float precio = Float.valueOf(str_price.replaceAll("[a-z]|[A-Z]",""));
 			precioTotal += precio;
 		}
-		JLabel l = new JLabel(precioTotal+" €"); //TODO calcular precio
-		p.add(l);
+		precio = new JLabel(precioTotal+" USD"); //TODO calcular precio
+		p.add(precio);
 		return p;
 	}
 
 	private JPanel getBotones() {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(3,1));
-		JButton pagar = new JButton("Pagar");
-		pagar.setToolTipText("Procede con la compra de sus productos");
+		//JButton pagar = new JButton("Pagar");
+		//pagar.setToolTipText("Procede con la compra de sus productos");
 		
 		cancelar = new JButton("Cancelar");
 		cancelar.setToolTipText("Cancela la compra actual");
@@ -119,7 +120,7 @@ public class VentanaCesta extends JFrame implements ActionListener{
 		p.add(eliminar);
 		p.add(cancelar);
 		p.add(comprar);
-		p.add(pagar);
+		//p.add(pagar);
 		
 		return p;
 	}
@@ -160,6 +161,15 @@ public class VentanaCesta extends JFrame implements ActionListener{
 			 int index = listaProductos.getSelectedIndex();
 			 listModel.remove(index);
 			 SistemaTienda.productosCesta.remove(index);
+			 
+			 precioTotal = 0;
+			 for(Integer id :SistemaTienda.productosCesta){
+				 	String str_price = GAPLoader.extractInfoProductById(id).getPrice();
+					float precio = Float.valueOf(str_price.replaceAll("[a-z]|[A-Z]",""));
+					precioTotal += precio;
+				}
+			
+			 precio.setText(precioTotal+" USD"); //TODO calcular precio
 
 			 if (listModel.getSize() <= 0) 
 				 eliminar.setEnabled(false);
