@@ -130,17 +130,22 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getBoton(String str)
 	{
 		char slash = File.separatorChar;
+		ImageIcon icon = null;
+		
 		JButton jb = new JButton();
 		jb.setName(str);
-		jb.setText(str);
+		//jb.setText(str);
 		
 		if (str.equals("Ayuda"))
-		{
-			jb.setText("");
-			ImageIcon icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"help.png");
-			jb.setIcon(icon);
-			jb.setToolTipText(str);
-		}
+			icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"help.png");
+		else if (str.equals("Perfil"))
+			icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"profile.png");
+		else if (str.equals("Cesta"))
+			icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"cart.png");
+		
+		jb.setIcon(icon);
+		jb.setToolTipText(str);
+		jb.setPreferredSize(new Dimension(48,48));
 		//action Listener
 		jb.addActionListener(new ListenerVentana());
 		return jb;
