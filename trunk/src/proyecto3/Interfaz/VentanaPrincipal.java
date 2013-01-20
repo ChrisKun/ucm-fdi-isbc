@@ -66,7 +66,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		// Panel de inicio NOTA: Es el panel que variará
 		//JPanel pE = new PanelExplorador();
-		//JPanel pI = new PanelInicio();
+		//panelCambia = new PanelInicio(vP);
 		panelCambia = new PanelArticulo(/*170831*/144459, this);
 		
 		//panelP.add(pE);
@@ -93,14 +93,20 @@ public class VentanaPrincipal extends JFrame {
 	
 	private JPanel getSubPanelTextoInicio() {
 		JPanel p = new JPanel();
-		labelInicio = new JLabel("¡Bienvenido, invitado!");
+		labelInicio = new JLabel("¡Bienvenido invitado! Inicie sesión o regístrese para comprar");
 		p.add(labelInicio);
 		return p;
+	}
+	
+	public void setLabelInicio(String str)
+	{
+		labelInicio.setText(str);
 	}
 
 	private JPanel getSubPanelMenu() {
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		p.add(getBoton("Inicio"));
 		p.add(getBoton("Cesta"));
 		p.add(getBoton("Perfil"));
 		p.add(getBoton("Ayuda"));
@@ -142,6 +148,8 @@ public class VentanaPrincipal extends JFrame {
 			icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"profile.png");
 		else if (str.equals("Cesta"))
 			icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"cart.png");
+		else
+			icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"home.png");
 		
 		jb.setIcon(icon);
 		jb.setToolTipText(str);
@@ -188,6 +196,10 @@ public class VentanaPrincipal extends JFrame {
 			{
 				new VentanaAyuda(vP);
 				vP.setEnabled(false);
+			}
+			else if (b.getName().equals("Inicio"))
+			{
+				vP.cambiarPanel(new PanelInicio(vP));
 			}
 		}		
 	}

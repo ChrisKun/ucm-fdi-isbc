@@ -202,6 +202,7 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 				this.add(panelConUsuario);
 				this.validate();
 				logeado = true;
+				vP.setLabelInicio("¡Encantados de volver a verte, "+usuario.getNombre()+"!");
 			} catch (Exception e) {
 				// Error al hacer login
 				JOptionPane.showMessageDialog(null,"Inserta un nombre de usuario y una pass validos"); 
@@ -218,6 +219,7 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 				this.add(panelConUsuario);
 				this.validate();
 				logeado = true;
+				vP.setLabelInicio("¡Bienvenido "+regNombre.getText()+"! Disfruta de nuestros productos");
 			} catch (Exception e) {
 				// Error al registrar
 				if (regNombre.getText().compareTo("") == 0){
@@ -237,6 +239,7 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 				this.add(panelSinUsuario);
 				this.validate();
 				logeado = false;
+				vP.setLabelInicio("¡Bienvenido invitado! Inicie sesión o regístrese para comprar");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
