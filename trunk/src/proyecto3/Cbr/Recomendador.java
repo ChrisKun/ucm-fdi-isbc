@@ -3,6 +3,7 @@ package Cbr;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -143,12 +144,11 @@ public class Recomendador implements StandardCBRApplication {
 	}	
 	
 	/**
-	 * Devuelve la lista de los ID's de los productos mas comprados
+	 * Devuelve la lista de los ID's de los productos mas comprados o null si no existe el directorio "Usuarios"
 	 * @param usuario
 	 * @return Lista ID's
-	 * @throws Exception
 	 */
-	public ArrayList<Integer> recomendadosPorMasComprados() throws Exception {	
+	public ArrayList<Integer> recomendadosPorMasComprados() {	
 		ArrayList<Integer> productosSimilares = new ArrayList<Integer>();	
 		File archivo = null;
 		FileReader fr = null;
@@ -156,30 +156,35 @@ public class Recomendador implements StandardCBRApplication {
 		String linea;
 		// Comprobamos si hay o no carpeta de usuarios
 		File directorio = new File(Usuario.DIR);
-		if (!directorio.exists()) 
-			throw new Exception("No hay carpeta de usuarios");
+		if (!directorio.exists()) {
+			System.err.println("No hay carpeta de usuarios");
+			return new ArrayList<Integer>();
+		}
 		// Listamos todos los usuarios
 		File[] usuarios = directorio.listFiles();
 		for (File usuario: usuarios) {
 			archivo = new File(Usuario.DIR+File.separatorChar+usuario.getName()+File.separatorChar+"Compras.txt");	
 			// Si no existe el fichero de compras no podemos leer y lo notificamos
-			if (!archivo.exists())
-				throw new Exception("El usuario "+usuario.getName()+" No tiene fichero de compras");
-			fr = new FileReader (archivo);
-            br = new BufferedReader(fr);
-            while((linea = br.readLine()) != null) {
-            	try {
-            	if (!productosSimilares.contains(Integer.valueOf(linea))) 
-            			productosSimilares.add(Integer.valueOf(linea));
-            	// Si hay problema de lectura del fichero lo notificamos
-            	} catch (Exception e) {
-            		fr.close();
-            		br.close();
-            		throw new Exception("El usuario "+usuario.getName()+" tiene el fichero de compras corrupto");
-            	}
-            }
-            fr.close();
-			br.close();
+			if (!archivo.exists()) {
+				System.err.println("El usuario "+usuario.getName()+" No tiene fichero de compras");
+				continue;
+			}
+			try {
+				fr = new FileReader (archivo);
+	            br = new BufferedReader(fr);
+	            while((linea = br.readLine()) != null) {
+	            	if (!productosSimilares.contains(Integer.valueOf(linea))) 
+	            			productosSimilares.add(Integer.valueOf(linea));
+	            }
+			} catch (Exception e ){
+				System.err.println("El usuario "+usuario.getName()+" tiene el fichero de productos corrupto");
+			} finally {
+				try {
+					fr.close();
+				} catch (IOException e) {
+					System.err.println("Error al cerrar el archivo");
+				}
+			}
 		}
 		return productosSimilares;		
 	}		

@@ -239,7 +239,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 						JButton b = (JButton) arg0.getSource();
 						//podemos coger el nombre del boton (no el texto que se muestra)
 						divisionActual = "";
-						vP.cambiarPanel(new PanelArticulo(vP, Integer.parseInt(b.getName())));						
+						vP.cambiarPanel(new PanelArticulo(vP, Integer.parseInt(b.getName())));
 					}
 				});
 			}

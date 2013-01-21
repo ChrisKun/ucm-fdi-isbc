@@ -38,14 +38,17 @@ public class PanelInicio extends JPanel{
 	//private JScrollPane panelReview;
 	private JTextArea textoReview; // Texto de la parte de la review. Atributo porque ha de ser modificable.
 	private JLabel imagen; //imagen que se muestra en el inicio. Atributo porque ha de ser modificable.
-	private Integer pIdActual;
+	private static Integer pIdActual;
+	private static int posPIdActual = 0;
+	private static ArrayList<Integer> pIdActuales;
 	private VentanaPrincipal vP; //referencia a la ventana principal para modificar el panel
 	
 	public PanelInicio(VentanaPrincipal vP)
 	{
 		this.vP = vP;
+		
 		pIdActual = 794756;
-		ArrayList<Integer> pIdActuales = new ArrayList<Integer>();
+		pIdActuales = new ArrayList<Integer>();
 		try {
 			if (SistemaTienda.usuarioActual == null){
 				pIdActuales = SistemaTienda.recomendador.recomendadosPorMasComprados();
@@ -82,23 +85,17 @@ public class PanelInicio extends JPanel{
 		gbc.gridy = 0;
 		gbc.insets = new Insets(1,1,1,1); //bordes de cada componente new Insets (arriba,izquierda,abajo,derecha);
 		this.add(getZonaImagen() , gbc );
-		/*
-		 * NOTA: No debería ser un lugar donde mostrar información del producto?
-		JButton jb = new JButton();
-		jb.setText("Review");
-		jb.setSize(20, 10);
-		this.add(jb, BorderLayout.SOUTH);
-		*/
 		
 		ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                //...Perform a task...
-
-                System.out.println("Reading SMTP Info.");
+            	posPIdActual++;
+            	if (posPIdActual == pIdActuales.size()) posPIdActual = 0;
+            	pIdActual = pIdActuales.get(posPIdActual);
+            	//TODO validate()
             }
-            };
-        Timer timer = new Timer( 100 , taskPerformer);
-        timer.setRepeats(false);
+		};
+        Timer timer = new Timer( 3000 , taskPerformer);
+        timer.setRepeats(true);
         timer.start();
 
 		
