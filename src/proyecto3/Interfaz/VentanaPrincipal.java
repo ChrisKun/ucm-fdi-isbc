@@ -235,19 +235,18 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 			//Opciones
 			if (b.getName().equals("Cesta"))
 			{
-				new VentanaCesta(vP);
 				vP.setEnabled(false);
-				
+				new VentanaCesta(vP);				
 			}
 			else if (b.getName().equals("Perfil"))
 			{
-				new VentanaPerfil(vP);
 				vP.setEnabled(false);
+				new VentanaPerfil(vP);
 			}
 			else if (b.getName().equals("Ayuda"))
 			{
-				new VentanaAyuda(vP);
 				vP.setEnabled(false);
+				new VentanaAyuda(vP);		
 			}
 			else if (b.getName().equals("Inicio"))
 			{
