@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import Perfil.Usuario;
 import jcolibri.casebase.*;
@@ -44,12 +45,17 @@ public class Recomendador implements StandardCBRApplication {
     /** Numbero de productos devueltos */
     Integer numeroCasos;
     
+    /** Numero de productos mas comprados */
+    Integer numeroMaximoProductosDevueltos;
+    
+    
     /**
      * Crea el recomendador y hace los metodos configure() y preCycle()
      * @throws ExecutionException
      */
     public Recomendador() throws Exception {
     	super();
+    	numeroMaximoProductosDevueltos = 15;
 		this.inicio();
     }
     
@@ -135,16 +141,27 @@ public class Recomendador implements StandardCBRApplication {
 			this.cycle(query);
 		}
 		// Comprobamos que ninguno de los productos similares sea alguno que haya comprado el usuario
-		ArrayList<Integer> productosDevueltos = new ArrayList<Integer>();
+		ArrayList<Integer> productosSimilares = new ArrayList<Integer>();
 		for (Integer id: productosSimilares) {
 			if (!usuario.getProductosComprados().contains(id)) 
-				productosDevueltos.add(id);
+				productosSimilares.add(id);
 		}
+		
+		// Devolvemos tantos productos como indique la variable numeroMaximoProductosDevueltos
+		ArrayList<Integer> productosDevueltos = new ArrayList<Integer>();	
+		Random cogerProducto = new Random();
+		cogerProducto.setSeed(System.currentTimeMillis());
+		for (Integer producto: productosSimilares) {
+			if (cogerProducto.nextBoolean() && productosDevueltos.size() < this.numeroMaximoProductosDevueltos) {
+				productosDevueltos.add(producto);
+			}
+		}
+			
 		return productosDevueltos;		
 	}	
 	
 	/**
-	 * Devuelve la lista de los ID's de los productos mas comprados o null si no existe el directorio "Usuarios"
+	 * Devuelve la lista de los ID's de K productos mas comprados (aleatorios) o null si no existe el directorio "Usuarios"
 	 * @param usuario
 	 * @return Lista ID's
 	 */
@@ -186,6 +203,15 @@ public class Recomendador implements StandardCBRApplication {
 				}
 			}
 		}
-		return productosSimilares;		
+		// Devolvemos tantos productos como indique la variable numeroMaximoProductosDevueltos
+		ArrayList<Integer> productosDevueltos = new ArrayList<Integer>();	
+		Random cogerProducto = new Random();
+		cogerProducto.setSeed(System.currentTimeMillis());
+		for (Integer producto: productosSimilares) {
+			if (cogerProducto.nextBoolean() && productosDevueltos.size() < this.numeroMaximoProductosDevueltos) {
+				productosDevueltos.add(producto);
+			}
+		}
+		return productosDevueltos;		
 	}		
 }
