@@ -19,6 +19,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -124,11 +125,13 @@ public class PanelArticulo extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				SistemaTienda.productosCesta.add(pIdActual);				
+				if (SistemaTienda.usuarioActual != null)
+					SistemaTienda.productosCesta.add(pIdActual);
+				else
+					JOptionPane.showMessageDialog(null, "Debe iniciar sesión para comprar");
 			}
 		});
-		if (SistemaTienda.usuarioActual == null){
-		}
+
 		panel.add(botonComprar, BorderLayout.SOUTH);
 		
 		return panel;

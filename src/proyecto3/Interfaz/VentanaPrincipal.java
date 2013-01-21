@@ -58,6 +58,7 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 		int width = pantalla.width;
 		int height = pantalla.height;
 		this.setBounds(width/2 - W/2, height/2 - H/2, W, H);
+		this.setResizable(false);
 		//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.addWindowListener(new WindowAdapter() {
@@ -270,12 +271,13 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 				   }
 				   vP.cambiarPanel(new PanelExplorador(vP,(String) list.getSelectedValue()));
 				   valoresLista = categorias[i];
+				   viendoCategorias = true;
 				   vP.validate();
-			} else {
+			} else { //ValueIsAdjusting == false
 				//list.clearSelection();
 				
 			}
-		} else {
+		} else { //viendoCategorias == true
 			
 		}
 		
