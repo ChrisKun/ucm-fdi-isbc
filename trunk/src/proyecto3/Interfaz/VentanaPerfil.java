@@ -212,7 +212,6 @@ public class VentanaPerfil extends JFrame implements ActionListener{
 		}
 		else if (b == botonReg)
 		{
-			// TODO añadir a la base de datos
 			try {
 				SistemaTienda.usuarioActual = Usuario.creaUsuario(regNombre.getText(), String.copyValueOf(regPass.getPassword()));
 				SistemaTienda.usuarioActual.guardaUsuario();

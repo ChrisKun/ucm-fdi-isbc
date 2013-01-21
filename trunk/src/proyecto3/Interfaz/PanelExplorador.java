@@ -38,7 +38,6 @@ import GAPDataBase.GAPLoader;
 
 public class PanelExplorador extends JPanel implements ChangeListener {
 
-	//TODO
 	/*
 	 * - Boton para hacer consulta aplicando filtros...
 	 * - Si no hay resultados, no mostrar nada
@@ -47,10 +46,11 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	 */
 	private static final int MAX = 25000;
 	private static final int MIN = 0;
-	private int precioMinimo;
-	private int precioMaximo;
+	private static int precioMinimo;
+	private static int precioMaximo;
 	private static String divisionActual;
 	private static String categoriaActual;
+	private static ArrayList<Integer> listaArticulos;
 	private static int numArticulos = 0;
 	private static int pagActual = 1;
 	private static int numPaginas = 1;
@@ -78,6 +78,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		if (divisionActual != division){
 			divisionActual = division;
 			pagActual = 1;
+			listaArticulos = GAPLoader.extractPIdsByDivision(divisionActual);
 		}
 		
 		precioMinimo = 10000;
@@ -181,6 +182,24 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		gbc.gridx = 2;
 		gbc.gridy = 1;
 		JButton j = new JButton("Aplicar Filtros");
+		j.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ArrayList<Integer> filtroLavado;
+				if (botonMano.isSelected()){
+					filtroLavado = GAPLoader.extractPIdsByWashing("Hand wash");	
+				} else {
+					filtroLavado = GAPLoader.extractPIdsByWashing("Machine wash");
+				}
+				ArrayList<Integer> filtroPrecio = GAPLoader.extractPIdsByPriceRange(precioMinimo/100, precioMaximo/100);
+				
+				listaArticulos.retainAll(filtroPrecio);
+				listaArticulos.retainAll(filtroLavado);
+				vP.cambiarPanel(new PanelExplorador(vP, divisionActual));
+			}
+		});
 		p.add(j,gbc);
 		
 		return p;
@@ -195,21 +214,20 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 			
 	private void anyadirArticulos(JPanel p, int numElem) {
 		JComponent j = null;
-		ArrayList<Integer> articulos = GAPLoader.extractPIdsByDivision(divisionActual);
-		numArticulos = articulos.size();
-		numPaginas = articulos.size()/numElem +1;
+		numArticulos = listaArticulos.size();
+		numPaginas = listaArticulos.size()/numElem +1;
 		//j.setIcon()
 		for (int i = (pagActual-1)*numElem; i < pagActual*numElem; i++) //TODO falta saber el número de elementos que queremos mostrar y sus imagenes
 		{
 			if (i >= numArticulos){ //se acabaron los elementos, rellenamos con Jlabel
 				j = new JLabel();
 			} else {
-				Integer pId = articulos.get(i);
+				Integer pId = listaArticulos.get(i);
 				j = new JButton(pId.toString());
 				j.setName(pId.toString());
 				Icon icon = new ImageIcon(GAPLoader.extractImagePathByPId(pId));
 				
-				Image img = ((ImageIcon) icon).getImage() ;  
+				Image img = ((ImageIcon) icon).getImage() ; 
 				Image newimg = img.getScaledInstance( 180, 130,  java.awt.Image.SCALE_SMOOTH ) ;  
 				icon = new ImageIcon( newimg );
 				
@@ -220,7 +238,8 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 					public void actionPerformed(ActionEvent arg0) {
 						JButton b = (JButton) arg0.getSource();
 						//podemos coger el nombre del boton (no el texto que se muestra)
-						vP.cambiarPanel(new PanelArticulo(vP, Integer.parseInt(b.getName())));
+						divisionActual = "";
+						vP.cambiarPanel(new PanelArticulo(vP, Integer.parseInt(b.getName())));						
 					}
 				});
 			}
