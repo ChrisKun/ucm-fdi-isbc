@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -88,6 +89,19 @@ public class PanelInicio extends JPanel{
 		jb.setSize(20, 10);
 		this.add(jb, BorderLayout.SOUTH);
 		*/
+		
+		ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                //...Perform a task...
+
+                System.out.println("Reading SMTP Info.");
+            }
+            };
+        Timer timer = new Timer( 100 , taskPerformer);
+        timer.setRepeats(false);
+        timer.start();
+
+		
 	}
 	/**
 	 * Construye el panel en donde estará el texto de la review. Tiene Scroll por si es un texto largo.

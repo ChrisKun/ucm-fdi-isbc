@@ -209,17 +209,23 @@ public class GAPLoader {
 	    try {	    	
 	    	Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/GAP", "sa", "");
 			Statement st = conn.createStatement();
-			//TODO X: Problema, precio viene en un string con USD
-			st.execute("select \"PID\" from \"Prenda\" where precio > " + min +" and precio < " + max );
+			st.execute("select \"PID\", precio from \"Prenda\"");
 			ResultSet rs = st.getResultSet();	
+			String precio_str;
+			Float precio_tmp;
+			Integer pId_tmp;
 			while(rs.next()){
-				products.add(rs.getInt(1));
-			}
+				pId_tmp = rs.getInt(1);
+				precio_str = rs.getString(2);
+				precio_tmp = Float.valueOf(precio_str.replaceAll("[a-z]|[A-Z]",""));
+				if (min <= precio_tmp && precio_tmp <= max){
+					products.add(pId_tmp);
+				}
+			}			
 			st.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
-		//ConfigurableHSQLDBserver.shutDown();
+		}
 		return products;
 
 	}
