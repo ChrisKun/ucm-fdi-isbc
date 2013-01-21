@@ -3,6 +3,7 @@ package Interfaz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -47,23 +49,27 @@ public class PanelInicio extends JPanel{
 	{
 		this.setName("PanelInicio");
 		this.vP = vP;
-		if (pIdActual == 0) pIdActual = 794756;
-		if (pIdActuales == null) pIdActuales = new ArrayList<Integer>();
-		try {
-			if (SistemaTienda.usuarioActual == null){
-				pIdActuales = SistemaTienda.recomendador.recomendadosPorMasComprados();
-			} else {
-				pIdActuales = SistemaTienda.recomendador.recomendadosPorUsuario(SistemaTienda.usuarioActual);
-			}
-			if (pIdActuales.size() == 0){
-				pIdActuales = SistemaTienda.recomendador.recomendadosPorProducto(pIdActual);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			pIdActuales.add(pIdActual);
+		if (pIdActual == 0){
+			pIdActual = 794756;
 		}
-		pIdActual = pIdActuales.get(0);
+		if (pIdActuales == null) {
+			pIdActuales = new ArrayList<Integer>();
+			try {
+				if (SistemaTienda.usuarioActual == null){
+					pIdActuales = SistemaTienda.recomendador.recomendadosPorMasComprados();
+				} else {
+					pIdActuales = SistemaTienda.recomendador.recomendadosPorUsuario(SistemaTienda.usuarioActual);
+				}
+				if (pIdActuales.size() == 0){
+					pIdActuales = SistemaTienda.recomendador.recomendadosPorProducto(pIdActual);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				pIdActuales.add(pIdActual);
+			}
+			pIdActual = pIdActuales.get(0);
+		}
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints(); // para las dimensiones de las celdas del gridBag
@@ -129,7 +135,10 @@ public class PanelInicio extends JPanel{
 	
 	private JPanel getZonaImagen() 
 	{
+		JPanel panelReturn = new JPanel();
+		panelReturn.setLayout(new BorderLayout());
 		JPanel pImagen = new JPanel();
+		
 		Border blackline = BorderFactory.createEtchedBorder();
 		pImagen.setBorder(blackline);
 		pImagen.getBorder();
@@ -149,6 +158,49 @@ public class PanelInicio extends JPanel{
 			}
 		});
 		pImagen.add(botonIrArticulo, BorderLayout.EAST);
-		return pImagen;
+		
+		JButton botonIzquierda = new JButton();
+		botonIzquierda.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (posPIdActual == 0){
+					posPIdActual = pIdActuales.size()-1;
+				} else {
+					posPIdActual--;
+				}
+				pIdActual = pIdActuales.get(posPIdActual);
+				vP.cambiarPanel(new PanelInicio(vP));
+			}
+		});
+		
+		JButton botonDerecha = new JButton();
+		botonDerecha.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (posPIdActual == pIdActuales.size()-1){
+					posPIdActual = 0;
+				} else {
+					posPIdActual++;
+				}
+				pIdActual = pIdActuales.get(posPIdActual);
+				vP.cambiarPanel(new PanelInicio(vP));
+			}
+		});
+		
+		char slash = File.separatorChar;
+		Icon icon = null;
+		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"back_cat.png");
+		botonIzquierda.setIcon(icon);
+		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"forw_cat.png");
+		botonDerecha.setIcon(icon);
+		
+		panelReturn.add(pImagen, BorderLayout.CENTER);
+		panelReturn.add(botonIzquierda, BorderLayout.WEST);
+		panelReturn.add(botonDerecha, BorderLayout.EAST);
+		return panelReturn;
 	}
 }
