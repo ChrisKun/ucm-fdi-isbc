@@ -45,11 +45,13 @@ public class VentanaCesta extends JFrame implements ActionListener{
 	private float precioTotal;
 	
 	public VentanaCesta(VentanaPrincipal ventana){
+		vP = ventana;
 		
 		if (SistemaTienda.usuarioActual == null) {
-			JOptionPane.showMessageDialog(null,"Debes hacer login para poder comprar");
 			vP.setEnabled(true);
 			dispose();
+			JOptionPane.showMessageDialog(null,"Debes hacer login para poder comprar");
+			
 		} else {
 			Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 			int width = pantalla.width;
@@ -61,7 +63,7 @@ public class VentanaCesta extends JFrame implements ActionListener{
 			this.setTitle("Cesta");
 			
 			this.setContentPane(getPanelPrincipalCesta());
-			vP = ventana;
+			
 			
 			this.addWindowListener(new WindowAdapter(){
 				  public void windowClosing(WindowEvent we){
