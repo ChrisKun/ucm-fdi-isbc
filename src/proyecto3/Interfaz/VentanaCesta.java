@@ -112,12 +112,15 @@ public class VentanaCesta extends JFrame implements ActionListener{
 		eliminar.addActionListener(this);
 		eliminar.setToolTipText("Elimina un producto seleccionado");
 		
-		if (listModel.getSize() == 0)
-			eliminar.setEnabled(false);
 		
 		comprar = new JButton("Comprar");
 		comprar.addActionListener(this);
 		comprar.setToolTipText("Compra los articulos seleccionados");
+		
+		if (listModel.getSize() == 0){
+			comprar.setEnabled(false);
+			eliminar.setEnabled(false);
+		}
 		
 		p.add(eliminar);
 		p.add(cancelar);
@@ -173,11 +176,10 @@ public class VentanaCesta extends JFrame implements ActionListener{
 			
 			 precio.setText(precioTotal+" USD"); //TODO calcular precio
 
-			 if (listModel.getSize() <= 0) 
+			 if (listModel.getSize() <= 0){
 				 eliminar.setEnabled(false);
-			 
-			 else 
-			 { 
+				 comprar.setEnabled(false);
+			 } else { 
 				 if (index == listModel.getSize()) 
 					 index--;
 				 
