@@ -44,7 +44,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	 * - Los botones avanzar y retroceder solo estaran disponibles cuando los resultados sean mayores que X elementos 
 	 *   (de momento X = 8)
 	 */
-	private static final int MAX = 25000;
+	private static final int MAX = 34000;
 	private static final int MIN = 0;
 	private static int precioMinimo;
 	private static int precioMaximo;
@@ -74,15 +74,17 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	
 	
 	public PanelExplorador(VentanaPrincipal vP, String division){
+		this.setName("PanelExplorador");
 		this.vP = vP;
 		if (divisionActual != division){
 			divisionActual = division;
 			pagActual = 1;
 			listaArticulos = GAPLoader.extractPIdsByDivision(divisionActual);
+			precioMinimo = 500;
+			precioMaximo = 1400;
 		}
 		
-		precioMinimo = 10000;
-		precioMaximo = 20000;
+		
 		this.setLayout(new BorderLayout());
 		this.add(getPanelFiltrado(), BorderLayout.NORTH);
 		this.add(getPanelArticulos(), BorderLayout.CENTER);

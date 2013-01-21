@@ -54,6 +54,7 @@ public class PanelArticulo extends JPanel {
 	public PanelArticulo(VentanaPrincipal vP, Integer pIdActual){
 		//Al crear este panel necesitamos llamar al recomendador automaticamente
 		//	y mostrar los articulos recuperados
+		this.setName("PanelArticulo");
 		this.vP = vP;
 		this.pIdActual = pIdActual;
 		this.setLayout(new BorderLayout());
