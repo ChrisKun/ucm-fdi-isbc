@@ -198,9 +198,17 @@ public class PanelInicio extends JPanel{
 		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"forw_cat.png");
 		botonDerecha.setIcon(icon);
 		
+		JLabel cabecera;
+		if (SistemaTienda.usuarioActual == null){
+			cabecera = new JLabel("Estos son los productos más comprados por nuestros usuarios");
+		} else {
+			cabecera = new JLabel("Nuestra recomendación exclusiva para ti!");
+		}
+		
 		panelReturn.add(pImagen, BorderLayout.CENTER);
 		panelReturn.add(botonIzquierda, BorderLayout.WEST);
 		panelReturn.add(botonDerecha, BorderLayout.EAST);
+		panelReturn.add(cabecera, BorderLayout.PAGE_START);
 		return panelReturn;
 	}
 }
