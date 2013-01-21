@@ -25,6 +25,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -72,7 +73,10 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 		this.setMinimumSize(new Dimension(W,H));
 		vP = this;
 		categorias = GAPLoader.recopilaCategorias();
+		
 	}
+
+
 	
 	private Container getPanelPrincipal() {
 		panelPrincipal = new JPanel();
@@ -132,7 +136,7 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 		p.setBorder(BorderFactory.createBevelBorder(0));
 		p.setLayout(new BorderLayout());
 		p.add(getPanelCategoria(), BorderLayout.CENTER);
-		p.add(getSubPanelBotonCategoria(), BorderLayout.SOUTH);
+		//p.add(getSubPanelBotonCategoria(), BorderLayout.SOUTH);
 		return p;
 	}
 	
@@ -150,16 +154,17 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 		retCat = new JButton();
 		retCat.setToolTipText("Retroceder una categoría");
 		retCat.setPreferredSize(new Dimension(32,32));
-		/*
+		
 		retCat.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				vP.cambiarPanel(new PanelExplorador(vP,(String) list.getSelectedValue()));
+				viendoCategorias = true;
+				validate();
 			}
 		});
-		*/
+		
 		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"home_cat.png");
 		homeCat.setIcon(icon);
 		
@@ -257,7 +262,6 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 	}
 	
 	public void valueChanged(ListSelectionEvent e) {
-		if (!viendoCategorias){
 			if (e.getValueIsAdjusting() == true) {
 
 				   int i = list.getSelectedIndex();
@@ -270,16 +274,8 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 					   if (categorias[i][j] != null) cat.add(categorias[i][j]);
 				   }
 				   vP.cambiarPanel(new PanelExplorador(vP,(String) list.getSelectedValue()));
-				   valoresLista = categorias[i];
-				   viendoCategorias = true;
-				   vP.validate();
-			} else { //ValueIsAdjusting == false
-				//list.clearSelection();
-				
+				   
 			}
-		} else { //viendoCategorias == true
-			
-		}
 		
 		
 	}

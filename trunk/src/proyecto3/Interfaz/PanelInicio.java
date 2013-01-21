@@ -38,17 +38,17 @@ public class PanelInicio extends JPanel{
 	//private JScrollPane panelReview;
 	private JTextArea textoReview; // Texto de la parte de la review. Atributo porque ha de ser modificable.
 	private JLabel imagen; //imagen que se muestra en el inicio. Atributo porque ha de ser modificable.
-	private static Integer pIdActual;
+	private static Integer pIdActual = 0;
 	private static int posPIdActual = 0;
 	private static ArrayList<Integer> pIdActuales;
 	private VentanaPrincipal vP; //referencia a la ventana principal para modificar el panel
 	
 	public PanelInicio(VentanaPrincipal vP)
 	{
+		this.setName("PanelInicio");
 		this.vP = vP;
-		
-		pIdActual = 794756;
-		pIdActuales = new ArrayList<Integer>();
+		if (pIdActual == 0) pIdActual = 794756;
+		if (pIdActuales == null) pIdActuales = new ArrayList<Integer>();
 		try {
 			if (SistemaTienda.usuarioActual == null){
 				pIdActuales = SistemaTienda.recomendador.recomendadosPorMasComprados();
@@ -85,21 +85,31 @@ public class PanelInicio extends JPanel{
 		gbc.gridy = 0;
 		gbc.insets = new Insets(1,1,1,1); //bordes de cada componente new Insets (arriba,izquierda,abajo,derecha);
 		this.add(getZonaImagen() , gbc );
-		
-		ActionListener taskPerformer = new ActionListener() {
+
+		/*
+		ActionListener taskPerformer = getTaskPerformer();
+        Timer timer = new Timer( 3000 , taskPerformer);
+        timer.setRepeats(false);
+        timer.start();
+        */
+	}
+	
+	/*
+	private ActionListener getTaskPerformer() {
+		// TODO Auto-generated method stub
+		return new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
             	posPIdActual++;
             	if (posPIdActual == pIdActuales.size()) posPIdActual = 0;
             	pIdActual = pIdActuales.get(posPIdActual);
-            	//TODO validate()
+            	//TODO validate();
+            	System.out.println(posPIdActual + ": " + pIdActual);
+            	vP.cambiarPanel(new PanelInicio(vP));
             }
 		};
-        Timer timer = new Timer( 3000 , taskPerformer);
-        timer.setRepeats(true);
-        timer.start();
-
-		
 	}
+	*/
+	
 	/**
 	 * Construye el panel en donde estará el texto de la review. Tiene Scroll por si es un texto largo.
 	 * @return JScrollPane
