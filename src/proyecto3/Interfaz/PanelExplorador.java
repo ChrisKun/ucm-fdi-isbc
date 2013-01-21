@@ -10,8 +10,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -58,6 +60,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	private JTextField etiquetaPrecioMax;
 	private JTextField etiquetaPrecioMin;
 	
+	private JLabel mostrarPagina;
 	
 	private VentanaPrincipal vP; //para hacer cambios en la interfaz
 	
@@ -87,11 +90,29 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 	
 	private Component getPanelAvanzarRetroceder() {
 		JPanel p = new JPanel();
+		char slash = File.separatorChar;
+		ImageIcon icon = null;
+		
 		p.setLayout(new GridBagLayout());
-		avanzar = new JButton("AVZ");
-		retroceder = new JButton("RET");
+		
+		avanzar = new JButton("");
+		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"forward.png");	
+		avanzar.setIcon(icon);
+		avanzar.setPreferredSize(new Dimension(32,32));
+		
+		retroceder = new JButton();
+		icon = new ImageIcon("src"+slash+"proyecto3"+slash+"images"+slash+"backward.png");	
+		retroceder = new JButton("");
+		retroceder.setIcon(icon);
+		retroceder.setPreferredSize(new Dimension(32,32));
+		
+		
+		
 		if (pagActual == numPaginas) avanzar.setEnabled(false);
 		if (pagActual == 1) retroceder.setEnabled(false);
+		
+		mostrarPagina = new JLabel("Página "+pagActual+" de "+numPaginas);
+		
 		
 		avanzar.addActionListener(new ActionListener() {
 			
@@ -100,6 +121,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 				pagActual++;
 				retroceder.setEnabled(true);
 				vP.cambiarPanel(new PanelExplorador(vP, divisionActual));
+				mostrarPagina.setText("Página "+pagActual+" de "+numPaginas);
 			}
 		});
 		
@@ -110,6 +132,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 				pagActual--;
 				avanzar.setEnabled(true);
 				vP.cambiarPanel(new PanelExplorador(vP, divisionActual));
+				mostrarPagina.setText("Página "+pagActual+" de "+numPaginas);
 			}
 		});
 		
@@ -126,6 +149,12 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		c.gridy = 0;
 		
 		p.add(avanzar,c);
+		
+		c.gridx = 2;
+		c.gridy = 0;
+		c.insets = new Insets (0,10,0,0);
+		
+		p.add(mostrarPagina,c);
 		return p;
 	}
 
