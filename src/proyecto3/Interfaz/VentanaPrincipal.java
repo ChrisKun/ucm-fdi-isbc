@@ -52,7 +52,9 @@ public class VentanaPrincipal extends JFrame implements ListSelectionListener {
 	
 	public VentanaPrincipal()
 	{
+		BarraProgreso b = new BarraProgreso();
 		GAPLoader.initDataBase();
+		b.cerrarVentana();
 		new SistemaTienda();
 		valoresLista = GAPLoader.recopilaDivisiones();
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
