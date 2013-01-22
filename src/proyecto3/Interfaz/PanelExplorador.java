@@ -169,7 +169,7 @@ public class PanelExplorador extends JPanel implements ChangeListener {
 		 gbc.gridy = 0;
 		 
 		 //gbc.gridwidth = 4;
-		 p.add(getSubPanelFiltradoLavado(),gbc);
+		// p.add(getSubPanelFiltradoLavado(),gbc);
 		
 		 gbc.gridx = 0;
 		 gbc.gridy = 0;
