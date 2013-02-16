@@ -1,26 +1,42 @@
 <html>
 <body>
 
-<form action = "Prueba.php" method="post">
+<form action = "sentwittment.php" method="post">
 Query: <input type="text" name="query"><br>
 ReturnPerPage: <input type="int" name="rpp"><br>
+Result Type: <select name="result_type">
+<option value="0" selected>Populares</option>
+<option value="1">Recientes</option>
+<option value="2">Mixtos</option>
+</select><br>
 <input type="submit">
 </form>
 
 </body>
 </html>
 
-<?php //Código Principal
+<?php //Main Program
 
 $lexicon = loadLexicon();
-
 if (isset($_POST["query"]))
 {
-  $q = "q=" . $_POST["query"] ; // Concepto o Query
+/*
+  $q = "q=" . $_POST["query"] ; // Query
   $rpp = "rpp=" . $_POST["rpp"]; // Return Per Page
+  switch ($_POST["result_type"]) {
+	case 0:
+		$result_type = "result_type=popular";
+		break;
+	case 1:
+		$result_type = "result_type=recent";
+		break;
+	case 2:
+		$result_type = "result_type=mixed";
+		break;
+  }
   $include_entities = "include_entities=false"; // Metadata about Tweets
-  $result_type = "result_type=recent"; // Popular and Recent
-
+*/
+  $query = getQueryFromForm();
   /* 
   La búsqueda se realiza por consulta web con un 'search.json?' al que hay que
   indicarle obligatoriamente un concepto con 'q= ' que representa el concepto
@@ -32,10 +48,10 @@ if (isset($_POST["query"]))
     'result_type= ' -> Tweets populares, recientes o mixtos
   
   La llamada Original
-    $format = "json?q=blue%20angels&rpp=5&include_entities=true&result_type=mixed";
+    http://search.twitter.com/search.json?q=blue%20angels&rpp=5&include_entities=true&result_type=mixed
   */
-  $format = "json?".$q."&".$rpp."&".$include_entities."&".$result_type;
-  $filename = "http://search.twitter.com/search." . $format;
+  //$format = "json?".$q."&".$rpp."&".$include_entities."&".$result_type;
+  $filename = "http://search.twitter.com/search.json?".$query;
 
   $json = file_get_contents($filename, true);
   $decode = json_decode($json, true);
@@ -75,5 +91,35 @@ function addStringToLexicon(&$lexicon,$string){
       $lexicon[$parts[0]]["neg"] = $lexicon[$parts[0]]["neg"]+1;
     }
   }
+}
+
+/**
+Get the neccessary info from the forms and return a string with the configured query
+*/
+function getQueryFromForm(){
+	// Query
+	$query = "q=" . $_POST["query"];
+	// Return Per Page
+	if (isset($_POST["rpp"])){
+		$query .= "&rpp=".$_POST["rpp"];
+	} else {
+		echo "<br>Rpp de 50 <br>";
+		$query .= "&rpp=50";
+	}
+	echo "<br>".$_POST["rpp"]."<br>";
+	// Result Type
+	if (isset($_POST["result_type"])){
+		
+		switch ($_POST["result_type"]) {
+			case 0:
+				$result_type = "result_type=popular"; break;
+			case 1:
+				$result_type = "result_type=recent"; break;
+			case 2:
+				$result_type = "result_type=mixed"; break;
+		}
+	
+	return $query;	
+	}
 }
 ?>
