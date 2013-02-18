@@ -1,4 +1,3 @@
-
 <html>
 <head>
 	<title>Sentwittment</title>
@@ -22,7 +21,7 @@
 
 <?php //Main Program
 
-$lexicon = loadLexicon();
+$lexicon = loadLexicon("lexicon.txt");
 if (!empty($_POST["query"]))
 {
 	$query = getQueryFromForm();
@@ -34,7 +33,9 @@ if (!empty($_POST["query"]))
 	$count = count($decode["results"]);
 	for($i=0;$i<$count;$i++){
 		$textCleaned = cleanString($decode["results"][$i]["text"]);
-		echo $i . ":\t" . $textCleaned . "<br>";
+    $words = explode(" ",$textCleaned);
+    print_r($words);
+		//echo $i . ":\t" . $textCleaned . "<br>";
 	}
 	echo "</pre>";
 }
@@ -42,8 +43,8 @@ if (!empty($_POST["query"]))
 
 <?php // Functions
 
-function loadLexicon(){
-  $file = fopen("lexicon.txt", "r") or exit("Unable to open file!");
+function loadLexicon($file){
+  $file = fopen($file, "r") or exit("Unable to open file!");
   $lexicon = array();
   while(!feof($file)){
     addStringToLexicon($lexicon, fgets($file));
@@ -53,15 +54,16 @@ function loadLexicon(){
 }
 
 function addStringToLexicon(&$lexicon,$string){
-  //$parts = explode("\t",$string);
+  $string = trim($string);
   $parts = explode("\t",$string);
-  //echo trim($string) ."<br>";
+  
+  //echo $parts[0] . " -> " . $parts[1] . "<br>"; 
   $lexicon[$parts[0]] = array("id" => $parts[1], "neg" => 0, "pos" => 0);
   $count = count($parts);
   if (strcmp($parts[2], "neg") == 0) $lexicon[$parts[0]]["neg"] = $lexicon[$parts[0]]["neg"]+1;
   if (strcmp($parts[2], "pos") == 0) $lexicon[$parts[0]]["pos"] = $lexicon[$parts[0]]["pos"]+1;
   if ($count == 4){
-    if (strcmp($parts[3], "pos") > 0){ 
+    if (strcmp($parts[3], "pos") == 0){ 
       $lexicon[$parts[0]]["pos"] = $lexicon[$parts[0]]["pos"]+1;
     } else {
       $lexicon[$parts[0]]["neg"] = $lexicon[$parts[0]]["neg"]+1;
@@ -70,7 +72,7 @@ function addStringToLexicon(&$lexicon,$string){
 }
 
 /**
-Get the neccessary info from the forms and return a string with the configured query
+Get the neccessary info from forms and return a string with the configured query
 */
 function getQueryFromForm(){
 	// Query
@@ -83,14 +85,12 @@ function getQueryFromForm(){
 	}
 	// Result Type
 	switch ($_POST["result_type"]) {
-			case 0:
-				$result_type = "result_type=mixed"; break;
 			case 1:
-				$result_type = "result_type=recent"; break;
+				$query .= "&result_type=recent"; break;
 			case 2:
-				$result_type = "result_type=popular"; break;
+				$query .= "&result_type=popular"; break;
 	}
-	echo $query;
+	echo $query ."<br>";
 	return $query;
 	
 	/***
@@ -99,12 +99,32 @@ function getQueryFromForm(){
 	*/
 }
 
-function cleanString(&$string){
-	$patterns = array();
-	$pattern[0] = 'c';
-	echo $string ."<br>";
-	$string = preg_replace($patterns, "", $string);
-	echo $string ."<br>";
-	print_r(explode(' ',$string));	
+function cleanString($string){
+	//Patterns of sequences we want to remove.
+  echo $string . "<br>" . utf8_decode($string) . "<br>";
+  $string = utf8_decode($string);
+  $string = strtolower($string);
+  $patterns = array();
+  $patterns[0] = '#http://[a-zA-Z0-9.\/]*#';
+  $patterns[1] = '#\d#';
+  $patterns[2] = '#_-().#';
+	
+  $string = preg_replace($patterns, " ", $string);
+  //Removing unnecessary blanks
+  $string = preg_replace("#(\ )+#", " ", $string);
+  $string = trim($string);
+	
+  return $string;
+}
+?>
+
+<?php //Auxiliar Functions
+function normalize ($cadena){
+    $originales =  'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr';
+    $modificadas = 'aaaaaaaceeeeiiiidnoooooouuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr';
+    $cadena = utf8_decode($cadena);
+    $cadena = strtr($cadena, utf8_decode($originales), $modificadas);
+    $cadena = strtolower($cadena);
+    return utf8_encode($cadena);
 }
 ?>
