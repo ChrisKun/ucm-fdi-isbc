@@ -107,7 +107,8 @@ function cleanString($string){
   $patterns = array();
   $patterns[0] = '#http://[a-zA-Z0-9.\/]*#';
   $patterns[1] = '#\d#';
-  $patterns[2] = '#_-().#';
+  //$patterns[2] = '#_-(),;.:\'"#';
+  $patterns[2] = '#^[a-zA-Z]+#';
 	
   $string = preg_replace($patterns, " ", $string);
   //Removing unnecessary blanks
@@ -115,16 +116,5 @@ function cleanString($string){
   $string = trim($string);
 	
   return $string;
-}
-?>
-
-<?php //Auxiliar Functions
-function normalize ($cadena){
-    $originales =  'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr';
-    $modificadas = 'aaaaaaaceeeeiiiidnoooooouuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr';
-    $cadena = utf8_decode($cadena);
-    $cadena = strtr($cadena, utf8_decode($originales), $modificadas);
-    $cadena = strtolower($cadena);
-    return utf8_encode($cadena);
 }
 ?>
