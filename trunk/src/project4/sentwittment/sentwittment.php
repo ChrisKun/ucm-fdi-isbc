@@ -1,22 +1,20 @@
 <html>
-<head>
-	<title>Sentwittment</title>
-	<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<form action = "sentwittment.php" method="post">
-	Query: <input type="text" name="query"><br>
-	ReturnPerPage: <input type="int" name="rpp"><br>
-	Result Type: <select name="result_type">
-		<option value="0" selected>Mixed</option>
-		<option value="1">Recent</option>
-		<option value="2">Popular</option>
-	</select><br>
-	<input type="submit">
-</form>
-
-</body>
+    <head>
+        <title>Sentwittment</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <form action = "sentwittment.php" method="post">
+            Query: <input type="text" name="query"><br>
+            ReturnPerPage: <input type="int" name="rpp"><br>
+            Result Type: <select name="result_type">
+                <option value="0" selected>Mixed</option>
+                <option value="1">Recent</option>
+                <option value="2">Popular</option>
+            </select><br>
+            <input type="submit">
+        </form>
+    </body>
 </html>
 
 <?php //Main Program
@@ -32,10 +30,8 @@ if (!empty($_POST["query"]))
 	echo "<pre>";
 	$count = count($decode["results"]);
 	for($i=0;$i<$count;$i++){
-		$textCleaned = cleanString($decode["results"][$i]["text"]);
-    $words = explode(" ",$textCleaned);
-    print_r($words);
-		//echo $i . ":\t" . $textCleaned . "<br>";
+		$tweet = $decode["results"][$i]["text"];
+        $value = tweetValue($lexicon, $tweet);    
 	}
 	echo "</pre>";
 }
@@ -43,6 +39,9 @@ if (!empty($_POST["query"]))
 
 <?php // Functions
 
+/**
+    Loads the lexicon given by $file
+*/
 function loadLexicon($file){
   $file = fopen($file, "r") or exit("Unable to open file!");
   $lexicon = array();
@@ -53,6 +52,9 @@ function loadLexicon($file){
   return $lexicon;
 }
 
+/**
+    Adds info of $string in $lexicon
+*/
 function addStringToLexicon(&$lexicon,$string){
   $string = trim($string);
   $parts = explode("\t",$string);
@@ -99,22 +101,68 @@ function getQueryFromForm(){
 	*/
 }
 
+/**
+    Removes from string all characters aren't representing words
+*/
 function cleanString($string){
 	//Patterns of sequences we want to remove.
-  echo $string . "<br>" . utf8_decode($string) . "<br>";
-  $string = utf8_decode($string);
-  $string = strtolower($string);
-  $patterns = array();
-  $patterns[0] = '#http://[a-zA-Z0-9.\/]*#';
-  $patterns[1] = '#\d#';
-  //$patterns[2] = '#_-(),;.:\'"#';
-  $patterns[2] = '#^[a-zA-Z]+#';
-	
-  $string = preg_replace($patterns, " ", $string);
-  //Removing unnecessary blanks
-  $string = preg_replace("#(\ )+#", " ", $string);
-  $string = trim($string);
-	
-  return $string;
+    echo utf8_decode($string) . "<br>";
+    $string = utf8_decode($string);
+    $string = strtolower($string);
+    $patterns = array();
+    $patterns[0] = '#http://[a-zA-Z0-9.\/]*#';
+    $patterns[1] = '#\d#';
+    $patterns[2] = '#_-(),;.:@#';
+    //$patterns[2] = '#^[a-zA-Z]+#';
+
+    $string = preg_replace($patterns, "", $string);
+    //Removing unnecessary blanks
+    $string = preg_replace("#\n\t(\ )+#", " ", $string);
+    //$string = preg_replace("#\s#", " ", $string);
+    $string = trim($string);
+
+    return $string;
+}
+
+/**
+    Consults a $string in $lexicon and returns a value
+*/
+function consultLexicon($lexicon, $string){
+  $value = 0;
+  //Check if string is in Lexicon
+  //Recover values from Lexicon
+  //Return array of values
+  
+  return $value;
+}
+
+/**
+    Consults a $tweet in $lexicon and returns total value of $tweet
+*/
+function tweetValue($lexicon, $tweet){
+  $textCleaned = cleanString($tweet);
+  $words = explode(" ",$textCleaned); print_r($words);
+  applyStemming($words);
+  applyLemming($words);
+  $value = 0;
+  $count = count($words);
+	for($i=0;$i<$count;$i++){
+        $value += consultLexicon($lexicon, $words[$i]);
+	}
+  return $value;
+}
+
+/**
+    Apply Stemming to given array $words
+*/
+function applyStemming(&$words){
+
+}
+
+/**
+    Aplly Lemming to given array $words
+*/
+function applyLemming(&$words){
+
 }
 ?>
