@@ -148,7 +148,7 @@ public class ParserWeb {
 				info.add(linea.text());
 			}
 		} catch (IOException e) {
-			System.err.println(dir+"?");
+			System.err.println(dir+"? -> Page Not Available");
 			paginasError.add(dir);
 			return;
 		}
@@ -236,19 +236,20 @@ public class ParserWeb {
 	public void actualizarConfiguracion(){
 		
 		try {
-			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/primera/clasificacion.html").get();
-			Elements tabla = doc.getElementsByTag("td");
-			String[] title = doc.getElementsByTag("title").text().split(" ");
-			ultimaTemporada = Integer.parseInt(title[3].split("-")[0]);			
-			ultimaJornadaPrimera = Integer.parseInt(tabla.get(2).text());
+			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/primera/").get();
+			String[] temporada = doc.getElementsByTag("small").text().split(" ");
+			String[] jornada = doc.getElementsByTag("h3").text().split(" ");
+			ultimaTemporada = Integer.parseInt(temporada[1].split("-")[0]);			
+			ultimaJornadaPrimera = Integer.parseInt(jornada[1]);
 		} catch (IOException e) {
 			System.err.println("No se puede acceder a la pagina principal de Primera division");
 		}
     
 		try {
-			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/segunda/clasificacion.html").get();
-			Elements tabla = doc.getElementsByTag("td");		
-			ultimaJornadaSegunda = Integer.parseInt(tabla.get(2).text());
+			Document doc = Jsoup.connect("http://www.marca.com/estadisticas/futbol/segunda").get();
+			
+			String[] jornada = doc.getElementsByTag("h3").text().split(" ");
+			ultimaJornadaSegunda = Integer.parseInt(jornada[1]);
 
 		} catch (IOException e) {
 			System.err.println("No se puede acceder a la pagina principal de Segunda division");
