@@ -32,9 +32,11 @@ if (!empty($_POST["query"]))
 	$count = count($decode["results"]);
 	for($i=0;$i<$count;$i++){
 		$tweet = $decode["results"][$i]["text"];
-        $value = tweetValue($lexicon, $tweet);    
+        $value = tweetValue($lexicon, $tweet);   
+		$values[] = $value;
 	}
 	echo "</pre>";
+	draw($values);
 }
 ?>
 
@@ -185,5 +187,37 @@ function checkStem($stem, $lexicon){
 		}
 	}
 	return $value;
+}
+
+function draw($values){
+	include('/google_chart/GoogChart.class.php'); //Include class
+	$chart = new GoogChart(); //Create chart
+	$num = count($values);	
+	
+	//var_dump($values); debug only
+	
+	// Set graph data (manual)
+	/*$data = array(
+		);*/
+
+	// Set graph colors
+	$color = array(
+			'#99C754',
+			'#54C7C5',
+			'#999999',
+		);
+	//chart
+	$chart->setChartAttrs( 
+	array(
+		'type' => 'bar-vertical',
+		'title' => 'Tweets values',
+		'data' => $values,
+		'size' => array( 32*$num, 300 ),
+		'color' => $color,
+		//'labelsXY' => true,
+		)
+	);
+	// Print chart
+	echo $chart;
 }
 ?>
