@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Sentwittment</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style.css">		
     </head>
     <body>
         <form action = "sentwittment.php" method="post">
@@ -14,6 +14,8 @@
             </select><br>
             <input type="submit">
         </form>
+		<div id="chart_values"></div>
+		<div id="chart_types"></div>
     </body>
 </html>
 
@@ -35,8 +37,9 @@ if (!empty($_POST["query"]))
         $value = tweetValue($lexicon, $tweet);   
 		$values[] = $value;
 	}
-	echo "</pre>";
-	draw($values);
+	
+	drawChartTweetsValues($values);
+	drawChartTweetsTypes($values);
 }
 ?>
 
@@ -189,35 +192,73 @@ function checkStem($stem, $lexicon){
 	return $value;
 }
 
-function draw($values){
-	include('/google_chart/GoogChart.class.php'); //Include class
-	$chart = new GoogChart(); //Create chart
-	$num = count($values);	
+function drawChartTweetsValues($values){
+	include('/google_chart/Chart.php');
 	
-	//var_dump($values); debug only
+	//number of tweets
+	$num = count($values);
 	
-	// Set graph data (manual)
-	/*$data = array(
-		);*/
+	// chart type
+	$chart = new Chart('LineChart');
 
-	// Set graph colors
-	$color = array(
-			'#99C754',
-			'#54C7C5',
-			'#999999',
-		);
-	//chart
-	$chart->setChartAttrs( 
-	array(
-		'type' => 'bar-vertical',
-		'title' => 'Tweets values',
-		'data' => $values,
-		'size' => array( 32*$num, 300 ),
-		'color' => $color,
-		//'labelsXY' => true,
-		)
+	$data = array(); // new array
+	
+	// titles
+	$data[0] = array('tweet','vote');	
+	
+	// function format
+	for($i=0;$i<$num;$i++){
+		$data[$i+1] = array($i,$values[$i]);
+	}
+
+	$chart->load($data, 'array');
+
+	$options = array('title' => 'Tweets Values', 'is3D' => true, 'width' => 400, 'height' => 300);
+	echo $chart->draw('chart_values', $options);
+	
+
+}
+
+function drawChartTweetsTypes($values){
+	//include('/google_chart/Chart.php');
+	
+	//number of tweets
+	$num = count($values);
+	
+	// chart type
+	$chart = new Chart('PieChart');
+
+	// classify types
+	
+	$neu = 0;
+	$pos = 0;
+	$neg = 0;
+	
+	for($i=0;$i<$num;$i++){
+		if ($values[$i] > 0){
+			$pos++;
+		}
+		else if ($values[$i] < 0){
+			$neg++;
+		}
+		else{
+			$neu++;
+		}
+	}
+	
+	$data = array(
+	array('tweet type','number'),
+	array('negative feedback', $neg),
+	array('neutral feedback', $neu),
+	array('positive feedback', $pos)
 	);
-	// Print chart
-	echo $chart;
+
+	$chart->load($data, 'array');
+
+	$options = array('title' => 'Feedback', 'is3D' => true, 'width' => 400, 'height' => 300);
+	echo $chart->draw('chart_types', $options);
+	
+
 }
 ?>
+
