@@ -1,54 +1,60 @@
+<!doctype html>
 <html>
     <head>
-        <title>Sentwittment</title>
-        <link rel="stylesheet" href="style.css">		
+        <title>Sentwittment</title>        
+		<meta charset="utf-8">
+        <link rel="stylesheet" href="forms/public/css/zebra_form.css">
     </head>
     <body>
-        <form action = "sentwittment.php" method="post">
-            Query: <input type="text" name="query"><br>
-            ReturnPerPage: <input type="int" name="rpp"><br>
-            Result Type: <select name="result_type">
-                <option value="0" selected>Mixed</option>
-                <option value="1">Recent</option>
-                <option value="2">Popular</option>
-            </select><br>
-            <input type="submit">
-        </form>
-		<div id="chart_values"></div>
-		<div id="chart_types"></div>
+	<center>
+	<?php
+		main();
+	?>
+	</center>
+	<!-- we're loading the JavaScript files at the bottom of the page so we don't delay page rendering -->
+
+	<!-- try to load jQuery from CDN server and fallback to local source if not available -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="path/to/jquery-1.8.2.min.js"><\/script>')</script>
+
+	<!-- load Zebra_Form's JavaScript file -->
+	<script src="forms/public/javascript/zebra_form.js"></script>
     </body>
 </html>
 
 <?php //Main Program
-require_once '/stemmer/Spanish.php';
-$lexicon = loadLexicon("lexicon.txt");
+function main() {
+	require_once 'formulary.php';
+	$values = array();
+	$values = form();
+	// Stemming
+	require_once '/stemmer/Spanish.php';
+	// Loads the lexicon
+	$lexicon = loadLexicon("lexicon.txt");
+	if (!empty($values["query"]))
+	{
+		//$query = getQueryFromForm();
+		$filename = "http://search.twitter.com/search.json?".$query;
+		$json = file_get_contents($filename, true);
+		$decode = json_decode($json, true);
 
-if (!empty($_POST["query"]))
-{
-	$query = getQueryFromForm();
-	$filename = "http://search.twitter.com/search.json?".$query;
-	$json = file_get_contents($filename, true);
-	$decode = json_decode($json, true);
-
-	echo "<pre>";
-	$count = count($decode["results"]);
-	for($i=0;$i<$count;$i++){
-		$tweet = $decode["results"][$i]["text"];
-        $value = tweetValue($lexicon, $tweet);   
-		$values[] = $value;
+		echo "<pre>";
+		$count = count($decode["results"]);
+		for($i=0;$i<$count;$i++){
+			$tweet = $decode["results"][$i]["text"];
+			$value = tweetValue($lexicon, $tweet);    
+		}
+		echo "</pre>";	
 	}
-	
-	drawChartTweetsValues($values);
-	drawChartTweetsTypes($values);
 }
-?>
-
-<?php // Functions
+// Functions
 
 /**
     Loads the lexicon given by $file
 */
 function loadLexicon($file){
+	static $lexicon = NULL;	
+	if (!is_null($lexicon)) return $lexicon;
 	$file = fopen($file, "r") or exit("Unable to open file!");
 	$lexicon = array();
 	$pos = 0;
@@ -77,7 +83,7 @@ function addStringToLexicon(&$lexicon,$string){
 		else if (strcmp($parts[$i], "pos") == 0)
 			$lexicon[$parts[0]]["pos"] = $lexicon[$parts[0]]["pos"]+1;
 	}
-	//echo $parts[0] . " [" . $stem . " , " . $lexicon[$parts[0]]["neg"] . " , " . $lexicon[$parts[0]]["pos"] . "] " . "<br>"; 
+	echo $parts[0] . " [" . $stem . " , " . $lexicon[$parts[0]]["neg"] . " , " . $lexicon[$parts[0]]["pos"] . "] " . "<br>"; 
 }
 
 /**
@@ -161,7 +167,9 @@ function tweetValue($lexicon, $tweet){
 		$words[$i] = stripAccents($words[$i]);
 		$value += consultLexicon($lexicon, $words[$i]);
 	}
-	echo $value . "<br>";	
+	if($value > 0) $value = 1;
+	else if ($value < 0) $value = -1;
+	//echo $value . "<br>";	
 	return $value;
 }
 
@@ -191,74 +199,4 @@ function checkStem($stem, $lexicon){
 	}
 	return $value;
 }
-
-function drawChartTweetsValues($values){
-	include('/google_chart/Chart.php');
-	
-	//number of tweets
-	$num = count($values);
-	
-	// chart type
-	$chart = new Chart('LineChart');
-
-	$data = array(); // new array
-	
-	// titles
-	$data[0] = array('tweet','vote');	
-	
-	// function format
-	for($i=0;$i<$num;$i++){
-		$data[$i+1] = array($i,$values[$i]);
-	}
-
-	$chart->load($data, 'array');
-
-	$options = array('title' => 'Tweets Values', 'is3D' => true, 'width' => 400, 'height' => 300);
-	echo $chart->draw('chart_values', $options);
-	
-
-}
-
-function drawChartTweetsTypes($values){
-	//include('/google_chart/Chart.php');
-	
-	//number of tweets
-	$num = count($values);
-	
-	// chart type
-	$chart = new Chart('PieChart');
-
-	// classify types
-	
-	$neu = 0;
-	$pos = 0;
-	$neg = 0;
-	
-	for($i=0;$i<$num;$i++){
-		if ($values[$i] > 0){
-			$pos++;
-		}
-		else if ($values[$i] < 0){
-			$neg++;
-		}
-		else{
-			$neu++;
-		}
-	}
-	
-	$data = array(
-	array('tweet type','number'),
-	array('negative feedback', $neg),
-	array('neutral feedback', $neu),
-	array('positive feedback', $pos)
-	);
-
-	$chart->load($data, 'array');
-
-	$options = array('title' => 'Feedback', 'is3D' => true, 'width' => 400, 'height' => 300);
-	echo $chart->draw('chart_types', $options);
-	
-
-}
 ?>
-
