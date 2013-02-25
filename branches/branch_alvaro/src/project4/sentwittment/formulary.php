@@ -22,16 +22,16 @@ function form() {
     $obj = & $form->add('text', 'returnpp', '', array('autocomplete' => 'off'));
     $obj->set_rule(array(
 		'number'    =>  array('', 'error', 'El valor ha de ser un entero'),
-		'length' 	=> array(0,3, 'error', 'El numero es demasiado grande'),
+		'length' 	=> 	array(0,3, 'error', 'El numero es demasiado grande'),
     ));
 
 	// "Result Type"
 	$form->add('label', 'label_type', 'type', 'Result Type:');
     $obj = & $form->add('select', 'type', 'mixed');
     $obj->add_options(array(
-        'mixed' => 'Mixed',
-		'recent' => 'Recent',
-		'popular' => 'Popular',
+        'mixed'		=> 'Mixed',
+		'recent' 	=> 'Recent',
+		'popular' 	=> 'Popular',
     ),true);
 	
     // "submit"
@@ -39,15 +39,14 @@ function form() {
     
     // if the form is valid
     if ($form->validate()) {
-		$i = 0;
 		$values = array();
 		foreach ($_POST as $key => $value) {
 			if (strpos($key, 'name_') !== 0 && strpos($key, 'timer_') !== 0 && strpos($key, 'response_') !== 0) {
-				$values[$i] = array("key" => $key, "value" => $value);
-				echo $values[$i]["key"] . " " . $values[$i]["value"] . "<br>"; 
-				$i++;				
+				$values[$key] = array("value" => $value);
+				echo $key . " " . $values[$key]["value"] . "<br>"; 				
 			}
 		}
+		form();
 		return $values;
 	// otherwise
     } else

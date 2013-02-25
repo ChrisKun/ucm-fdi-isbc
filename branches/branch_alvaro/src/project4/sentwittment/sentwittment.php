@@ -6,11 +6,9 @@
         <link rel="stylesheet" href="forms/public/css/zebra_form.css">
     </head>
     <body>
-	<center>
 	<?php
 		main();
 	?>
-	</center>
 	<!-- we're loading the JavaScript files at the bottom of the page so we don't delay page rendering -->
 
 	<!-- try to load jQuery from CDN server and fallback to local source if not available -->
@@ -83,7 +81,7 @@ function addStringToLexicon(&$lexicon,$string){
 		else if (strcmp($parts[$i], "pos") == 0)
 			$lexicon[$parts[0]]["pos"] = $lexicon[$parts[0]]["pos"]+1;
 	}
-	echo $parts[0] . " [" . $stem . " , " . $lexicon[$parts[0]]["neg"] . " , " . $lexicon[$parts[0]]["pos"] . "] " . "<br>"; 
+	//echo $parts[0] . " [" . $stem . " , " . $lexicon[$parts[0]]["neg"] . " , " . $lexicon[$parts[0]]["pos"] . "] " . "<br>"; 
 }
 
 /**

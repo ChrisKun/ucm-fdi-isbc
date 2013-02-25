@@ -1,8 +1,16 @@
 /*******************************
  *  STYLES FOR ZEBRA_FORM
  *******************************/
-
-.Zebra_Form,
+/* Formulario global */ 
+.Zebra_Form {   
+   padding:2px;
+   cursor:pointer;
+   display:block;
+   width:290px;
+   margin: 0 auto;
+   text-align:center
+},
+/* Subformularios */
 .Zebra_Form * {
     font-family: inherit;
     font-size: inherit;
@@ -12,7 +20,7 @@
     color: #222;
 }
 
-.Zebra_Form { position: relative }
+.Zebra_Form { position: none}
 
 .Zebra_Form div.hidden .text {
     display: none /* hide the honey pot */
