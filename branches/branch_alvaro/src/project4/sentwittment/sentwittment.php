@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
     <head>
-        <title>Sentwittment</title>        
+        <title>Sentwittment_Results</title>        
 		<meta charset="utf-8">
-        <link rel="stylesheet" type="stylesheet" href="stylesheets/style.css">
+        <link rel="stylesheet" type="stylesheet" href="stylesheets/style_results.css">
     </head>
     <body>
 	<?php
@@ -17,7 +17,7 @@
 
 <?php //Main Program
 function main() {	
-	print_r($_SESSION["values"]);
+	// print_r($_SESSION["values"]);
 	$values = $_SESSION["values"];
 	require_once 'back.php';
 	require_once 'wordProcessing.php';	

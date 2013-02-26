@@ -3,7 +3,7 @@
     <head>
         <title>Sentwittment</title>        
 		<meta charset="utf-8">
-        <link rel="stylesheet" href="stylesheets/zebra_form.css">
+        <link rel="stylesheet" href="stylesheets/back_form.css">
     </head>
     <body>
 	<!-- we're loading the JavaScript files at the bottom of the page so we don't delay page rendering -->
@@ -25,16 +25,16 @@ function form() {
     $form = new Zebra_Form('form');
 
     // "submit"
-    $form->add('submit', 'btnsubmit', 'Submit');
+    $form->add('submit', 'btnBack', 'Volver a generar otra consulta');
     
     // if the form is valid
     if ($form->validate()) {
-		header("Location: consult.php");
+		header("Location: sentwittmentForm.php");
 		exit;
 	// otherwise
     } else{
 		// generate output using a custom template
 		$form->render('*horizontal');
-		}
+	}
 }
 ?>

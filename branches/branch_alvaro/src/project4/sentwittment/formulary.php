@@ -3,7 +3,7 @@
     <head>
         <title>Sentwittment</title>        
 		<meta charset="utf-8">
-        <link rel="stylesheet" href="stylesheets/zebra_form.css">
+        <link rel="stylesheet" href="stylesheets/sentwittment_form.css">
     </head>
     <body>
 	<!-- we're loading the JavaScript files at the bottom of the page so we don't delay page rendering -->
@@ -35,7 +35,7 @@ function form() {
     ));
 
     // "Return Per page"
-    $form->add('label', 'label_returnpp', 'returnpp', 'Tweets Per Page');
+    $form->add('label', 'label_returnpp', 'returnpp', 'Numero de Tweets');
     $obj = & $form->add('text', 'returnpp', '', array('autocomplete' => 'off'));
     $obj->set_rule(array(
 		'number'    =>  array('', 'error', 'El valor ha de ser un entero'),
@@ -43,11 +43,11 @@ function form() {
     ));
 
 	// "Result Type"
-	$form->add('label', 'label_type', 'type', 'Result Type:');
+	$form->add('label', 'label_type', 'type', 'Tipo de resultado:');
     $obj = & $form->add('select', 'type', 'mixed');
     $obj->add_options(array(
-        'mixed'		=> 'Mixed',
-		'recent' 	=> 'Recent',
+        'mixed'		=> 'Mixto',
+		'recent' 	=> 'Reciente',
 		'popular' 	=> 'Popular',
     ),true);
 	
@@ -63,11 +63,8 @@ function form() {
 				//echo $key . " " . $values[$key] . "<br>"; 				
 			}
 		}
-		//return $values;
 		$_SESSION["values"] = $values;
-		//header($values);
 		header("Location: sentwittment.php");		
-		//exit;
 	// otherwise
     } else
 		// generate output using a custom template
