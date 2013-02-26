@@ -64,7 +64,10 @@ function form() {
 			}
 		}
 		//return $values;
+		$_SESSION["values"] = $values;
+		//header($values);
 		header("Location: sentwittment.php");
+		
 		exit;
 	// otherwise
     } else

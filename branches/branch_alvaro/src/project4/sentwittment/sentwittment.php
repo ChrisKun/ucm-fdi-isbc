@@ -16,11 +16,12 @@
 
 <?php //Main Program
 function main() {
-	echo $_POST["query"] . "<br>";
-	require_once 'formulary.php';
+	session_start();
+	print_r($_SESSION["values"]);
+	$values = $_SESSION["values"];
+	require_once 'back.php';
 	require_once 'wordProcessing.php';	
-	$values = array();
-	$values = form();
+	form();
 	// Stemming
 	require_once '/stemmer/Spanish.php';
 	// Loads the lexicon
@@ -41,11 +42,9 @@ function main() {
 		}
 		echo "</pre>";
 		drawChartTweetsValues($chartValues);
-		drawChartTweetsTypes($chartValues);		
-		
+		drawChartTweetsTypes($chartValues);				
 	}
 }
-
 /**
     Consults a $tweet in $lexicon and returns total value of $tweet
 */

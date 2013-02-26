@@ -3,8 +3,8 @@ body
 	position: absolute;
 	top: 50%;	
 	left: 50%;
-	font-family: Georgia, "Times New Roman", Times, serif;
-	color: black;
+	/*font-family: Georgia, "Times New Roman", Times, serif;
+	color: black;*/
 	background:url(../twitter_logo.jpg) no-repeat center top;
 	background-attachment: fixed;
 	background-color: #30accf

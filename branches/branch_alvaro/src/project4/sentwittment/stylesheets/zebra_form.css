@@ -12,12 +12,11 @@
 }
 
 .Zebra_Form { 
-	outline:#00FF00 dotted thick;
+	position:relative;
  }
 
 .Zebra_Form div.hidden .text {
     display: none /* hide the honey pot */
-
 }
 
 .Zebra_Form .row label,
