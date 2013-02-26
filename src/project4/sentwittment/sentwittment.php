@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Sentwittment_Results</title>        
+        <title>Sentwittment Results</title>        
 		<meta charset="utf-8">
         <link rel="stylesheet" type="stylesheet" href="stylesheets/style_results.css">
     </head>
@@ -35,8 +35,10 @@ function main() {
 
 		echo "<pre>";
 		$count = count($decode["results"]);
-		for($i=0;$i<$count;$i++){
+		for($i=0;$i<$count;$i++){	
 			$tweet = $decode["results"][$i]["text"];
+			echo "Tweet" . $i . " -> ";
+			echo $tweet . "<br>";
 			$value = tweetValue($lexicon, $tweet);
 			$chartValues[] = $value;
 		}
@@ -48,8 +50,7 @@ function main() {
 /**
     Consults a $tweet in $lexicon and returns total value of $tweet
 */
-function tweetValue($lexicon, $tweet){	
-	echo $tweet . "<br>";
+function tweetValue($lexicon, $tweet){
 	$words = explode(" ",$tweet); 
 	//print_r($words);
 	$value = 0;
@@ -58,7 +59,7 @@ function tweetValue($lexicon, $tweet){
 		$words[$i]=cleanString($words[$i]);
 		$value += consultLexicon($lexicon, $words[$i]);
 	}
-	echo $value . "<br>";	
+	//echo $value . "<br>";	
 	return $value;
 }
 
@@ -69,11 +70,7 @@ function getQueryFromForm($values){
 	// Query
 	$query = "q=" . $values["query"];
 	// Return Per Page
-	if (!empty($values["returnpp"])){
-		$query .= "&count=".$values["returnpp"];
-	} else {
-		$query .= "&count=25";
-	}
+	$query .= "&rpp=".$values["returnpp"];
 	// Result Type
 	switch ($values["type"]) {
 			case 'recent':

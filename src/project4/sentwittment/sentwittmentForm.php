@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Sentwittment_Form</title>        
+        <title>Sentwittment Form</title>        
 		<meta charset="utf-8"> 
 		<link rel="stylesheet" href="stylesheets/style_form.css">		
     </head>

@@ -44,7 +44,7 @@ function form() {
 
     // "Return Per page"
     $form->add('label', 'label_returnpp', 'returnpp', 'Numero de Tweets');
-    $obj = & $form->add('text', 'returnpp', '', array('autocomplete' => 'off'));
+    $obj = & $form->add('text', 'returnpp', 10, array('autocomplete' => 'off'));
     $obj->set_rule(array(
 		'digits'    =>  array('', 'error', 'El valor ha de ser un entero'),
 		'length' 	=> 	array(0,3, 'error', 'El numero es demasiado grande'),

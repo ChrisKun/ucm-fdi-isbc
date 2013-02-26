@@ -1,20 +1,22 @@
 body
 {
+	text-align:justify;
+	line-height: 20pt;
 	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
 	color: black;
-	background:url(../images/twitter_logo.jpg) no-repeat center top;
+	background:url(../images/twitter_logo.png) no-repeat center top;
 	background-attachment: scroll;
 }
 
 #chart_values {
-width: 50 em;
-float: left;
-padding: 10px;
 position: relative;
-margin-left: 0px;
+margin-top: 2em;
+float: left;
+
 }
 #chart_types {
-width: 50 em;
+position: relative;
+margin-top: 2em;
 float: right;
-padding: 10px;
 }
