@@ -7,6 +7,7 @@
     </head>
     <body>
 	<?php
+		session_start();
 		main();
 	?>
 	<div id="chart_values"></div>
@@ -15,7 +16,6 @@
 </html>
 
 <?php //Main Program
-session_start();
 function main() {
 	require_once 'formulary.php';
 	$values = array();

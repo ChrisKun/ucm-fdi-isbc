@@ -70,7 +70,7 @@ function cleanString($string){
     $patterns[1] = '#\d#';
     $string = preg_replace($patterns, " ", $string);
 	// Pattern of symbols we don't want to process
-	$string = preg_replace('([^A-Za-z0-9])', ' ', $string);	
+	$string = preg_replace('([^A-Za-z])', ' ', $string);	
 	//Removing unnecessary blanks
     $string = preg_replace("#(\n|\t|\ )+#", " ", $string);
     $string = trim($string);

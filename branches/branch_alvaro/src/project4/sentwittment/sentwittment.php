@@ -7,6 +7,7 @@
     </head>
     <body>
 	<?php
+		session_start();
 		main();
 	?>
 	<div id="chart_values"></div>
@@ -15,8 +16,7 @@
 </html>
 
 <?php //Main Program
-function main() {
-	session_start();
+function main() {	
 	print_r($_SESSION["values"]);
 	$values = $_SESSION["values"];
 	require_once 'back.php';
