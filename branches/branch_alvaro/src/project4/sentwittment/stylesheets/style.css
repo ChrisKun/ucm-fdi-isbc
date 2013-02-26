@@ -1,8 +1,8 @@
 body
 {
 	position: absolute;
-	top: 50%;
-	left: 35%;
+	top: 50%;	
+	left: 50%;
 	font-family: Georgia, "Times New Roman", Times, serif;
 	color: black;
 	background:url(../twitter_logo.jpg) no-repeat center top;

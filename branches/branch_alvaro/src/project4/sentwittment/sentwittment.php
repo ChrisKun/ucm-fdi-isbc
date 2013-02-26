@@ -9,11 +9,14 @@
 	<?php
 		main();
 	?>
+	<div id="chart_values"></div>
+	<div id="chart_types"></div>
     </body>
 </html>
 
 <?php //Main Program
 function main() {
+	echo $_POST["query"] . "<br>";
 	require_once 'formulary.php';
 	require_once 'wordProcessing.php';	
 	$values = array();
