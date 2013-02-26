@@ -33,6 +33,7 @@ function main() {
 
 	echo "<pre>";
 	$count = count($decode["results"]);
+	$chartValues = NULL;
 	for($i=0;$i<$count;$i++){	
 		$tweet = $decode["results"][$i]["text"];
 		echo "Tweet" . $i . " -> ";
@@ -41,8 +42,12 @@ function main() {
 		$chartValues[] = $value;
 	}
 	echo "</pre>";
-	drawChartTweetsValues($chartValues);
-	drawChartTweetsTypes($chartValues);		
+	if ($chartValues != NULL) {
+		drawChartTweetsValues($chartValues);
+		drawChartTweetsTypes($chartValues);		
+	} else {
+		echo 'No se han encotrado tweets' . "<br>";
+	}
 }
 /**
     Consults a $tweet in $lexicon and returns total value of $tweet
