@@ -17,7 +17,7 @@
 
 <?php //Main Program
 function main() {	
-	// print_r($_SESSION["values"]);
+	//print_r($_SESSION["values"]);
 	$values = $_SESSION["values"];
 	require_once 'back.php';
 	require_once 'wordProcessing.php';	
@@ -26,26 +26,23 @@ function main() {
 	require_once '/stemmer/Spanish.php';
 	// Loads the lexicon
 	$lexicon = loadLexicon("lexicon.txt");
-	if (!empty($values["query"]))
-	{
-		$query = getQueryFromForm($values);
-		$filename = "http://search.twitter.com/search.json?".$query;
-		$json = file_get_contents($filename, true);
-		$decode = json_decode($json, true);
+	$query = getQueryFromForm($values);
+	$filename = "http://search.twitter.com/search.json?".$query;
+	$json = file_get_contents($filename, true);
+	$decode = json_decode($json, true);
 
-		echo "<pre>";
-		$count = count($decode["results"]);
-		for($i=0;$i<$count;$i++){	
-			$tweet = $decode["results"][$i]["text"];
-			echo "Tweet" . $i . " -> ";
-			echo $tweet . "<br>";
-			$value = tweetValue($lexicon, $tweet);
-			$chartValues[] = $value;
-		}
-		echo "</pre>";
-		drawChartTweetsValues($chartValues);
-		drawChartTweetsTypes($chartValues);				
+	echo "<pre>";
+	$count = count($decode["results"]);
+	for($i=0;$i<$count;$i++){	
+		$tweet = $decode["results"][$i]["text"];
+		echo "Tweet" . $i . " -> ";
+		echo $tweet . "<br>";
+		$value = tweetValue($lexicon, $tweet);
+		$chartValues[] = $value;
 	}
+	echo "</pre>";
+	drawChartTweetsValues($chartValues);
+	drawChartTweetsTypes($chartValues);		
 }
 /**
     Consults a $tweet in $lexicon and returns total value of $tweet
@@ -67,8 +64,10 @@ function tweetValue($lexicon, $tweet){
 Get the neccessary info from forms and return a string with the configured query
 */
 function getQueryFromForm($values){
-	// Query
-	$query = "q=" . $values["query"];
+	// For a proper search we have to chances whitespaces for "+"
+	$query = preg_replace("#\ #", "+",$values['query']);
+	// Query	
+	$query = "q=" . $query;
 	// Return Per Page
 	$query .= "&rpp=".$values["returnpp"];
 	// Result Type
