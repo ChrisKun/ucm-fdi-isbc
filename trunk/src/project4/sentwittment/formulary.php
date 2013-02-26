@@ -16,6 +16,14 @@
 </html>
 
 <?php
+function is_valid_number($value)
+{
+    // return false if the value is less than 21
+    if ($value < 21) return false;
+    // return true otherwise
+    return true;
+}
+
 /**
 	Sets the formulary and returns the values of the fields
 */
@@ -23,7 +31,7 @@ function form() {
 	require_once '/forms/Zebra_Form.php';
     // instantiate a Zebra_Form object
     $form = new Zebra_Form('form');
-
+	$form->clientside_validation(true);
     // the label for the "query" element
     $form->add('label', 'label_query', 'query', 'Query');
     // add the "query" element
@@ -38,7 +46,7 @@ function form() {
     $form->add('label', 'label_returnpp', 'returnpp', 'Numero de Tweets');
     $obj = & $form->add('text', 'returnpp', '', array('autocomplete' => 'off'));
     $obj->set_rule(array(
-		'number'    =>  array('', 'error', 'El valor ha de ser un entero'),
+		'digits'    =>  array('', 'error', 'El valor ha de ser un entero'),
 		'length' 	=> 	array(0,3, 'error', 'El numero es demasiado grande'),
     ));
 
