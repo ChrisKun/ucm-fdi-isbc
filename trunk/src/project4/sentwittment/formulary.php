@@ -40,6 +40,7 @@ function form() {
     $obj->set_rule(array(
         // error messages will be sent to a variable called "error", usable in custom templates
         'required'  =>  array('error', 'Se necesita una query'),
+		'alphabet'	=> 	array(' ', 'error', 'Sólo se admiten palabras')
     ));
 
     // "Return Per page"
@@ -66,9 +67,9 @@ function form() {
     if ($form->validate()) {
 		$values = array();
 		foreach ($_POST as $key => $value) {
-			if (strpos($key, 'name_') !== 0 && strpos($key, 'timer_') !== 0 && strpos($key, 'response_') !== 0) {
+			if (strpos($key, 'name_') !== 0 && strpos($key, 'timer_') !== 0 && strpos($key, 'response_') !== 0) {			
 				$values[$key] = $value;
-				//echo $key . " " . $values[$key] . "<br>"; 				
+				// echo $key . " " . $values[$key] . "<br>"; 				
 			}
 		}
 		$_SESSION["values"] = $values;
