@@ -40,7 +40,7 @@ function form() {
     $obj->set_rule(array(
         // error messages will be sent to a variable called "error", usable in custom templates
         'required'  =>  array('error', 'Se necesita una query'),
-		'alphabet'	=> 	array(' ', 'error', 'Sólo se admiten palabras')
+		//'alphabet'	=> 	array(' ', 'error', 'Sólo se admiten palabras')
     ));
 
     // "Return Per page"
@@ -61,7 +61,7 @@ function form() {
     ),true);
 	
     // "submit"
-    $form->add('submit', 'btnsubmit', 'Submit');
+    $form->add('submit', 'btnsubmit', 'Buscar Tweets');
     
     // if the form is valid
     if ($form->validate()) {
@@ -73,7 +73,8 @@ function form() {
 			}
 		}
 		$_SESSION["values"] = $values;
-		header("Location: sentwittment.php");		
+		header("Location: sentwittment.php");	
+		exit;
 	// otherwise
     } else
 		// generate output using a custom template

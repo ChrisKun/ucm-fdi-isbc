@@ -6,25 +6,30 @@
         <link rel="stylesheet" type="stylesheet" href="stylesheets/style_results.css">
     </head>
     <body>
-	<?php
-		session_start();
-		main();
-	?>
 	<div id="chart_values"></div>
 	<div id="chart_types"></div>
+	<?php
+		session_start();		
+		if (!isset($_SESSION["values"])) {
+			header("Location: sentwittmentForm.php");
+			exit;
+		} else 
+			main();
+	?>
     </body>
 </html>
 
 <?php //Main Program
 function main() {	
+	require_once 'back.php';
+	form();
 	//print_r($_SESSION["values"]);
 	$values = $_SESSION["values"];
-	require_once 'back.php';
-	require_once 'wordProcessing.php';	
-	form();
+	session_destroy();
 	// Stemming
 	require_once '/stemmer/Spanish.php';
 	// Loads the lexicon
+	require_once 'wordProcessing.php';	
 	$lexicon = loadLexicon("lexicon.txt");
 	$query = getQueryFromForm($values);
 	$filename = "http://search.twitter.com/search.json?".$query;
@@ -49,6 +54,7 @@ function main() {
 		echo 'No se han encotrado tweets' . "<br>";
 	}
 }
+
 /**
     Consults a $tweet in $lexicon and returns total value of $tweet
 */

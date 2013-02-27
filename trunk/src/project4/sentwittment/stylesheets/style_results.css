@@ -7,7 +7,7 @@ body
 	color: black;
 	background:url(../images/twitter_logo.png) no-repeat center top;
 	background-attachment: scroll;
-}
+}    
 
 #chart_values {
 position: relative;
