@@ -46,7 +46,7 @@ function consultLexicon($lexicon, $string){
 		$value += $lexicon[$string]["pos"];
 		$value -= $lexicon[$string]["neg"];
 		//echo 'si' . " " . $string . "<br>";
-	// If it isn't, then apply stemming
+	// If it isn't, then apply stemming and choose one randomnly
 	} else if (strlen($string) > 2){
 		$stem = spanish::stemm($string);
 		$value = checkStem($stem, $lexicon);		
@@ -90,16 +90,21 @@ function stripAccents($string){
 }
 
 /**
-	Checks if $stem exists in $lexicon and operates the values of all the words in the lexicon with that stem
+	Checks if $stem exists in $lexicon and select a random word in the lexicon with that stem
 */
 function checkStem($stem, $lexicon){
 	$value = 0;
+	$values[] = NULL;
+	$i=0;
 	foreach ($lexicon as &$content) {
 		if (strcmp($stem, $content["stem"]) == 0) {
-			//echo $stem . " raiz " . "si" . "<br>";
-			$value += $content["pos"];
-			$value -= $content["neg"];
+			$values[$i] = $content["pos"] -  $content["neg"];
+			$i++;
 		}
+	}
+	if ($values != NULL) {
+		$i=rand(0,count($values)-1);
+		$value = $values[$i];
 	}
 	return $value;
 }
