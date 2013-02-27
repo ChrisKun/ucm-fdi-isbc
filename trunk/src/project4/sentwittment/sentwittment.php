@@ -35,12 +35,21 @@ function main() {
 	$filename = "http://search.twitter.com/search.json?".$query;
 	$json = file_get_contents($filename, true);
 	$decode = json_decode($json, true);
-
+    $tweets = $decode["results"];
 	echo "<pre>";
-	$count = count($decode["results"]);
+    $numTweets = $values["returnpp"];
+    $page = round($numTweets / 100);
+    for ($i=0;$i<$page;$i++){
+    
+        $json = file_get_contents($filename . "$page=" . $page, true);
+        $decode = json_decode($json, true);
+        $tweets = array_merge($tweets, $decode["results"]);
+    }
+    echo ($numTweets) . "<br>";
+    
 	$chartValues = NULL;
-	for($i=0;$i<$count;$i++){	
-		$tweet = $decode["results"][$i]["text"];
+	for($i=0;$i<$numTweets;$i++){	
+		$tweet = $tweets[$i]["text"];
 		echo "Tweet" . $i . " -> ";
 		echo $tweet . "<br>";
 		$value = tweetValue($lexicon, $tweet);
