@@ -9,12 +9,14 @@
 	<div id="chart_values"></div>
 	<div id="chart_types"></div>
 	<?php
+	echo "<pre>";
 		session_start();		
 		if (!isset($_SESSION["values"])) {
 			header("Location: sentwittmentForm.php");
 			exit;
 		} else 
 			main();
+	echo "</pre>";
 	?>
     </body>
 </html>
@@ -36,7 +38,7 @@ function main() {
 	$json = file_get_contents($filename, true);
 	$decode = json_decode($json, true);
     $tweets = $decode["results"];
-	echo "<pre>";
+
     $numTweets = $values["returnpp"];
     $page = round($numTweets / 100);
     for ($i=0;$i<$page;$i++){
@@ -50,12 +52,11 @@ function main() {
 	$chartValues = NULL;
 	for($i=0;$i<$numTweets;$i++){	
 		$tweet = $tweets[$i]["text"];
-		echo "Tweet" . $i . " -> ";
+		echo "<h2>" . "Tweet " . $i . "</h2>";
 		echo $tweet . "<br>";
 		$value = tweetValue($lexicon, $tweet);
 		$chartValues[] = $value;
 	}
-	echo "</pre>";
 	if ($chartValues != NULL) {
 		drawChartTweetsValues($chartValues);
 		drawChartTweetsTypes($chartValues);		
