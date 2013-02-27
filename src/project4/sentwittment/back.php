@@ -34,7 +34,7 @@ function form() {
 	// otherwise
     } else{
 		// generate output using a custom template
-		$form->render('*horizontal');
+		$form->render('*vertical');
 	}
 }
 ?>
