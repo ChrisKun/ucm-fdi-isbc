@@ -52,8 +52,8 @@ function main() {
 	$chartValues = NULL;
 	for($i=0;$i<$numTweets;$i++){	
 		$tweet = $tweets[$i]["text"];
-		echo "<h2>" . "Tweet " . $i . "</h2>";
-		echo $tweet . "<br>";
+		echo "<h2>" . "<img src=images/twitter-bird.png>" . "Tweet " . $i . "</h2>";
+		echo "<cite>" . $tweet . "</cite>". "<br>";
 		$value = tweetValue($lexicon, $tweet);
 		$chartValues[] = $value;
 	}
