@@ -6,6 +6,16 @@
         <link rel="stylesheet" href="stylesheets/sentwittment_form.css">
     </head>
     <body>
+	<!-- the custom function in JavaScript -->
+	<script type="text/javascript">
+    function is_valid_number(value)
+    {
+        // return false if the value is less than 21
+        if (value > 500) return false;
+        // return true otherwise
+        return true;
+    }
+	</script>
 	<!-- we're loading the JavaScript files at the bottom of the page so we don't delay page rendering -->
 	<!-- try to load jQuery from CDN server and fallback to local source if not available -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -19,7 +29,7 @@
 function is_valid_number($value)
 {
     // return false if the value is less than 21
-    if ($value < 21) return false;
+    if ($value > 500) return false;
     // return true otherwise
     return true;
 }
@@ -49,7 +59,8 @@ function form() {
     $obj->set_rule(array(
 		'digits'    =>  array('', 'error', 'El valor ha de ser un entero'),
 		'length' 	=> 	array(0,3, 'error', 'El numero es demasiado grande'),
-    ));
+		'custom'    =>  array('is_valid_number', 'error', 'El numero de Tweets debe ser menor de 500') 
+	));
 
 	// "Result Type"
 	$form->add('label', 'label_type', 'type', 'Tipo de resultado:');
