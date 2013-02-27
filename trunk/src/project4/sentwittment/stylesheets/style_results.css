@@ -1,22 +1,31 @@
 body
 {
-	text-align:justify;
-	line-height: 20pt;
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-weight: bold;
-	color: black;
 	background:url(../images/twitter_logo.png) no-repeat center top;
 	background-attachment: scroll;
 }    
 
-#chart_values {
-position: relative;
-margin-top: 2em;
-float: left;
+h2 {
+	margin-top: 1.5em;
+}
+
+pre {
+	margin-top: 2em;
+	text-align:justify;
+	line-height: 12pt;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
+	color: black;
 
 }
+
+#chart_values {
+	position: relative;
+	margin-top: 6em;
+	float: left;
+}
+
 #chart_types {
-position: relative;
-margin-top: 2em;
-float: right;
+	position: relative;
+	margin-top: 6em;
+	float: right;
 }
