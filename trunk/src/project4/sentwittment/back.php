@@ -20,7 +20,7 @@
 	Sets the formulary and returns the values of the fields
 */
 function form() {
-	require_once '/forms/Zebra_Form.php';
+	require_once './forms/Zebra_Form.php';
     // instantiate a Zebra_Form object
     $form = new Zebra_Form('form');
 

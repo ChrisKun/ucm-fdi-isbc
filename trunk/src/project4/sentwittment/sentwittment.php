@@ -29,7 +29,7 @@ function main() {
 	$values = $_SESSION["values"];
 	session_destroy();
 	// Stemming
-	require_once '/stemmer/Spanish.php';
+	require_once './stemmer/Spanish.php';
 	// Loads the lexicon
 	require_once 'wordProcessing.php';	
 	$lexicon = loadLexicon("lexicon.txt");
@@ -106,7 +106,7 @@ function getQueryFromForm($values){
 
 /********** CHARTS ***********/
 function drawChartTweetsValues($values){
-	include('/google_chart/Chart.php');
+	include('./google_chart/Chart.php');
 	
 	//number of tweets
 	$num = count($values);
