@@ -47,7 +47,7 @@ function main() {
         $decode = json_decode($json, true);
         $tweets = array_merge($tweets, $decode["results"]);
     }
-    echo ($numTweets) . "<br>";
+    //echo ($numTweets) . "<br>";
     
 	$chartValues = NULL;
 	for($i=0;$i<$numTweets;$i++){	
