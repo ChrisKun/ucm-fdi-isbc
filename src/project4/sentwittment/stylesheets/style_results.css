@@ -2,14 +2,22 @@ body
 {
 	background:url(../images/twitter_logo.png) no-repeat center top;
 	background-attachment: scroll;
+	background-color: white;
 }    
 
 h2 {
 	margin-top: 1.5em;
+	Text-decoration: underline;
+}
+
+cite {
+	word-wrap: break-word; 
+	max-width:150px; 
+	width:150;
 }
 
 pre {
-	margin-top: 2em;
+	margin-top: 2.5em;
 	text-align:justify;
 	line-height: 12pt;
 	font-family: Georgia, "Times New Roman", Times, serif;
@@ -18,13 +26,19 @@ pre {
 }
 
 #chart_values {
-	position: relative;
+	border-style: outset;
+	border-width: 5px;
+	border-color: #80C8FE;
+	
 	margin-top: 6em;
 	float: left;
 }
 
 #chart_types {
-	position: relative;
+	border-style: outset;
+	border-width: 5px;
+	border-color: #80C8FE;
+
 	margin-top: 6em;
 	float: right;
 }
