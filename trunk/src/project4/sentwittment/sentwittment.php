@@ -18,6 +18,7 @@
 			main();
 	echo "</pre>";
 	?>
+	<cite> Authors: Raúl Bueno Sevilla, Xavier Gallofré Nieva, Álvaro Pérez Liaño </cite>
     </body>
 </html>
 
