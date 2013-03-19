@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.owl-ontologies.com/Ontology1363733989.owl#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.owl-ontologies.com/Ontology1363733989.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Hermano">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Hombre"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Hombre">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:ID="Persona"/>
+          <owl:Restriction>
+            <owl:hasValue>
+              <owl:Thing rdf:ID="Masculino"/>
+            </owl:hasValue>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="tieneGenero"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <owl:equivalentClass>
+      <owl:Class rdf:ID="Padre"/>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Abuelo">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Hombre"/>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Restriction>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >1</owl:minCardinality>
+                <owl:onProperty>
+                  <owl:ObjectProperty rdf:ID="tieneNieto"/>
+                </owl:onProperty>
+              </owl:Restriction>
+              <owl:Restriction>
+                <owl:onProperty>
+                  <owl:ObjectProperty rdf:ID="tieneNieta"/>
+                </owl:onProperty>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >1</owl:minCardinality>
+              </owl:Restriction>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Tio">
+    <rdfs:subClassOf rdf:resource="#Hombre"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Sobrino">
+    <rdfs:subClassOf rdf:resource="#Hombre"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Padre">
+    <owl:equivalentClass rdf:resource="#Hombre"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Ascendiente"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Persona">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:hasValue rdf:resource="#Masculino"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneGenero"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneGenero"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <owl:Thing rdf:ID="Femenino"/>
+            </owl:hasValue>
+          </owl:Restriction>
+        </owl:unionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Hijo">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Hombre"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="tienePadreOMadre"/>
+            </owl:onProperty>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Genero">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:oneOf rdf:parseType="Collection">
+          <owl:Thing rdf:about="#Masculino"/>
+          <owl:Thing rdf:about="#Femenino"/>
+        </owl:oneOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Nieto">
+    <rdfs:subClassOf rdf:resource="#Hombre"/>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="tieneAbuelo"/>
+            </owl:onProperty>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="tieneAbuela"/>
+            </owl:onProperty>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+          </owl:Restriction>
+        </owl:unionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Mujer">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Persona"/>
+          <owl:Restriction>
+            <owl:hasValue rdf:resource="#Femenino"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneGenero"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="#Ascendiente">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Persona"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="tieneHijoOHija"/>
+            </owl:onProperty>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Primo">
+    <rdfs:subClassOf rdf:resource="#Hombre"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="tieneTia"/>
+  <owl:ObjectProperty rdf:ID="tienePrimo"/>
+  <owl:ObjectProperty rdf:about="#tieneHijoOHija">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#tienePadreOMadre"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#tieneNieto">
+    <rdfs:domain rdf:resource="#Persona"/>
+    <rdfs:range rdf:resource="#Persona"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#tienePadreOMadre">
+    <owl:inverseOf rdf:resource="#tieneHijoOHija"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#tieneGenero">
+    <rdfs:domain rdf:resource="#Persona"/>
+    <rdfs:range rdf:resource="#Genero"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="tienePrima"/>
+  <owl:ObjectProperty rdf:ID="tieneSobrino"/>
+  <owl:ObjectProperty rdf:ID="tieneTio"/>
+  <owl:ObjectProperty rdf:ID="tieneSobrina"/>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.8, Build 629)  http://protege.stanford.edu -->
