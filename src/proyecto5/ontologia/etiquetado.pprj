@@ -1,4 +1,4 @@
-; Thu Apr 11 21:18:12 CEST 2013
+; Fri Apr 12 11:22:42 CEST 2013
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[etiquetado_ProjectKB_Class10724]
-		[etiquetado_ProjectKB_Class10725]
-		[etiquetado_ProjectKB_Class10726]
-		[etiquetado_ProjectKB_Class10727]
-		[etiquetado_ProjectKB_Class10728]))
+		[etiquetado_ProjectKB_Class10091]
+		[etiquetado_ProjectKB_Class10092]
+		[etiquetado_ProjectKB_Class10093]
+		[etiquetado_ProjectKB_Class10094]
+		[etiquetado_ProjectKB_Class10095]))
 
 ([CLSES_TAB] of  Widget
 
@@ -38,27 +38,27 @@
 ([etiquetado_ProjectKB_Class10] of  Property_List
 )
 
-([etiquetado_ProjectKB_Class10724] of  String
+([etiquetado_ProjectKB_Class10091] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([etiquetado_ProjectKB_Class10725] of  String
+([etiquetado_ProjectKB_Class10092] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Class")
 	(string_value "%3ANAME"))
 
-([etiquetado_ProjectKB_Class10726] of  String
+([etiquetado_ProjectKB_Class10093] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([etiquetado_ProjectKB_Class10727] of  String
+([etiquetado_ProjectKB_Class10094] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([etiquetado_ProjectKB_Class10728] of  String
+([etiquetado_ProjectKB_Class10095] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Thing")
 	(string_value "%3ANAME"))
@@ -674,9 +674,6 @@
 	(name ":DIRECT-TEMPLATE-SLOTS")
 	(property_list [KB_100699_Instance_11])
 	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
-
-([KB_111421_Class0] of  Map
-)
 
 ([KB_140180_Instance_0] of  Widget
 
@@ -3309,6 +3306,9 @@
 ([KB_713803_Instance_981] of  Property_List
 )
 
+([KB_735700_Class0] of  Map
+)
+
 ([KB_764103_Instance_545] of  Widget
 
 	(is_hidden FALSE)
@@ -5698,8 +5698,8 @@
 		"http://www.w3.org/2002/07/owl#InverseFunctionalProperty"
 		":ANNOTATED-INSTANCE"
 		"http://www.w3.org/2003/11/swrl#BuiltinAtom"
-		":OWL-ONTOLOGY-POINTER-CLASS"
 		"http://www.w3.org/2002/07/owl#Ontology"
+		":OWL-ONTOLOGY-POINTER-CLASS"
 		"http://www.w3.org/1999/02/22-rdf-syntax-ns#object"
 		"http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
 		":VALUE-TYPE"
