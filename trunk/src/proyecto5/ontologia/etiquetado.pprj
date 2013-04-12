@@ -1,4 +1,4 @@
-; Fri Apr 12 11:22:42 CEST 2013
+; Fri Apr 12 13:10:20 CEST 2013
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[etiquetado_ProjectKB_Class10091]
-		[etiquetado_ProjectKB_Class10092]
-		[etiquetado_ProjectKB_Class10093]
-		[etiquetado_ProjectKB_Class10094]
-		[etiquetado_ProjectKB_Class10095]))
+		[etiquetado_ProjectKB_Class11263]
+		[etiquetado_ProjectKB_Class11264]
+		[etiquetado_ProjectKB_Class11265]
+		[etiquetado_ProjectKB_Class11266]
+		[etiquetado_ProjectKB_Class11267]))
 
 ([CLSES_TAB] of  Widget
 
@@ -38,36 +38,202 @@
 ([etiquetado_ProjectKB_Class10] of  Property_List
 )
 
-([etiquetado_ProjectKB_Class10091] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([etiquetado_ProjectKB_Class10092] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([etiquetado_ProjectKB_Class10093] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([etiquetado_ProjectKB_Class10094] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([etiquetado_ProjectKB_Class10095] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
-
 ([etiquetado_ProjectKB_Class11] of  Widget
 
 	(is_hidden TRUE)
 	(property_list [etiquetado_ProjectKB_Class12])
 	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.InstanceTreeTab"))
+
+([etiquetado_ProjectKB_Class11141] of  Widget
+
+	(is_hidden FALSE)
+	(name "http://www.owl-ontologies.com/Ontology1365698210.owl#Ocarina")
+	(property_list [etiquetado_ProjectKB_Class11144])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormWidget"))
+
+([etiquetado_ProjectKB_Class11144] of  Property_List
+
+	(properties
+		[etiquetado_ProjectKB_Class11145]
+		[etiquetado_ProjectKB_Class11148]
+		[etiquetado_ProjectKB_Class11151]
+		[etiquetado_ProjectKB_Class11154]
+		[etiquetado_ProjectKB_Class11156]
+		[etiquetado_ProjectKB_Class11158]
+		[etiquetado_ProjectKB_Class11160]
+		[etiquetado_ProjectKB_Class11162]
+		[etiquetado_ProjectKB_Class11164]
+		[etiquetado_ProjectKB_Class11166]
+		[etiquetado_ProjectKB_Class11168]))
+
+([etiquetado_ProjectKB_Class11145] of  Widget
+
+	(height 0)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":NAME")
+	(property_list [etiquetado_ProjectKB_Class11146])
+	(width 0)
+	(x 0)
+	(y 0))
+
+([etiquetado_ProjectKB_Class11146] of  Property_List
+
+	(properties [etiquetado_ProjectKB_Class11147]))
+
+([etiquetado_ProjectKB_Class11147] of  Boolean
+
+	(boolean_value TRUE)
+	(name "DisabledByUser"))
+
+([etiquetado_ProjectKB_Class11148] of  Property_List
+
+	(name "layout properties")
+	(properties
+		[etiquetado_ProjectKB_Class11149]
+		[etiquetado_ProjectKB_Class11150]))
+
+([etiquetado_ProjectKB_Class11149] of  String
+
+	(name "horizontal_stretcher")
+	(string_value "<<all>>"))
+
+([etiquetado_ProjectKB_Class11150] of  String
+
+	(name "vertical_stretcher")
+	(string_value "<<none>>"))
+
+([etiquetado_ProjectKB_Class11151] of  Widget
+
+	(height 180)
+	(is_hidden FALSE)
+	(name "http://protege.stanford.edu/plugins/owl/protege#inferredType")
+	(property_list [etiquetado_ProjectKB_Class11152])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.HeaderWidget")
+	(width 550)
+	(x 0)
+	(y 0))
+
+([etiquetado_ProjectKB_Class11152] of  Property_List
+
+	(properties [etiquetado_ProjectKB_Class11153]))
+
+([etiquetado_ProjectKB_Class11153] of  Boolean
+
+	(boolean_value FALSE)
+	(name "DisabledByUser"))
+
+([etiquetado_ProjectKB_Class11154] of  Widget
+
+	(is_hidden FALSE)
+	(name "http://www.w3.org/2002/07/owl#versionInfo")
+	(property_list [etiquetado_ProjectKB_Class11155]))
+
+([etiquetado_ProjectKB_Class11155] of  Property_List
+)
+
+([etiquetado_ProjectKB_Class11156] of  Widget
+
+	(is_hidden FALSE)
+	(name "http://www.w3.org/2000/01/rdf-schema#isDefinedBy")
+	(property_list [etiquetado_ProjectKB_Class11157]))
+
+([etiquetado_ProjectKB_Class11157] of  Property_List
+)
+
+([etiquetado_ProjectKB_Class11158] of  Widget
+
+	(is_hidden FALSE)
+	(name "http://www.w3.org/2000/01/rdf-schema#comment")
+	(property_list [etiquetado_ProjectKB_Class11159]))
+
+([etiquetado_ProjectKB_Class11159] of  Property_List
+)
+
+([etiquetado_ProjectKB_Class11160] of  Widget
+
+	(is_hidden FALSE)
+	(name "http://www.w3.org/2000/01/rdf-schema#seeAlso")
+	(property_list [etiquetado_ProjectKB_Class11161]))
+
+([etiquetado_ProjectKB_Class11161] of  Property_List
+)
+
+([etiquetado_ProjectKB_Class11162] of  Widget
+
+	(is_hidden FALSE)
+	(name "http://www.w3.org/2000/01/rdf-schema#label")
+	(property_list [etiquetado_ProjectKB_Class11163]))
+
+([etiquetado_ProjectKB_Class11163] of  Property_List
+)
+
+([etiquetado_ProjectKB_Class11164] of  Widget
+
+	(height 240)
+	(is_hidden FALSE)
+	(name "http://www.owl-ontologies.com/Ontology1365698210.owl#produce")
+	(property_list [etiquetado_ProjectKB_Class11165])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.MultiResourceWidget")
+	(width 200)
+	(x 200)
+	(y 180))
+
+([etiquetado_ProjectKB_Class11165] of  Property_List
+)
+
+([etiquetado_ProjectKB_Class11166] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(name "http://www.owl-ontologies.com/Ontology1365698210.owl#esUsado")
+	(property_list [etiquetado_ProjectKB_Class11167])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.MultiResourceWidget")
+	(width 200)
+	(x 0)
+	(y 300))
+
+([etiquetado_ProjectKB_Class11167] of  Property_List
+)
+
+([etiquetado_ProjectKB_Class11168] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(name "http://www.owl-ontologies.com/Ontology1365698210.owl#daña")
+	(property_list [etiquetado_ProjectKB_Class11169])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.MultiResourceWidget")
+	(width 200)
+	(x 0)
+	(y 180))
+
+([etiquetado_ProjectKB_Class11169] of  Property_List
+)
+
+([etiquetado_ProjectKB_Class11263] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([etiquetado_ProjectKB_Class11264] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([etiquetado_ProjectKB_Class11265] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([etiquetado_ProjectKB_Class11266] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([etiquetado_ProjectKB_Class11267] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
 
 ([etiquetado_ProjectKB_Class12] of  Property_List
 )
@@ -781,6 +947,9 @@
 	(property_list [KB_140180_Instance_9]))
 
 ([KB_140180_Instance_9] of  Property_List
+)
+
+([KB_190883_Class0] of  Map
 )
 
 ([KB_221055_Instance_10] of  Widget
@@ -3304,9 +3473,6 @@
 	(property_list [KB_713803_Instance_981]))
 
 ([KB_713803_Instance_981] of  Property_List
-)
-
-([KB_735700_Class0] of  Map
 )
 
 ([KB_764103_Instance_545] of  Widget
