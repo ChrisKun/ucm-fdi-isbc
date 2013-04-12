@@ -1,4 +1,4 @@
-; Fri Apr 12 12:49:04 GMT 2013
+; Fri Apr 12 12:51:00 GMT 2013
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[etiquetado_ProjectKB_Class11048]
-		[etiquetado_ProjectKB_Class11049]
-		[etiquetado_ProjectKB_Class11050]
-		[etiquetado_ProjectKB_Class11051]
-		[etiquetado_ProjectKB_Class11052]))
+		[etiquetado_ProjectKB_Class11063]
+		[etiquetado_ProjectKB_Class11064]
+		[etiquetado_ProjectKB_Class11065]
+		[etiquetado_ProjectKB_Class11066]
+		[etiquetado_ProjectKB_Class11067]))
 
 ([CLSES_TAB] of  Widget
 
@@ -44,27 +44,27 @@
 	(property_list [etiquetado_ProjectKB_Class12])
 	(widget_class_name "edu.stanford.smi.RemoteKBTab.WordNetTab"))
 
-([etiquetado_ProjectKB_Class11048] of  String
+([etiquetado_ProjectKB_Class11063] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Class")
 	(string_value "%3ANAME"))
 
-([etiquetado_ProjectKB_Class11049] of  String
+([etiquetado_ProjectKB_Class11064] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([etiquetado_ProjectKB_Class11050] of  String
+([etiquetado_ProjectKB_Class11065] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([etiquetado_ProjectKB_Class11051] of  String
+([etiquetado_ProjectKB_Class11066] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Thing")
 	(string_value "%3ANAME"))
 
-([etiquetado_ProjectKB_Class11052] of  String
+([etiquetado_ProjectKB_Class11067] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
