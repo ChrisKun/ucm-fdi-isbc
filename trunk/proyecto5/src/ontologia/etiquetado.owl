@@ -1,0 +1,519 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns="http://www.owl-ontologies.com/Ontology1365698210.owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.owl-ontologies.com/Ontology1365698210.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Bosque">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Tierra"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Contenido">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="Foto"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="apareceEn"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Filo">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:ID="Arma"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="produce"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Daño rdf:ID="Cortante"/>
+            </owl:hasValue>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Instrumento">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="Sonido"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#produce"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:ID="Objeto"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="FotoConNaturaleza">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="Naturaleza"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="aparece"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Foto"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Daño">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Atributos"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Raza"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Sexo"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Sonido"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Agua">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Naturaleza"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Arma">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Objeto"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#produce"/>
+            </owl:onProperty>
+            <owl:someValuesFrom rdf:resource="#Daño"/>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Lago">
+    <rdfs:subClassOf rdf:resource="#Agua"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Elfo">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="tieneRaza"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Raza rdf:ID="Elfica"/>
+            </owl:hasValue>
+          </owl:Restriction>
+          <owl:Class rdf:ID="Personaje"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Humano">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneRaza"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Raza rdf:ID="Humana"/>
+            </owl:hasValue>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Personaje"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Torre">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Edificio"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Edificio">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Estructura"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Foto">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Contenido"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#aparece"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Distancia">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#produce"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Daño rdf:ID="A_Distancia"/>
+            </owl:hasValue>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Arma"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Lugar">
+    <rdfs:subClassOf rdf:resource="#Contenido"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Sexo"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Sonido"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Animal"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Planta"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Castillo">
+    <rdfs:subClassOf rdf:resource="#Edificio"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Planta">
+    <rdfs:subClassOf rdf:resource="#Contenido"/>
+    <owl:disjointWith rdf:resource="#Lugar"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Animal"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="FotoConEstructura">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Foto"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#aparece"/>
+            </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class rdf:about="#Estructura"/>
+            </owl:someValuesFrom>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="#Sonido">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Raza"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Daño"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Sexo"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Lugar"/>
+    <rdfs:subClassOf rdf:resource="#Atributos"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Sexo">
+    <rdfs:subClassOf rdf:resource="#Atributos"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Raza"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Daño"/>
+    <owl:disjointWith rdf:resource="#Sonido"/>
+    <owl:disjointWith rdf:resource="#Lugar"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Objeto">
+    <rdfs:subClassOf rdf:resource="#Contenido"/>
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="esUsado"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Personaje"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Mar">
+    <rdfs:subClassOf rdf:resource="#Agua"/>
+  </owl:Class>
+  <owl:Class rdf:ID="FotoConMonumento">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Foto"/>
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="Monumento"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#aparece"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="#Animal">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneRaza"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Raza rdf:ID="Bestia"/>
+            </owl:hasValue>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Contenido"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <owl:disjointWith rdf:resource="#Planta"/>
+    <owl:disjointWith rdf:resource="#Lugar"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Rio">
+    <rdfs:subClassOf rdf:resource="#Agua"/>
+  </owl:Class>
+  <owl:Class rdf:ID="FotoConVariasPersonas">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Foto"/>
+          <owl:Restriction>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >2</owl:minCardinality>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="aparecePersonaje"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="#Personaje">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="usa"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#Objeto"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Contenido"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Personaje"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="amigoDe"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Personaje"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="enemigoDe"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom rdf:resource="#Sexo"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="tieneSexo"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneRaza"/>
+            </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class rdf:about="#Raza"/>
+            </owl:someValuesFrom>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Tienda">
+    <rdfs:subClassOf rdf:resource="#Edificio"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Hada">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneRaza"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Raza rdf:ID="Hadica"/>
+            </owl:hasValue>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Personaje"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="#Tierra">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Naturaleza"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Montaña">
+    <rdfs:subClassOf rdf:resource="#Tierra"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Estatua">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Monumento"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Granja">
+    <rdfs:subClassOf rdf:resource="#Edificio"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Estructura">
+    <rdfs:subClassOf rdf:resource="#Lugar"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Naturaleza"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Campo">
+    <rdfs:subClassOf rdf:resource="#Tierra"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Raza">
+    <rdfs:subClassOf rdf:resource="#Atributos"/>
+    <owl:disjointWith rdf:resource="#Sexo"/>
+    <owl:disjointWith rdf:resource="#Sonido"/>
+    <owl:disjointWith rdf:resource="#Daño"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Monumento">
+    <rdfs:subClassOf rdf:resource="#Estructura"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Naturaleza">
+    <owl:disjointWith rdf:resource="#Estructura"/>
+    <rdfs:subClassOf rdf:resource="#Lugar"/>
+  </owl:Class>
+  <owl:Class rdf:ID="FotoConPersona">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#aparece"/>
+            </owl:onProperty>
+            <owl:someValuesFrom rdf:resource="#Personaje"/>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Foto"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Puente">
+    <rdfs:subClassOf rdf:resource="#Estructura"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="#produce">
+    <rdfs:range rdf:resource="#Atributos"/>
+    <rdfs:domain rdf:resource="#Objeto"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#aparece">
+    <rdfs:domain rdf:resource="#Foto"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#apareceEn"/>
+    </owl:inverseOf>
+    <rdfs:range rdf:resource="#Contenido"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#aparecePersonaje">
+    <rdfs:range rdf:resource="#Personaje"/>
+    <rdfs:subPropertyOf rdf:resource="#aparece"/>
+    <rdfs:domain rdf:resource="#Foto"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#enemigoDe">
+    <owl:inverseOf rdf:resource="#enemigoDe"/>
+    <rdfs:domain rdf:resource="#Personaje"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    <rdfs:range rdf:resource="#Personaje"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#usa">
+    <rdfs:domain rdf:resource="#Personaje"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#esUsado"/>
+    </owl:inverseOf>
+    <rdfs:range rdf:resource="#Objeto"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#tieneSexo">
+    <rdfs:range rdf:resource="#Sexo"/>
+    <rdfs:domain rdf:resource="#Personaje"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#apareceEn">
+    <rdfs:domain rdf:resource="#Contenido"/>
+    <rdfs:range rdf:resource="#Foto"/>
+    <owl:inverseOf rdf:resource="#aparece"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#tieneRaza">
+    <rdfs:domain rdf:resource="#Personaje"/>
+    <rdfs:range rdf:resource="#Raza"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#esUsado">
+    <rdfs:domain rdf:resource="#Objeto"/>
+    <rdfs:range rdf:resource="#Personaje"/>
+    <owl:inverseOf rdf:resource="#usa"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#amigoDe">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    <rdfs:domain rdf:resource="#Personaje"/>
+    <owl:inverseOf rdf:resource="#amigoDe"/>
+    <rdfs:range rdf:resource="#Personaje"/>
+  </owl:ObjectProperty>
+  <Granja rdf:ID="Rancho_Lon_Lon"/>
+  <Daño rdf:ID="Contundente"/>
+  <Sexo rdf:ID="Masculino"/>
+  <Puente rdf:ID="Puente_de_madera"/>
+  <Sonido rdf:ID="Musica"/>
+  <Raza rdf:ID="Indefinida"/>
+  <Sexo rdf:ID="Femenino"/>
+  <Bosque rdf:ID="Bosque_Kokiri"/>
+  <Campo rdf:ID="Campo_de_Hyrule"/>
+  <Lago rdf:ID="Lago_Hylia"/>
+  <Rio rdf:ID="Rio_Hyrule"/>
+  <Daño rdf:ID="Magico"/>
+  <Personaje rdf:ID="Link"/>
+  <Castillo rdf:ID="Castillo_de_Hyrule"/>
+  <Planta rdf:ID="Arbol"/>
+  <Tienda rdf:ID="Tienda_Hyrule"/>
+  <Estatua rdf:ID="Estatua_Kokiri"/>
+  <Montaña rdf:ID="Monte_Goron"/>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.8, Build 629)  http://protege.stanford.edu -->
