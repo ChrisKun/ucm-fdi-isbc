@@ -16,6 +16,7 @@ public class Interfaz extends JFrame {
 
 	private JMenuBar menuBar;
 	private JLabel l_Banner;
+	private PanelVentana panelVentana;
 	
 	public final static int W = 1280;
 	public final static int H = 720;
@@ -28,6 +29,7 @@ public class Interfaz extends JFrame {
 	public Interfaz(Controlador controlador){
 		this.setLocation(200, 150);
 		this.setMinimumSize(new Dimension(W,H));
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		initMenuBar();
 		this.setJMenuBar(menuBar);
@@ -36,6 +38,8 @@ public class Interfaz extends JFrame {
 		l_Banner = new JLabel("Banner",SwingConstants.CENTER);
 		this.add(l_Banner,BorderLayout.NORTH);
 		this.add(controlador.getTree(),BorderLayout.WEST);
+		panelVentana = new PanelVentana(controlador);
+		this.add(panelVentana, BorderLayout.CENTER);
 	}
 	
 	public void initMenuBar(){
