@@ -7,7 +7,7 @@ import interfaz.Interfaz;
 public class Main {
 
 	public static void main(String[] args){
-		Ontologia modelo = new Ontologia("http://http://sentwittment.p.ht/","file:src/proyecto5/ontologia/etiquetado.owl");
+		Ontologia modelo = new Ontologia("http://http://sentwittment.p.ht/","file:proyecto5/src/ontologia/etiquetado.owl");
 		Controlador controlador = new Controlador(modelo);
 		Interfaz vista = new Interfaz(controlador);
 		controlador.setVista(vista);
