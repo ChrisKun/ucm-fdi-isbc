@@ -11,13 +11,13 @@ import ontobridge.Ontologia;
 public class Controlador {
 
 	Ontologia modelo;
-	Interfaz vista;
+	VentanaPrincipal vista;
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
 	}
 	
-	public void setVista(Interfaz vista){
+	public void setVista(VentanaPrincipal vista){
 		this.vista = vista;
 	}
 	
@@ -36,7 +36,9 @@ public class Controlador {
 	 */
 	public ArrayList<String> getTiposDeContenido(){
 		ArrayList<String> list = new ArrayList<String>();
-		
+		list.add("Objeto");
+		list.add("Personaje");
+		list.add("Lugar");
 		return list;
 	}
 	
