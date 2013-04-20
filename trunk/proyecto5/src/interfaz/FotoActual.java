@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class PanelVentana extends JPanel {
+public class FotoActual extends JPanel {
 
 	private Controlador controlador;
 	
@@ -19,7 +19,7 @@ public class PanelVentana extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public PanelVentana(Controlador controlador){
+	public FotoActual(Controlador controlador){
 		this.controlador = controlador;
 		this.setLayout(new BorderLayout());
 		//fotoActual = new JLabel();
@@ -32,7 +32,6 @@ public class PanelVentana extends JPanel {
 		nombreFotoActual = nuevaFoto;		
 		
         Border blackline = BorderFactory.createEtchedBorder();
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         String pathFile = "proyecto5\\fotos\\zelda\\Battle-for-the-Triforce-III-2.jpg";
         ImageIcon foto = new ImageIcon(pathFile);
         fotoActual = new JLabel(new ImageIcon(pathFile));

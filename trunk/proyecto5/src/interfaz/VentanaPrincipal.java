@@ -10,13 +10,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class Interfaz extends JFrame {
+public class VentanaPrincipal extends JFrame {
 
 	private Controlador controlador;
 
 	private JMenuBar menuBar;
 	private JLabel l_Banner;
-	private PanelVentana panelVentana;
+	private JPanel panelActual;
 	
 	public final static int W = 1280;
 	public final static int H = 720;
@@ -26,7 +26,7 @@ public class Interfaz extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Interfaz(Controlador controlador){
+	public VentanaPrincipal(Controlador controlador){
 		this.setLocation(200, 150);
 		this.setMinimumSize(new Dimension(W,H));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,11 +38,16 @@ public class Interfaz extends JFrame {
 		l_Banner = new JLabel("Banner",SwingConstants.CENTER);
 		this.add(l_Banner,BorderLayout.NORTH);
 		this.add(controlador.getTree(),BorderLayout.WEST);
-		panelVentana = new PanelVentana(controlador);
-		this.add(panelVentana, BorderLayout.CENTER);
+		
+		panelActual = new NavegadorJuegos();
+		this.add(panelActual, BorderLayout.CENTER);
+		
+		VentanaEtiquetar vE = new VentanaEtiquetar(controlador);
+		vE.setVisible(true);
 	}
 	
 	public void initMenuBar(){
 		menuBar = new JMenuBar();
 	}
+
 }
