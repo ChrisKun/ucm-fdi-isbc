@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
