@@ -49,8 +49,17 @@ public class Controlador {
 	 * @return
 	 */
 	public ArrayList<String> getPreguntasARellenar(int contenido){
+		ArrayList<String> clasesContenido = getTiposDeContenido();
 		ArrayList<String> list = new ArrayList<String>();
+		String aux = null;
+		//Obtenemos las propiedades de una clase y la guardamos en un iterador
+		Iterator<String> it = modelo.getOb().listProperties(clasesContenido.get(contenido));
 		
+		while (it.hasNext()){
+			aux = it.next();
+			list.add(aux.substring(aux.lastIndexOf("#")+1));
+			//TODO Falta comprobar si es obligatoria y mejorar el aspecto :P
+		}
 		return list;
 	}
 	
