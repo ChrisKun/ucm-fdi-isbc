@@ -13,7 +13,8 @@ public class VentanaEtiquetar extends JDialog {
 
 	private Controlador controlador;
 	private static final long serialVersionUID = 1L;
-	private JList<String> list;
+	private JList list; // JAVA 6
+	//private JList<String> list; FIXME JAVA 7
 	private JButton b_Back;
 	private JButton b_Next;
 	
@@ -46,7 +47,8 @@ public class VentanaEtiquetar extends JDialog {
 		ArrayList<String> list_values = controlador.getTiposDeContenido();
 		String[] values = new String[list_values.size()];
 		list_values.toArray(values);
-		list = new JList<String>(values);
+		list = new JList(values); //JAVA 6
+		//list = new JList<String>(values); FIXME JAVA 7
 		panel.add(list);
 		return panel;
 	}
@@ -56,7 +58,8 @@ public class VentanaEtiquetar extends JDialog {
 		ArrayList<String> list_values = controlador.getPreguntasARellenar(contenido);
 		String[] preguntas = new String[list_values.size()];
 		list_values.toArray(preguntas);
-		list = new JList<String>(preguntas);
+		//list = new JList<String>(preguntas); FIXME JAVA 7
+		list = new JList(preguntas); // JAVA 6
 		panel.add(list);
 		return panel;
 	}
