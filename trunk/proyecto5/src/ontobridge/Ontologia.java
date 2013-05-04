@@ -6,6 +6,7 @@ import java.util.Iterator;
 import es.ucm.fdi.gaia.ontobridge.OntoBridge;
 import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
+import es.ucm.fdi.gaia.ontobridge.test.gui.PnlSelectInstance;
 
 public class Ontologia {
 	
@@ -63,7 +64,7 @@ public class Ontologia {
 		
 		
 		javax.swing.JFrame window = new javax.swing.JFrame(ontologia.getMainOnto().getURL());
-		PnlConceptsAndInstancesTree tree = new PnlConceptsAndInstancesTree(ontologia.getOb(),true);
+		PnlSelectInstance tree = new PnlSelectInstance(ontologia.ob,false);
 		window.getContentPane().add(tree);
 		window.pack();
 		window.setSize(300, 600);
