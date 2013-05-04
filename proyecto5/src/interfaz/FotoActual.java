@@ -14,30 +14,40 @@ public class FotoActual extends JPanel {
 
 	private Controlador controlador;
 	
-	private String nombreFotoActual;
+	private String pathFotoActual;
 	private JLabel fotoActual;
 	
 	private static final long serialVersionUID = 1L;
+	
+	public FotoActual() {
+		// TODO Auto-generated constructor stub
+		
+	}
 	
 	public FotoActual(Controlador controlador){
 		this.controlador = controlador;
 		this.setLayout(new BorderLayout());
 		//fotoActual = new JLabel();
 		setFotoActual("");
-		this.add(fotoActual, BorderLayout.CENTER);
-		this.add(new JLabel("Añadir información, etiquetar, etc."), BorderLayout.SOUTH);
+		
 	}
 
+	
+
 	public void setFotoActual(String nuevaFoto){
-		nombreFotoActual = nuevaFoto;		
+		pathFotoActual = nuevaFoto;
+		actualizarPanel();
+	}
+	
+	private void actualizarPanel(){
+		this.removeAll();
 		
-        Border blackline = BorderFactory.createEtchedBorder();
-        String pathFile = "proyecto5\\fotos\\zelda\\Battle-for-the-Triforce-III-2.jpg";
-        ImageIcon foto = new ImageIcon(pathFile);
-        fotoActual = new JLabel(new ImageIcon(pathFile));
+		Border blackline = BorderFactory.createEtchedBorder();
+        ImageIcon foto = new ImageIcon(pathFotoActual);
+        fotoActual = new JLabel(foto);
         fotoActual.setPreferredSize(new Dimension(700,850));
         fotoActual.setBorder(blackline);
-		
-		this.validate();
+        this.add(fotoActual, BorderLayout.CENTER);
+		this.add(new JLabel("Añadir información, etiquetar, etc."), BorderLayout.SOUTH);
 	}
 }

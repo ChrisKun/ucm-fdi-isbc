@@ -3,20 +3,26 @@ package interfaz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class VentanaPrincipal extends JFrame {
+import clasificador.Main;
 
-	private Controlador controlador;
+public class VentanaPrincipal extends JFrame{
+
+	public static Controlador controlador;
 
 	private JMenuBar menuBar;
 	private JLabel l_Banner;
-	private JPanel panelActual;
+	private PanelIntercambiable panelIntercambiable;
 	
 	public final static int W = 1280;
 	public final static int H = 720;
@@ -39,15 +45,25 @@ public class VentanaPrincipal extends JFrame {
 		this.add(l_Banner,BorderLayout.NORTH);
 		this.add(controlador.getTree(),BorderLayout.WEST);
 		
-		panelActual = new NavegadorJuegos();
-		this.add(panelActual, BorderLayout.CENTER);
-		
-		VentanaEtiquetar vE = new VentanaEtiquetar(controlador);
-		vE.setVisible(true);
+		panelIntercambiable = new PanelIntercambiable();
+		this.add(panelIntercambiable, BorderLayout.CENTER);
+
 	}
 	
 	public void initMenuBar(){
 		menuBar = new JMenuBar();
+	}
+
+	public void activaPanelExplorador(String pathFile){
+		panelIntercambiable.setPathExplorador(pathFile);
+		panelIntercambiable.cambiarPanel(PanelIntercambiable.panelExplorador);
+		this.validate();
+	}
+	
+	public void activaPanelFoto(String pathFile){
+		panelIntercambiable.setPathFoto(pathFile);
+		panelIntercambiable.cambiarPanel(PanelIntercambiable.panelFoto);
+		this.validate();
 	}
 
 }
