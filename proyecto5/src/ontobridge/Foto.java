@@ -1,52 +1,41 @@
 package ontobridge;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Foto {
 	
 	private String ruta;
 	private String nombre;
-	private ArrayList<String> lugar;
-	private ArrayList<String> objeto;
-	private ArrayList<String> personaje;
+	private HashMap<String, ArrayList<String>> listaEtiquetado;
 	
 	
 	public Foto(String ruta, String nombre){
 		this.ruta = ruta;
 		this.nombre = nombre;
-		lugar = new ArrayList<String>();
-		objeto = new ArrayList<String>();
-		personaje = new ArrayList<String>();
+		listaEtiquetado = new HashMap<String, ArrayList<String>>();
 	}
 
 
-	public void setInstancias(ArrayList<String> instancias, String string) {
-		//TODO Hacer enumerado
-		if (string.equals("Objeto")){
-			this.objeto = instancias;
+	public void setIndividuos(ArrayList<String> instancias, String categoria) {
+		listaEtiquetado.put(categoria, instancias);
+	}
+	
+	public void inicializaCategorias(ArrayList<String> categorias){
+		for (int i = 0; i < categorias.size(); i++){
+			listaEtiquetado.put(categorias.get(i), new ArrayList<String>());
 		}
-		else if (string.equals("Personaje")){
-			this.personaje = instancias;
-		}
-		else if (string.equals("Lugar")){
-			this.lugar = instancias;
-		}
+	}
+	
+	public void addIndividuo(String categoria, String individuo){
+		ArrayList<String> l = listaEtiquetado.get(categoria);
+		if (l != null)
+			l.add(individuo);
 	}
 
 
-	public ArrayList<String> getInstancias(String string) {
-		ArrayList<String> l = null;
-		//TODO Enumerado!!!
-		if (string.equals("Objeto")){
-			l = this.objeto;
-		}
-		else if (string.equals("Personaje")){
-			l = this.personaje;
-		}
-		else if (string.equals("Lugar")){
-			l = this.lugar;
-		}
-		return l;
+	public ArrayList<String> getIndividuos(String categoria) {
+		return listaEtiquetado.get(categoria);
 	}
 	
 	public String getRuta(){

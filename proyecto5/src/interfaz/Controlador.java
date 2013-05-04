@@ -42,10 +42,16 @@ public class Controlador {
 	 * @return
 	 */
 	public ArrayList<String> getTiposDeContenido(){
+		
+		String s;
+		Iterator<String> it = modelo.getOb().listSubClasses("http://www.owl-ontologies.com/Ontology1365698210.owl#Contenido", true);
 		ArrayList<String> list = new ArrayList<String>();
-		list.add("Objeto");
-		list.add("Personaje");
-		list.add("Lugar");
+		
+		while (it.hasNext()){
+			s = it.next();
+			list.add(s.substring(s.lastIndexOf("#")+1));
+		}
+		
 		return list;
 	}
 	
@@ -79,7 +85,7 @@ public class Controlador {
 	 */
 	public ArrayList<String> getIndividuosEtiquetados(String nombreFoto, int contenido){
 		Foto f = fotos.get(nombreFoto);
-		return f.getInstancias(getTiposDeContenido().get(contenido));
+		return f.getIndividuos(getTiposDeContenido().get(contenido));
 	}
 	
 	/**
@@ -92,7 +98,7 @@ public class Controlador {
 	public void setEtiquetarInstancias(String nombreFoto, ArrayList<String> individuos, int contenido){
 		Foto f = fotos.get(nombreFoto);
 		if (f != null)
-			f.setInstancias(individuos,getTiposDeContenido().get(contenido));
+			f.setIndividuos(individuos,getTiposDeContenido().get(contenido));
 	}
 	
 	/**
@@ -107,12 +113,11 @@ public class Controlador {
 		return s;
 	}
 	/**
-	 * Selecciona la foto con la que estamos trabajando y permite sacar
-	 * información asociada a ella, como quienes aparecen, donde aparecen...
+	 * Permite añadir una foto a los datos para poder empezar a etiquetar
 	 */
-	
-	public void addFoto(String nombre, String ruta){
+	public void addNuevaFoto(String nombre, String ruta){
 		Foto f = new Foto(nombre, ruta);
+		f.inicializaCategorias(getTiposDeContenido());
 		fotos.put(nombre, f);
 	}
 	
@@ -136,7 +141,7 @@ public class Controlador {
 			f = itFotos.next();
 			
 			while (itClases.hasNext()){
-				if (f.getInstancias(itClases.next()).contains(individuo))
+				if (f.getIndividuos(itClases.next()).contains(individuo))
 					listaRutasFotos.add(f.getRuta());
 			}
 		}
