@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
+import es.ucm.fdi.gaia.ontobridge.test.gui.PnlSelectInstance;
 
 import ontobridge.Foto;
 import ontobridge.Ontologia;
@@ -33,7 +34,7 @@ public class Controlador {
 	 * @return
 	 */
 	public Component getTree(){
-		PnlConceptsAndInstancesTree tree = new PnlConceptsAndInstancesTree(modelo.getOb(),true);
+		PnlSelectInstance tree = new PnlSelectInstance(modelo.getOb(),true);
 		return tree;
 	}
 	
