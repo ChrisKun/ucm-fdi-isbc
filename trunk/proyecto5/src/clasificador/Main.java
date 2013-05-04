@@ -15,6 +15,7 @@ public class Main {
 		Controlador controlador = new Controlador(modelo);
 		VentanaPrincipal vista = new VentanaPrincipal(controlador);
 		controlador.setVista(vista);
+		controlador.getTiposDeContenido();
 		
 		
 		
