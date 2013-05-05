@@ -17,7 +17,7 @@ import ontobridge.Ontologia;
 
 public class Controlador {
 
-	Ontologia modelo;
+	public static Ontologia modelo; //FIXME Solo para pruebas
 	VentanaPrincipal vista;
 	HashMap<String, Foto> fotos;
 	//Foto foto;
@@ -104,9 +104,9 @@ public class Controlador {
 	 * @param individuo
 	 * @return properties y values serán rellenados con las propiedades y los valores de esas propiedades
 	 */
-	public void getValoresDePropiedadesDeIndividuo(String individuo, List<String> properties, List<String> values){
-		modelo.getOb().listInstancePropertiesValues(individuo, properties, values);
-	}
+	//public void getValoresDePropiedadesDeIndividuo(String individuo, List<String> properties, List<String> values){
+	//	modelo.getOb().listInstancePropertiesValues(individuo, properties, values);
+	//}
 	
 	/**
 	 * Permite rellenar las propiedades de un individuo
