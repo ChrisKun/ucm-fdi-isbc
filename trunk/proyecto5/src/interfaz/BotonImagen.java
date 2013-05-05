@@ -37,7 +37,6 @@ public class BotonImagen extends JButton {
 			foto = new ImageIcon(Main.rootPath + "\\" + "nok.png");
 		}		
 		
-		//Image img = ((ImageIcon) icon).getImage() ;
 		Image img = foto.getImage();
 		int height = img.getHeight(null);
 		int width = img.getWidth(null);
@@ -52,7 +51,7 @@ public class BotonImagen extends JButton {
 			newWidth = (int) (width/propWidth);
 		}
 		
-		Image newimg = img.getScaledInstance( newWidth, newHeight,  java.awt.Image.SCALE_SMOOTH ) ; 
+		Image newimg = img.getScaledInstance( newWidth, newHeight,  java.awt.Image.SCALE_DEFAULT ) ; 
 
 		foto = new ImageIcon( newimg );
 		
