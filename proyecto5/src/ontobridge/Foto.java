@@ -3,6 +3,11 @@ package ontobridge;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Nota: tal como esta esta clase no se deberia usar, ya que las fotos pasan a ser individuos ahora que tienen sus propias propiedades
+ * Mirar los ejemplos de ontobridge para ver eso, que queda mucho mas claro.
+ * @deprecated
+ */
 public class Foto {
 	
 	private String ruta;

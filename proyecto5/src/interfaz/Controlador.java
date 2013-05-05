@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+
 
 
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
@@ -87,6 +89,30 @@ public class Controlador {
 	public ArrayList<String> getIndividuosEtiquetados(String nombreFoto, int contenido){
 		Foto f = fotos.get(nombreFoto);
 		return f.getIndividuos(getTiposDeContenido().get(contenido));
+	}
+	
+	/**
+	 * Devuelve las propiedades de un individuo
+	 * @param individuo
+	 * @return
+	 */
+	public Iterator<String> getPropiedadesIndividuo(String individuo){
+		return modelo.getOb().listInstanceProperties(individuo);
+	}
+	/**
+	 * Devuelve los individuos asociados a una propiedad de un individuo
+	 * @param individuo
+	 * @return properties y values serán rellenados con las propiedades y los valores de esas propiedades
+	 */
+	public void getValoresDePropiedadesDeIndividuo(String individuo, List<String> properties, List<String> values){
+		modelo.getOb().listInstancePropertiesValues(individuo, properties, values);
+	}
+	
+	/**
+	 * Permite rellenar las propiedades de un individuo
+	 */
+	public void creaIndividuo(String clase, String individuo){
+		modelo.getOb().createInstance(clase, individuo);
 	}
 	
 	/**
