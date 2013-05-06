@@ -34,6 +34,6 @@ public class PanelIntercambiable extends JPanel{
 	}
 
 	public void setPathFoto(String pathFile) {
-		fotoActual.setFotoActual(pathFile);		
+		fotoActual.actualizarFoto(pathFile);		
 	}
 }

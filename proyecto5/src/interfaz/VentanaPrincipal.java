@@ -50,6 +50,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 
 	public VentanaPrincipal(Controlador controlador){
+		this.controlador = controlador;
 		this.setLocation(200, 150);
 		this.setMinimumSize(new Dimension(W,H));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

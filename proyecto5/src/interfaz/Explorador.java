@@ -24,6 +24,7 @@ public class Explorador extends JPanel{
 	
 	private void actualizarPanel(){
 		this.removeAll();
+		this.repaint();
 		File dir = new File(directoryPath);
 		String[] carpetas = dir.list();
 		
