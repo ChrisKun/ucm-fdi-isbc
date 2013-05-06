@@ -81,23 +81,8 @@ public class TablaIndividuos extends DefaultTableModel {
 			Vector <String> v = new Vector<String>();
 			//CONTENIDO - Comprobamos la propiedad
 			String str = modelo.getOb().getShortName(properties.get(i));
-			/*if (str.equals("aparecePersonaje")){
-				/* En este caso la propiedad son los personajes que aparecen en la foto y por tanto sabemos que pertenecen al
-				 * contenido Personaje
-				 */
-				//if (modelo.getOb().isInstanceOf(values.get(i), modelo.getOb().getURI("Personaje"))){
-					//v.add("Personaje");
-				//}
-				// Metemos tambien el nombre del personaje
-			/*	v.add(modelo.getOb().getShortName(values.get(i)));
-				//Lo añadimos como nueva fila
-				this.addRow(v);
-				
-			}*/
 			if (str.equals("aparece")){
-				/*
-				 * Sacamos que a que tipo de contenido pertenece
-				 */
+				// Sacamos que a que tipo de contenido pertenece
 				for (int j = 0; j < c.getTiposDeContenido().size(); j++){
 					//Comprobar si es distinto de personaje
 					if (modelo.getOb().isInstanceOf(values.get(i),modelo.getOb().getURI(c.getTiposDeContenido().get(j)))){
@@ -112,6 +97,9 @@ public class TablaIndividuos extends DefaultTableModel {
 		
 	}
 	
+	/**
+	 * impide que se puedan modificar las celdas
+	 */
 	 public boolean isCellEditable (int row, int column){
 		 return false;
 	 }
