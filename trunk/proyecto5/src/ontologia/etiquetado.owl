@@ -802,6 +802,7 @@
     </owl:distinctMembers>
   </owl:AllDifferent>
   <Granja rdf:ID="Rancho_Lon_Lon"/>
+  <Planta rdf:ID="Arbusto"/>
   <Estructura rdf:ID="Estructura_Generica"/>
   <Humano rdf:ID="Humano_Generico"/>
   <Raza rdf:ID="R_Indefinida"/>
@@ -809,15 +810,24 @@
   <Granja rdf:ID="Rancho_Generico"/>
   <Lago rdf:ID="Lago_Generico"/>
   <Rio rdf:ID="Rio_Generico"/>
+  <Animal rdf:ID="Pez"/>
+  <Filo rdf:ID="Espada"/>
   <Arma rdf:ID="Espada_Magica">
     <produce rdf:resource="#D_Magico"/>
     <produce rdf:resource="#D_Cortante"/>
   </Arma>
   <Bosque rdf:ID="Bosque_Kokiri"/>
+  <Distancia rdf:ID="Rifle"/>
   <Torre rdf:ID="Torre_Generica"/>
   <Campo rdf:ID="Campo_de_Hyrule"/>
   <Lago rdf:ID="Lago_Hylia"/>
   <Animal rdf:ID="Caballo"/>
+  <Filo rdf:ID="Puñal"/>
+  <Distancia rdf:ID="Pistola_Laser">
+    <produce>
+      <Daño rdf:ID="D_Laser"/>
+    </produce>
+  </Distancia>
   <owl:AllDifferent>
     <owl:distinctMembers rdf:parseType="Collection">
       <Personaje rdf:about="#Link"/>
@@ -827,7 +837,12 @@
     </owl:distinctMembers>
   </owl:AllDifferent>
   <Planta rdf:ID="Planta_Generica"/>
+  <Planta rdf:ID="Hierba"/>
+  <Distancia rdf:ID="Pistola"/>
   <Planta rdf:ID="Arbol"/>
+  <Instrumento rdf:ID="Guitarra">
+    <produce rdf:resource="#So_Musica"/>
+  </Instrumento>
   <Animal rdf:ID="Vaca"/>
   <owl:AllDifferent>
     <owl:distinctMembers rdf:parseType="Collection">
@@ -853,9 +868,11 @@
     <produce rdf:resource="#D_Contundente"/>
     <produce rdf:resource="#D_Magico"/>
   </Arma>
+  <Planta rdf:ID="Rosa"/>
   <Puente rdf:ID="Puente_de_madera"/>
   <Animal rdf:ID="Gato"/>
   <owl:AllDifferent/>
+  <Contundente rdf:ID="Porra"/>
   <Castillo rdf:ID="Castillo_Generico"/>
   <Animal rdf:ID="Perro"/>
   <Monumento rdf:ID="Monumento_Generico"/>
@@ -863,6 +880,7 @@
   <Edificio rdf:ID="Edificio_Generico"/>
   <Rio rdf:ID="Rio_Hyrule"/>
   <Campo rdf:ID="Campo_Generico"/>
+  <Magica rdf:ID="Varita"/>
   <Montaña rdf:ID="Montaña_Generica"/>
   <owl:AllDifferent>
     <owl:distinctMembers rdf:parseType="Collection">
