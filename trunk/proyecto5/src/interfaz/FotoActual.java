@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
@@ -34,20 +35,21 @@ public class FotoActual extends JPanel {
 		this.controlador = controlador;
 		this.setLayout(new BorderLayout());
 		//fotoActual = new JLabel();
-		setFotoActual("");
+		//actualizarFoto("");
 		
 	}
 
 	
 
-	public void setFotoActual(String nuevaFoto){
+	public void actualizarFoto(String nuevaFoto){
+		this.removeAll();
 		pathFotoActual = nuevaFoto;
 		actualizarPanel();
+		actualizarTabla();
 	}
 	
 	private void actualizarPanel(){
-		this.removeAll();
-		
+				
 		Border blackline = BorderFactory.createEtchedBorder();
         ImageIcon foto = resizeFoto(pathFotoActual, 600, 350);
         
@@ -62,7 +64,28 @@ public class FotoActual extends JPanel {
 		modeloPropiedades.addRow(a);
 		tablaPropiedades = new JTable(modeloPropiedades);
 		
+		
+	}
+	
+	private void actualizarTabla(){
+		tablaPropiedades.setLayout(new BorderLayout());
 		this.add(tablaPropiedades,BorderLayout.CENTER);
+		TablaIndividuos tab = new TablaIndividuos(controlador.modelo, controlador);
+		JTable t = new JTable(tab);
+		/*
+		 * Métodos interesantes a la hora de añadir el default table model a un JTable
+		 */
+		t.setCellSelectionEnabled(false);
+		JScrollPane scrollPane = new JScrollPane(t);
+		t.setFillsViewportHeight(true);
+		tablaPropiedades.add(BorderLayout.CENTER, scrollPane);
+
+		/*
+		 * actualizar el contenido con una foto
+		 */
+		String nombreFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
+		System.out.println(nombreFoto);
+		tab.ponerIndividuosPorContentidoDeFoto(nombreFoto);
 	}
 	
 	private ImageIcon resizeFoto(String pathFoto, int ancho, int alto){
