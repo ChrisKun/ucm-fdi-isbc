@@ -17,14 +17,18 @@ import ontobridge.Ontologia;
 
 public class Controlador {
 
-	public static Ontologia modelo; //FIXME Solo para pruebas
+	Ontologia modelo; //FIXME Solo para pruebas
 	VentanaPrincipal vista;
+	String rutaOntologia;
+	
 	HashMap<String, Foto> fotos;
 	//Foto foto;
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
-		fotos = new HashMap<String,Foto>();
+		rutaOntologia = modelo.getOb().getThingURI();
+		System.out.println(rutaOntologia);
+		//fotos = new HashMap<String,Foto>();
 	}
 	
 	public void setVista(VentanaPrincipal vista){
@@ -47,14 +51,14 @@ public class Controlador {
 	public ArrayList<String> getTiposDeContenido(){
 		
 		String s;
-		Iterator<String> it = modelo.getOb().listSubClasses("http://www.owl-ontologies.com/Ontology1365698210.owl#Contenido", true);
+		//FIXME cambiar esto para generalizar
+		Iterator<String> it = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), true);
 		ArrayList<String> list = new ArrayList<String>();
 		
 		while (it.hasNext()){
 			s = it.next();
-			list.add(s.substring(s.lastIndexOf("#")+1));
+			list.add(modelo.getOb().getShortName(s));
 		}
-		
 		return list;
 	}
 	
@@ -73,7 +77,8 @@ public class Controlador {
 		
 		while (it.hasNext()){
 			aux = it.next();
-			list.add(aux.substring(aux.lastIndexOf("#")+1));
+			list.add(modelo.getOb().getShortName(aux));
+			//list.add(aux.substring(aux.lastIndexOf("#")+1));
 			//TODO Falta comprobar si es obligatoria
 		}
 		return list;
@@ -132,7 +137,7 @@ public class Controlador {
 	 * Devuelve la instancia con la que estamos trabajando en este momento, no tiene por qué
 	 * ser un String pero hay que hablar de que devolvemos aquí.
 	 * @return
-	 * FIXME
+	 * FIXME Falta ver cómo el árbol guarda quién esta seleccionado...
 	 */
 	public String getInstanciaActualSeleccionada(){
 		String s = "";
@@ -152,6 +157,7 @@ public class Controlador {
 	 * Devuelve la ruta de las fotos en las que aparece un individuo
 	 * @param individuo
 	 * @return
+	 * FIXME Ahora hay que readaptarlo
 	 */
 	public ArrayList<String> getFotosAparece(String individuo){
 		ArrayList<String> listaRutasFotos = new ArrayList<String>();

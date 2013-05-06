@@ -16,8 +16,8 @@ import interfaz.VentanaPrincipal;
 public class Main {
 
 	public static final String rootPath = "proyecto5";
-	public static final String gamesPath = rootPath + "\\fotos"; //"fotos"; 
-	private static final String pathOntologia =  "file:proyecto5/src/ontologia/etiquetado.owl"; //"file:src/ontologia/etiquetado.owl";
+	public static final String gamesPath = "fotos";// rootPath + "\\fotos"; //"fotos"; 
+	private static final String pathOntologia = "file:src/ontologia/etiquetado.owl";// "file:proyecto5/src/ontologia/etiquetado.owl"; //"file:src/ontologia/etiquetado.owl";
 	private static final String urlOntologia = "http://http://sentwittment.p.ht/";
 	
 	
@@ -37,7 +37,7 @@ public class Main {
 		JPanel p = new JPanel();
 		p.setLayout(new BorderLayout());
 		f.setContentPane(p);
-		TablaIndividuos tab = new TablaIndividuos(modelo);
+		TablaIndividuos tab = new TablaIndividuos(modelo, controlador);
 		JTable t = new JTable(tab);
 		/*
 		 * Métodos interesantes a la hora de añadir el default table model a un JTable
@@ -47,6 +47,7 @@ public class Main {
 		t.setFillsViewportHeight(true);
 		p.add(BorderLayout.CENTER, scrollPane);
 		f.setVisible(true);
+		/*
 		boolean para = false;
 		Iterator<String> it = modelo.getOb().listAllClasses();
 		while (it.hasNext() && !para){
@@ -57,8 +58,10 @@ public class Main {
 				String la = l.next();
 				if (la != null)
 					para = true;
-				tab.actualizarTabla(la);
+				//tab.actualizarPropiedadesIndividuo(la);
+				//tab.verContenidoFoto(modelo.getOb().getURI("Link"));
 			}
-		}
+		}*/
+		tab.verContenidoFoto(modelo.getOb().getURI("Link"));
 	}
 }
