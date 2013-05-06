@@ -64,15 +64,16 @@ public class TablaIndividuos extends DefaultTableModel {
 	 * del inviduo
 	 */
 	public void ponerIndividuosPorContentidoDeFoto(String foto){
+		String foto2 = modelo.getOb().getURI(foto);
 		String[] s = {"Componente", "Individuo"};
 		this.setColumnIdentifiers(s);
 		//Ver qué tipo de foto es para saber que propiedades podemos pedirle...
-		if (!modelo.getOb().existsInstance(modelo.getOb().getURI(foto)))
+		if (!modelo.getOb().existsInstance(foto2))
 			return;
 		//recogemos sus propiedades
 		List<String> properties = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		modelo.getOb().listInstancePropertiesValues(foto, properties, values);
+		modelo.getOb().listInstancePropertiesValues(foto2, properties, values);
 		/* y ahora vemos sus propiedades
 		 * aparece y aparecePersonaje son propiedades del individuo foto
 		 * aparecePersonaje ademas cuenta con que tienen que ser personajes..

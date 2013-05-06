@@ -51,7 +51,7 @@ public class Main {
 		/*
 		 * actualizar el contenido con una foto
 		 */
-		tab.ponerIndividuosPorContentidoDeFoto(modelo.getOb().getURI("TLOZ02"));
+		tab.ponerIndividuosPorContentidoDeFoto("TLOZ02");
 		
 		/* Pruebas para obtener las fotos en las que aparece un personaje, objeto, planta...
 		 * ArrayList<String> a = controlador.getFotosAparece("Link");
