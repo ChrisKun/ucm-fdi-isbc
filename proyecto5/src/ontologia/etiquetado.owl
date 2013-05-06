@@ -16,21 +16,21 @@
       <owl:Class rdf:ID="Tierra"/>
     </rdfs:subClassOf>
     <owl:disjointWith>
-      <owl:Class rdf:ID="Campo"/>
+      <owl:Class rdf:ID="Montaña"/>
     </owl:disjointWith>
     <owl:disjointWith>
-      <owl:Class rdf:ID="Montaña"/>
+      <owl:Class rdf:ID="Campo"/>
     </owl:disjointWith>
   </owl:Class>
   <owl:Class rdf:ID="Contenido">
     <owl:equivalentClass>
       <owl:Restriction>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:ID="apareceEn"/>
-        </owl:onProperty>
         <owl:someValuesFrom>
           <owl:Class rdf:ID="Foto"/>
         </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="apareceEn"/>
+        </owl:onProperty>
       </owl:Restriction>
     </owl:equivalentClass>
   </owl:Class>
@@ -44,7 +44,7 @@
               <owl:ObjectProperty rdf:ID="produce"/>
             </owl:onProperty>
             <owl:hasValue>
-              <Daño rdf:ID="Cortante"/>
+              <Daño rdf:ID="D_Cortante"/>
             </owl:hasValue>
           </owl:Restriction>
         </owl:intersectionOf>
@@ -90,13 +90,16 @@
       <owl:Class rdf:ID="Atributos"/>
     </rdfs:subClassOf>
     <owl:disjointWith>
-      <owl:Class rdf:ID="Raza"/>
+      <owl:Class rdf:ID="Estructurales"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Sonido"/>
     </owl:disjointWith>
     <owl:disjointWith>
       <owl:Class rdf:ID="Sexo"/>
     </owl:disjointWith>
     <owl:disjointWith>
-      <owl:Class rdf:about="#Sonido"/>
+      <owl:Class rdf:ID="Raza"/>
     </owl:disjointWith>
   </owl:Class>
   <owl:Class rdf:ID="Agua">
@@ -124,10 +127,10 @@
   </owl:Class>
   <owl:Class rdf:ID="Lago">
     <owl:disjointWith>
-      <owl:Class rdf:ID="Rio"/>
+      <owl:Class rdf:ID="Mar"/>
     </owl:disjointWith>
     <owl:disjointWith>
-      <owl:Class rdf:ID="Mar"/>
+      <owl:Class rdf:ID="Rio"/>
     </owl:disjointWith>
     <rdfs:subClassOf rdf:resource="#Agua"/>
   </owl:Class>
@@ -137,7 +140,7 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
             <owl:hasValue>
-              <Raza rdf:ID="Elfica"/>
+              <Raza rdf:ID="R_Elfa"/>
             </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:ID="tieneRaza"/>
@@ -153,12 +156,12 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:hasValue>
-              <Raza rdf:ID="Humana"/>
-            </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="#tieneRaza"/>
             </owl:onProperty>
+            <owl:hasValue>
+              <Raza rdf:ID="R_Humana"/>
+            </owl:hasValue>
           </owl:Restriction>
           <owl:Class rdf:about="#Personaje"/>
         </owl:intersectionOf>
@@ -166,15 +169,21 @@
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:ID="Edificio">
-    <rdfs:subClassOf>
-      <owl:Class rdf:ID="Estructura"/>
-    </rdfs:subClassOf>
-    <owl:disjointWith>
-      <owl:Class rdf:ID="Puente"/>
-    </owl:disjointWith>
-    <owl:disjointWith>
-      <owl:Class rdf:ID="Monumento"/>
-    </owl:disjointWith>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:ID="Estructura"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="tieneEstructural"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Estructurales rdf:ID="E_Habitable"/>
+            </owl:hasValue>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="#Foto">
     <owl:equivalentClass>
@@ -196,6 +205,9 @@
     <owl:disjointWith>
       <owl:Class rdf:ID="Castillo"/>
     </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Templo"/>
+    </owl:disjointWith>
     <rdfs:subClassOf rdf:resource="#Edificio"/>
   </owl:Class>
   <owl:Class rdf:ID="Distancia">
@@ -203,12 +215,12 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:hasValue>
-              <Daño rdf:ID="A_Distancia"/>
-            </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="#produce"/>
             </owl:onProperty>
+            <owl:hasValue>
+              <Daño rdf:ID="D_A_Distancia"/>
+            </owl:hasValue>
           </owl:Restriction>
           <owl:Class rdf:about="#Arma"/>
         </owl:intersectionOf>
@@ -219,6 +231,30 @@
     <rdfs:subClassOf rdf:resource="#Contenido"/>
     <owl:disjointWith>
       <owl:Class rdf:ID="Planta"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#Templo">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Tienda"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Torre"/>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Edificio"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneEstructural"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Estructurales rdf:ID="E_Culto"/>
+            </owl:hasValue>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Granja"/>
     </owl:disjointWith>
   </owl:Class>
   <owl:Class rdf:about="#Castillo">
@@ -234,16 +270,6 @@
   <owl:Class rdf:about="#Planta">
     <rdfs:subClassOf rdf:resource="#Contenido"/>
     <owl:disjointWith rdf:resource="#Lugar"/>
-  </owl:Class>
-  <owl:Class rdf:about="#Sonido">
-    <owl:disjointWith>
-      <owl:Class rdf:about="#Raza"/>
-    </owl:disjointWith>
-    <owl:disjointWith rdf:resource="#Daño"/>
-    <owl:disjointWith>
-      <owl:Class rdf:about="#Sexo"/>
-    </owl:disjointWith>
-    <rdfs:subClassOf rdf:resource="#Atributos"/>
   </owl:Class>
   <owl:Class rdf:ID="FotoConEstructura">
     <owl:equivalentClass>
@@ -262,13 +288,29 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
-  <owl:Class rdf:about="#Sexo">
-    <rdfs:subClassOf rdf:resource="#Atributos"/>
+  <owl:Class rdf:about="#Sonido">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Estructurales"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Sexo"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Daño"/>
     <owl:disjointWith>
       <owl:Class rdf:about="#Raza"/>
     </owl:disjointWith>
-    <owl:disjointWith rdf:resource="#Daño"/>
+    <rdfs:subClassOf rdf:resource="#Atributos"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Sexo">
+    <rdfs:subClassOf rdf:resource="#Atributos"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Estructurales"/>
+    </owl:disjointWith>
     <owl:disjointWith rdf:resource="#Sonido"/>
+    <owl:disjointWith rdf:resource="#Daño"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Raza"/>
+    </owl:disjointWith>
   </owl:Class>
   <owl:Class rdf:about="#Objeto">
     <rdfs:subClassOf rdf:resource="#Contenido"/>
@@ -284,10 +326,10 @@
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="#Mar">
+    <owl:disjointWith rdf:resource="#Lago"/>
     <owl:disjointWith>
       <owl:Class rdf:about="#Rio"/>
     </owl:disjointWith>
-    <owl:disjointWith rdf:resource="#Lago"/>
     <rdfs:subClassOf rdf:resource="#Agua"/>
   </owl:Class>
   <owl:Class rdf:ID="FotoConMonumento">
@@ -300,7 +342,7 @@
               <owl:ObjectProperty rdf:about="#aparece"/>
             </owl:onProperty>
             <owl:someValuesFrom>
-              <owl:Class rdf:about="#Monumento"/>
+              <owl:Class rdf:ID="Monumento"/>
             </owl:someValuesFrom>
           </owl:Restriction>
         </owl:intersectionOf>
@@ -308,8 +350,8 @@
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="#Rio">
-    <owl:disjointWith rdf:resource="#Mar"/>
     <owl:disjointWith rdf:resource="#Lago"/>
+    <owl:disjointWith rdf:resource="#Mar"/>
     <rdfs:subClassOf rdf:resource="#Agua"/>
   </owl:Class>
   <owl:Class rdf:ID="Animal">
@@ -317,12 +359,12 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:hasValue>
-              <Raza rdf:ID="Bestia"/>
-            </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="#tieneRaza"/>
             </owl:onProperty>
+            <owl:hasValue>
+              <Raza rdf:ID="R_Bestia"/>
+            </owl:hasValue>
           </owl:Restriction>
           <owl:Class rdf:about="#Contenido"/>
         </owl:intersectionOf>
@@ -335,27 +377,27 @@
   <owl:Class rdf:about="#Personaje">
     <rdfs:subClassOf>
       <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Personaje"/>
         <owl:onProperty>
-          <owl:ObjectProperty rdf:ID="usa"/>
+          <owl:SymmetricProperty rdf:ID="enemigoDe"/>
         </owl:onProperty>
-        <owl:someValuesFrom rdf:resource="#Objeto"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:SymmetricProperty rdf:ID="amigoDe"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#Personaje"/>
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:subClassOf rdf:resource="#Contenido"/>
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:someValuesFrom rdf:resource="#Personaje"/>
         <owl:onProperty>
-          <owl:ObjectProperty rdf:ID="amigoDe"/>
+          <owl:ObjectProperty rdf:ID="usa"/>
         </owl:onProperty>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:someValuesFrom rdf:resource="#Personaje"/>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:ID="enemigoDe"/>
-        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#Objeto"/>
       </owl:Restriction>
     </rdfs:subClassOf>
     <owl:equivalentClass>
@@ -379,6 +421,23 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
+  <owl:Class rdf:ID="Contundente">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Arma"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#produce"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Daño rdf:ID="D_Contundente"/>
+            </owl:hasValue>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
   <owl:Class rdf:about="#Tienda">
     <rdfs:subClassOf rdf:resource="#Edificio"/>
     <owl:disjointWith>
@@ -386,6 +445,16 @@
     </owl:disjointWith>
     <owl:disjointWith rdf:resource="#Castillo"/>
     <owl:disjointWith rdf:resource="#Torre"/>
+    <owl:disjointWith rdf:resource="#Templo"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Estructurales">
+    <rdfs:subClassOf rdf:resource="#Atributos"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Raza"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Sexo"/>
+    <owl:disjointWith rdf:resource="#Sonido"/>
+    <owl:disjointWith rdf:resource="#Daño"/>
   </owl:Class>
   <owl:Class rdf:ID="Hada">
     <owl:equivalentClass>
@@ -396,7 +465,7 @@
               <owl:ObjectProperty rdf:about="#tieneRaza"/>
             </owl:onProperty>
             <owl:hasValue>
-              <Raza rdf:ID="Hadica"/>
+              <Raza rdf:ID="R_Hada"/>
             </owl:hasValue>
           </owl:Restriction>
           <owl:Class rdf:about="#Personaje"/>
@@ -412,10 +481,10 @@
   </owl:Class>
   <owl:Class rdf:about="#Montaña">
     <rdfs:subClassOf rdf:resource="#Tierra"/>
+    <owl:disjointWith rdf:resource="#Bosque"/>
     <owl:disjointWith>
       <owl:Class rdf:about="#Campo"/>
     </owl:disjointWith>
-    <owl:disjointWith rdf:resource="#Bosque"/>
   </owl:Class>
   <owl:Class rdf:ID="Estatua">
     <rdfs:subClassOf>
@@ -426,35 +495,93 @@
     <owl:disjointWith rdf:resource="#Tienda"/>
     <owl:disjointWith rdf:resource="#Castillo"/>
     <owl:disjointWith rdf:resource="#Torre"/>
+    <owl:disjointWith rdf:resource="#Templo"/>
     <rdfs:subClassOf rdf:resource="#Edificio"/>
   </owl:Class>
+  <owl:Class rdf:ID="Catedral">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Monumento"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneEstructural"/>
+            </owl:onProperty>
+            <owl:hasValue rdf:resource="#E_Culto"/>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
   <owl:Class rdf:about="#Estructura">
-    <rdfs:subClassOf rdf:resource="#Lugar"/>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:hasValue>
+              <Estructurales rdf:ID="E_Construido"/>
+            </owl:hasValue>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneEstructural"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Lugar"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
     <owl:disjointWith>
       <owl:Class rdf:about="#Naturaleza"/>
     </owl:disjointWith>
   </owl:Class>
-  <owl:Class rdf:about="#Raza">
-    <rdfs:subClassOf rdf:resource="#Atributos"/>
-    <owl:disjointWith rdf:resource="#Sexo"/>
-    <owl:disjointWith rdf:resource="#Sonido"/>
-    <owl:disjointWith rdf:resource="#Daño"/>
-  </owl:Class>
   <owl:Class rdf:about="#Campo">
     <rdfs:subClassOf rdf:resource="#Tierra"/>
-    <owl:disjointWith rdf:resource="#Montaña"/>
     <owl:disjointWith rdf:resource="#Bosque"/>
+    <owl:disjointWith rdf:resource="#Montaña"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Raza">
+    <rdfs:subClassOf rdf:resource="#Atributos"/>
+    <owl:disjointWith rdf:resource="#Estructurales"/>
+    <owl:disjointWith rdf:resource="#Daño"/>
+    <owl:disjointWith rdf:resource="#Sonido"/>
+    <owl:disjointWith rdf:resource="#Sexo"/>
   </owl:Class>
   <owl:Class rdf:about="#Monumento">
-    <rdfs:subClassOf rdf:resource="#Estructura"/>
-    <owl:disjointWith>
-      <owl:Class rdf:about="#Puente"/>
-    </owl:disjointWith>
-    <owl:disjointWith rdf:resource="#Edificio"/>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Estructura"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tieneEstructural"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Estructurales rdf:ID="E_Emblematico"/>
+            </owl:hasValue>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="#Naturaleza">
     <owl:disjointWith rdf:resource="#Estructura"/>
     <rdfs:subClassOf rdf:resource="#Lugar"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Magica">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Arma"/>
+          <owl:Restriction>
+            <owl:hasValue>
+              <Daño rdf:ID="D_Magico"/>
+            </owl:hasValue>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#produce"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:ID="FotoConPersona">
     <owl:equivalentClass>
@@ -471,10 +598,8 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
-  <owl:Class rdf:about="#Puente">
+  <owl:Class rdf:ID="Puente">
     <rdfs:subClassOf rdf:resource="#Estructura"/>
-    <owl:disjointWith rdf:resource="#Monumento"/>
-    <owl:disjointWith rdf:resource="#Edificio"/>
   </owl:Class>
   <owl:ObjectProperty rdf:about="#produce">
     <rdfs:range rdf:resource="#Atributos"/>
@@ -486,12 +611,6 @@
       <owl:ObjectProperty rdf:about="#apareceEn"/>
     </owl:inverseOf>
     <rdfs:range rdf:resource="#Contenido"/>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="#enemigoDe">
-    <owl:inverseOf rdf:resource="#enemigoDe"/>
-    <rdfs:domain rdf:resource="#Personaje"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-    <rdfs:range rdf:resource="#Personaje"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#usa">
     <rdfs:domain rdf:resource="#Personaje"/>
@@ -518,126 +637,133 @@
     <rdfs:range rdf:resource="#Personaje"/>
     <owl:inverseOf rdf:resource="#usa"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="#amigoDe">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+  <owl:ObjectProperty rdf:about="#tieneEstructural">
+    <rdfs:domain rdf:resource="#Lugar"/>
+    <rdfs:range rdf:resource="#Estructurales"/>
+  </owl:ObjectProperty>
+  <owl:SymmetricProperty rdf:about="#enemigoDe">
+    <owl:inverseOf rdf:resource="#enemigoDe"/>
+    <rdfs:domain rdf:resource="#Personaje"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="#Personaje"/>
+  </owl:SymmetricProperty>
+  <owl:SymmetricProperty rdf:about="#amigoDe">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
     <rdfs:domain rdf:resource="#Personaje"/>
     <owl:inverseOf rdf:resource="#amigoDe"/>
     <rdfs:range rdf:resource="#Personaje"/>
-  </owl:ObjectProperty>
-  <Granja rdf:ID="Rancho_Lon_Lon"/>
+  </owl:SymmetricProperty>
+  <Mar rdf:ID="Mar_Generico"/>
+  <Bosque rdf:ID="Bosque_Generico"/>
   <owl:AllDifferent>
     <owl:distinctMembers rdf:parseType="Collection">
       <Personaje rdf:ID="Link">
+        <tieneSexo>
+          <Sexo rdf:ID="Se_Masculino"/>
+        </tieneSexo>
         <usa>
           <Objeto rdf:ID="espada_Maestra">
-            <produce rdf:resource="#Cortante"/>
+            <produce rdf:resource="#D_Cortante"/>
             <esUsado rdf:resource="#Link"/>
             <apareceEn>
               <Foto rdf:ID="TLOZ04">
-                <aparece rdf:resource="#espada_Maestra"/>
+                <aparece rdf:resource="#Link"/>
                 <aparece>
                   <Objeto rdf:ID="escudo_Hylian">
                     <esUsado rdf:resource="#Link"/>
                     <apareceEn rdf:resource="#TLOZ04"/>
                     <apareceEn>
-                      <Foto rdf:ID="TLOZ03">
+                      <Foto rdf:ID="TLOZ02">
                         <aparece>
                           <Objeto rdf:ID="arpa">
                             <esUsado>
                               <Personaje rdf:ID="Sheik">
                                 <enemigoDe>
                                   <Personaje rdf:ID="Ganondorf">
-                                    <tieneSexo>
-                                      <Sexo rdf:ID="Masculino"/>
-                                    </tieneSexo>
+                                    <tieneSexo rdf:resource="#Se_Masculino"/>
                                     <apareceEn>
                                       <Foto rdf:ID="TLOZ01">
+                                        <aparece rdf:resource="#espada_Maestra"/>
+                                        <aparece>
+                                          <Personaje rdf:ID="Zelda">
+                                            <tieneSexo>
+                                              <Sexo rdf:ID="Se_Femenino"/>
+                                            </tieneSexo>
+                                            <tieneRaza rdf:resource="#R_Elfa"/>
+                                            <apareceEn rdf:resource="#TLOZ01"/>
+                                            <enemigoDe rdf:resource="#Ganondorf"/>
+                                            <amigoDe rdf:resource="#Sheik"/>
+                                            <amigoDe rdf:resource="#Link"/>
+                                          </Personaje>
+                                        </aparece>
+                                        <aparece rdf:resource="#Link"/>
+                                        <aparece rdf:resource="#Ganondorf"/>
                                         <aparece>
                                           <Castillo rdf:ID="Castillo_de_Ganondorf">
                                             <apareceEn rdf:resource="#TLOZ01"/>
                                           </Castillo>
                                         </aparece>
-                                        <aparece rdf:resource="#Ganondorf"/>
-                                        <aparece rdf:resource="#Link"/>
-                                        <aparece>
-                                          <Personaje rdf:ID="Zelda">
-                                            <tieneSexo>
-                                              <Sexo rdf:ID="Femenino"/>
-                                            </tieneSexo>
-                                            <tieneRaza rdf:resource="#Elfica"/>
-                                            <apareceEn rdf:resource="#TLOZ01"/>
-                                            <enemigoDe rdf:resource="#Ganondorf"/>
-                                            <amigoDe rdf:resource="#Link"/>
-                                            <amigoDe rdf:resource="#Sheik"/>
-                                          </Personaje>
-                                        </aparece>
-                                        <aparece rdf:resource="#espada_Maestra"/>
                                       </Foto>
                                     </apareceEn>
-                                    <tieneRaza rdf:resource="#Bestia"/>
-                                    <enemigoDe rdf:resource="#Sheik"/>
-                                    <enemigoDe rdf:resource="#Zelda"/>
+                                    <tieneRaza rdf:resource="#R_Bestia"/>
                                     <enemigoDe rdf:resource="#Link"/>
+                                    <enemigoDe rdf:resource="#Zelda"/>
+                                    <enemigoDe rdf:resource="#Sheik"/>
                                   </Personaje>
                                 </enemigoDe>
                                 <usa rdf:resource="#arpa"/>
-                                <tieneRaza rdf:resource="#Elfica"/>
-                                <tieneSexo rdf:resource="#Masculino"/>
-                                <apareceEn rdf:resource="#TLOZ03"/>
+                                <tieneRaza rdf:resource="#R_Elfa"/>
+                                <tieneSexo rdf:resource="#Se_Masculino"/>
+                                <apareceEn rdf:resource="#TLOZ02"/>
                                 <apareceEn>
-                                  <Foto rdf:ID="TLOZ02">
-                                    <aparece rdf:resource="#espada_Maestra"/>
-                                    <aparece>
-                                      <Objeto rdf:ID="ocarina_del_tiempo">
-                                        <esUsado rdf:resource="#Link"/>
-                                        <apareceEn rdf:resource="#TLOZ02"/>
-                                        <produce>
-                                          <Sonido rdf:ID="Musica"/>
-                                        </produce>
-                                      </Objeto>
-                                    </aparece>
+                                  <Foto rdf:ID="TLOZ03">
+                                    <aparece rdf:resource="#escudo_Hylian"/>
                                     <aparece rdf:resource="#Link"/>
                                     <aparece rdf:resource="#Sheik"/>
-                                    <aparece rdf:resource="#escudo_Hylian"/>
                                     <aparece>
                                       <Montaña rdf:ID="Monte_Goron">
-                                        <apareceEn rdf:resource="#TLOZ03"/>
                                         <apareceEn rdf:resource="#TLOZ02"/>
+                                        <apareceEn rdf:resource="#TLOZ03"/>
                                       </Montaña>
                                     </aparece>
+                                    <aparece rdf:resource="#espada_Maestra"/>
                                     <aparece rdf:resource="#arpa"/>
                                   </Foto>
                                 </apareceEn>
-                                <amigoDe rdf:resource="#Link"/>
                                 <amigoDe rdf:resource="#Zelda"/>
+                                <amigoDe rdf:resource="#Link"/>
                               </Personaje>
                             </esUsado>
-                            <apareceEn rdf:resource="#TLOZ03"/>
                             <apareceEn rdf:resource="#TLOZ02"/>
-                            <produce rdf:resource="#Musica"/>
+                            <apareceEn rdf:resource="#TLOZ03"/>
+                            <produce>
+                              <Sonido rdf:ID="So_Musica"/>
+                            </produce>
+                          </Objeto>
+                        </aparece>
+                        <aparece rdf:resource="#Monte_Goron"/>
+                        <aparece rdf:resource="#escudo_Hylian"/>
+                        <aparece rdf:resource="#Sheik"/>
+                        <aparece rdf:resource="#Link"/>
+                        <aparece>
+                          <Objeto rdf:ID="ocarina_del_tiempo">
+                            <esUsado rdf:resource="#Link"/>
+                            <apareceEn rdf:resource="#TLOZ02"/>
+                            <produce rdf:resource="#So_Musica"/>
                           </Objeto>
                         </aparece>
                         <aparece rdf:resource="#espada_Maestra"/>
-                        <aparece rdf:resource="#Monte_Goron"/>
-                        <aparece rdf:resource="#Sheik"/>
-                        <aparece rdf:resource="#Link"/>
-                        <aparece rdf:resource="#escudo_Hylian"/>
                       </Foto>
                     </apareceEn>
-                    <apareceEn rdf:resource="#TLOZ02"/>
+                    <apareceEn rdf:resource="#TLOZ03"/>
                   </Objeto>
                 </aparece>
-                <aparece rdf:resource="#Link"/>
-                <aparece>
-                  <Torre rdf:ID="Templo_del_Tiempo">
-                    <apareceEn rdf:resource="#TLOZ04"/>
-                  </Torre>
-                </aparece>
+                <aparece rdf:resource="#espada_Maestra"/>
               </Foto>
             </apareceEn>
-            <apareceEn rdf:resource="#TLOZ03"/>
-            <apareceEn rdf:resource="#TLOZ02"/>
             <apareceEn rdf:resource="#TLOZ01"/>
+            <apareceEn rdf:resource="#TLOZ02"/>
+            <apareceEn rdf:resource="#TLOZ03"/>
           </Objeto>
         </usa>
         <amigoDe rdf:resource="#Zelda"/>
@@ -648,11 +774,10 @@
           </Foto>
         </apareceEn>
         <usa rdf:resource="#escudo_Hylian"/>
-        <tieneRaza rdf:resource="#Elfica"/>
         <enemigoDe rdf:resource="#Ganondorf"/>
         <apareceEn rdf:resource="#TLOZ03"/>
-        <tieneSexo rdf:resource="#Masculino"/>
         <apareceEn rdf:resource="#TLOZ02"/>
+        <tieneRaza rdf:resource="#R_Elfa"/>
         <apareceEn rdf:resource="#TLOZ01"/>
         <amigoDe rdf:resource="#Sheik"/>
         <apareceEn rdf:resource="#TLOZ04"/>
@@ -673,19 +798,47 @@
       <Personaje rdf:about="#Peach"/>
       <Personaje rdf:about="#Bowser"/>
       <Personaje rdf:about="#Ganondorf"/>
+      <Personaje rdf:about="#Sheik"/>
     </owl:distinctMembers>
   </owl:AllDifferent>
-  <Daño rdf:ID="Contundente"/>
-  <Raza rdf:ID="Indefinida"/>
+  <Granja rdf:ID="Rancho_Lon_Lon"/>
+  <Estructura rdf:ID="Estructura_Generica"/>
+  <Humano rdf:ID="Humano_Generico"/>
+  <Raza rdf:ID="R_Indefinida"/>
+  <Templo rdf:ID="Templo_Del_Tiempo"/>
+  <Granja rdf:ID="Rancho_Generico"/>
+  <Lago rdf:ID="Lago_Generico"/>
+  <Rio rdf:ID="Rio_Generico"/>
+  <Arma rdf:ID="Espada_Magica">
+    <produce rdf:resource="#D_Magico"/>
+    <produce rdf:resource="#D_Cortante"/>
+  </Arma>
   <Bosque rdf:ID="Bosque_Kokiri"/>
+  <Torre rdf:ID="Torre_Generica"/>
   <Campo rdf:ID="Campo_de_Hyrule"/>
   <Lago rdf:ID="Lago_Hylia"/>
+  <Animal rdf:ID="Caballo"/>
+  <owl:AllDifferent>
+    <owl:distinctMembers rdf:parseType="Collection">
+      <Personaje rdf:about="#Link"/>
+      <Personaje rdf:about="#Zelda"/>
+      <Personaje rdf:about="#Mario"/>
+      <Personaje rdf:about="#Peach"/>
+    </owl:distinctMembers>
+  </owl:AllDifferent>
+  <Planta rdf:ID="Planta_Generica"/>
+  <Planta rdf:ID="Arbol"/>
+  <Animal rdf:ID="Vaca"/>
   <owl:AllDifferent>
     <owl:distinctMembers rdf:parseType="Collection">
       <Castillo rdf:ID="Castillo_de_Hyrule"/>
       <Castillo rdf:about="#Castillo_de_Ganondorf"/>
     </owl:distinctMembers>
   </owl:AllDifferent>
+  <Estatua rdf:ID="Estatua_Generica"/>
+  <Animal rdf:ID="Koopa"/>
+  <Tienda rdf:ID="Tienda_Generica"/>
+  <Templo rdf:ID="Templo_Generico"/>
   <owl:AllDifferent>
     <owl:distinctMembers rdf:parseType="Collection">
       <Objeto rdf:about="#espada_Maestra"/>
@@ -694,7 +847,23 @@
       <Objeto rdf:about="#escudo_Hylian"/>
     </owl:distinctMembers>
   </owl:AllDifferent>
-  <Planta rdf:ID="Arbol"/>
+  <Elfo rdf:ID="Elfo_Generico"/>
+  <Hada rdf:ID="Hada_Generico"/>
+  <Arma rdf:ID="Baston_Magico">
+    <produce rdf:resource="#D_Contundente"/>
+    <produce rdf:resource="#D_Magico"/>
+  </Arma>
+  <Puente rdf:ID="Puente_de_madera"/>
+  <Animal rdf:ID="Gato"/>
+  <owl:AllDifferent/>
+  <Castillo rdf:ID="Castillo_Generico"/>
+  <Animal rdf:ID="Perro"/>
+  <Monumento rdf:ID="Monumento_Generico"/>
+  <rdf:List/>
+  <Edificio rdf:ID="Edificio_Generico"/>
+  <Rio rdf:ID="Rio_Hyrule"/>
+  <Campo rdf:ID="Campo_Generico"/>
+  <Montaña rdf:ID="Montaña_Generica"/>
   <owl:AllDifferent>
     <owl:distinctMembers rdf:parseType="Collection">
       <Foto rdf:about="#TLOZ01"/>
@@ -715,7 +884,8 @@
       <Foto rdf:ID="TLOZ16"/>
     </owl:distinctMembers>
   </owl:AllDifferent>
-  <Puente rdf:ID="Puente_de_madera"/>
+  <Sexo rdf:ID="Se_Indefinido"/>
+  <Tienda rdf:ID="Tienda_Hyrule"/>
   <owl:AllDifferent>
     <owl:distinctMembers rdf:parseType="Collection">
       <Personaje rdf:about="#Link"/>
@@ -724,21 +894,8 @@
       <Personaje rdf:about="#Peach"/>
       <Personaje rdf:about="#Bowser"/>
       <Personaje rdf:about="#Ganondorf"/>
-      <Personaje rdf:about="#Sheik"/>
     </owl:distinctMembers>
   </owl:AllDifferent>
-  <owl:AllDifferent>
-    <owl:distinctMembers rdf:parseType="Collection">
-      <Personaje rdf:about="#Link"/>
-      <Personaje rdf:about="#Zelda"/>
-      <Personaje rdf:about="#Mario"/>
-      <Personaje rdf:about="#Peach"/>
-    </owl:distinctMembers>
-  </owl:AllDifferent>
-  <owl:AllDifferent/>
-  <Rio rdf:ID="Rio_Hyrule"/>
-  <Daño rdf:ID="Magico"/>
-  <Tienda rdf:ID="Tienda_Hyrule"/>
   <Estatua rdf:ID="Estatua_Kokiri"/>
 </rdf:RDF>
 
