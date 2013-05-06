@@ -34,9 +34,8 @@ public class TablaIndividuos extends DefaultTableModel {
 	/**
 	 * Con el nombre de un individuo, busca en la ontologia y si existe, rellena la tabla
 	 * con las propiedades de ese individuo (foto) y los valores para cada propiedad.
-	 * 
-	 * 
 	 * @param individuo
+	 * @deprecated
 	 */
 	public void actualizarPropiedadesIndividuo(String individuo){
 		//1. Comprobar que existe el individuo en la ontologia (como individuo)
@@ -62,53 +61,55 @@ public class TablaIndividuos extends DefaultTableModel {
 	/**
 	 * Le pasamos el nombre del individuo de una foto y lo que tiene que hacer es ir comprobando los valores de las propiedades
 	 * de este individuo. Una vez consultado eso, deberia sacar a que tipo de clase pertenece (Personaje, Planta, etc) y el nombre
-	 * del inviduo:
-	 * Ejemplo:
-	 *     Contenido | Valor
-	 *     -----------------
-	 *     Personaje | Link
-	 *     Personaje | Zelda
-	 *     Lugar     | Castillo
-	 * @param foto
+	 * del inviduo
 	 */
-	public void verContenidoFoto(String foto){
-		Iterator<String> it;
-		ArrayList<String> tiposContenido;
-		boolean enc = false;
-		String clase;
-		//1. Comprobar que existe la foto instanciada en la ontologia
-		if (!modelo.getOb().existsInstance(foto))
+	public void ponerIndividuosPorContentidoDeFoto(String foto){
+		String[] s = {"Componente", "Individuo"};
+		this.setColumnIdentifiers(s);
+		//Ver qué tipo de foto es para saber que propiedades podemos pedirle...
+		if (!modelo.getOb().existsInstance(modelo.getOb().getURI(foto)))
 			return;
-		//2. Existe, por tanto vemos las propiedades (del estilo, Aparece)
+		//recogemos sus propiedades
 		List<String> properties = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		modelo.getOb().listInstancePropertiesValues(foto, properties, values);
-		String[] s = {"Componente", "Individuo"};
-		this.setColumnIdentifiers(s);
-		// Procesamos los valores de cada propiedad y vemos si son individuos... Si son individuos sacamos en ontobridge
-		// a cual de las 4 clases pertenece
-		for(int i = 0; i < properties.size(); i++){
-			if (modelo.getOb().existsInstance(values.get(i))){
-				// Existe esa instancia, por tanto vemos a que clases pertenece
-				it = modelo.getOb().listBelongingClasses(values.get(i));
-				//Vamos a ver a cual de las 4 clases pertenece
-				while (it.hasNext() && !enc){
-					clase = it.next();
-					tiposContenido = c.getTiposDeContenido();
-					for (int j = 0; j < tiposContenido.size(); j++ )
-						if (clase.equals(tiposContenido.get(j))){
-							enc = true;
-							Vector<String> v = new Vector<String>();
-							//CONTENIDO
-							v.add(tiposContenido.get(j));
-							//INSTANCIA
-							v.add(modelo.getOb().getShortName(values.get(i)));
-							//Lo añadimos como nueva fila
-							this.addRow(v);
-						}
+		/* y ahora vemos sus propiedades
+		 * aparece y aparecePersonaje son propiedades del individuo foto
+		 * aparecePersonaje ademas cuenta con que tienen que ser personajes..
+		 */
+		for (int i = 0; i < properties.size(); i++){
+			Vector <String> v = new Vector<String>();
+			//CONTENIDO - Comprobamos la propiedad
+			String str = modelo.getOb().getShortName(properties.get(i));
+			/*if (str.equals("aparecePersonaje")){
+				/* En este caso la propiedad son los personajes que aparecen en la foto y por tanto sabemos que pertenecen al
+				 * contenido Personaje
+				 */
+				//if (modelo.getOb().isInstanceOf(values.get(i), modelo.getOb().getURI("Personaje"))){
+					//v.add("Personaje");
+				//}
+				// Metemos tambien el nombre del personaje
+			/*	v.add(modelo.getOb().getShortName(values.get(i)));
+				//Lo añadimos como nueva fila
+				this.addRow(v);
+				
+			}*/
+			if (str.equals("aparece")){
+				/*
+				 * Sacamos que a que tipo de contenido pertenece
+				 */
+				for (int j = 0; j < c.getTiposDeContenido().size(); j++){
+					//Comprobar si es distinto de personaje
+					if (modelo.getOb().isInstanceOf(values.get(i),modelo.getOb().getURI(c.getTiposDeContenido().get(j)))){
+						v.add(c.getTiposDeContenido().get(j));
+						v.add(modelo.getOb().getShortName(values.get(i)));
+						//Lo añadimos como nueva fila
+						this.addRow(v);
+					}
 				}
 			}
 		}
+		
 	}
 	
 	 public boolean isCellEditable (int row, int column){

@@ -1,4 +1,4 @@
-; Fri Apr 12 17:56:27 CEST 2013
+; Mon May 06 19:42:10 CEST 2013
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[etiquetado_ProjectKB_Class61]
-		[etiquetado_ProjectKB_Class62]
-		[etiquetado_ProjectKB_Class63]
-		[etiquetado_ProjectKB_Class64]
-		[etiquetado_ProjectKB_Class65]))
+		[etiquetado_ProjectKB_Class10259]
+		[etiquetado_ProjectKB_Class10260]
+		[etiquetado_ProjectKB_Class10261]
+		[etiquetado_ProjectKB_Class10262]
+		[etiquetado_ProjectKB_Class10263]))
 
 ([CLSES_TAB] of  Widget
 
@@ -37,6 +37,31 @@
 
 ([etiquetado_ProjectKB_Class10] of  Property_List
 )
+
+([etiquetado_ProjectKB_Class10259] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([etiquetado_ProjectKB_Class10260] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([etiquetado_ProjectKB_Class10261] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([etiquetado_ProjectKB_Class10262] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([etiquetado_ProjectKB_Class10263] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
 
 ([etiquetado_ProjectKB_Class11] of  Widget
 
@@ -284,31 +309,6 @@
 ([etiquetado_ProjectKB_Class60] of  Property_List
 )
 
-([etiquetado_ProjectKB_Class61] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([etiquetado_ProjectKB_Class62] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([etiquetado_ProjectKB_Class63] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([etiquetado_ProjectKB_Class64] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([etiquetado_ProjectKB_Class65] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
-
 ([etiquetado_ProjectKB_Class7] of  Widget
 
 	(is_hidden TRUE)
@@ -553,6 +553,9 @@
 	(label "Instances")
 	(property_list [Instance_88])
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
+
+([KB_001891_Class0] of  Map
+)
 
 ([KB_024013_Instance_4] of  Widget
 
@@ -3258,9 +3261,6 @@
 	(property_list [XY_Instance_195])
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormWidget"))
 
-([KB_772554_Class0] of  Map
-)
-
 ([KB_865583_Instance_10] of  Widget
 
 	(is_hidden TRUE)
@@ -5701,8 +5701,8 @@
 		"http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
 		"http://protege.stanford.edu/plugins/owl/protege#FROM"
 		"http://www.w3.org/2001/XMLSchema#nonPositiveInteger"
-		"http://protege.stanford.edu/plugins/owl/protege#classificationStatus"
 		"http://www.w3.org/2002/07/owl#someValuesFrom"
+		"http://protege.stanford.edu/plugins/owl/protege#classificationStatus"
 		"http://protege.stanford.edu/plugins/owl/protege#inferredSuperclassOf"
 		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf"
 		"http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
