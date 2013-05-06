@@ -62,6 +62,6 @@ public class Main {
 				//tab.verContenidoFoto(modelo.getOb().getURI("Link"));
 			}
 		}*/
-		tab.verContenidoFoto(modelo.getOb().getURI("Link"));
+		tab.ponerIndividuosPorContentidoDeFoto(modelo.getOb().getURI("TLOZ01"));
 	}
 }
