@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 
 
@@ -17,18 +18,15 @@ import ontobridge.Ontologia;
 
 public class Controlador {
 
-	Ontologia modelo; //FIXME Solo para pruebas
+	Ontologia modelo; 
 	VentanaPrincipal vista;
 	String rutaOntologia;
-	
-	HashMap<String, Foto> fotos;
-	//Foto foto;
+	PnlSelectInstance tree; //arbol
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
 		rutaOntologia = modelo.getOb().getThingURI();
 		System.out.println(rutaOntologia);
-		//fotos = new HashMap<String,Foto>();
 	}
 	
 	public void setVista(VentanaPrincipal vista){
@@ -40,18 +38,18 @@ public class Controlador {
 	 * @return
 	 */
 	public Component getTree(){
-		PnlSelectInstance tree = new PnlSelectInstance(modelo.getOb(),true);
+		tree = new PnlSelectInstance(modelo.getOb(),true);
 		return tree;
 	}
 	
 	/**
-	 * Devuelve en una lista los tipos de contenidos que etiquetamos
+	 * Devuelve en una lista los tipos de contenidos que se pueden etiquetar
+	 * (Personajes, Plantas, Lugares y Objetos)
 	 * @return
 	 */
 	public ArrayList<String> getTiposDeContenido(){
 		
 		String s;
-		//FIXME cambiar esto para generalizar
 		Iterator<String> it = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), true);
 		ArrayList<String> list = new ArrayList<String>();
 		
@@ -78,7 +76,6 @@ public class Controlador {
 		while (it.hasNext()){
 			aux = it.next();
 			list.add(modelo.getOb().getShortName(aux));
-			//list.add(aux.substring(aux.lastIndexOf("#")+1));
 			//TODO Falta comprobar si es obligatoria
 		}
 		return list;
@@ -89,11 +86,13 @@ public class Controlador {
 	 * en concreto
 	 * @param nombreFoto nombre de la foto que se quiere sacar las instancias
 	 * @param contenido tipo de contenido a sacar
+	 * @deprecated
 	 * @return
 	 */
 	public ArrayList<String> getIndividuosEtiquetados(String nombreFoto, int contenido){
-		Foto f = fotos.get(nombreFoto);
-		return f.getIndividuos(getTiposDeContenido().get(contenido));
+		//Foto f = fotos.get(nombreFoto);
+		//return f.getIndividuos(getTiposDeContenido().get(contenido));
+		return null;
 	}
 	
 	/**
@@ -126,60 +125,53 @@ public class Controlador {
 	 * @param nombreFoto nombre de la foto a sobreescribir instancias
 	 * @param individuos nuevos que sustituiran a las viejas
 	 * @param contenido tipo de contenido 
+	 * @deprecated
 	 */
 	public void setEtiquetarInstancias(String nombreFoto, ArrayList<String> individuos, int contenido){
-		Foto f = fotos.get(nombreFoto);
-		if (f != null)
-			f.setIndividuos(individuos,getTiposDeContenido().get(contenido));
+		//Foto f = fotos.get(nombreFoto);
+		//if (f != null)
+			//f.setIndividuos(individuos,getTiposDeContenido().get(contenido));
 	}
 	
 	/**
 	 * Devuelve la instancia con la que estamos trabajando en este momento, no tiene por qué
 	 * ser un String pero hay que hablar de que devolvemos aquí.
-	 * @return
-	 * FIXME Falta ver cómo el árbol guarda quién esta seleccionado...
+	 * @return la instancia actual seleccionada
 	 */
 	public String getInstanciaActualSeleccionada(){
-		String s = "";
-		
-		return s;
+		return modelo.getOb().getShortName(tree.getSelectedInstance());
 	}
+
 	/**
-	 * Permite añadir una foto a los datos para poder empezar a etiquetar
+	 * FIXME Forma de añadir un nuevo individuo. En el caso de las fotos
+	 * El nombre sera el nombre del archivo quitando el jpg
 	 */
-	public void addNuevaFoto(String nombre, String ruta){
-		Foto f = new Foto(nombre, ruta);
-		f.inicializaCategorias(getTiposDeContenido());
-		fotos.put(nombre, f);
+	public void crearInvididuo(String nombre){
+		
 	}
 	
 	/**
 	 * Devuelve la ruta de las fotos en las que aparece un individuo
 	 * @param individuo
-	 * @return
-	 * FIXME Ahora hay que readaptarlo
+	 * @return lista de fotos en las que aparece
 	 */
 	public ArrayList<String> getFotosAparece(String individuo){
-		ArrayList<String> listaRutasFotos = new ArrayList<String>();
+		ArrayList<String> listaFotos = new ArrayList<String>();
 		//Primero vemos todas las clases a las que pertenece un individuo
-		Iterator<String> itClases = modelo.getOb().listBelongingClasses(individuo);
-		/*Ahora buscamos en todas las fotos en los contenidos en concreto
-		 * para saber si está*/
-		Collection<Foto> c = fotos.values();
-		Iterator<Foto> itFotos = c.iterator();
-		
-		Foto f;
-		
-		while (itFotos.hasNext()){
-			f = itFotos.next();
-			
-			while (itClases.hasNext()){
-				if (f.getIndividuos(itClases.next()).contains(individuo))
-					listaRutasFotos.add(f.getRuta());
+		List<String> properties = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		modelo.getOb().listInstancePropertiesValues(individuo, properties, values);
+		/* Ahora buscamos la propiedad de apareceEn para saber en qué fotos aparece y
+		 * lo guardamos en un arrayList que es lo que devolvemos
+		 */
+		for (int i = 0; i < properties.size(); i++){
+			String str = modelo.getOb().getShortName(properties.get(i));
+			// Ahora comprobamos si es la propiedad que nos interesa
+			if (str.equals("apareceEn")){
+				listaFotos.add(modelo.getOb().getShortName(values.get(i)));
 			}
 		}
-		
 		//En el caso de que este, lo añadimos al array que devolvemos
-		return listaRutasFotos;
+		return listaFotos;
 	}
 }

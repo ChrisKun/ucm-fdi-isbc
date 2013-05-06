@@ -1,6 +1,7 @@
 package clasificador;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JFrame;
@@ -48,20 +49,13 @@ public class Main {
 		p.add(BorderLayout.CENTER, scrollPane);
 		f.setVisible(true);
 		/*
-		boolean para = false;
-		Iterator<String> it = modelo.getOb().listAllClasses();
-		while (it.hasNext() && !para){
-			String clase = it.next();
-			Iterator<String> l = modelo.getOb().listInstances(clase);
-			while (l.hasNext() && !para)
-			{
-				String la = l.next();
-				if (la != null)
-					para = true;
-				//tab.actualizarPropiedadesIndividuo(la);
-				//tab.verContenidoFoto(modelo.getOb().getURI("Link"));
-			}
-		}*/
-		tab.ponerIndividuosPorContentidoDeFoto(modelo.getOb().getURI("TLOZ01"));
+		 * actualizar el contenido con una foto
+		 */
+		tab.ponerIndividuosPorContentidoDeFoto(modelo.getOb().getURI("TLOZ02"));
+		
+		/* Pruebas para obtener las fotos en las que aparece un personaje, objeto, planta...
+		 * ArrayList<String> a = controlador.getFotosAparece("Link");
+		for (int i = 0; i <a.size(); i++)
+			System.out.println(a.get(i));*/
 	}
 }
