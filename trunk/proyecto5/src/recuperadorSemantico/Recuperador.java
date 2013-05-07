@@ -262,7 +262,7 @@ public class Recuperador {
 	 * @param consulta 		- String pasado como consulta 
 	 * @throws Exception	- Excepcion para notificar que la consulta no se ciñe a los parámetros
 	 */
-	public void consulta(String consulta) throws Exception {
+	public ArrayList<String> consulta(String consulta) throws Exception {
 		// Creamos las estructuras
 		propiedades = new ArrayList<InfoCadena>();
 		clases = new ArrayList<InfoCadena>();
@@ -274,12 +274,14 @@ public class Recuperador {
 		// Hacemos el analisis semantico
 		analisisSemantico(argumentos);
 		// Ejecutamos las consultas en OntoBridge
-		ejecutarConsultas();
+		ArrayList<String> resultados = ejecutarConsultas();
 		// Limpiamos las estructuras para futuros usos
 		clases.clear();
 		instancias.clear();
 		propiedades.clear();
 		juego = null;
+		// Devolvemos los resultados
+		return resultados;
 	}
 
 	public static void main(String[] args) throws Exception{

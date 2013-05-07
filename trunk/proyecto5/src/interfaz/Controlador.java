@@ -6,18 +6,22 @@ import java.util.Iterator;
 import java.util.List;
 
 
-import es.ucm.fdi.gaia.ontobridge.test.gui.PnlSelectInstance;
-
 import ontobridge.Ontologia;
 
 public class Controlador {
 
 	Ontologia modelo; 
 	VentanaPrincipal vista;
-	PnlSelectInstance tree; //arbol
+	ArbolPersonalizado treeContenido; //arbol con raiz: CONTENIDO
+	ArbolPersonalizado treeFoto; //arbol con raiz: Foto
+	ArbolPersonalizado tree; // Arbol ACTIVO
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
+		treeContenido = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Contenido.toString());
+		treeFoto = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Foto.toString());
+		// Incialmente activamos el arbol de contenido
+		tree = treeContenido;
 	}
 	
 	public void setVista(VentanaPrincipal vista){
@@ -25,12 +29,22 @@ public class Controlador {
 	}
 	
 	/**
-	 * Devuelve el árbol de Ontobridge correctamente configurado.
+	 * Devuelve el árbol de Ontobridge ACTIVO correctamente configurado.
 	 * @return
 	 */
 	public Component getTree(){
-		tree = new PnlSelectInstance(modelo.getOb(),true);
 		return tree;
+	}
+	
+	/**
+	 * Elige el arbol de Ontobridge activo
+	 * @return
+	 */
+	public void setTree(Config.SeleccionArbol seleccion){
+		if (seleccion.equals(Config.SeleccionArbol.Contenido))			
+			tree = treeContenido;
+		else
+			tree = treeFoto;
 	}
 	
 	/**
