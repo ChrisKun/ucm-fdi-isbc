@@ -70,6 +70,7 @@ public class FotoActual extends JPanel implements ActionListener{
 		Border blackline = BorderFactory.createEtchedBorder();
         ImageIcon foto = resizeFoto(pathFotoActual, 600, 350);
         
+        if (fotoActual != null) remove(fotoActual);
         fotoActual = new JLabel(foto);
         fotoActual.setPreferredSize(new Dimension(600,300));
         fotoActual.setBorder(blackline);
