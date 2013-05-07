@@ -9,6 +9,8 @@ import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -49,9 +51,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private JButton botonAtras;
 	private JButton botonInicio;
 	
-	private Component ontoTree;
-
-	
+		
 	
 	public final static int W = 1280;
 	public final static int H = 720;
@@ -65,16 +65,24 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		this.controlador = controlador;
 		this.setLocation(200, 150);
 		this.setMinimumSize(new Dimension(W,H));
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showOptionDialog(null, "Estas seguro de que te quieres ir? ya te vas?", "Cerrar el programa", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (confirm == 0) {
+                   System.exit(0);
+                }
+            }
+		});
 		initMenuBar();
 		this.setJMenuBar(menuBar);
 		
 		this.setLayout(new BorderLayout());
 		l_Banner = new JLabel("Banner",SwingConstants.CENTER);
 		this.add(l_Banner,BorderLayout.NORTH);
-		ontoTree = controlador.getTree();
-		this.add(ontoTree,BorderLayout.WEST);
+		
 		
 		panelBotones = new JPanel();
 		panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -95,6 +103,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		panelIntercambiable.add("Explorador",panelExploracion);
 		
 		this.add(panelIntercambiable, BorderLayout.CENTER);
+		
+		
+		
 	}
 	
 	private void initMenuBar(){
@@ -142,10 +153,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		
 		if (e.getSource() == itemGuardarOnt){
 			controlador.guardarOntologia();
+			JOptionPane.showMessageDialog(this, "Rellenar el metodo 'controlador.guardarOntologia()'");
 		}
 		
 		if (e.getSource() == itemCargarOnt){
 			controlador.cargarOntologia();
+			JOptionPane.showMessageDialog(this, "Rellenar el metodo 'controlador.cargarOntologia()'");
 		}
 
 		/////////////
