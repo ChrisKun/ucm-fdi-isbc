@@ -34,6 +34,8 @@ public class FotoActual extends JPanel implements ActionListener{
 	private JButton b_New;
 	private JButton b_Add;
 	
+	private TablaIndividuos tab;
+	
 	private static final long serialVersionUID = 1L;
 	
 	public FotoActual() {
@@ -78,7 +80,7 @@ public class FotoActual extends JPanel implements ActionListener{
 	
 	private void actualizarTabla(){
 		
-		TablaIndividuos tab = new TablaIndividuos(controlador);
+		tab = new TablaIndividuos(controlador);
 		JTable t = new JTable(tab);
 		/*
 		 * Métodos interesantes a la hora de añadir el default table model a un JTable
@@ -140,8 +142,8 @@ public class FotoActual extends JPanel implements ActionListener{
 			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
 			JOptionPane.showMessageDialog(this,
 					controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto));
-			// FIXME Falta actualizar... this.actualizarFoto(nomFoto);
-			//controlador.imprimirPropiedades(nomFoto);
+			//Añadir nueva fila a la tabla (solo si existe)
+			tab.anadirIndividuoPorContenidoDeFoto(nomFoto,controlador.getInstanciaActualSeleccionada());
 			
 		}
 	}
