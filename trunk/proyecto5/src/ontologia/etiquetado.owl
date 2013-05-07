@@ -737,6 +737,8 @@
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#sale_en_foto">
     <owl:inverseOf rdf:resource="#sale_el_juego"/>
+    <rdfs:range rdf:resource="#Foto"/>
+    <rdfs:domain rdf:resource="#Juego"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#usa">
     <rdfs:domain rdf:resource="#Personaje"/>
