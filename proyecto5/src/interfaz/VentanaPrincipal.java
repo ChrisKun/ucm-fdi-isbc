@@ -104,7 +104,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		
 		this.add(panelIntercambiable, BorderLayout.CENTER);
 		
-		
+		controlador.getIndividuosValidosRellenarPropiedad("amigo_de");
 		
 	}
 	

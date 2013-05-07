@@ -22,36 +22,6 @@ public class TablaIndividuos extends DefaultTableModel {
 	}
 	
 	/**
-	 * Igual que poner IndividuosPorContenidoDeFoto pero solo para poner uno nuevo
-	 * @param foto
-	 * @deprecated
-	 */
-	public void anadirIndividuoPorContenidoDeFoto(String foto,String individuo){
-		String foto2 = modelo.getOb().getURI(foto);
-		String uriIndividuo = modelo.getOb().getURI(individuo);
-		ArrayList<String> list = c.getTiposDeContenido();
-		
-		if (!modelo.getOb().existsInstance(foto2))
-			return;
-
-		//CONTENIDO - Comprobamos la propiedad
-		Vector<String> v = new Vector<String>();
-		boolean enc = false;
-		
-		for (int j = 0; j < list.size() && !enc; j++){
-		//Comprobar si es distinto de personaje
-			if (modelo.getOb().isInstanceOf(uriIndividuo,modelo.getOb().getURI(list.get(j)))){
-				v.add(list.get(j));
-				v.add(individuo);
-				//Lo añadimos como nueva fila
-				this.addRow(v);
-				enc = true;
-			}
-					
-		}
-	}
-	
-	/**
 	 * FIXME
 	 * @param foto
 	 */
