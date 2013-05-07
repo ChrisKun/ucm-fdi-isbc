@@ -1,4 +1,4 @@
-; Wed May 08 00:23:25 CEST 2013
+; Wed May 08 01:04:05 CEST 2013
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[etiquetado_ProjectKB_Class735]
-		[etiquetado_ProjectKB_Class736]
-		[etiquetado_ProjectKB_Class737]
-		[etiquetado_ProjectKB_Class738]
-		[etiquetado_ProjectKB_Class739]))
+		[etiquetado_ProjectKB_Class938]
+		[etiquetado_ProjectKB_Class939]
+		[etiquetado_ProjectKB_Class940]
+		[etiquetado_ProjectKB_Class941]
+		[etiquetado_ProjectKB_Class942]))
 
 ([CLSES_TAB] of  Widget
 
@@ -290,31 +290,6 @@
 	(property_list [etiquetado_ProjectKB_Class8])
 	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
 
-([etiquetado_ProjectKB_Class735] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([etiquetado_ProjectKB_Class736] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([etiquetado_ProjectKB_Class737] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([etiquetado_ProjectKB_Class738] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([etiquetado_ProjectKB_Class739] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
-
 ([etiquetado_ProjectKB_Class8] of  Property_List
 )
 
@@ -323,6 +298,31 @@
 	(is_hidden TRUE)
 	(property_list [etiquetado_ProjectKB_Class10])
 	(widget_class_name "ca.uvic.csr.shrimp.jambalaya.JambalayaTab"))
+
+([etiquetado_ProjectKB_Class938] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([etiquetado_ProjectKB_Class939] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([etiquetado_ProjectKB_Class940] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([etiquetado_ProjectKB_Class941] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([etiquetado_ProjectKB_Class942] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
 
 ([FORMS_TAB] of  Widget
 

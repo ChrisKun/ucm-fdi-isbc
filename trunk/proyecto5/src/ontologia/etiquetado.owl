@@ -467,14 +467,14 @@
       <owl:Restriction>
         <owl:someValuesFrom rdf:resource="#Personaje"/>
         <owl:onProperty>
-          <owl:ObjectProperty rdf:ID="enemigo_de"/>
+          <owl:SymmetricProperty rdf:ID="enemigo_de"/>
         </owl:onProperty>
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:subClassOf>
       <owl:Restriction>
         <owl:onProperty>
-          <owl:ObjectProperty rdf:ID="amigo_de"/>
+          <owl:SymmetricProperty rdf:ID="amigo_de"/>
         </owl:onProperty>
         <owl:someValuesFrom rdf:resource="#Personaje"/>
       </owl:Restriction>
@@ -692,10 +692,6 @@
     <rdfs:subClassOf rdf:resource="#Estructura"/>
     <owl:disjointWith rdf:resource="#Monumento"/>
   </owl:Class>
-  <owl:ObjectProperty rdf:about="#enemigo_de">
-    <rdfs:domain rdf:resource="#Personaje"/>
-    <rdfs:range rdf:resource="#Personaje"/>
-  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#produce">
     <rdfs:range rdf:resource="#Atributos"/>
     <rdfs:domain rdf:resource="#Objeto"/>
@@ -752,10 +748,18 @@
     <rdfs:domain rdf:resource="#Personaje"/>
     <rdfs:range rdf:resource="#Comportamiento"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="#amigo_de">
+  <owl:SymmetricProperty rdf:about="#enemigo_de">
+    <rdfs:domain rdf:resource="#Personaje"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="#Personaje"/>
+    <owl:inverseOf rdf:resource="#enemigo_de"/>
+  </owl:SymmetricProperty>
+  <owl:SymmetricProperty rdf:about="#amigo_de">
     <rdfs:range rdf:resource="#Personaje"/>
     <rdfs:domain rdf:resource="#Personaje"/>
-  </owl:ObjectProperty>
+    <owl:inverseOf rdf:resource="#amigo_de"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:SymmetricProperty>
   <Mar rdf:ID="Mar_Generico"/>
   <Bosque rdf:ID="Bosque_Generico"/>
   <rdf:List/>
@@ -775,95 +779,97 @@
             <es_usado rdf:resource="#Link"/>
             <aparece_en>
               <Foto rdf:ID="TLOZ04">
-                <aparece rdf:resource="#Link"/>
                 <aparece>
-                  <Objeto rdf:ID="escudo_Hylian">
-                    <es_usado rdf:resource="#Link"/>
-                    <aparece_en rdf:resource="#TLOZ04"/>
-                    <aparece_en>
-                      <Foto rdf:ID="TLOZ02">
-                        <aparece>
-                          <Objeto rdf:ID="arpa">
-                            <es_usado>
-                              <Personaje rdf:ID="Sheik">
-                                <enemigo_de>
-                                  <Personaje rdf:ID="Ganondorf">
-                                    <enemigo_de rdf:resource="#Link"/>
-                                    <enemigo_de>
-                                      <Personaje rdf:ID="Zelda">
+                  <Personaje rdf:ID="Ganondorf">
+                    <enemigo_de rdf:resource="#Link"/>
+                    <enemigo_de>
+                      <Personaje rdf:ID="Zelda">
+                        <aparece_en>
+                          <Foto rdf:ID="TLOZ01">
+                            <aparece rdf:resource="#espada_Maestra"/>
+                            <aparece rdf:resource="#Zelda"/>
+                            <aparece rdf:resource="#Link"/>
+                            <aparece rdf:resource="#Ganondorf"/>
+                            <aparece>
+                              <Castillo rdf:ID="Castillo_de_Ganondorf">
+                                <aparece_en rdf:resource="#TLOZ01"/>
+                              </Castillo>
+                            </aparece>
+                            <sale_el_juego>
+                              <Juego rdf:ID="Legend">
+                                <sale_en_foto rdf:resource="#TLOZ04"/>
+                                <sale_en_foto>
+                                  <Foto rdf:ID="TLOZ03">
+                                    <sale_el_juego rdf:resource="#Legend"/>
+                                    <aparece>
+                                      <Objeto rdf:ID="escudo_Hylian">
+                                        <es_usado rdf:resource="#Link"/>
+                                        <aparece_en rdf:resource="#TLOZ04"/>
                                         <aparece_en>
-                                          <Foto rdf:ID="TLOZ01">
-                                            <aparece rdf:resource="#espada_Maestra"/>
-                                            <aparece rdf:resource="#Zelda"/>
-                                            <aparece rdf:resource="#Link"/>
-                                            <aparece rdf:resource="#Ganondorf"/>
+                                          <Foto rdf:ID="TLOZ02">
                                             <aparece>
-                                              <Castillo rdf:ID="Castillo_de_Ganondorf">
-                                                <aparece_en rdf:resource="#TLOZ01"/>
-                                              </Castillo>
+                                              <Objeto rdf:ID="arpa">
+                                                <es_usado>
+                                                  <Personaje rdf:ID="Sheik">
+                                                    <enemigo_de rdf:resource="#Ganondorf"/>
+                                                    <aparece_en rdf:resource="#TLOZ02"/>
+                                                    <aparece_en rdf:resource="#TLOZ03"/>
+                                                    <amigo_de rdf:resource="#Zelda"/>
+                                                    <amigo_de rdf:resource="#Link"/>
+                                                    <usa rdf:resource="#arpa"/>
+                                                  </Personaje>
+                                                </es_usado>
+                                                <aparece_en rdf:resource="#TLOZ02"/>
+                                                <aparece_en rdf:resource="#TLOZ03"/>
+                                              </Objeto>
                                             </aparece>
-                                            <sale_el_juego>
-                                              <Juego rdf:ID="Legend">
-                                                <sale_en_foto rdf:resource="#TLOZ04"/>
-                                                <sale_en_foto>
-                                                  <Foto rdf:ID="TLOZ03">
-                                                    <sale_el_juego rdf:resource="#Legend"/>
-                                                    <aparece rdf:resource="#escudo_Hylian"/>
-                                                    <aparece rdf:resource="#Link"/>
-                                                    <aparece rdf:resource="#Sheik"/>
-                                                    <aparece>
-                                                      <Montaña rdf:ID="Monte_Goron">
-                                                        <aparece_en rdf:resource="#TLOZ02"/>
-                                                        <aparece_en rdf:resource="#TLOZ03"/>
-                                                      </Montaña>
-                                                    </aparece>
-                                                    <aparece rdf:resource="#espada_Maestra"/>
-                                                    <aparece rdf:resource="#arpa"/>
-                                                  </Foto>
-                                                </sale_en_foto>
-                                                <sale_en_foto rdf:resource="#TLOZ02"/>
-                                                <sale_en_foto rdf:resource="#TLOZ01"/>
-                                              </Juego>
-                                            </sale_el_juego>
+                                            <aparece>
+                                              <Montaña rdf:ID="Monte_Goron">
+                                                <aparece_en rdf:resource="#TLOZ02"/>
+                                                <aparece_en rdf:resource="#TLOZ03"/>
+                                              </Montaña>
+                                            </aparece>
+                                            <aparece rdf:resource="#escudo_Hylian"/>
+                                            <aparece rdf:resource="#Sheik"/>
+                                            <aparece rdf:resource="#Link"/>
+                                            <aparece>
+                                              <Objeto rdf:ID="ocarina_del_tiempo">
+                                                <aparece_en rdf:resource="#TLOZ02"/>
+                                                <es_usado rdf:resource="#Link"/>
+                                              </Objeto>
+                                            </aparece>
+                                            <aparece rdf:resource="#espada_Maestra"/>
+                                            <sale_el_juego rdf:resource="#Legend"/>
                                           </Foto>
                                         </aparece_en>
-                                        <amigo_de rdf:resource="#Sheik"/>
-                                        <amigo_de rdf:resource="#Link"/>
-                                        <enemigo_de rdf:resource="#Ganondorf"/>
-                                      </Personaje>
-                                    </enemigo_de>
-                                    <enemigo_de rdf:resource="#Sheik"/>
-                                    <aparece_en rdf:resource="#TLOZ01"/>
-                                  </Personaje>
-                                </enemigo_de>
-                                <aparece_en rdf:resource="#TLOZ02"/>
-                                <aparece_en rdf:resource="#TLOZ03"/>
-                                <amigo_de rdf:resource="#Zelda"/>
-                                <amigo_de rdf:resource="#Link"/>
-                                <usa rdf:resource="#arpa"/>
-                              </Personaje>
-                            </es_usado>
-                            <aparece_en rdf:resource="#TLOZ02"/>
-                            <aparece_en rdf:resource="#TLOZ03"/>
-                          </Objeto>
-                        </aparece>
-                        <aparece rdf:resource="#Monte_Goron"/>
-                        <aparece rdf:resource="#escudo_Hylian"/>
-                        <aparece rdf:resource="#Sheik"/>
-                        <aparece rdf:resource="#Link"/>
-                        <aparece>
-                          <Objeto rdf:ID="ocarina_del_tiempo">
-                            <aparece_en rdf:resource="#TLOZ02"/>
-                            <es_usado rdf:resource="#Link"/>
-                          </Objeto>
-                        </aparece>
-                        <aparece rdf:resource="#espada_Maestra"/>
-                        <sale_el_juego rdf:resource="#Legend"/>
-                      </Foto>
-                    </aparece_en>
-                    <aparece_en rdf:resource="#TLOZ03"/>
-                  </Objeto>
+                                        <aparece_en rdf:resource="#TLOZ03"/>
+                                      </Objeto>
+                                    </aparece>
+                                    <aparece rdf:resource="#Link"/>
+                                    <aparece rdf:resource="#Sheik"/>
+                                    <aparece rdf:resource="#Monte_Goron"/>
+                                    <aparece rdf:resource="#espada_Maestra"/>
+                                    <aparece rdf:resource="#arpa"/>
+                                  </Foto>
+                                </sale_en_foto>
+                                <sale_en_foto rdf:resource="#TLOZ02"/>
+                                <sale_en_foto rdf:resource="#TLOZ01"/>
+                              </Juego>
+                            </sale_el_juego>
+                          </Foto>
+                        </aparece_en>
+                        <amigo_de rdf:resource="#Sheik"/>
+                        <amigo_de rdf:resource="#Link"/>
+                        <enemigo_de rdf:resource="#Ganondorf"/>
+                      </Personaje>
+                    </enemigo_de>
+                    <enemigo_de rdf:resource="#Sheik"/>
+                    <aparece_en rdf:resource="#TLOZ04"/>
+                    <aparece_en rdf:resource="#TLOZ01"/>
+                  </Personaje>
                 </aparece>
+                <aparece rdf:resource="#Link"/>
+                <aparece rdf:resource="#escudo_Hylian"/>
                 <aparece rdf:resource="#espada_Maestra"/>
                 <sale_el_juego rdf:resource="#Legend"/>
               </Foto>
