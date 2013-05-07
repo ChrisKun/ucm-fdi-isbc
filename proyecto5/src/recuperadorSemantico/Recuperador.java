@@ -45,12 +45,23 @@ public class Recuperador {
 		}
 	}
 	
+	/********************************************** FUNCIONES ******************************************************/
+	
 	/**
 	 * Constructora que carga la ontologia
 	 * @param ontologia
 	 */
 	public Recuperador(Ontologia ontologia) {
 		this.ontologia = ontologia;
+	}
+	
+	/**
+	 * Funcion para obtener el nombre completo del parametro en la ontologia
+	 * @param parametro - String cuyo nombre complemeto queremos saber
+	 * @return String con el nombre completo
+	 */
+	private String uri(String parametro) {
+		return ontologia.getOb().getURI(parametro);
 	}
 	
 	/**
@@ -125,24 +136,24 @@ public class Recuperador {
 		 */		
 		switch (fase) {
 		case 0:
-			if (ontologia.getOb().existsProperty(argumento)) {
+			if (ontologia.getOb().existsProperty(uri(argumento))) {
 				propiedades.add(new InfoCadena(union, argumento));
 				fase = 0;
 				break;
 			}
 		case 1:
-			if (ontologia.getOb().existsClass(argumento)) {
+			if (ontologia.getOb().existsClass(uri(argumento))) {
 				clases.add(new InfoCadena(union, argumento));
 				fase = 1;				
 				break;
 			}
-			else if (ontologia.getOb().existsInstance(argumento)) {	
+			else if (ontologia.getOb().existsInstance(uri(argumento))) {
 				instancias.add(new InfoCadena(union, argumento));
 				fase = 1;
 				break;
 			}			
 		case 2:
-			if (ontologia.getOb().existsInstance(argumento, "Juego")) {
+			if (ontologia.getOb().existsInstance(uri(argumento), uri("Juego"))) {
 				juego = new String(argumento);
 				fase = 3;
 				break;
@@ -166,7 +177,7 @@ public class Recuperador {
 		String aux;
 		// Sacamos las iteradorancias de todas las clases
 		for(InfoCadena clase: clases) {
-			iterador = ontologia.getOb().listInstances(clase.cadena);
+			iterador = ontologia.getOb().listInstances(uri(clase.cadena));
 			while (iterador.hasNext()) {
 				// A cada instancia le ponemos el valor de union correspondiente a la clase
 				instancias.add(new InfoCadena(clase.union, iterador.next()));
@@ -176,7 +187,7 @@ public class Recuperador {
 		for (InfoCadena propiedad: propiedades) {
 			// Por cada individuo sacamos los valores de la propiedad
 			for (InfoCadena instancia: instancias) {
-				iterador = ontologia.getOb().listPropertyValue(instancia.cadena, propiedad.cadena);
+				iterador = ontologia.getOb().listPropertyValue(uri(instancia.cadena), uri(propiedad.cadena));
 				if (instancia.union) {
 					// En caso de union si no esta lo unimos 
 					while (iterador.hasNext()) {
@@ -202,10 +213,10 @@ public class Recuperador {
 		// Si no se pide juego, no hacemos nada
 		if (juego != null) {
 			// Fotos del juego
-			iterador = ontologia.getOb().listPropertyValue(juego, "sale_en_foto");
+			iterador = ontologia.getOb().listPropertyValue(uri(juego), uri("sale_en_foto"));
 			while (iterador.hasNext()) {
 				// Sacamos los individuos de cada foto
-				iterador2 = ontologia.getOb().listPropertyValue(iterador.next(), "aparece");
+				iterador2 = ontologia.getOb().listPropertyValue(uri(iterador.next()), uri("aparece"));
 				while(iterador2.hasNext()) {
 					aux = iterador2.next();
 					// Si no estaba el individuo añadido, lo añadimos
@@ -220,7 +231,11 @@ public class Recuperador {
 				if (!individuosFotos.contains(individuo)) {
 					resultado.remove(individuo);
 				}
-			}	
+			}
+		}
+		// Dejamos la cadena resultado con los nombres cortos
+		for (String elemento: resultado) {
+			elemento = ontologia.getOb().getShortName(elemento);
 		}
 		return resultado;
 	}
@@ -251,7 +266,7 @@ public class Recuperador {
 	}
 
 	public static void main(String[] args) throws Exception{
-		String pathOntologia = "file:src/ontologia/etiquetado.owl";// "file:proyecto5/src/ontologia/etiquetado.owl"; //"file:src/ontologia/etiquetado.owl";
+		String pathOntologia = "file:src/ontologia/etiquetado.owl";
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);

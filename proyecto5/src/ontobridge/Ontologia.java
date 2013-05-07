@@ -32,8 +32,7 @@ public class Ontologia {
 	}
 	
 		
-	// Getters
-	
+	// Getters	
 	public OntoBridge getOb() {
 		return ob;
 	}
