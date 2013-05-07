@@ -12,4 +12,5 @@ public class Config {
 	public static final String urlfoto = "urlfoto";
 	public static final String saleEnFoto = "sale_en_foto";
 	public static final String juego = "Juego";
+	public static enum SeleccionArbol {Contenido, Foto};
 }

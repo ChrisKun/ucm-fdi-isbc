@@ -38,10 +38,11 @@ public class PanelOntoTree extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JComboBox cB = (JComboBox) e.getSource();
 		if (cB.getSelectedItem() == valoresSeleccion[0]){
-			JOptionPane.showMessageDialog(this, "Cambia la raiz a Contenidos");
+			controlador.setTree(Config.SeleccionArbol.Contenido);
 		}
 		if (cB.getSelectedItem() == valoresSeleccion[1]){
-			JOptionPane.showMessageDialog(this, "Cambia la raiz a Fotos");
+			controlador.setTree(Config.SeleccionArbol.Foto);
 		}
+		ontoTree = controlador.getTree();
 	}
 }
