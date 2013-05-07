@@ -188,14 +188,14 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
+            <owl:someValuesFrom rdf:resource="#Contenido"/>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="#aparece"/>
             </owl:onProperty>
-            <owl:someValuesFrom rdf:resource="#Contenido"/>
           </owl:Restriction>
           <owl:Restriction>
             <owl:onProperty>
-              <owl:ObjectProperty rdf:about="#tiene"/>
+              <owl:ObjectProperty rdf:ID="sale_el_juego"/>
             </owl:onProperty>
             <owl:someValuesFrom>
               <owl:Class rdf:ID="Juego"/>
@@ -389,7 +389,19 @@
     </owl:disjointWith>
   </owl:Class>
   <owl:Class rdf:about="#Juego">
-    <rdfs:subClassOf rdf:resource="#Atributos"/>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="sale_en_foto"/>
+            </owl:onProperty>
+            <owl:someValuesFrom rdf:resource="#Foto"/>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Atributos"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="#Objeto">
     <rdfs:subClassOf rdf:resource="#Contenido"/>
@@ -703,9 +715,12 @@
     <owl:inverseOf rdf:resource="#aparece_en"/>
     <rdfs:range rdf:resource="#Contenido"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="juego">
+  <owl:ObjectProperty rdf:about="#sale_el_juego">
     <rdfs:range rdf:resource="#Juego"/>
     <rdfs:domain rdf:resource="#Foto"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#sale_en_foto"/>
+    </owl:inverseOf>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#tiene">
     <rdfs:domain>
@@ -719,6 +734,9 @@
       </owl:Class>
     </rdfs:domain>
     <rdfs:range rdf:resource="#Atributos"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#sale_en_foto">
+    <owl:inverseOf rdf:resource="#sale_el_juego"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#usa">
     <rdfs:domain rdf:resource="#Personaje"/>
