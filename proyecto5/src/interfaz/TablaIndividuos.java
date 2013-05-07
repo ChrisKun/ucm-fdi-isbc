@@ -1,6 +1,7 @@
 package interfaz;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -32,7 +33,7 @@ public class TablaIndividuos extends DefaultTableModel {
 			return;
 
 		//CONTENIDO - Comprobamos la propiedad
-		Vector v = new Vector<String>();
+		Vector<String> v = new Vector<String>();
 		
 		for (int j = 0; j < c.getTiposDeContenido().size(); j++){
 		//Comprobar si es distinto de personaje
@@ -54,6 +55,9 @@ public class TablaIndividuos extends DefaultTableModel {
 	public void ponerIndividuosPorContentidoDeFoto(String foto, String rutaImagen){
 		//Asociamos la ruta de la imagen a una instancia
 		c.setRutaFoto(rutaImagen, foto); //FIXME
+		Vector <String> v = new Vector<String>();
+		String uriAparece = modelo.getOb().getURI(Config.aparece);
+		ArrayList<String> tiposContenido = c.getTiposDeContenido();
 		
 		String foto2 = modelo.getOb().getURI(foto);
 		String[] s = {"Componente", "Individuo"};
@@ -62,30 +66,50 @@ public class TablaIndividuos extends DefaultTableModel {
 		if (!modelo.getOb().existsInstance(foto2))
 			return;
 		//recogemos sus propiedades
-		List<String> properties = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		modelo.getOb().listInstancePropertiesValues(foto2, properties, values);
+		//List<String> properties = new ArrayList<String>();
+		//List<String> values = new ArrayList<String>();
+		//modelo.getOb().listInstancePropertiesValues(foto2, properties, values);
+		
+		// Sacamos los valores de la propiedad aparece
+		Iterator<String> it = modelo.getOb().listPropertyValue(foto2, uriAparece);
+		
+		String str;
+		
+		while (it.hasNext()){
+			str = it.next();
+			v = new Vector<String>();
+			
+				for (int j = 0; j < tiposContenido.size() ; j++){
+					//Comprobar si es distinto de personaje
+					if (modelo.getOb().isInstanceOf(str,modelo.getOb().getURI(tiposContenido.get(j)))){
+						v.add(tiposContenido.get(j));
+						v.add(modelo.getOb().getShortName(str));
+						//Lo añadimos como nueva fila
+						this.addRow(v);
+					}
+			}
+		}
+		
 		/* y ahora vemos sus propiedades
 		 * aparece y aparecePersonaje son propiedades del individuo foto
 		 * aparecePersonaje ademas cuenta con que tienen que ser personajes..
 		 */
-		for (int i = 0; i < properties.size(); i++){
-			Vector <String> v = new Vector<String>();
+		/*for (int i = 0; i < properties.size(); i++){
 			//CONTENIDO - Comprobamos la propiedad
-			String str = modelo.getOb().getShortName(properties.get(i));
-			if (str.equals(Config.aparece)){
+			if (uriAparece.equals(properties.get(i))){
+				v = new Vector<String>();
 				// Sacamos que a que tipo de contenido pertenece
-				for (int j = 0; j < c.getTiposDeContenido().size(); j++){
+				for (int j = 0; j < tiposContenido.size() ; j++){
 					//Comprobar si es distinto de personaje
-					if (modelo.getOb().isInstanceOf(values.get(i),modelo.getOb().getURI(c.getTiposDeContenido().get(j)))){
-						v.add(c.getTiposDeContenido().get(j));
+					if (modelo.getOb().isInstanceOf(values.get(i),modelo.getOb().getURI(tiposContenido.get(j)))){
+						v.add(tiposContenido.get(j));
 						v.add(modelo.getOb().getShortName(values.get(i)));
 						//Lo añadimos como nueva fila
 						this.addRow(v);
 					}
 				}
 			}
-		}
+		}*/
 	}
 	
 	/**
