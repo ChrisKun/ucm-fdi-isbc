@@ -307,4 +307,14 @@ public class Controlador {
 		//En el caso de que este, lo añadimos al array que devolvemos
 		return listaFotos;
 	}
+
+	public void guardarOntologia() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void cargarOntologia() {
+		// TODO Auto-generated method stub
+		
+	}
 }
