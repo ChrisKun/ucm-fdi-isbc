@@ -43,6 +43,9 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	private JPanel panelTipos;
 	private JPanel panelPreguntas;
 	
+	private ArrayList<JComboBox> comboBoxRespuestas;
+	private int cont;
+	
 	public VentanaEtiquetar(Controlador controlador) {
 		this.controlador = controlador;
 		this.setLayout(new CardLayout(10, 10));
@@ -96,6 +99,8 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	
 	private void actualizarPanelPreguntas(int contenido){
 		panelPreguntas.removeAll();
+		cont = contenido;
+		comboBoxRespuestas = new ArrayList<JComboBox>();
 		panelPreguntas.add(getPanelPregunta("Nombre", true, null));
 		ArrayList<String> list_values = controlador.getPreguntasARellenar(contenido);
 		for (String s: list_values){
@@ -112,8 +117,11 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		if (nombre)
 			p.add(new TextField(50),BorderLayout.EAST);
 		else{
-			JComboBox j = new JComboBox(individuos);
+			individuos.add(""); //para que se pueda dejar en blanco
+			JComboBox j = new JComboBox(individuos); //FIXME (hay que guardar estos punteros para recuperar la información seleccionada)
 			p.add(j);
+			// agregamos ahora el combobox a la lista para mantener el puntero
+			comboBoxRespuestas.add(j);
 		}
 		return p;
 	}
@@ -123,11 +131,20 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		Component[] components = panelPreguntas.getComponents();
 		TextField tF;
 		JPanel p;
-		for (int i=0;i<components.length-1;i++){
+		// Nombre
+		p = (JPanel) components[0];
+		tF = (TextField) p.getComponent(1);
+		respuestas.add(tF.getText());
+		// Resto de respuestas
+		for (int i = 0; i < comboBoxRespuestas.size(); i++){
+			respuestas.add((String)comboBoxRespuestas.get(i).getSelectedItem());
+		}
+		
+		/*for (int i=0;i<components.length-1;i++){
 			p = (JPanel) components[i];
 			tF = (TextField) p.getComponent(1);
 			respuestas.add(tF.getText());
-		}
+		}*/
 		return respuestas;
 	}
 	
@@ -148,8 +165,8 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 			cambiarPanel(s_Tipos);
 		}
 		if (e.getSource() == b_Send){
-			JOptionPane.showMessageDialog(this, "Habilitame un metodo para pasarte todo esto");
-			recopilarRespuestas();
+			//JOptionPane.showMessageDialog(this, "Habilitame un metodo para pasarte todo esto");
+			controlador.crearIndividuo(controlador.getTiposDeContenido().get(cont), recopilarRespuestas().get(0),recopilarRespuestas());
 		}
 	}
 }
