@@ -1,16 +1,9 @@
 package interfaz;
 
-import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import ontobridge.Ontologia;
@@ -20,8 +13,8 @@ public class TablaIndividuos extends DefaultTableModel {
 	Ontologia modelo;
 	Controlador c;
 	
-	public TablaIndividuos(Ontologia modelo, Controlador c){
-		this.modelo = modelo;
+	public TablaIndividuos(Controlador c){
+		modelo = c.modelo;
 		String[] s = {"Componente", "Individuo"};
 		this.setColumnIdentifiers(s);
 		this.c = c;

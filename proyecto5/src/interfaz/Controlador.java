@@ -139,7 +139,14 @@ public class Controlador {
 	 * @return la instancia actual seleccionada
 	 */
 	public String getInstanciaActualSeleccionada(){
-		return modelo.getOb().getShortName(tree.getSelectedInstance());
+		//TODO: Decide que hacer cuando no hay ninguna seleccionada porque peta
+		String s;
+		try{
+			s = modelo.getOb().getShortName(tree.getSelectedInstance());
+		}catch(NullPointerException e){
+			s = "--???--";
+		}		
+		return s;
 	}
 
 	/**
