@@ -88,7 +88,6 @@ public class TablaIndividuos extends DefaultTableModel {
 				}
 			}
 		}
-		
 	}
 	
 	/**
