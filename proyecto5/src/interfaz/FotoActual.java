@@ -136,7 +136,12 @@ public class FotoActual extends JPanel implements ActionListener{
 			jD.setTitle("Crea un nuevo individuo");
 		}
 		if (e.getSource() == b_Add){
-			JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
+			//JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
+			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
+			JOptionPane.showMessageDialog(this,
+					controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto));
+			this.actualizarTabla();
+			
 		}
 	}
 }

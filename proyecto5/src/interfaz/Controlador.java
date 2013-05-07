@@ -13,7 +13,6 @@ import java.util.Vector;
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlSelectInstance;
 
-import ontobridge.Foto;
 import ontobridge.Ontologia;
 
 public class Controlador {
@@ -82,20 +81,6 @@ public class Controlador {
 	}
 	
 	/**
-	 * Devuelve los individuos de la foto asociada a un tipo de contenido
-	 * en concreto
-	 * @param nombreFoto nombre de la foto que se quiere sacar las instancias
-	 * @param contenido tipo de contenido a sacar
-	 * @deprecated
-	 * @return
-	 */
-	public ArrayList<String> getIndividuosEtiquetados(String nombreFoto, int contenido){
-		//Foto f = fotos.get(nombreFoto);
-		//return f.getIndividuos(getTiposDeContenido().get(contenido));
-		return null;
-	}
-	
-	/**
 	 * Devuelve las propiedades de un individuo
 	 * @param individuo
 	 * @return
@@ -103,34 +88,71 @@ public class Controlador {
 	public Iterator<String> getPropiedadesIndividuo(String individuo){
 		return modelo.getOb().listInstanceProperties(individuo);
 	}
-	/**
-	 * Devuelve los individuos asociados a una propiedad de un individuo
-	 * @param individuo
-	 * @return properties y values serán rellenados con las propiedades y los valores de esas propiedades
-	 */
-	//public void getValoresDePropiedadesDeIndividuo(String individuo, List<String> properties, List<String> values){
-	//	modelo.getOb().listInstancePropertiesValues(individuo, properties, values);
-	//}
 	
 	/**
-	 * Permite rellenar las propiedades de un individuo
+	 * Permite aniadir un individuo EXISTENTE a una propiedad EXISTENTE de otro
+	 * individuo EXISTENTE
+	 * @param invididuo - individuo que contiene la propiedad
+	 * @param invididuoP - individuo que queremos incluir en la propiedad
+	 * @param propiedad - propiedad del individuo donde incluiremos el individuoP
+	 * @return (TRUE o FALSE) Si la operacion ha tenido exito
 	 */
-	public void creaIndividuo(String clase, String individuo){
-		modelo.getOb().createInstance(clase, individuo);
+	public boolean anadirInvididuoAPropiedad(String individuo, String individuoP, String propiedad){
+		boolean exito = false;
+		//1. Pasar todo a URIs de la ontologia
+		String uriIndividuo = modelo.getOb().getURI(individuo);
+		String uriIndividuoP = modelo.getOb().getURI(individuoP);
+		String uriPropiedad = modelo.getOb().getURI(propiedad);
+		//2. Comprobar que las 3 existen en la ontologia
+		exito = (modelo.getOb().existsInstance(uriIndividuo) &&
+				modelo.getOb().existsInstance(uriIndividuoP) &&
+				modelo.getOb().existsProperty(uriPropiedad));
+		//3. Si alguna no exite, no continuamos y devolvemos FALSE
+		if (!exito)
+			return exito;
+		//4. Si ha habido exito, continuamos
+		//5. Sacamos los valores del individuo
+		//List<String> valores = new ArrayList();
+		//List<String> propiedades = new ArrayList();
+		//modelo.getOb().listInstancePropertiesValues(uriIndividuo, propiedades, valores);
+		//6. añadimos
+		modelo.getOb().createOntProperty(uriIndividuo, uriPropiedad, uriIndividuoP);
+		//propiedades.add(uriPropiedad);
+		//valores.add(uriIndividuoP);
+		return exito;
 	}
 	
 	/**
-	 * Permite añadir individuos a la foto, pasandole los nuevos
-	 * que sobreescribiran las que habian y el tipo de contenido que son
-	 * @param nombreFoto nombre de la foto a sobreescribir instancias
-	 * @param individuos nuevos que sustituiran a las viejas
-	 * @param contenido tipo de contenido 
-	 * @deprecated
+	 * Permite incluir un individuo en una foto
+	 * @param individuo - el que queremos anadir en la foto
+	 * @param foto - la foto que queremos que se incluya el individuo
+	 * @return
 	 */
-	public void setEtiquetarInstancias(String nombreFoto, ArrayList<String> individuos, int contenido){
-		//Foto f = fotos.get(nombreFoto);
-		//if (f != null)
-			//f.setIndividuos(individuos,getTiposDeContenido().get(contenido));
+	public boolean anadirIndividuoAFoto(String individuo, String foto){
+		boolean exito = this.anadirInvididuoAPropiedad(foto, individuo, Config.aparece);
+		return exito;
+	}
+	
+	/**
+	 * Permite crear un individuo de una clase indicada y rellena sus
+	 * propiedades. Tambien podrian ser fotos
+	 * @param clasePertenencia - clase a la que pertenece la instancia a crear
+	 * @param valoresPropiedades - valores de las propiedades que tiene que tener la instancia
+	 */
+	public void crearIndividuo(String clasePertenencia, String nombreInstancia, ArrayList<String> valoresPropiedades){
+		// 1. Sacamos el nombre completo de la clase de pertenencia
+		String uriClase = modelo.getOb().getURI(clasePertenencia);
+		// 2. Creamos la instancia de esa clase
+		modelo.getOb().createInstance(uriClase,nombreInstancia);
+		// 3. Ahora tenemos que rellenar las propiedades de la instancia
+		// Para ello recuperamos los punteros a propiedades y valores
+		List<String> valores = new ArrayList();
+		List<String> propiedades = new ArrayList();
+		modelo.getOb().listInstancePropertiesValues(modelo.getOb().getURI(nombreInstancia), propiedades, valores);
+		
+		for (int i = 0; i < valoresPropiedades.size();i++){
+			valores.add(modelo.getOb().getURI(valoresPropiedades.get(i)));
+		}
 	}
 	
 	/**
@@ -150,14 +172,6 @@ public class Controlador {
 	}
 
 	/**
-	 * FIXME Forma de añadir un nuevo individuo. En el caso de las fotos
-	 * El nombre sera el nombre del archivo quitando el jpg
-	 */
-	public void crearInvididuo(String nombre){
-		
-	}
-	
-	/**
 	 * Devuelve la ruta de las fotos en las que aparece un individuo
 	 * @param individuo
 	 * @return lista de fotos en las que aparece
@@ -174,7 +188,7 @@ public class Controlador {
 		for (int i = 0; i < properties.size(); i++){
 			String str = modelo.getOb().getShortName(properties.get(i));
 			// Ahora comprobamos si es la propiedad que nos interesa
-			if (str.equals("apareceEn")){
+			if (str.equals(Config.apareceEn)){
 				listaFotos.add(modelo.getOb().getShortName(values.get(i)));
 			}
 		}

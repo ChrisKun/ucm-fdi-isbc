@@ -75,7 +75,7 @@ public class TablaIndividuos extends DefaultTableModel {
 			Vector <String> v = new Vector<String>();
 			//CONTENIDO - Comprobamos la propiedad
 			String str = modelo.getOb().getShortName(properties.get(i));
-			if (str.equals("aparece")){
+			if (str.equals(Config.aparece)){
 				// Sacamos que a que tipo de contenido pertenece
 				for (int j = 0; j < c.getTiposDeContenido().size(); j++){
 					//Comprobar si es distinto de personaje
