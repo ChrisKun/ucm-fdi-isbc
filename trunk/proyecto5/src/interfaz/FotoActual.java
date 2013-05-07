@@ -4,17 +4,24 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-public class FotoActual extends JPanel {
+import clasificador.Main;
+
+public class FotoActual extends JPanel implements ActionListener{
 
 	private Controlador controlador;
 	
@@ -23,6 +30,9 @@ public class FotoActual extends JPanel {
 	
 	private JTable tablaPropiedades;
 	private DefaultTableModel modeloPropiedades;
+	
+	private JButton b_New;
+	private JButton b_Add;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -34,22 +44,27 @@ public class FotoActual extends JPanel {
 	public FotoActual(Controlador controlador){
 		this.controlador = controlador;
 		this.setLayout(new BorderLayout());
-		//fotoActual = new JLabel();
-		//actualizarFoto("");
 		
+		modeloPropiedades = new DefaultTableModel();
+		tablaPropiedades = new JTable(modeloPropiedades);
+		tablaPropiedades.setLayout(new BorderLayout());
+		this.add(tablaPropiedades,BorderLayout.CENTER);
+		
+		b_New = new JButton("Nuevo Individuo");
+		b_New.addActionListener(this);
+		b_Add = new JButton("Etiqueta Individuo");
+		b_Add.addActionListener(this);
 	}
 
 	
 
 	public void actualizarFoto(String nuevaFoto){
-		this.removeAll();
 		pathFotoActual = nuevaFoto;
 		actualizarPanel();
 		actualizarTabla();
 	}
 	
 	private void actualizarPanel(){
-				
 		Border blackline = BorderFactory.createEtchedBorder();
         ImageIcon foto = resizeFoto(pathFotoActual, 600, 350);
         
@@ -57,20 +72,13 @@ public class FotoActual extends JPanel {
         fotoActual.setPreferredSize(new Dimension(600,300));
         fotoActual.setBorder(blackline);
         this.add(fotoActual, BorderLayout.WEST);
-		this.add(new JLabel("Añadir información, etiquetar, etc."), BorderLayout.SOUTH);
-		
-		modeloPropiedades = new DefaultTableModel();
-		String[] a = {"a","b"};
-		modeloPropiedades.addRow(a);
-		tablaPropiedades = new JTable(modeloPropiedades);
-		
+		this.add(new JLabel("Añadir información, etiquetar, etc."), BorderLayout.SOUTH);		
 		
 	}
 	
 	private void actualizarTabla(){
-		tablaPropiedades.setLayout(new BorderLayout());
-		this.add(tablaPropiedades,BorderLayout.CENTER);
-		TablaIndividuos tab = new TablaIndividuos(controlador.modelo, controlador);
+		
+		TablaIndividuos tab = new TablaIndividuos(controlador);
 		JTable t = new JTable(tab);
 		/*
 		 * Métodos interesantes a la hora de añadir el default table model a un JTable
@@ -78,13 +86,16 @@ public class FotoActual extends JPanel {
 		t.setCellSelectionEnabled(false);
 		JScrollPane scrollPane = new JScrollPane(t);
 		t.setFillsViewportHeight(true);
+		tablaPropiedades.removeAll();
+		
+		tablaPropiedades.add(BorderLayout.PAGE_START, b_New);
+		tablaPropiedades.add(BorderLayout.SOUTH, b_Add);
 		tablaPropiedades.add(BorderLayout.CENTER, scrollPane);
 
 		/*
 		 * actualizar el contenido con una foto
 		 */
 		String nombreFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
-		System.out.println(nombreFoto);
 		tab.ponerIndividuosPorContentidoDeFoto(nombreFoto);
 	}
 	
@@ -110,5 +121,22 @@ public class FotoActual extends JPanel {
 		foto = new ImageIcon( newimg );
 		
 		return foto;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == b_New){
+			VentanaEtiquetar vE = new VentanaEtiquetar(controlador);
+			JDialog jD = new JDialog();
+			jD.setContentPane(vE);
+			jD.setSize(vE.getPreferredSize());
+			jD.setLocation(200, 100);
+			jD.setVisible(true);
+			jD.setAlwaysOnTop(true);
+			jD.setTitle("Crea un nuevo individuo");
+		}
+		if (e.getSource() == b_Add){
+			JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
+		}
 	}
 }

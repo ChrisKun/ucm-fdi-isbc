@@ -2,11 +2,13 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -20,13 +22,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.event.MouseInputListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import clasificador.Main;
 
 public class VentanaPrincipal extends JFrame implements ActionListener{
 
-	public static Controlador controlador;
+	private Controlador controlador;
 
 	private JMenuBar menuBar;
 	private JMenu menuArchivo;
@@ -40,6 +43,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private JButton botonAtras;
 	private JButton botonInicio;
 	
+	private Component ontoTree;
 	
 	public final static int W = 1280;
 	public final static int H = 720;
@@ -61,7 +65,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		this.setLayout(new BorderLayout());
 		l_Banner = new JLabel("Banner",SwingConstants.CENTER);
 		this.add(l_Banner,BorderLayout.NORTH);
-		this.add(controlador.getTree(),BorderLayout.WEST);
+		ontoTree = controlador.getTree();
+		this.add(ontoTree,BorderLayout.WEST);
 		
 		panelBotones = new JPanel();
 		panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -73,7 +78,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		panelBotones.add(botonInicio);		
 		this.add(panelBotones, BorderLayout.SOUTH);
 		
-		panelIntercambiable = new PanelIntercambiable();
+		panelIntercambiable = new PanelIntercambiable(controlador);
 		this.add(panelIntercambiable, BorderLayout.CENTER);
 	}
 	

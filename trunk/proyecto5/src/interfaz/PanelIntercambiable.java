@@ -15,9 +15,9 @@ public class PanelIntercambiable extends JPanel{
 	private Explorador explorador;
 	private FotoActual fotoActual;
 	
-	public PanelIntercambiable(){
+	public PanelIntercambiable(Controlador controlador){
 		explorador = new Explorador(Main.gamesPath);
-		fotoActual = new FotoActual(VentanaPrincipal.controlador);
+		fotoActual = new FotoActual(controlador);
 		this.setLayout(new CardLayout(10,10));
 		this.add(explorador, panelExplorador);
 		this.add(fotoActual, panelFoto);		
