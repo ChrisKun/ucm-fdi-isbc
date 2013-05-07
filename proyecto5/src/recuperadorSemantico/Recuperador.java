@@ -287,7 +287,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("Link en Legend");	
+		r.consulta("amigo_de Link o Mario");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 }
