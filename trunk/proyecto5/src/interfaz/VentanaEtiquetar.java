@@ -10,9 +10,11 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -94,19 +96,25 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	
 	private void actualizarPanelPreguntas(int contenido){
 		panelPreguntas.removeAll();
-		panelPreguntas.add(getPanelPregunta("Nombre"));
+		panelPreguntas.add(getPanelPregunta("Nombre", true, null));
 		ArrayList<String> list_values = controlador.getPreguntasARellenar(contenido);
 		for (String s: list_values){
-			panelPreguntas.add(getPanelPregunta(s));
+			Vector<String> v = new Vector<String>(controlador.getIndividuosValidosRellenarPropiedad(s));
+			panelPreguntas.add(getPanelPregunta(s,false,v));
 		}
 		panelPreguntas.add(getButtonsPanel());
 	}
 
-	private JPanel getPanelPregunta(String string) {
+	private JPanel getPanelPregunta(String string,boolean nombre, Vector<String> individuos) {
 		JPanel p = new JPanel();
 		p.setLayout(new BorderLayout(20,15));
 		p.add(new JLabel(string),BorderLayout.WEST);
-		p.add(new TextField(50),BorderLayout.EAST);
+		if (nombre)
+			p.add(new TextField(50),BorderLayout.EAST);
+		else{
+			JComboBox j = new JComboBox(individuos);
+			p.add(j);
+		}
 		return p;
 	}
 

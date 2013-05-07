@@ -61,6 +61,40 @@ public class Controlador {
 	}
 	
 	/**
+	 * Devuelve en una lista los individuos que pueden asociarse a una propiedad
+	 * pasada por parámetro
+	 * @param propiedad
+	 * @return rango de instancias que pueden rellenar la propiedad
+	 */
+	public ArrayList<String> getIndividuosValidosRellenarPropiedad(String propiedad)
+	{
+		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> rango = new ArrayList<String>();
+		String uriPropiedad = modelo.getOb().getURI(propiedad);
+		Iterator<String> itInd;
+		// Si la propiedad no existe, salimos
+		
+		if (!modelo.getOb().existsProperty(uriPropiedad))
+			return list;
+		
+		// Si existe, continuamos
+		Iterator<String> it = modelo.getOb().listPropertyRange(uriPropiedad);
+		
+		while (it.hasNext())
+			rango.add(it.next());
+		
+		//Hay que devolver todos los individuos que cumplan el rango
+		for (int i = 0; i < rango.size(); i++){
+			//Obtenemos todos los individuos que satisfacen uno de los rangos
+			itInd = modelo.getOb().listInstances(rango.get(i));
+			
+			while (itInd.hasNext())
+				list.add(modelo.getOb().getShortName(itInd.next()));
+		}
+		return list;
+	}
+	
+	/**
 	 * Devuelve en una lista las preguntas que debe responder el usuario cuando crea un individuo
 	 * de un contenido en concreto (relleno de atributos)
 	 * @param contenido indice en la lista devuelta por 'getTiposDeContenido()'
@@ -88,7 +122,8 @@ public class Controlador {
 	 */
 	public ArrayList<String> getPropiedadesIndividuo(String individuo){
 		ArrayList<String> str = new ArrayList<String>();
-		Iterator<String> it = modelo.getOb().listInstanceProperties(individuo);
+		String uriIndividuo = modelo.getOb().getURI(individuo);
+		Iterator<String> it = modelo.getOb().listInstanceProperties(uriIndividuo);
 		
 		while (it.hasNext())
 			str.add(it.next());
