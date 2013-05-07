@@ -18,37 +18,6 @@ public class TablaIndividuos extends DefaultTableModel {
 		String[] s = {"Componente", "Individuo"};
 		this.setColumnIdentifiers(s);
 		this.c = c;
-		//this.addRow(s);
-		
-
-	}
-	
-	
-	/**
-	 * Con el nombre de un individuo, busca en la ontologia y si existe, rellena la tabla
-	 * con las propiedades de ese individuo (foto) y los valores para cada propiedad.
-	 * @param individuo
-	 * @deprecated
-	 */
-	public void actualizarPropiedadesIndividuo(String individuo){
-		//1. Comprobar que existe el individuo en la ontologia (como individuo)
-		if (!modelo.getOb().existsInstance(individuo))
-			return;
-		//2. Ver las propiedades del invividuo y cargar esos valores para cada propiedad (cogiendolo de ontobridge)
-		List<String> properties = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		modelo.getOb().listInstancePropertiesValues(individuo, properties, values);
-		//3. Ahora hay que procesar la informacion de los posibles individuos que puedan aparecer en los
-		// valores de las propiedades y sacar a su vez el tipo de componente que son
-		this.setColumnCount(0);
-		// Hay que procesar esto para que las propiedades salgan bien y no con toda la direccion de la ontologia
-		// XXX NOTA: En Componente deberia ir la clase superior a la que pertenece el individuo (Personaje, Planta, etc) y el
-		// Nombre del individuo
-		this.addColumn("Componente", properties.toArray());
-		this.addColumn("Valor", values.toArray());
-		//4. Añadir esta información a la tabla (actualizar)
-		
-		
 	}
 	
 	/**
@@ -56,7 +25,10 @@ public class TablaIndividuos extends DefaultTableModel {
 	 * de este individuo. Una vez consultado eso, deberia sacar a que tipo de clase pertenece (Personaje, Planta, etc) y el nombre
 	 * del inviduo
 	 */
-	public void ponerIndividuosPorContentidoDeFoto(String foto){
+	public void ponerIndividuosPorContentidoDeFoto(String foto, String rutaImagen){
+		//Asociamos la ruta de la imagen a una instancia
+		c.setRutaFoto(rutaImagen, foto); //FIXME
+		
 		String foto2 = modelo.getOb().getURI(foto);
 		String[] s = {"Componente", "Individuo"};
 		this.setColumnIdentifiers(s);

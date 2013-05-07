@@ -96,7 +96,7 @@ public class FotoActual extends JPanel implements ActionListener{
 		 * actualizar el contenido con una foto
 		 */
 		String nombreFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
-		tab.ponerIndividuosPorContentidoDeFoto(nombreFoto);
+		tab.ponerIndividuosPorContentidoDeFoto(nombreFoto,pathFotoActual);
 	}
 	
 	private ImageIcon resizeFoto(String pathFoto, int ancho, int alto){
@@ -141,6 +141,7 @@ public class FotoActual extends JPanel implements ActionListener{
 			JOptionPane.showMessageDialog(this,
 					controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto));
 			// FIXME Falta actualizar... this.actualizarFoto(nomFoto);
+			//controlador.imprimirPropiedades(nomFoto);
 			
 		}
 	}

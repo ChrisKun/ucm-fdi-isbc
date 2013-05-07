@@ -14,13 +14,10 @@ public class Controlador {
 
 	Ontologia modelo; 
 	VentanaPrincipal vista;
-	String rutaOntologia;
 	PnlSelectInstance tree; //arbol
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
-		rutaOntologia = modelo.getOb().getThingURI();
-		System.out.println(rutaOntologia);
 	}
 	
 	public void setVista(VentanaPrincipal vista){
@@ -37,12 +34,21 @@ public class Controlador {
 	}
 	
 	/**
+	 * FIXME Da un nullPointer??
+	 * Permite asociar una instancia de una foto a una imagen poniendo su ruta
+	 * @param rutaFoto
+	 * @param instanciaFoto
+	 */
+	public void setRutaFoto(String rutaFoto, String instanciaFoto){
+		//modelo.getOb().createDataTypeProperty(modelo.getOb().getURI(instanciaFoto), Config.urlfoto, "file:"+rutaFoto);
+	}
+	
+	/**
 	 * Devuelve en una lista los tipos de contenidos que se pueden etiquetar
 	 * (Personajes, Plantas, Lugares y Objetos)
 	 * @return
 	 */
 	public ArrayList<String> getTiposDeContenido(){
-		
 		String s;
 		Iterator<String> it = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), true);
 		ArrayList<String> list = new ArrayList<String>();
@@ -70,44 +76,48 @@ public class Controlador {
 		while (it.hasNext()){
 			aux = it.next();
 			list.add(modelo.getOb().getShortName(aux));
-			//TODO Falta comprobar si es obligatoria
 		}
 		return list;
 	}
 	
 	/**
-	 * Devuelve las propiedades de un individuo
+	 * FIXME Quiza venga bien filtrar esto...
+	 * Devuelve las propiedades que puede tener un individuo
 	 * @param individuo
 	 * @return
 	 */
-	public Iterator<String> getPropiedadesIndividuo(String individuo){
-		return modelo.getOb().listInstanceProperties(individuo);
+	public ArrayList<String> getPropiedadesIndividuo(String individuo){
+		ArrayList<String> str = new ArrayList<String>();
+		Iterator<String> it = modelo.getOb().listInstanceProperties(individuo);
+		
+		while (it.hasNext())
+			str.add(it.next());
+		
+		return str;
 	}
 	
 	/**
-	 * TODO
-	 * Elimina un valor asociado a una propiedad.
-	 * @param propiedad - propiedad a eliminar
-	 * @param valor - valor de la propiedad
-	 * @return si se ha podido hacer
-	 */
-	public boolean eliminarValorDePropiedad(String propiedad, String valor){
-		return true;
-	}
-	
-	/**
-	 * TODO
 	 * Elimina todos los valores asociados a una misma propiedad. Por ejemplo
 	 * aparece Zelda, aparece Link y mandamos borrar aparece, borraria todas
 	 * las propiedades asociadas a aparece (Link y Zelda)
 	 * @param propiedad
 	 * @return
 	 */
-	public boolean eliminarTodosValoresDePropiedad(String propiedad){
-		return true;
+	public boolean eliminarTodosValoresDePropiedad(String individuo, String propiedad){
+		boolean existe = false;
+		String uriPropiedad = modelo.getOb().getURI(propiedad);
+		String uriIndividuo = modelo.getOb().getURI(individuo);
+		existe = modelo.getOb().existsProperty(uriPropiedad) &&
+				modelo.getOb().existsInstance(uriIndividuo);
+		if (!existe)
+			return existe;
+		//2 Existe, por tanto eliminamos todas los valores asociados a una misma propiedad
+		modelo.getOb().deleteProperties(uriIndividuo, uriPropiedad);
+		return existe;
 	}
 	
 	/**
+	 * TODO
 	 * Elimina un individuo de la ontologia
 	 * @param individuo
 	 * @return
@@ -115,6 +125,27 @@ public class Controlador {
 	public boolean eliminarIndividuo(String individuo){
 		String uriIndividuo = modelo.getOb().getURI(individuo);
 		return true;
+	}
+	
+	/**
+	 * FIXME Falla y no se xq
+	 * Devuelve un String con la ruta de la instancia de la foto actual
+	 * @param foto
+	 * @return
+	 */
+	public String getRutaInstanciaActual(String instanciaFoto){
+		//Iterator<String> it = modelo.getOb().listPropertyValue(modelo.getOb().getURI(instanciaFoto), Config.urlfoto);
+		//return it.next();
+		return "FIXME";
+	}
+	
+	/**
+	 * Elimina todos los individuos etiquetados en una foto
+	 * @param foto
+	 * @return
+	 */
+	public boolean limpiarFoto(String foto){
+		return eliminarTodosValoresDePropiedad(foto, Config.aparece);
 	}
 	
 	/**
@@ -149,6 +180,34 @@ public class Controlador {
 	}
 	
 	/**
+	 * Elimina un individuo EXISTENTE asociado a una propiedad de otro individuo
+	 * @param individuo del que se quiere eliminar
+	 * @param individuoP que se va a borrar
+	 * @see Solo funciona para individuos aniadidos desde ontobridge
+	 * @param propiedad que los asocia
+	 * @return TRUE o FALSE
+	 */
+	public boolean eliminarIndividuoDePropiedad(String individuo, String individuoP, String propiedad){
+		boolean exito = false;
+		//1. Pasar todo a URIs de la ontologia
+		String uriIndividuo = modelo.getOb().getURI(individuo);
+		String uriIndividuoP = modelo.getOb().getURI(individuoP);
+		String uriPropiedad = modelo.getOb().getURI(propiedad);
+		//2. Comprobar que las 3 existen en la ontologia
+		exito = (modelo.getOb().existsInstance(uriIndividuo) &&
+				modelo.getOb().existsInstance(uriIndividuoP) &&
+				modelo.getOb().existsProperty(uriPropiedad));
+		//3. Si alguna no exite, no continuamos y devolvemos FALSE
+		if (!exito)
+			return exito;
+		//4. eliminamos
+		modelo.getOb().deleteOntProperty(uriIndividuo, uriPropiedad, uriIndividuoP);
+		return exito;
+	}
+	
+	
+	
+	/**
 	 * Comprueba si un individuo pertenece a una de las clases de Tipo de Contenido
 	 * @param individuo
 	 * @return
@@ -170,11 +229,22 @@ public class Controlador {
 	 * @return
 	 */
 	public boolean anadirIndividuoAFoto(String individuo, String foto){
-		boolean exito = this.anadirInvididuoAPropiedad(foto, individuo, Config.aparece);
-		return exito;
+		return this.anadirInvididuoAPropiedad(foto, individuo, Config.aparece);
 	}
 	
 	/**
+	 * Permite eliminar un individuo de una foto
+	 * @param individuo que queremos borrar de la foto
+	 * @see Solo funciona para individuos aniadidos desde ontobridge
+	 * @param foto de la que queremos quitar el individuo
+	 * @return
+	 */
+	public boolean eliminarIndividuoDeFoto(String individuo, String foto){
+		return this.eliminarIndividuoDePropiedad(foto, individuo, Config.aparece);
+	}
+	
+	/**
+	 * FIXME Hay que rehacerlo
 	 * Permite crear un individuo de una clase indicada y rellena sus
 	 * propiedades. Tambien podrian ser fotos
 	 * @param clasePertenencia - clase a la que pertenece la instancia a crear
@@ -197,12 +267,12 @@ public class Controlador {
 	}
 	
 	/**
+	 * FIXME Hay que decidir que hacer cuando no hay nada seleccionado
 	 * Devuelve la instancia con la que estamos trabajando en este momento, no tiene por qué
 	 * ser un String pero hay que hablar de que devolvemos aquí.
 	 * @return la instancia actual seleccionada
 	 */
 	public String getInstanciaActualSeleccionada(){
-		//TODO: Decide que hacer cuando no hay ninguna seleccionada porque peta
 		String s;
 		try{
 			s = modelo.getOb().getShortName(tree.getSelectedInstance());
@@ -213,6 +283,7 @@ public class Controlador {
 	}
 
 	/**
+	 * XXX Sin testear
 	 * Devuelve la ruta de las fotos en las que aparece un individuo
 	 * @param individuo
 	 * @return lista de fotos en las que aparece
