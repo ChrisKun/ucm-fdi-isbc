@@ -288,17 +288,25 @@ public class Controlador {
 	public void crearIndividuo(String clasePertenencia, String nombreInstancia, ArrayList<String> valoresPropiedades){
 		// 1. Sacamos el nombre completo de la clase de pertenencia
 		String uriClase = modelo.getOb().getURI(clasePertenencia);
-		// 2. Creamos la instancia de esa clase
+		// 2. Comprobamos que existe
+		if (!modelo.getOb().existsClass(uriClase))
+			return;
+		// 3. Creamos la instancia de esa clase
 		modelo.getOb().createInstance(uriClase,nombreInstancia);
-		// 3. Ahora tenemos que rellenar las propiedades de la instancia
+		ArrayList<String> propiedades = getPropiedadesIndividuo(nombreInstancia);
+		// 4. Ahora tenemos que rellenar las propiedades de la instancia
 		// Para ello recuperamos los punteros a propiedades y valores
-		List<String> valores = new ArrayList();
+		for (int i = 1; i < valoresPropiedades.size(); i++){
+			modelo.getOb().createOntProperty(nombreInstancia, propiedades.get(i), valoresPropiedades.get(i));
+		}
+		
+		/*List<String> valores = new ArrayList();
 		List<String> propiedades = new ArrayList();
 		modelo.getOb().listInstancePropertiesValues(modelo.getOb().getURI(nombreInstancia), propiedades, valores);
 		
 		for (int i = 0; i < valoresPropiedades.size();i++){
 			valores.add(modelo.getOb().getURI(valoresPropiedades.get(i)));
-		}
+		}*/
 	}
 	
 	/**
