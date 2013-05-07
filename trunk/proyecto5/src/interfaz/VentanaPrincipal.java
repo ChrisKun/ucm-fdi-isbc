@@ -21,6 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.MouseInputListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -34,16 +35,23 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private JMenuBar menuBar;
 	private JMenu menuArchivo;
 	private JMenuItem itemNuevo;
+	private JMenuItem itemGuardarOnt;
+	private JMenuItem itemCargarOnt;
 	
 	private JLabel l_Banner;
 	
-	private PanelIntercambiable panelIntercambiable;
+	private JTabbedPane panelIntercambiable;
+	
+	private JPanel panelConsulta;
+	private PanelExploracion panelExploracion;
 	
 	private JPanel panelBotones;
 	private JButton botonAtras;
 	private JButton botonInicio;
 	
 	private Component ontoTree;
+
+	
 	
 	public final static int W = 1280;
 	public final static int H = 720;
@@ -78,7 +86,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		panelBotones.add(botonInicio);		
 		this.add(panelBotones, BorderLayout.SOUTH);
 		
-		panelIntercambiable = new PanelIntercambiable(controlador);
+		panelIntercambiable = new JTabbedPane();
+
+		panelConsulta = new JPanel();
+		panelIntercambiable.add("Consulta",panelConsulta);
+		
+		panelExploracion = new PanelExploracion(controlador);
+		panelIntercambiable.add("Explorador",panelExploracion);
+		
 		this.add(panelIntercambiable, BorderLayout.CENTER);
 	}
 	
@@ -89,17 +104,23 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		itemNuevo = new JMenuItem("Nuevo");
 		itemNuevo.addActionListener(this);
 		menuArchivo.add(itemNuevo);
+		itemGuardarOnt = new JMenuItem("Salvar Ontologia");
+		itemGuardarOnt.addActionListener(this);
+		menuArchivo.add(itemGuardarOnt);
+		itemCargarOnt = new JMenuItem("Cargar Ontologia");
+		itemCargarOnt.addActionListener(this);
+		menuArchivo.add(itemCargarOnt);
 	}
 
 	public void activaPanelExplorador(String pathFile){
-		panelIntercambiable.setPathExplorador(pathFile);
-		panelIntercambiable.cambiarPanel(PanelIntercambiable.panelExplorador);
+		panelExploracion.setPathExplorador(pathFile);
+		panelExploracion.cambiarPanel(PanelExploracion.panelExplorador);
 		this.validate();
 	}
 	
 	public void activaPanelFoto(String pathFile){
-		panelIntercambiable.setPathFoto(pathFile);
-		panelIntercambiable.cambiarPanel(PanelIntercambiable.panelFoto);
+		panelExploracion.setPathFoto(pathFile);
+		panelExploracion.cambiarPanel(PanelExploracion.panelFoto);
 		this.validate();
 	}
 
@@ -118,6 +139,16 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 			   activaPanelFoto(fichero.getAbsolutePath());
 			}
 		}
+		
+		if (e.getSource() == itemGuardarOnt){
+			controlador.guardarOntologia();
+		}
+		
+		if (e.getSource() == itemCargarOnt){
+			controlador.cargarOntologia();
+		}
+
+		/////////////
 		
 		if (e.getSource() == botonAtras) {
 			JOptionPane.showMessageDialog(null, "You shall not pass!!");
