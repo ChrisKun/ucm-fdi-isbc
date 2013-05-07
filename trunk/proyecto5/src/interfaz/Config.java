@@ -9,5 +9,6 @@ public class Config {
 	
 	public static final String aparece = "aparece";
 	public static final String apareceEn = "aparece_en";
+	public static final String urlfoto = "urlfoto";
 
 }
