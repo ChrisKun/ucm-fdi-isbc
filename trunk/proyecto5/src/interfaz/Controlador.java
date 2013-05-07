@@ -2,15 +2,10 @@ package interfaz;
 
 import java.awt.Component;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 
-
-import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlSelectInstance;
 
 import ontobridge.Ontologia;
@@ -90,6 +85,39 @@ public class Controlador {
 	}
 	
 	/**
+	 * TODO
+	 * Elimina un valor asociado a una propiedad.
+	 * @param propiedad - propiedad a eliminar
+	 * @param valor - valor de la propiedad
+	 * @return si se ha podido hacer
+	 */
+	public boolean eliminarValorDePropiedad(String propiedad, String valor){
+		return true;
+	}
+	
+	/**
+	 * TODO
+	 * Elimina todos los valores asociados a una misma propiedad. Por ejemplo
+	 * aparece Zelda, aparece Link y mandamos borrar aparece, borraria todas
+	 * las propiedades asociadas a aparece (Link y Zelda)
+	 * @param propiedad
+	 * @return
+	 */
+	public boolean eliminarTodosValoresDePropiedad(String propiedad){
+		return true;
+	}
+	
+	/**
+	 * Elimina un individuo de la ontologia
+	 * @param individuo
+	 * @return
+	 */
+	public boolean eliminarIndividuo(String individuo){
+		String uriIndividuo = modelo.getOb().getURI(individuo);
+		return true;
+	}
+	
+	/**
 	 * Permite aniadir un individuo EXISTENTE a una propiedad EXISTENTE de otro
 	 * individuo EXISTENTE
 	 * @param invididuo - individuo que contiene la propiedad
@@ -110,16 +138,29 @@ public class Controlador {
 		//3. Si alguna no exite, no continuamos y devolvemos FALSE
 		if (!exito)
 			return exito;
-		//4. Si ha habido exito, continuamos
-		//5. Sacamos los valores del individuo
-		//List<String> valores = new ArrayList();
-		//List<String> propiedades = new ArrayList();
-		//modelo.getOb().listInstancePropertiesValues(uriIndividuo, propiedades, valores);
+		//4. Comprobar además que el individuo a etiquetar pertenece a alguno
+		// de los tipos de contenido
+		exito = comprobarSiEsTipoContenido(uriIndividuoP);
+		if (!exito)
+			return exito;
 		//6. añadimos
 		modelo.getOb().createOntProperty(uriIndividuo, uriPropiedad, uriIndividuoP);
-		//propiedades.add(uriPropiedad);
-		//valores.add(uriIndividuoP);
 		return exito;
+	}
+	
+	/**
+	 * Comprueba si un individuo pertenece a una de las clases de Tipo de Contenido
+	 * @param individuo
+	 * @return
+	 */
+	private boolean comprobarSiEsTipoContenido(String individuo){
+		boolean esDeTipoContenido = false;
+		ArrayList<String> tiposContenido = getTiposDeContenido();
+		for (int i = 0; i < tiposContenido.size(); i++){
+				if (modelo.getOb().isInstanceOf(individuo, modelo.getOb().getURI(tiposContenido.get(i))))
+					esDeTipoContenido = true;
+		}
+		return esDeTipoContenido;
 	}
 	
 	/**
