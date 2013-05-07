@@ -24,27 +24,42 @@ public class TablaIndividuos extends DefaultTableModel {
 	/**
 	 * Igual que poner IndividuosPorContenidoDeFoto pero solo para poner uno nuevo
 	 * @param foto
+	 * @deprecated
 	 */
 	public void anadirIndividuoPorContenidoDeFoto(String foto,String individuo){
 		String foto2 = modelo.getOb().getURI(foto);
 		String uriIndividuo = modelo.getOb().getURI(individuo);
+		ArrayList<String> list = c.getTiposDeContenido();
 		
 		if (!modelo.getOb().existsInstance(foto2))
 			return;
 
 		//CONTENIDO - Comprobamos la propiedad
 		Vector<String> v = new Vector<String>();
+		boolean enc = false;
 		
-		for (int j = 0; j < c.getTiposDeContenido().size(); j++){
+		for (int j = 0; j < list.size() && !enc; j++){
 		//Comprobar si es distinto de personaje
-			if (modelo.getOb().isInstanceOf(uriIndividuo,modelo.getOb().getURI(c.getTiposDeContenido().get(j)))){
-				v.add(c.getTiposDeContenido().get(j));
+			if (modelo.getOb().isInstanceOf(uriIndividuo,modelo.getOb().getURI(list.get(j)))){
+				v.add(list.get(j));
 				v.add(individuo);
 				//Lo añadimos como nueva fila
 				this.addRow(v);
+				enc = true;
 			}
 					
 		}
+	}
+	
+	/**
+	 * FIXME
+	 * @param foto
+	 */
+	public void actualizarContenidoFoto(String foto){
+		String[] s = {"Componente", "Individuo"};
+		this.setNumRows(0);
+		this.setColumnIdentifiers(s);
+		this.ponerIndividuosPorContentidoDeFoto(foto, null);
 	}
 	
 	/**
@@ -64,12 +79,7 @@ public class TablaIndividuos extends DefaultTableModel {
 		this.setColumnIdentifiers(s);
 		//Ver qué tipo de foto es para saber que propiedades podemos pedirle...
 		if (!modelo.getOb().existsInstance(foto2))
-			return;
-		//recogemos sus propiedades
-		//List<String> properties = new ArrayList<String>();
-		//List<String> values = new ArrayList<String>();
-		//modelo.getOb().listInstancePropertiesValues(foto2, properties, values);
-		
+			return;		
 		// Sacamos los valores de la propiedad aparece
 		Iterator<String> it = modelo.getOb().listPropertyValue(foto2, uriAparece);
 		
@@ -89,27 +99,6 @@ public class TablaIndividuos extends DefaultTableModel {
 					}
 			}
 		}
-		
-		/* y ahora vemos sus propiedades
-		 * aparece y aparecePersonaje son propiedades del individuo foto
-		 * aparecePersonaje ademas cuenta con que tienen que ser personajes..
-		 */
-		/*for (int i = 0; i < properties.size(); i++){
-			//CONTENIDO - Comprobamos la propiedad
-			if (uriAparece.equals(properties.get(i))){
-				v = new Vector<String>();
-				// Sacamos que a que tipo de contenido pertenece
-				for (int j = 0; j < tiposContenido.size() ; j++){
-					//Comprobar si es distinto de personaje
-					if (modelo.getOb().isInstanceOf(values.get(i),modelo.getOb().getURI(tiposContenido.get(j)))){
-						v.add(tiposContenido.get(j));
-						v.add(modelo.getOb().getShortName(values.get(i)));
-						//Lo añadimos como nueva fila
-						this.addRow(v);
-					}
-				}
-			}
-		}*/
 	}
 	
 	/**

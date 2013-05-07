@@ -144,7 +144,8 @@ public class FotoActual extends JPanel implements ActionListener{
 			JOptionPane.showMessageDialog(this,
 					controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto));
 			//Añadir nueva fila a la tabla (solo si existe)
-			tab.anadirIndividuoPorContenidoDeFoto(nomFoto,controlador.getInstanciaActualSeleccionada());
+			tab.actualizarContenidoFoto(nomFoto);
+			//tab.ponerIndividuosPorContentidoDeFoto(nomFoto,pathFotoActual);
 			
 		}
 	}
