@@ -183,6 +183,28 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
+  <owl:Class rdf:about="#Foto">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom rdf:resource="#Contenido"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#aparece"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="Juego"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tiene"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
   <owl:Class rdf:ID="Edificio">
     <owl:equivalentClass>
       <owl:Class>
@@ -200,16 +222,6 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
-  <owl:Class rdf:about="#Foto">
-    <owl:equivalentClass>
-      <owl:Restriction>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="#aparece"/>
-        </owl:onProperty>
-        <owl:someValuesFrom rdf:resource="#Contenido"/>
-      </owl:Restriction>
-    </owl:equivalentClass>
-  </owl:Class>
   <owl:Class rdf:ID="Torre">
     <owl:disjointWith>
       <owl:Class rdf:ID="Templo"/>
@@ -224,6 +236,23 @@
       <owl:Class rdf:ID="Granja"/>
     </owl:disjointWith>
     <rdfs:subClassOf rdf:resource="#Edificio"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Monstruo">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:hasValue>
+              <Raza rdf:ID="A_Monstruo"/>
+            </owl:hasValue>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#tiene"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Personaje"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:ID="Distancia">
     <owl:equivalentClass>
@@ -358,6 +387,9 @@
     <owl:disjointWith>
       <owl:Class rdf:about="#Comportamiento"/>
     </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#Juego">
+    <rdfs:subClassOf rdf:resource="#Atributos"/>
   </owl:Class>
   <owl:Class rdf:about="#Objeto">
     <rdfs:subClassOf rdf:resource="#Contenido"/>
@@ -558,12 +590,6 @@
     <owl:disjointWith rdf:resource="#Tienda"/>
     <rdfs:subClassOf rdf:resource="#Edificio"/>
   </owl:Class>
-  <owl:Class rdf:about="#Catedral">
-    <owl:disjointWith rdf:resource="#Estatua"/>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Monumento"/>
-    </rdfs:subClassOf>
-  </owl:Class>
   <owl:Class rdf:about="#Estructura">
     <owl:equivalentClass>
       <owl:Restriction>
@@ -580,6 +606,12 @@
       <owl:Class rdf:about="#Naturaleza"/>
     </owl:disjointWith>
   </owl:Class>
+  <owl:Class rdf:about="#Catedral">
+    <owl:disjointWith rdf:resource="#Estatua"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Monumento"/>
+    </rdfs:subClassOf>
+  </owl:Class>
   <owl:Class rdf:about="#Comportamiento">
     <rdfs:subClassOf rdf:resource="#Atributos"/>
     <owl:disjointWith rdf:resource="#Daño"/>
@@ -590,6 +622,11 @@
       <owl:Class rdf:about="#Raza"/>
     </owl:disjointWith>
   </owl:Class>
+  <owl:Class rdf:about="#Campo">
+    <rdfs:subClassOf rdf:resource="#Tierra"/>
+    <owl:disjointWith rdf:resource="#Montaña"/>
+    <owl:disjointWith rdf:resource="#Bosque"/>
+  </owl:Class>
   <owl:Class rdf:about="#Raza">
     <rdfs:subClassOf rdf:resource="#Atributos"/>
     <owl:disjointWith rdf:resource="#Sexo"/>
@@ -597,11 +634,6 @@
     <owl:disjointWith rdf:resource="#Daño"/>
     <owl:disjointWith rdf:resource="#Lugar"/>
     <owl:disjointWith rdf:resource="#Comportamiento"/>
-  </owl:Class>
-  <owl:Class rdf:about="#Campo">
-    <rdfs:subClassOf rdf:resource="#Tierra"/>
-    <owl:disjointWith rdf:resource="#Montaña"/>
-    <owl:disjointWith rdf:resource="#Bosque"/>
   </owl:Class>
   <owl:Class rdf:about="#Monumento">
     <rdfs:subClassOf rdf:resource="#Estructura"/>
@@ -669,6 +701,10 @@
     <rdfs:domain rdf:resource="#Foto"/>
     <owl:inverseOf rdf:resource="#aparece_en"/>
     <rdfs:range rdf:resource="#Contenido"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="juego">
+    <rdfs:range rdf:resource="#Juego"/>
+    <rdfs:domain rdf:resource="#Foto"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#tiene">
     <rdfs:domain>
@@ -923,7 +959,6 @@
   </Arma>
   <Planta rdf:ID="Rosa"/>
   <Puente rdf:ID="Puente_de_madera"/>
-  <Raza rdf:ID="A_Monstruo"/>
   <Animal rdf:ID="Gato"/>
   <Contundente rdf:ID="Porra"/>
   <Castillo rdf:ID="Castillo_Generico"/>
