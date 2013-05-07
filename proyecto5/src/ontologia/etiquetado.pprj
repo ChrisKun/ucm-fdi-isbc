@@ -1,4 +1,4 @@
-; Tue May 07 21:58:41 CEST 2013
+; Tue May 07 22:04:42 CEST 2013
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[etiquetado_ProjectKB_Class745]
-		[etiquetado_ProjectKB_Class746]
-		[etiquetado_ProjectKB_Class747]
-		[etiquetado_ProjectKB_Class748]
-		[etiquetado_ProjectKB_Class749]))
+		[etiquetado_ProjectKB_Class750]
+		[etiquetado_ProjectKB_Class751]
+		[etiquetado_ProjectKB_Class752]
+		[etiquetado_ProjectKB_Class753]
+		[etiquetado_ProjectKB_Class754]))
 
 ([CLSES_TAB] of  Widget
 
@@ -290,27 +290,27 @@
 	(property_list [etiquetado_ProjectKB_Class8])
 	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
 
-([etiquetado_ProjectKB_Class745] of  String
+([etiquetado_ProjectKB_Class750] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([etiquetado_ProjectKB_Class746] of  String
+([etiquetado_ProjectKB_Class751] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Class")
 	(string_value "%3ANAME"))
 
-([etiquetado_ProjectKB_Class747] of  String
+([etiquetado_ProjectKB_Class752] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([etiquetado_ProjectKB_Class748] of  String
+([etiquetado_ProjectKB_Class753] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([etiquetado_ProjectKB_Class749] of  String
+([etiquetado_ProjectKB_Class754] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Thing")
 	(string_value "%3ANAME"))

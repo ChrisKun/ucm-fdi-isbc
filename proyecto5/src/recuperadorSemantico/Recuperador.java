@@ -160,6 +160,7 @@ public class Recuperador {
 	 */
 	private ArrayList<String> ejecutarConsultas() {		
 		ArrayList<String> resultado = new ArrayList<String>();
+		ArrayList<String> listaInterseccion = new ArrayList<String>();
 		ArrayList<String> individuosFotos = new ArrayList<String>();
 		Iterator<String> iterador, iterador2;
 		String aux;
@@ -176,15 +177,24 @@ public class Recuperador {
 			// Por cada individuo sacamos los valores de la propiedad
 			for (InfoCadena instancia: instancias) {
 				iterador = ontologia.getOb().listPropertyValue(instancia.cadena, propiedad.cadena);
-				while (iterador.hasNext()) {
-					aux = iterador.next();
+				if (instancia.union) {
 					// En caso de union si no esta lo unimos 
-					if (!resultado.contains(aux) && instancia.union) {						
-						resultado.add(iterador.next());
-					// En caso de interseccion lo eliminamos si esta
-					} else if (resultado.contains(aux) && !instancia.union) {
-						resultado.remove(aux);
+					while (iterador.hasNext()) {
+						aux = iterador.next();
+						if (!resultado.contains(aux)) {						
+							resultado.add(aux);
+						}
 					}
+				} else {
+					// En caso de interseccion solo dejamos los comunes 
+					while (iterador.hasNext()) {
+						aux = iterador.next();
+						if (resultado.contains(aux)) {
+							listaInterseccion.add(aux);
+						}
+					}
+					resultado.clear();
+					resultado.addAll(listaInterseccion);
 				}
 			}			
 		}
@@ -205,13 +215,13 @@ public class Recuperador {
 				}
 				
 			}
+			// Intersecamos ambos conjuntos (resultado y los individuos de las fotos)
+			for(String individuo: resultado) {
+				if (!individuosFotos.contains(individuo)) {
+					resultado.remove(individuo);
+				}
+			}	
 		}
-		// Intersecamos ambos conjuntos (resultado y los individuos de las fotos)
-		for(String individuo: resultado) {
-			if (!individuosFotos.contains(individuo)) {
-				resultado.remove(individuo);
-			}
-		}		
 		return resultado;
 	}
 	
