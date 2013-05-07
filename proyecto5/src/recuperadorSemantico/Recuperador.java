@@ -1,5 +1,7 @@
 package recuperadorSemantico;
 
+import interfaz.Config;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import ontobridge.Ontologia;
@@ -153,7 +155,7 @@ public class Recuperador {
 				break;
 			}			
 		case 2:
-			if (ontologia.getOb().existsInstance(uri(argumento), uri("Juego"))) {
+			if (ontologia.getOb().existsInstance(uri(argumento), uri(Config.juego))) {
 				juego = new String(argumento);
 				fase = 3;
 				break;
@@ -172,10 +174,9 @@ public class Recuperador {
 	private ArrayList<String> ejecutarConsultas() {		
 		ArrayList<String> lista = new ArrayList<String>();
 		ArrayList<String> listaInterseccion = new ArrayList<String>();
-		ArrayList<String> individuosFotos = new ArrayList<String>();
 		ArrayList<String> fotografias = new ArrayList<String>();
 		Iterator<String> iterador, iterador2;
-		String aux;
+		String aux, aux1;
 		// Sacamos las instancias de todas las clases
 		for(InfoCadena clase: clases) {
 			iterador = ontologia.getOb().listInstances(uri(clase.cadena));
@@ -212,47 +213,42 @@ public class Recuperador {
 					}
 				}			
 			}
-		// Si no hay propiedades, entonces (por ahora) el lista son las instancias
+		// Si no hay propiedades, entonces (por ahora) la lista son las instancias
 		} else {
 			for (InfoCadena instancia: instancias) {
 				lista.add(uri(instancia.cadena));
 			}
 		}
-		// Sacamos los individuos que estan catalogados en fotos del juego pedido
-		// Si no se pide juego, no hacemos nada
+		// Sacamos las fotos del juego pedido
 		if (juego != null) {
 			// Fotos del juego
-			iterador = ontologia.getOb().listPropertyValue(uri(juego), uri("sale_en_foto"));
+			iterador = ontologia.getOb().listPropertyValue(uri(juego), uri(Config.saleEnFoto));
 			while (iterador.hasNext()) {
 				aux = iterador.next();
 				// Sacamos los individuos de cada foto
-				iterador2 = ontologia.getOb().listPropertyValue(uri(aux), uri("aparece"));
+				iterador2 = ontologia.getOb().listPropertyValue(uri(aux), uri(Config.aparece));
 				while (iterador2.hasNext()) {
-					aux = iterador2.next();
-					// Si no estaba el individuo añadido, lo añadimos
-					if (!individuosFotos.contains(aux)) {
-						individuosFotos.add(aux);
+					aux1 = iterador2.next();
+					// Si el individuo estaba en la lista y la foto no esta añadida, la añadimos
+					if (lista.contains(aux1) && !fotografias.contains(aux)) {
+						fotografias.add(aux);
 					}
 				}
 				
 			}
-			// Intersecamos ambos conjuntos (lista y los individuos de las fotos)
-			for(String individuo: lista) {
-				if (!individuosFotos.contains(individuo)) {
-					lista.remove(individuo);
+		// Si no se nos restringe a un juego concreto, cogemos todas las fotos	
+		} else {
+			// Sacamos las fotos finalmente con la informacion de los individuos que queremos
+			for (String individuo: lista) {
+				iterador = ontologia.getOb().listPropertyValue(individuo, uri(Config.apareceEn));
+				while (iterador.hasNext()) {
+					aux = iterador.next();
+					if (!fotografias.contains(aux)) {
+						fotografias.add(aux);
+					}
 				}
-			}
+			}		
 		}
-		// Sacamos las fotos finalmente con la informacion de los individuos que queremos
-		for (String individuo: lista) {
-			iterador = ontologia.getOb().listPropertyValue(individuo, uri("aparece_en"));
-			while (iterador.hasNext()) {
-				aux = iterador.next();
-				if (!fotografias.contains(aux)) {
-					fotografias.add(aux);
-				}
-			}
-		}		
 		// Dejamos la cadena lista con los nombres cortos
 		for (String foto: fotografias) {
 			foto = ontologia.getOb().getShortName(foto);
