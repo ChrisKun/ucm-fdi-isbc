@@ -148,7 +148,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		if (e.getSource() == itemNuevo) {
 			JFileChooser fileChooser = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("Tipos de Imagen", "jpg", "gif", "png");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Tipos de Imagen", "jpg", "jpeg", "gif", "png");
 			fileChooser.setFileFilter(filter);
 			int seleccion = fileChooser.showOpenDialog(this);
 			if (seleccion == JFileChooser.APPROVE_OPTION)
