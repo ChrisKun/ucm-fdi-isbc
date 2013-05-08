@@ -468,6 +468,37 @@ public class Controlador {
 		return numeroAñadido;
 	}		
 	
+	public ArrayList<String> getPropiedades() {
+		ArrayList<String> lista = new ArrayList<String>();
+		Iterator<String> iterador = modelo.getOb().listProperties(modelo.getOb().getURI("Contenido"));
+		while (iterador.hasNext()) {
+			lista.add(iterador.next());
+		}
+		return lista;
+	}
+	
+	public ArrayList<String> getIndividuosYClases() {
+		ArrayList<String> lista = new ArrayList<String>();
+		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Contenido"));
+		while (iterador.hasNext()) {
+			lista.add(iterador.next());
+		}
+		iterador = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), false);
+		while (iterador.hasNext()) {
+			lista.add(iterador.next());
+		}
+		return lista;
+	}
+	
+	public ArrayList<String> getJuegos() {
+		ArrayList<String> lista = new ArrayList<String>();
+		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Juego"));
+		while (iterador.hasNext()) {
+			lista.add(iterador.next());
+		}
+		return lista;
+	}
+	
 	// TODO: Main para pruebas, eliminar cuando no se necesite
 	public static void main(String[] args) throws Exception{
 		String pathOntologia = "file:src/ontologia/etiquetado_limpio.owl";
