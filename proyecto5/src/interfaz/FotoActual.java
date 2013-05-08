@@ -159,17 +159,7 @@ public class FotoActual extends JPanel implements ActionListener{
 			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
 			PanelEtiquetar vE = new PanelEtiquetar(controlador);
 			vE.setFotoActual(pathFotoActual);
-			////-.---.-.-.-.
 			Main.vista.activaPanelEdicion(pathFotoActual);
-			/*
-			JDialog jD = new JDialog();
-			jD.setContentPane(vE);
-			jD.setSize(vE.getPreferredSize());
-			jD.setLocation(200, 100);
-			jD.setVisible(true);
-			jD.setAlwaysOnTop(true);
-			jD.setTitle("Crea un nuevo individuo");
-			*/
 		}
 		if (e.getSource() == b_Add){
 			//JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
