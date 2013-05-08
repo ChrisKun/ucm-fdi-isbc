@@ -1,12 +1,17 @@
 package interfaz;
 
 import java.awt.Component;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import controlador.Controlador_2;
+
+import clasificador.Main;
 
 
 import ontobridge.Ontologia;
@@ -357,13 +362,72 @@ public class Controlador {
 		return listaFotos;
 	}
 
+	/** 
+	 * Funcion de guardado de la ontologia
+	 */
 	public void guardarOntologia() {
-		// TODO Auto-generated method stub
-		
+		modelo.getOb().save(Main.pathOntoLimpio);
 	}
 
 	public void cargarOntologia() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	// TODO: Eliminar este comentario, es solo para que Raul sepa donde he tocado
+	/******* PARTE DE ALVARO **************/
+
+	/**
+	 * Extrae el nombre de una foto de una url
+	 * @param urlFoto - url de la foto
+	 * @return String con el nombre de la foto
+	 */
+	private String nombreFoto(String urlFoto) {
+		String separador = String.valueOf(File.separatorChar) + String.valueOf(File.separatorChar);
+		String[] tokens = urlFoto.split(separador);
+		return tokens[tokens.length-1];
+	}
+	
+	private boolean tieneFormatoCorrecto(String foto) {
+		if (foto.endsWith(".jpg") || foto.endsWith(".jpeg") ||
+				foto.endsWith(".gif") || foto.endsWith(".png"))
+			return true;
+		else 
+			return false;
+	}
+	
+	/**
+	 * Añade las fotos a la modelo 
+	 * @param urlFotos - Recibe unas url's y añade a la modelo los nombres de las url's
+	 * @return Entero con el numero de fotos añadidas
+	 * @throws Exception - Excepcion lanzada en caso de no poder añadir la foto a la modelo
+	 */
+	public int añadeFotosModelo (ArrayList<String> urlFotos) throws Exception {
+		int numeroAñadido = 0;
+		String nombre;
+		for (String urlFoto: urlFotos) {
+			nombre = nombreFoto(urlFoto);
+			if (!modelo.getOb().existsInstance(modelo.getOb().getURI(nombre))) {
+				if (tieneFormatoCorrecto(urlFoto)) {
+					modelo.getOb().createInstance("Foto", nombreFoto(urlFoto));
+					modelo.getOb().createDataTypeProperty(nombre, modelo.getOb().getURI("urlfoto"), urlFoto);					
+					numeroAñadido++;
+				} else 
+					throw new Exception ("El nombre "+nombre+" no tiene un formato aceptado");
+			} else
+				throw new Exception ("El nombre "+nombre+" ya está en la ontología");
+		}	
+		return numeroAñadido;
+	}		
+	
+	public static void main(String[] args) throws Exception{
+		String pathOntologia = "file:src/ontologia/etiquetado.owl";
+		String urlOntologia = "http://http://sentwittment.p.ht/";
+		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
+		Controlador r = new Controlador(ontologia);
+		ArrayList<String> lista = new ArrayList<String>();
+		lista.add("D:\\workspace\\ucm-fdi-isbc\\proyecto5\\fotos\\starfox\\images.jpg");
+		lista.add("D:\\workspace\\ucm-fdi-isbc\\proyecto5\\fotos\\starfox\\sfa108.jpg");
+		r.añadeFotosModelo(lista);	
 	}
 }
