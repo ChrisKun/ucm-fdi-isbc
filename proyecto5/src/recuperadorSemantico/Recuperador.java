@@ -280,6 +280,8 @@ public class Recuperador {
 	 * @throws Exception	- Excepcion para notificar que la consulta no se ciñe a los parámetros
 	 */
 	public ArrayList<String> consulta(String consulta) throws Exception {
+		// Quitamos espacios de delante y atras
+		consulta = consulta.trim();
 		// Creamos las estructuras
 		propiedades = new ArrayList<InfoCadena>();
 		clases = new ArrayList<InfoCadena>();
@@ -391,7 +393,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("en Legend");	
+		r.consulta(" en Legend ");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 }
