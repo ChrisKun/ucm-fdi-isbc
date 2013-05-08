@@ -380,25 +380,6 @@ public class Controlador {
 	/******* PARTE DE ALVARO **************/
 
 	/**
-	 * Extrae el nombre de una foto de una url
-	 * @param urlFoto - url de la foto
-	 * @return String con el nombre de la foto
-	 */
-	private String nombreFoto(String urlFoto) {
-		String separador = String.valueOf(File.separatorChar) + String.valueOf(File.separatorChar);
-		String[] tokens = urlFoto.split(separador);
-		return tokens[tokens.length-1];
-	}
-	
-	private boolean tieneFormatoCorrecto(String foto) {
-		if (foto.endsWith(".jpg") || foto.endsWith(".jpeg") ||
-				foto.endsWith(".gif") || foto.endsWith(".png"))
-			return true;
-		else 
-			return false;
-	}
-	
-	/**
 	 * Devuelve el nombre pasado como parametro en lenguaje natural
 	 * @param nombre - nombre de un argumento perteneciente a la ontologia
 	 * @return String con el nombre en lenguaje natural
@@ -424,6 +405,30 @@ public class Controlador {
 		hashFiltrado.put("tiene", "tiene");
 		hashFiltrado.put("usa", "usa");
 	}
+	
+	/**
+	 * Extrae el nombre de una foto de una url
+	 * @param urlFoto - url de la foto
+	 * @return String con el nombre de la foto
+	 */
+	private String nombreFoto(String urlFoto) {
+		String separador = String.valueOf(File.separatorChar) + String.valueOf(File.separatorChar);
+		String[] tokens = urlFoto.split(separador);
+		return tokens[tokens.length-1];
+	}
+	
+	/**
+	 * Funcion para chequear el formato de una foto
+	 * @param foto a chequear
+	 * @return true - formato valido, falso en caso contrario
+	 */
+	private boolean tieneFormatoCorrecto(String foto) {
+		if (foto.endsWith(".jpg") || foto.endsWith(".jpeg") ||
+				foto.endsWith(".gif") || foto.endsWith(".png"))
+			return true;
+		else 
+			return false;
+	}	
 	
 	/**
 	 * Añade las fotos al modelo 
