@@ -69,20 +69,9 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		l.setHorizontalAlignment((int) l.CENTER_ALIGNMENT);
 		l.setFont(new Font(l.getFont().getFontName(), Font.PLAIN, 20));
 		panelTipos.add(BorderLayout.NORTH,l);
-		//panelTipos = new JPanel();		
-		/*listModel = new DefaultListModel();
-		
-		list = new JList(listModel);
-		list.setBackground(this.getBackground());
-		list.addListSelectionListener(this);*/
-		
-		//panelTipos.setLayout(new GridLayout(0,2));
-		
-		
 		
 		panelPreguntas = new JPanel();
 		panelPreguntas.setLayout(new GridLayout(0,2));
-		
 		
 		actualizarPanelTipo();
 		this.add(panelTipos, s_Tipos);
@@ -90,7 +79,6 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		
 		this.setPreferredSize(new Dimension(550,400));
 		
-		//this.nomFoto = nomFoto;
 		setFotoActual("");
 	}
 	
@@ -102,7 +90,6 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 	
 	private JPanel getButtonsPanel(){
 		JPanel panel = new JPanel();
-		//panel.setLayout(new GridLayout(1, 2));
 		
 		b_Back = new JButton("Atras");
 		b_Back.addActionListener(this);
@@ -116,7 +103,6 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 	}
 	
 	private void actualizarPanelTipo(){
-		//listModel.removeAllElements();	
 		
 		JPanel p = new JPanel();
 		FlowLayout f = new FlowLayout();
@@ -140,10 +126,6 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 			p.add(b);
 		}
 		panelTipos.add(BorderLayout.CENTER,p);
-		/*for (String s: list_values){
-			listModel.addElement(s);
-		}
-		panelTipos.add(list);*/
 	}
 	
 	private void actualizarPanelPreguntas(int contenido){
@@ -171,13 +153,11 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		JPanel p = new JPanel();
 		if (nombre){
 			p.setLayout(new FlowLayout());
-			//p.add(new JLabel(string));
 			fieldNombreIndividuo = new TextField(50);
 			p.add(fieldNombreIndividuo);
 		}
 		else {
 			p.setLayout(new FlowLayout());
-			//p.add(new JLabel(string));
 			//Parte de apareceEn (especial para restringir a la foto actual)
 			if (string.equals("OTRA cosA")){ //XXX Config.apareceEn
 				Vector<String> v = new Vector<String>();
@@ -236,7 +216,12 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 			respuestasMultiRespuesta.put(string, l);
 			p.add(l);
 		}		
-		TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), string);
+		
+		String str = controlador.hashFiltrado.get(string);
+		if (str == null)
+			str = string;
+		
+		TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), str);
 		title.setTitleJustification(TitledBorder.CENTER);
 		p.setBorder(title);
 		return p;
@@ -276,20 +261,7 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		cambiarPanel(s_Tipos);
 		actualizarPanelTipo();
 	}
-	
-	/*
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		JList list = (JList) e.getSource();
-		if (e.getValueIsAdjusting()){
-			System.out.println(list.getSelectedValue());
-			actualizarPanelPreguntas(list.getSelectedIndex());
-			cambiarPanel(s_Preguntas);
-			list.setSelectedIndex(-1);
-		}		
-	}*/
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == b_Back){
 			cambiarPanel(s_Tipos);
