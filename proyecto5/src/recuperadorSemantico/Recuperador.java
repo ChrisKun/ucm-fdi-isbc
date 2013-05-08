@@ -304,5 +304,5 @@ public class Recuperador {
 		Recuperador r = new Recuperador(ontologia);
 		r.consulta("amigos de Link o Mario");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
-		}
+	}
 	}
