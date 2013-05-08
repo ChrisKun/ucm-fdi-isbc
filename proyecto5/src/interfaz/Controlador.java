@@ -11,6 +11,7 @@ import clasificador.Main;
 
 
 import ontobridge.Ontologia;
+import utilidades.Ficheros;
 
 public class Controlador {
 
@@ -447,9 +448,8 @@ public class Controlador {
 	 * Añade las fotos al modelo 
 	 * @param urlFotos - Recibe unas url's y añade al modelo los nombres de las url's
 	 * @return Entero con el numero de fotos añadidas
-	 * @throws Exception - Excepcion lanzada en caso de no poder añadir la foto al modelo
 	 */
-	public int añadeFotosModelo(ArrayList<String> urlFotos) throws Exception {
+	public int añadeFotosModelo(ArrayList<String> urlFotos) {
 		int numeroAñadido = 0;
 		String nombre;
 		for (String urlFoto: urlFotos) {
@@ -459,10 +459,8 @@ public class Controlador {
 					modelo.getOb().createInstance("Foto", nombreFoto(nombre));
 					modelo.getOb().createDataTypeProperty(nombre, modelo.getOb().getURI("urlfoto"), urlFoto);					
 					numeroAñadido++;
-				} else 
-					throw new Exception ("El nombre "+nombre+" con url: "+urlFoto+" no tiene un formato aceptado");
-			} else
-				throw new Exception ("El nombre "+nombre+" con url: "+urlFoto+" ya está en la ontología");
+				}
+			}
 		}	
 		return numeroAñadido;
 	}		
@@ -508,11 +506,15 @@ public class Controlador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Controlador r = new Controlador(ontologia);
-		r.getPropiedades();
+		Ficheros f = new Ficheros();
+		ArrayList<String> lista = f.ficheros(Main.gamesPath);
+		r.añadeFotosModelo(lista);
+		/*
 		ArrayList<String> lista = new ArrayList<String>();
 		lista.add("\\fotos\\starfox\\images.jpg");
 		lista.add("\\fotos\\starfox\\sfa108.jpg");
 		r.añadeFotosModelo(lista);	
+		*/
 		r.guardarOntologia();
 	}
 }
