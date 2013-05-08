@@ -46,13 +46,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	
 	private JPanel panelConsulta;
 	private PanelExploracion panelExploracion;
-	private JPanel panelEdicion;
+	private VentanaEtiquetar panelEdicion;
 	
 	private JPanel panelBotones;
 	private JButton botonAtras;
 	private JButton botonInicio;
-	
-		
 	
 	public final static int W = 1280;
 	public final static int H = 720;
@@ -102,6 +100,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		
 		panelExploracion = new PanelExploracion(controlador);
 		panelIntercambiable.add("Explorador",panelExploracion);
+	
+		
+		panelEdicion = new VentanaEtiquetar(controlador);
+		panelIntercambiable.add("Edicion",panelEdicion);
 		
 		this.add(panelIntercambiable, BorderLayout.CENTER);
 		

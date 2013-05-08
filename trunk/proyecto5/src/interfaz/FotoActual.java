@@ -130,7 +130,9 @@ public class FotoActual extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == b_New){
 			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
-			VentanaEtiquetar vE = new VentanaEtiquetar(controlador,nomFoto,tab);
+			VentanaEtiquetar vE = new VentanaEtiquetar(controlador);
+			vE.setFotoActual(pathFotoActual);
+			/*
 			JDialog jD = new JDialog();
 			jD.setContentPane(vE);
 			jD.setSize(vE.getPreferredSize());
@@ -138,6 +140,7 @@ public class FotoActual extends JPanel implements ActionListener{
 			jD.setVisible(true);
 			jD.setAlwaysOnTop(true);
 			jD.setTitle("Crea un nuevo individuo");
+			*/
 		}
 		if (e.getSource() == b_Add){
 			//JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
