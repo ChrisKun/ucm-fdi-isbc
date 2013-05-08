@@ -1,9 +1,11 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -15,8 +17,7 @@ public class PanelOntoTree extends JPanel implements ActionListener{
 
 	private JComboBox cB_Seleccion;
 	private String[] valoresSeleccion = {"Contenidos","Fotos"};
-	private Component ontoTree;
-	
+	private JPanel panelTrees;
 	
 	private Controlador controlador;
 	
@@ -25,9 +26,14 @@ public class PanelOntoTree extends JPanel implements ActionListener{
 		this.controlador = controlador;
 		
 		this.setLayout(new BorderLayout(10,10));
+		panelTrees = new JPanel();
+		panelTrees.setLayout(new CardLayout());
+		ArrayList<Component> trees = controlador.getTrees();
 		
-		ontoTree = controlador.getTree();
-		this.add(ontoTree,BorderLayout.CENTER);
+		for (int i=0;i<trees.size();i++){
+			panelTrees.add(trees.get(i),valoresSeleccion[i]);
+		}
+		this.add(panelTrees,BorderLayout.CENTER);
 		
 		cB_Seleccion = new JComboBox(valoresSeleccion);
 		cB_Seleccion.addActionListener(this);
@@ -37,12 +43,14 @@ public class PanelOntoTree extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComboBox cB = (JComboBox) e.getSource();
+		CardLayout cl = (CardLayout) panelTrees.getLayout();		
+		
 		if (cB.getSelectedItem() == valoresSeleccion[0]){
-			controlador.setTree(Config.SeleccionArbol.Contenido);
+			cl.show(panelTrees, valoresSeleccion[0]);
 		}
 		if (cB.getSelectedItem() == valoresSeleccion[1]){
-			controlador.setTree(Config.SeleccionArbol.Foto);
+			cl.show(panelTrees, valoresSeleccion[1]);
 		}
-		ontoTree = controlador.getTree();
+		panelTrees.validate();
 	}
 }

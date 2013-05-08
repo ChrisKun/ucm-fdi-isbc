@@ -142,8 +142,7 @@ public class FotoActual extends JPanel implements ActionListener{
 		if (e.getSource() == b_Add){
 			//JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
 			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
-			JOptionPane.showMessageDialog(this,
-					controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto));
+			//JOptionPane.showMessageDialog(this,controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto));
 			//Añadir nueva fila a la tabla (solo si existe)
 			tab.actualizarContenidoFoto(nomFoto);
 			//tab.ponerIndividuosPorContentidoDeFoto(nomFoto,pathFotoActual);
