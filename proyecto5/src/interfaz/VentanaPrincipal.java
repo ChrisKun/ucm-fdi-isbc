@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -155,6 +156,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 			   File fichero = fileChooser.getSelectedFile();
 			   // Aquí debemos abrir y leer el fichero.
 			   activaPanelFoto(fichero.getAbsolutePath());
+			   JDialog jD = new JDialog();
+			   jD.setBounds(500, 600, 400, 300);
+			   jD.setContentPane(new PanelAsociarJuego(controlador));
+			   jD.setVisible(true);
 			}
 		}
 		
