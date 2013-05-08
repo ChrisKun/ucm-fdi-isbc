@@ -117,16 +117,24 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		cont = contenido;
 		comboBoxRespuestas = new HashMap<String,JComboBox>();
 		respuestasMultiRespuesta = new HashMap<String,List>();
-		panelPreguntas.add(getPanelPregunta("Nombre", true, null));
+		panelPreguntas.add(getPanelPregunta("Nombre", true,true, null));
 		ArrayList<String> list_values = controlador.getPreguntasARellenar(contenido);
 		for (String s: list_values){
 			Vector<String> v = new Vector<String>(controlador.getIndividuosValidosRellenarPropiedad(s));
-			panelPreguntas.add(getPanelPregunta(s,false,v));
+			panelPreguntas.add(getPanelPregunta(s,false,false,v));
 		}
 		panelPreguntas.add(getButtonsPanel());
 	}
 
-	private JPanel getPanelPregunta(final String string,boolean nombre, Vector<String> individuos) {
+	/**
+	 * FIXME De momento no se usa unaRespuesta
+	 * @param string
+	 * @param nombre
+	 * @param unaRespuesta
+	 * @param individuos
+	 * @return
+	 */
+	private JPanel getPanelPregunta(final String string,boolean nombre,boolean unaRespuesta, Vector<String> individuos) {
 		JPanel p = new JPanel();
 		if (nombre){
 			p.setLayout(new FlowLayout());
@@ -201,25 +209,32 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		return p;
 	}
 
-	public ArrayList<String> recopilarRespuestas(){
-		ArrayList<String> respuestas = new ArrayList<String>();
-		Component[] components = panelPreguntas.getComponents();
-		TextField tF;
-		JPanel p;
-		// Nombre
-		p = (JPanel) components[0];
-		tF = (TextField) p.getComponent(1);
-		respuestas.add(tF.getText());
-		// Resto de respuestas
-		for (int i = 0; i < comboBoxRespuestas.size(); i++){
-			respuestas.add((String)comboBoxRespuestas.get(i).getSelectedItem());
-		}
+	public HashMap<String,ArrayList<String>> recopilarRespuestas(){
+		HashMap<String,ArrayList<String>> respuestas = new HashMap<String,ArrayList<String>>();
 		
-		/*for (int i=0;i<components.length-1;i++){
-			p = (JPanel) components[i];
-			tF = (TextField) p.getComponent(1);
-			respuestas.add(tF.getText());
-		}*/
+		ArrayList<String> a = new ArrayList<String>();
+		a.add(fieldNombreIndividuo.getText());
+		
+		respuestas.put("Nombre", a);
+		
+		//Para el resto hay que recopilar acorde a la categoria
+		ArrayList<String> propiedades = controlador.getPreguntasARellenar(cont);
+		
+		// Ahora vamos recorriendo todas las propiedades y sacamos la lista
+		// asociada a la propiedad y lo pasamos a un arrayList
+		List lista;
+		String[] l;
+		ArrayList<String> resp;
+		for (int i = 0; i < propiedades.size(); i++){
+			lista = respuestasMultiRespuesta.get(propiedades.get(i));
+			//Ahora lo añadimos al hashmap a devolver
+			l = lista.getItems();
+			resp = new ArrayList<String>();
+			for (int j = 0; j < l.length; j++){
+				resp.add(l[j]);
+			}
+			respuestas.put(propiedades.get(i),resp);
+		}
 		return respuestas;
 	}
 	
@@ -248,7 +263,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		if (e.getSource() == b_Send){
 			//JOptionPane.showMessageDialog(this, "Habilitame un metodo para pasarte todo esto");
 			//FIXME Actualizar a la nueva forma
-			controlador.crearIndividuo(cont, recopilarRespuestas().get(0),recopilarRespuestas());
+			controlador.crearIndividuo(cont, recopilarRespuestas());
 		}
 	}
 }

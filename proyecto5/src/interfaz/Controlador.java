@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -292,29 +293,27 @@ public class Controlador {
 	 * @param cont - clase a la que pertenece la instancia a crear
 	 * @param valoresPropiedades - valores de las propiedades que tiene que tener la instancia
 	 */
-	public void crearIndividuo(int cont, String nombreInstancia, ArrayList<String> valoresPropiedades){
+	public void crearIndividuo(int cont, HashMap<String,ArrayList<String>> valoresPropiedades){
 		// 1. Sacamos el nombre completo de la clase de pertenencia
 		String uriClase = modelo.getOb().getURI(getTiposDeContenido().get(cont));
 		// 2. Comprobamos que existe
 		if (!modelo.getOb().existsClass(uriClase))
 			return;
 		// 3. Creamos la instancia de esa clase
-		modelo.getOb().createInstance(uriClase,nombreInstancia);
+		String nombreInstancia = valoresPropiedades.get("Nombre").get(0);
+		modelo.getOb().createInstance(uriClase,valoresPropiedades.get("Nombre").get(0));
 		ArrayList<String> propiedades = getPreguntasARellenar(cont);
 		// 4. Ahora tenemos que rellenar las propiedades de la instancia
 		// Para ello recuperamos los punteros a propiedades y valores
-		for (int i = 1; i < valoresPropiedades.size(); i++){
-			if (!valoresPropiedades.get(i).equals(""))
-				modelo.getOb().createOntProperty(nombreInstancia, propiedades.get(i-1), valoresPropiedades.get(i));
+		for (int i = 0; i < propiedades.size(); i++){
+			ArrayList<String> valorPropiedad = valoresPropiedades.get(propiedades.get(i));
+			//Obtenemos la lista de valores de esa propiedad
+			//Rellenamos con toda la lista de valores esa propiedad
+			for (int j = 0; j < valorPropiedad.size(); j++){
+				if(!valorPropiedad.get(j).equals(""))
+					modelo.getOb().createOntProperty(nombreInstancia, propiedades.get(i), valorPropiedad.get(j));
+			}
 		}
-		
-		/*List<String> valores = new ArrayList();
-		List<String> propiedades = new ArrayList();
-		modelo.getOb().listInstancePropertiesValues(modelo.getOb().getURI(nombreInstancia), propiedades, valores);
-		
-		for (int i = 0; i < valoresPropiedades.size();i++){
-			valores.add(modelo.getOb().getURI(valoresPropiedades.get(i)));
-		}*/
 	}
 	
 	/**
