@@ -354,10 +354,10 @@ public class Recuperador {
 		consulta = consulta.replaceAll("(O|o)bjeto(s)?", "Objeto");
 				// Arma
 		consulta = consulta.replaceAll("(A|a)rma(s)?", "Arma");
-		consulta = consulta.replaceAll("(C|c)ontundente(s)?", "Contundente");
-		consulta = consulta.replaceAll("(A|a) (D|d)istancia", "Distancia");
-		consulta = consulta.replaceAll("(F|f)ilo(s)?", "Filo");
-		consulta = consulta.replaceAll("(M|m)(a|á)gica(s)?", "Magica");
+		consulta = consulta.replaceAll("(A|a)rma(s)? (C|c)ontundente(s)?", "Contundente");
+		consulta = consulta.replaceAll("(A|a)rma(s)? (A|a|de)? (D|d)istancia", "Distancia");
+		consulta = consulta.replaceAll("(A|a)rma(s)? (de|con)? (F|f)ilo(s)?", "Filo");
+		consulta = consulta.replaceAll("(A|a)rma(s)? (M|m)(a|á)gica(s)?", "Magica");
 				// Instrumento
 		consulta = consulta.replaceAll("(I|i)nstrumento(s)?", "Instrumento");
 			// Personaje
@@ -376,7 +376,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("torres");	
+		r.consulta("armas de Distancia");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 	}
