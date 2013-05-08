@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -68,7 +69,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		list.addListSelectionListener(this);
 		
 		panelPreguntas = new JPanel();
-		panelPreguntas.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 15));
+		panelPreguntas.setLayout(new GridLayout(0,2));
 		
 		
 		actualizarPanelTipo();
@@ -90,7 +91,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	
 	private JPanel getButtonsPanel(){
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(1, 2));
+		//panel.setLayout(new GridLayout(1, 2));
 		
 		b_Back = new JButton("Atras");
 		b_Back.addActionListener(this);
@@ -146,7 +147,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 			p.setLayout(new FlowLayout());
 			//p.add(new JLabel(string));
 			//Parte de apareceEn (especial para restringir a la foto actual)
-			if (string.equals(Config.apareceEn)){
+			if (string.equals("OTRA cosA")){ //XXX Config.apareceEn
 				Vector<String> v = new Vector<String>();
 				v.add(nomFoto); 
 				JComboBox j = new JComboBox(v);
@@ -263,7 +264,10 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		if (e.getSource() == b_Send){
 			//JOptionPane.showMessageDialog(this, "Habilitame un metodo para pasarte todo esto");
 			//FIXME Actualizar a la nueva forma
-			controlador.crearIndividuo(cont, recopilarRespuestas());
+			if (!fieldNombreIndividuo.getText().equals(""))
+				controlador.crearIndividuo(cont, recopilarRespuestas());
+			else
+				JOptionPane.showMessageDialog(null, "Por favor, introduce un nombre de instancia");
 		}
 	}
 }
