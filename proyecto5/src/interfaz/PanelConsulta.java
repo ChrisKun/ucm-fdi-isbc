@@ -1,5 +1,6 @@
 package interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,17 +27,27 @@ public class PanelConsulta extends JPanel implements ActionListener{
 		this.setLayout(new GridLayout(1,2));
 		
 		panelIzquierda = new JPanel();
-		this.add(panelIzquierda);
 		panelDerecha = new JPanel();
+		
+		panelIzquierda.setLayout(new BorderLayout());
+		
+		this.add(panelIzquierda);
 		this.add(panelDerecha);
+		
+		JPanel p_consultaTexto = new JPanel();
+		JPanel p_consultaBotones = new PanelCondiciones(controlador);
+		
+		panelIzquierda.add(p_consultaTexto, BorderLayout.NORTH);
+		panelIzquierda.add(p_consultaBotones, BorderLayout.CENTER);
 		
 		l_fotosDe = new JLabel("FOTOS DE: ");
 		tF_consulta = new JTextField(30);
 		b_consulta = new JButton("Consulta");
-		panelIzquierda.add(l_fotosDe);
-		panelIzquierda.add(tF_consulta);
-		panelIzquierda.add(b_consulta);
 		
+		p_consultaTexto.add(l_fotosDe);
+		p_consultaTexto.add(tF_consulta);
+		p_consultaTexto.add(b_consulta);
+				
 		modelos = new JList(/*controlador.getModelos()*/);
 		panelDerecha.add(modelos);
 	}
