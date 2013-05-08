@@ -4,6 +4,8 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import Controlador.Controlador;
+
 import clasificador.Main;
 
 public class PanelIntercambiable extends JPanel{

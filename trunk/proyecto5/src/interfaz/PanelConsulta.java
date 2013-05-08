@@ -11,6 +11,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controlador.Controlador;
+
 public class PanelConsulta extends JPanel implements ActionListener{
 
 	private Controlador controlador;

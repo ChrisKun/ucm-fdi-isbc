@@ -1,4 +1,4 @@
-package interfaz;
+package clasificador;
 
 /**
  * Sirve para poder modificar facilmente los nombres de las propiedades

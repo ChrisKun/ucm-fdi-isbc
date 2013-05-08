@@ -4,9 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+
+import Controlador.Controlador;
 import ontobridge.Ontologia;
 import utilidades.Ficheros;
-import interfaz.Controlador;
 import interfaz.VentanaPrincipal;
 
 public class Main {

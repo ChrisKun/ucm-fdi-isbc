@@ -4,6 +4,8 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
+import Controlador.Controlador;
+
 public class PanelCondiciones extends JPanel{
 
 	public PanelCondiciones(Controlador controlador){

@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import Controlador.Controlador;
+
 public class PanelAsociarJuego extends JPanel{
 	
 	private Controlador controlador;

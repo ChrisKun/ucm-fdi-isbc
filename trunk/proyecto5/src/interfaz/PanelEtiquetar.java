@@ -33,6 +33,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import Controlador.Controlador;
+
 import clasificador.Main;
 
 public class PanelEtiquetar extends JPanel implements ActionListener{

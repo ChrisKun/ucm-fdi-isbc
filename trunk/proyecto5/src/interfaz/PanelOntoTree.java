@@ -11,6 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Controlador.Controlador;
+
 public class PanelOntoTree extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;

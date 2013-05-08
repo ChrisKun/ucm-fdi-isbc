@@ -29,6 +29,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.MouseInputListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Controlador.Controlador;
+
 import clasificador.Main;
 
 public class VentanaPrincipal extends JFrame implements ActionListener{

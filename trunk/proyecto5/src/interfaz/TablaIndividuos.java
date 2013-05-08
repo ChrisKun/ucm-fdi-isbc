@@ -7,6 +7,10 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
+import clasificador.Config;
+
+import Controlador.Controlador;
+
 import ontobridge.Ontologia;
 
 public class TablaIndividuos extends DefaultTableModel {
