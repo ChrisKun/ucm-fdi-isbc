@@ -169,8 +169,16 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		}
 		
 		if (e.getSource() == itemCargarOnt){
-			controlador.cargarOntologia();
+			JFileChooser fileChooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Ontologia", "owl");
+			fileChooser.setFileFilter(filter);
 			JOptionPane.showMessageDialog(this, "Rellenar el metodo 'controlador.cargarOntologia()'");
+			int seleccion = fileChooser.showOpenDialog(this);
+			if (seleccion == JFileChooser.APPROVE_OPTION)
+			{
+			   File fichero = fileChooser.getSelectedFile();
+			   controlador.cargarOntologia(fichero.getAbsolutePath());
+			}
 		}
 
 		/////////////

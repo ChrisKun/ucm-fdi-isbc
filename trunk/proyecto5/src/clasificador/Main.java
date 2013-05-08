@@ -34,6 +34,11 @@ public class Main {
 
 	private static void checkFiles() {
 		File dir = new File(gamesPath);
-		JOptionPane.showConfirmDialog(null, "Estamos comprobando /fotos");
+		JOptionPane.showMessageDialog(
+				null, 
+				"Estamos comprobando /fotos", 
+				"Comprobando las fotos", 
+				JOptionPane.NO_OPTION
+				);
 	}
 }
