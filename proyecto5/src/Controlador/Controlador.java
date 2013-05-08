@@ -1,15 +1,15 @@
-package interfaz;
+package Controlador;
+
+import interfaz.VentanaPrincipal;
 
 import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
+import clasificador.Config;
 import clasificador.Main;
-
-
 import ontobridge.Ontologia;
 import utilidades.Ficheros;
 
@@ -38,21 +38,19 @@ public class Controlador {
 	}
 	
 	/**
-	 * FIXME Da un nullPointer??
-	 * Permite asociar una instancia de una foto a una imagen poniendo su ruta
-	 * @param rutaFoto
-	 * @param instanciaFoto
-	 */
-	public void setRutaFoto(String rutaFoto, String instanciaFoto){
-		//modelo.getOb().createDataTypeProperty(modelo.getOb().getURI(instanciaFoto), Config.urlfoto, "file://"+rutaFoto);
-	}
-	
-	/**
 	 * Devuelve el árbol de Ontobridge ACTIVO correctamente configurado.
 	 * @return
 	 */
 	public ArrayList<Component> getTrees(){
 		return trees;
+	}
+	
+	/**
+	 * Devuelve el modelo
+	 * @return Ontologia (modelo)
+	 */
+	public Ontologia getModelo() {
+		return modelo;
 	}
 	
 	/**
@@ -205,13 +203,12 @@ public class Controlador {
 	}
 	
 	/**
-	 * TODO
 	 * Elimina un individuo de la ontologia
 	 * @param individuo
 	 * @return
 	 */
 	public boolean eliminarIndividuo(String individuo){
-		String uriIndividuo = modelo.getOb().getURI(individuo);
+		modelo.getOb().delete(modelo.getOb().getURI(individuo));
 		return true;
 	}
 	

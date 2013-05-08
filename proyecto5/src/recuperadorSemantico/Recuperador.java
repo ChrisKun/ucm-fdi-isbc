@@ -1,9 +1,10 @@
 package recuperadorSemantico;
 
-import interfaz.Config;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import clasificador.Config;
 import ontobridge.Ontologia;
 
 /**

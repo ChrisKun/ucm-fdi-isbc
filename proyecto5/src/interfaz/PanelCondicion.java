@@ -21,6 +21,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import Controlador.Controlador;
+
 public class PanelCondicion extends JPanel implements ActionListener{
 
 	private String titulo;

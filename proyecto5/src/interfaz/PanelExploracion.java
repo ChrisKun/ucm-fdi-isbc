@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import Controlador.Controlador;
+
 import clasificador.Main;
 
 public class PanelExploracion extends JPanel{
