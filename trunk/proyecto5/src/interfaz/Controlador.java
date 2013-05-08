@@ -7,10 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import controlador.Controlador_2;
-
 import clasificador.Main;
 
 
@@ -369,9 +365,12 @@ public class Controlador {
 		modelo.getOb().save(Main.pathOntoLimpio);
 	}
 
+	/**
+	 * Funcion de carga de una nueva ontologia
+	 */
 	public void cargarOntologia() {
 		// TODO Auto-generated method stub
-		
+		modelo = new Ontologia(Main.urlOntologia, Main.pathOntologia);
 	}
 	
 	// TODO: Eliminar este comentario, es solo para que Raul sepa donde he tocado
