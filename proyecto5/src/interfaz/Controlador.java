@@ -376,6 +376,19 @@ public class Controlador {
 		modelo = new Ontologia(Main.urlOntologia, Main.pathOntologia);
 	}
 	
+	public int dameIndiceContenido(String contenido){
+		int index = -1;
+		boolean enc = false;
+		ArrayList<String> s = this.getTiposDeContenido();
+		for (int i = 0; i < s.size() && !enc; i++){
+			if (s.get(i).equals(contenido)){
+				enc = true;
+				index = i;
+			}
+		}
+		return index;
+	}
+	
 	// TODO: Eliminar este comentario, es solo para que Raul sepa donde he tocado
 	/******* PARTE DE ALVARO **************/
 
@@ -394,16 +407,16 @@ public class Controlador {
 	private void inicializaHashFiltrado() {
 		hashFiltrado = new HashMap<String, String>();
 		/* Propiedades */
-		hashFiltrado.put("amigo_de", "amigo de");
-		hashFiltrado.put("aparece", "aparece");
-		hashFiltrado.put("aparece_en", "aparece en");
-		hashFiltrado.put("comportamiento", "comportamiento");
-		hashFiltrado.put("enemigo_de", "enemigo de");
-		hashFiltrado.put("es_usado", "es usado");
-		hashFiltrado.put("sale_el_juego", "sale el juego");
-		hashFiltrado.put("sale_en_foto", "sale en foto");
-		hashFiltrado.put("tiene", "tiene");
-		hashFiltrado.put("usa", "usa");
+		hashFiltrado.put(Config.amigoDe, "amigo de");
+		hashFiltrado.put(Config.aparece,"aparece");
+		hashFiltrado.put(Config.apareceEn, "aparece en");
+		hashFiltrado.put(Config.comportamiento, "comportamiento");
+		hashFiltrado.put(Config.enemigoDe, "enemigo de");
+		hashFiltrado.put(Config.esUsado, "es usado");
+		hashFiltrado.put(Config.saleElJuego, "sale el juego");
+		hashFiltrado.put(Config.saleEnFoto, "sale en foto");
+		hashFiltrado.put(Config.tiene, "tiene");
+		hashFiltrado.put(Config.usa, "usa");
 	}
 	
 	/**
@@ -443,7 +456,7 @@ public class Controlador {
 			nombre = nombreFoto(urlFoto);
 			if (!modelo.getOb().existsInstance(modelo.getOb().getURI(nombre))) {
 				if (tieneFormatoCorrecto(urlFoto)) {
-					modelo.getOb().createInstance("Foto", nombreFoto(urlFoto));
+					modelo.getOb().createInstance("Foto", nombreFoto(nombre));
 					modelo.getOb().createDataTypeProperty(nombre, modelo.getOb().getURI("urlfoto"), urlFoto);					
 					numeroAñadido++;
 				} else 

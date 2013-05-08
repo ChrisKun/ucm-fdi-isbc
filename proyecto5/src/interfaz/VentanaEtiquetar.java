@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.List;
 import java.awt.TextField;
@@ -34,7 +35,7 @@ import javax.swing.event.ListSelectionListener;
 
 import clasificador.Main;
 
-public class VentanaEtiquetar extends JPanel implements ListSelectionListener, ActionListener{
+public class VentanaEtiquetar extends JPanel implements ActionListener{
 
 	private Controlador controlador;
 	private static final long serialVersionUID = 1L;
@@ -62,11 +63,22 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		this.controlador = controlador;
 		this.setLayout(new CardLayout(10, 10));
 		
-		panelTipos = new JPanel();		
-		listModel = new DefaultListModel();
+		panelTipos = new JPanel();
+		panelTipos.setLayout(new BorderLayout());
+		JLabel l = new JLabel("Por favor, selecciona un tipo de individuo a crear: ");
+		l.setHorizontalAlignment((int) l.CENTER_ALIGNMENT);
+		l.setFont(new Font(l.getFont().getFontName(), Font.PLAIN, 20));
+		panelTipos.add(BorderLayout.NORTH,l);
+		//panelTipos = new JPanel();		
+		/*listModel = new DefaultListModel();
+		
 		list = new JList(listModel);
 		list.setBackground(this.getBackground());
-		list.addListSelectionListener(this);
+		list.addListSelectionListener(this);*/
+		
+		//panelTipos.setLayout(new GridLayout(0,2));
+		
+		
 		
 		panelPreguntas = new JPanel();
 		panelPreguntas.setLayout(new GridLayout(0,2));
@@ -104,12 +116,34 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	}
 	
 	private void actualizarPanelTipo(){
-		listModel.removeAllElements();		
+		//listModel.removeAllElements();	
+		
+		JPanel p = new JPanel();
+		FlowLayout f = new FlowLayout();
+		f.setAlignment(FlowLayout.CENTER);
+		p.setLayout(f);
+		
 		ArrayList<String> list_values = controlador.getTiposDeContenido();
-		for (String s: list_values){
+		
+		for (final String s: list_values){
+			JButton b = new JButton(s);
+			b.setFont(new Font(b.getFont().getFontName(), Font.BOLD, 22));
+			b.setBorder(BorderFactory.createBevelBorder(0));
+			b.addActionListener(new ActionListener(){
+
+				public void actionPerformed(ActionEvent arg0) {
+					actualizarPanelPreguntas(controlador.dameIndiceContenido(s));
+					cambiarPanel(s_Preguntas);
+				}
+				
+			});
+			p.add(b);
+		}
+		panelTipos.add(BorderLayout.CENTER,p);
+		/*for (String s: list_values){
 			listModel.addElement(s);
 		}
-		panelTipos.add(list);
+		panelTipos.add(list);*/
 	}
 	
 	private void actualizarPanelPreguntas(int contenido){
@@ -117,24 +151,23 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		cont = contenido;
 		comboBoxRespuestas = new HashMap<String,JComboBox>();
 		respuestasMultiRespuesta = new HashMap<String,List>();
-		panelPreguntas.add(getPanelPregunta("Nombre", true,true, null));
+		panelPreguntas.add(getPanelPregunta("Nombre", true, null));
 		ArrayList<String> list_values = controlador.getPreguntasARellenar(contenido);
 		for (String s: list_values){
 			Vector<String> v = new Vector<String>(controlador.getIndividuosValidosRellenarPropiedad(s));
-			panelPreguntas.add(getPanelPregunta(s,false,false,v));
+			panelPreguntas.add(getPanelPregunta(s,false,v));
 		}
 		panelPreguntas.add(getButtonsPanel());
 	}
 
 	/**
-	 * FIXME De momento no se usa unaRespuesta
 	 * @param string
 	 * @param nombre
 	 * @param unaRespuesta
 	 * @param individuos
 	 * @return
 	 */
-	private JPanel getPanelPregunta(final String string,boolean nombre,boolean unaRespuesta, Vector<String> individuos) {
+	private JPanel getPanelPregunta(final String string,boolean nombre, Vector<String> individuos) {
 		JPanel p = new JPanel();
 		if (nombre){
 			p.setLayout(new FlowLayout());
@@ -244,6 +277,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		actualizarPanelTipo();
 	}
 	
+	/*
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		JList list = (JList) e.getSource();
@@ -253,7 +287,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 			cambiarPanel(s_Preguntas);
 			list.setSelectedIndex(-1);
 		}		
-	}
+	}*/
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -261,10 +295,10 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 			cambiarPanel(s_Tipos);
 		}
 		if (e.getSource() == b_Send){
-			//JOptionPane.showMessageDialog(this, "Habilitame un metodo para pasarte todo esto");
-			//FIXME Actualizar a la nueva forma
-			if (!fieldNombreIndividuo.getText().equals(""))
+			if (!fieldNombreIndividuo.getText().equals("")){
 				controlador.crearIndividuo(cont, recopilarRespuestas());
+				cambiarPanel(s_Tipos);
+			}	
 			else
 				JOptionPane.showMessageDialog(null, "Por favor, introduce un nombre de instancia");
 		}
