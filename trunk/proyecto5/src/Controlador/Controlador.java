@@ -429,6 +429,14 @@ public class Controlador {
 		return recuperador.consulta(consulta);
 	}
 	
+	/**
+	 * Muestra el uso del recuperador
+	 * @return ArrayList<String> para mostrar el uso
+	 */
+	public ArrayList<String> usoRecuperador() {
+		return recuperador.uso();
+	}
+	
 	/******************** METODOS PRIVADOS ***************************/
 	/**
 	 * Extrae el nombre de una foto de una url

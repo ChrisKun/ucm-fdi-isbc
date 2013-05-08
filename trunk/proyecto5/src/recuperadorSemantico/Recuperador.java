@@ -392,4 +392,4 @@ public class Recuperador {
 		r.consulta("en Legend");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
-	}
+}
