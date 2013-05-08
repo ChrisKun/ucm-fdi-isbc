@@ -321,6 +321,7 @@ public class Recuperador {
 		consulta = consulta.replaceFirst("personajes buenos", "comportamiento A_Bueno");
 		consulta = consulta.replaceFirst("personajes (malvados|malos)", "comportamiento A_Malo");
 		// Permitimos variaciones en los nombres de las clases
+		// Los comentarios inferiores estan desplazados acorde al nivel de la clase en la ontologia
 		// Contenido
 		consulta = consulta.replaceAll("(C|c)ontenido(s)?", "Contenido");
 			// Estructura
