@@ -92,7 +92,6 @@ public class Controlador {
 		
 		// Si existe, continuamos
 		Iterator<String> it = modelo.getOb().listPropertyRange(uriPropiedad);
-		
 		while (it.hasNext())
 			rango.add(it.next());
 		
@@ -118,7 +117,7 @@ public class Controlador {
 		ArrayList<String> list = new ArrayList<String>();
 		String aux = null;
 		//Obtenemos las propiedades de una clase y la guardamos en un iterador
-		Iterator<String> it = modelo.getOb().listProperties(clasesContenido.get(contenido));
+		Iterator<String> it = modelo.getOb().listSpecificProperties((clasesContenido.get(contenido)));
 		
 		while (it.hasNext()){
 			aux = it.next();
@@ -472,7 +471,8 @@ public class Controlador {
 		ArrayList<String> lista = new ArrayList<String>();
 		Iterator<String> iterador = modelo.getOb().listSpecificProperties(modelo.getOb().getURI("Naturaleza"));
 		while (iterador.hasNext()) {
-			lista.add(iterador.next());
+			String strSucia = iterador.next();
+			lista.add(hashFiltrado.get(strSucia));
 		}
 		return lista;
 	}
@@ -481,11 +481,13 @@ public class Controlador {
 		ArrayList<String> lista = new ArrayList<String>();
 		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Contenido"));
 		while (iterador.hasNext()) {
-			lista.add(iterador.next());
+			String strSucia = iterador.next();
+			lista.add(hashFiltrado.get(strSucia));
 		}
 		iterador = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), false);
 		while (iterador.hasNext()) {
-			lista.add(iterador.next());
+			String strSucia = iterador.next();
+			lista.add(hashFiltrado.get(strSucia));
 		}
 		return lista;
 	}
@@ -494,7 +496,8 @@ public class Controlador {
 		ArrayList<String> lista = new ArrayList<String>();
 		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Juego"));
 		while (iterador.hasNext()) {
-			lista.add(iterador.next());
+			String strSucia = iterador.next();
+			lista.add(hashFiltrado.get(strSucia));
 		}
 		return lista;
 	}
