@@ -255,7 +255,11 @@ public class Recuperador {
 		}
 		// Dejamos la cadena lista con los nombres cortos
 		for (String foto: fotografias) {
-			foto = ontologia.getOb().getShortName(foto);
+			iterador = ontologia.getOb().listInstanceProperties(foto);
+			while (iterador.hasNext()) {
+				aux = iterador.next();
+				foto = aux;
+			}
 			System.out.println(foto);
 		}
 		return fotografias;
@@ -376,11 +380,11 @@ public class Recuperador {
 	
 	// TODO: Main para pruebas, quitar cuando no se use
 	public static void main(String[] args) throws Exception{
-		String pathOntologia = "file:src/ontologia/etiquetado.owl";
+		String pathOntologia = "file:src/ontologia/etiquetado_limpio.owl";
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("");	
+		r.consulta("en Legend");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 	}
