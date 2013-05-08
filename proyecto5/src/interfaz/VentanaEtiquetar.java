@@ -6,10 +6,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
@@ -46,8 +48,10 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	String nomFoto;
 	TablaIndividuos tab;
 	
-	private ArrayList<JComboBox> comboBoxRespuestas;
+	private HashMap<String,JComboBox> comboBoxRespuestas;
+	private HashMap<String,List> respuestasMultiRespuesta;
 	private int cont;
+	private TextField fieldNombreIndividuo;
 	
 	public VentanaEtiquetar(Controlador controlador, String nomFoto, TablaIndividuos tab) {
 		this.controlador = controlador;
@@ -106,7 +110,8 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	private void actualizarPanelPreguntas(int contenido){
 		panelPreguntas.removeAll();
 		cont = contenido;
-		comboBoxRespuestas = new ArrayList<JComboBox>();
+		comboBoxRespuestas = new HashMap<String,JComboBox>();
+		respuestasMultiRespuesta = new HashMap<String,List>();
 		panelPreguntas.add(getPanelPregunta("Nombre", true, null));
 		ArrayList<String> list_values = controlador.getPreguntasARellenar(contenido);
 		for (String s: list_values){
@@ -116,15 +121,88 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		panelPreguntas.add(getButtonsPanel());
 	}
 
-	private JPanel getPanelPregunta(String string,boolean nombre, Vector<String> individuos) {
+	private JPanel getPanelPregunta(final String string,boolean nombre, Vector<String> individuos) {
 		JPanel p = new JPanel();
-		p.setLayout(new BorderLayout(20,15));
+		if (nombre){
+			p.setLayout(new GridLayout(1,2));
+			p.add(new JLabel(string));
+			fieldNombreIndividuo = new TextField(50);
+			p.add(fieldNombreIndividuo);
+		}
+		else {
+			p.setLayout(new GridLayout(1,4));
+			p.add(new JLabel(string));
+			//Parte de apareceEn (especial para restringir a la foto actual)
+			if (string.equals(Config.apareceEn)){
+				Vector<String> v = new Vector<String>();
+				v.add(nomFoto); 
+				JComboBox j = new JComboBox(v);
+				p.add(j);
+				comboBoxRespuestas.put(string,j);
+			}
+			else{
+				JComboBox j = new JComboBox(individuos); 
+				p.add(j);
+				// agregamos ahora el combobox a la lista para mantener el puntero
+				comboBoxRespuestas.put(string,j);
+			}
+			//paneles de botones
+			JPanel panelBotones = new JPanel();
+			panelBotones.setLayout(new GridLayout(2,1));
+			JButton bMas = new JButton("+");
+			bMas.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					//1. Obtenemos la respuesta seleccionada del ComboBox
+					String sel = (String) comboBoxRespuestas.get(string).getSelectedItem();
+					//2. Comprobamos que no esta en la lista
+					List lis = respuestasMultiRespuesta.get(string);
+					//2.b pasamos el contenido a una estructura
+					String[] con = lis.getItems();
+					//2.c comprobamos que no existe
+					boolean enc = false;
+					for (int i = 0; i < con.length && !enc; i++)
+						enc = con[i].equals(sel);
+					//3. lo incluimos si no estaba
+					if (!enc)
+						lis.add(sel);
+					//respuestasMultiRespuesta.get(string).add((String) comboBoxRespuestas.get(string).getSelectedItem());
+				}
+				
+			});
+			panelBotones.add(bMas);
+			
+			JButton bMenos = new JButton("-");
+			bMenos.addActionListener(new ActionListener(){
+
+				public void actionPerformed(ActionEvent arg0) {
+					//Borramos el item seleccionado de la lista
+					List lis = respuestasMultiRespuesta.get(string);
+					int indexSel = lis.getSelectedIndex();
+					System.out.println(indexSel);
+					if (indexSel>=0)
+						lis.remove(indexSel);
+				}
+				
+			});
+			panelBotones.add(bMenos);
+			//TODO Action Listener
+			p.add(panelBotones);
+			//lista con elementos añadidos (lo que se pasa al controlador)
+			List l = new List();
+			respuestasMultiRespuesta.put(string, l);
+			p.add(l);
+			
+			
+		}
+		
+		
+		/*p.setLayout(new BorderLayout(20,15));
 		p.add(new JLabel(string),BorderLayout.WEST);
 		if (nombre)
 			p.add(new TextField(50),BorderLayout.EAST);
 		else if (string.equals(Config.apareceEn)){
 			Vector<String> v = new Vector<String>();
-			v.add(nomFoto); //FIXME Chapuza xD
+			v.add(nomFoto); 
 			JComboBox j = new JComboBox(v);
 			p.add(j);
 			comboBoxRespuestas.add(j);
@@ -135,7 +213,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 			p.add(j);
 			// agregamos ahora el combobox a la lista para mantener el puntero
 			comboBoxRespuestas.add(j);
-		}
+		}*/
 		return p;
 	}
 

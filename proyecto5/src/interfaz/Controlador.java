@@ -48,7 +48,7 @@ public class Controlador {
 	 * @param instanciaFoto
 	 */
 	public void setRutaFoto(String rutaFoto, String instanciaFoto){
-		//modelo.getOb().createDataTypeProperty(modelo.getOb().getURI(instanciaFoto), Config.urlfoto, "file:"+rutaFoto);
+		//modelo.getOb().createDataTypeProperty(modelo.getOb().getURI(instanciaFoto), Config.urlfoto, "file://"+rutaFoto);
 	}
 	
 	/**
@@ -287,7 +287,6 @@ public class Controlador {
 	}
 	
 	/**
-	 * FIXME Hay que rehacerlo
 	 * Permite crear un individuo de una clase indicada y rellena sus
 	 * propiedades. Tambien podrian ser fotos
 	 * @param cont - clase a la que pertenece la instancia a crear
@@ -319,7 +318,6 @@ public class Controlador {
 	}
 	
 	/**
-	 * FIXME Hay que decidir que hacer cuando no hay nada seleccionado
 	 * Devuelve la instancia con la que estamos trabajando en este momento, no tiene por qué
 	 * ser un String pero hay que hablar de que devolvemos aquí.
 	 * @return la instancia actual seleccionada
