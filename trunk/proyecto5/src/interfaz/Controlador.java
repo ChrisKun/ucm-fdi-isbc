@@ -20,23 +20,31 @@ public class Controlador {
 	ArbolPersonalizado treeContenido; //arbol con raiz: CONTENIDO
 	ArbolPersonalizado treeFoto; //arbol con raiz: Foto
 	ArrayList<Component> trees;
-	HashMap<String,String> hashFiltrado;
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
 		treeContenido = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Contenido.toString());
 		treeFoto = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Foto.toString());
-		// Incialmente activamos el arbol de contenido		
+		// Incialmente activamos el arbol de contenido
 		trees = new ArrayList<Component>();
 		trees.add(treeContenido);
 		trees.add(treeFoto);
 		// Creamos el hashMap que tiene la tabla de equivalencias entre nombres de la ontologia
 		// y nombres en lenguaje natural
-		inicializaHashFiltrado();
 	}
 	
 	public void setVista(VentanaPrincipal vista){
 		this.vista = vista;
+	}
+	
+	/**
+	 * FIXME Da un nullPointer??
+	 * Permite asociar una instancia de una foto a una imagen poniendo su ruta
+	 * @param rutaFoto
+	 * @param instanciaFoto
+	 */
+	public void setRutaFoto(String rutaFoto, String instanciaFoto){
+		//modelo.getOb().createDataTypeProperty(modelo.getOb().getURI(instanciaFoto), Config.urlfoto, "file://"+rutaFoto);
 	}
 	
 	/**
@@ -46,15 +54,48 @@ public class Controlador {
 	public ArrayList<Component> getTrees(){
 		return trees;
 	}
-		
+	
 	/**
-	 * FIXME Da un nullPointer??
-	 * Permite asociar una instancia de una foto a una imagen poniendo su ruta
-	 * @param rutaFoto
-	 * @param instanciaFoto
+	 * Devuelve todas las propiedades de la ontologia
+	 * @return ArrayList<String> con las propiedades
 	 */
-	public void setRutaFoto(String rutaFoto, String instanciaFoto){
-		//modelo.getOb().createDataTypeProperty(modelo.getOb().getURI(instanciaFoto), Config.urlfoto, "file://"+rutaFoto);
+	public ArrayList<String> getPropiedades() {
+		ArrayList<String> lista = new ArrayList<String>();
+		Iterator<String> iterador = modelo.getOb().listSpecificProperties(modelo.getOb().getURI("Naturaleza"));
+		while (iterador.hasNext()) {
+			lista.add(iterador.next());
+		}
+		return lista;
+	}
+	
+	/**
+	 * Devuelve todos los individuos y clases de la ontologia
+	 * @return ArrayList<String> con las clases e instancias
+	 */
+	public ArrayList<String> getIndividuosYClases() {
+		ArrayList<String> lista = new ArrayList<String>();
+		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Contenido"));
+		while (iterador.hasNext()) {
+			lista.add(iterador.next());
+		}
+		iterador = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), false);
+		while (iterador.hasNext()) {
+			lista.add(iterador.next());
+		}
+		return lista;
+	}
+	
+	/**
+	 * Devuelve todas las instancias de Juego
+	 * @return ArrayList<String> con las instancias de Juego
+	 */
+	public ArrayList<String> getJuegos() {
+		ArrayList<String> lista = new ArrayList<String>();
+		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Juego"));
+		while (iterador.hasNext()) {
+			lista.add(iterador.next());
+		}
+		return lista;
 	}
 	
 	/**
@@ -394,33 +435,6 @@ public class Controlador {
 	/******* PARTE DE ALVARO **************/
 
 	/**
-	 * Devuelve el nombre pasado como parametro en lenguaje natural
-	 * @param nombre - nombre de un argumento perteneciente a la ontologia
-	 * @return String con el nombre en lenguaje natural
-	 */
-	private String nombreFiltrado(String nombre) {		
-		return hashFiltrado.get(nombre);
-	}
-	
-	/**
-	 * Funcion que inicializa el hashMap de equivalencias de nombres
-	 */
-	private void inicializaHashFiltrado() {
-		hashFiltrado = new HashMap<String, String>();
-		/* Propiedades */
-		hashFiltrado.put(Config.amigoDe, "amigo de");
-		hashFiltrado.put(Config.aparece,"aparece");
-		hashFiltrado.put(Config.apareceEn, "aparece en");
-		hashFiltrado.put(Config.comportamiento, "comportamiento");
-		hashFiltrado.put(Config.enemigoDe, "enemigo de");
-		hashFiltrado.put(Config.esUsado, "es usado");
-		hashFiltrado.put(Config.saleElJuego, "sale el juego");
-		hashFiltrado.put(Config.saleEnFoto, "sale en foto");
-		hashFiltrado.put(Config.tiene, "tiene");
-		hashFiltrado.put(Config.usa, "usa");
-	}
-	
-	/**
 	 * Extrae el nombre de una foto de una url
 	 * @param urlFoto - url de la foto
 	 * @return String con el nombre de la foto
@@ -465,40 +479,7 @@ public class Controlador {
 		return numeroAñadido;
 	}		
 	
-	public ArrayList<String> getPropiedades() {
-		ArrayList<String> lista = new ArrayList<String>();
-		Iterator<String> iterador = modelo.getOb().listSpecificProperties(modelo.getOb().getURI("Naturaleza"));
-		while (iterador.hasNext()) {
-			String strSucia = iterador.next();
-			lista.add(hashFiltrado.get(strSucia));
-		}
-		return lista;
-	}
-	
-	public ArrayList<String> getIndividuosYClases() {
-		ArrayList<String> lista = new ArrayList<String>();
-		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Contenido"));
-		while (iterador.hasNext()) {
-			String strSucia = iterador.next();
-			lista.add(hashFiltrado.get(strSucia));
-		}
-		iterador = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), false);
-		while (iterador.hasNext()) {
-			String strSucia = iterador.next();
-			lista.add(hashFiltrado.get(strSucia));
-		}
-		return lista;
-	}
-	
-	public ArrayList<String> getJuegos() {
-		ArrayList<String> lista = new ArrayList<String>();
-		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Juego"));
-		while (iterador.hasNext()) {
-			String strSucia = iterador.next();
-			lista.add(hashFiltrado.get(strSucia));
-		}
-		return lista;
-	}
+
 	
 	// TODO: Main para pruebas, eliminar cuando no se necesite
 	public static void main(String[] args) throws Exception{
