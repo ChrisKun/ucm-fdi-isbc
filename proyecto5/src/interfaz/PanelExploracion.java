@@ -2,6 +2,8 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,7 +25,9 @@ public class PanelExploracion extends JPanel{
 	
 	public PanelExploracion(Controlador controlador){
 		explorador = new Explorador(Main.gamesPath);
-		JScrollPane exploradorScroll = new JScrollPane(explorador);
+		explorador.setLayout(new GridLayout(0,3));
+		//explorador.setLayout(new )
+		JScrollPane exploradorScroll = new JScrollPane(explorador,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		fotoActual = new FotoActual(controlador);
 		
 		panelIntercambiable = new JPanel();

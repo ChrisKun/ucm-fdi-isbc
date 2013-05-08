@@ -68,29 +68,17 @@ public class VentanaEtiquetar extends JPanel implements ActionListener{
 		JLabel l = new JLabel("Por favor, selecciona un tipo de individuo a crear: ");
 		l.setHorizontalAlignment((int) l.CENTER_ALIGNMENT);
 		l.setFont(new Font(l.getFont().getFontName(), Font.PLAIN, 20));
-		panelTipos.add(BorderLayout.NORTH,l);
-		//panelTipos = new JPanel();		
-		/*listModel = new DefaultListModel();
-		
-		list = new JList(listModel);
-		list.setBackground(this.getBackground());
-		list.addListSelectionListener(this);*/
-		
-		//panelTipos.setLayout(new GridLayout(0,2));
-		
-		
+		panelTipos.add(BorderLayout.NORTH,l);		
 		
 		panelPreguntas = new JPanel();
 		panelPreguntas.setLayout(new GridLayout(0,2));
-		
-		
+				
 		actualizarPanelTipo();
 		this.add(panelTipos, s_Tipos);
 		this.add(panelPreguntas, s_Preguntas);
 		
 		this.setPreferredSize(new Dimension(550,400));
 		
-		//this.nomFoto = nomFoto;
 		setFotoActual("");
 	}
 	
@@ -276,18 +264,6 @@ public class VentanaEtiquetar extends JPanel implements ActionListener{
 		cambiarPanel(s_Tipos);
 		actualizarPanelTipo();
 	}
-	
-	/*
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		JList list = (JList) e.getSource();
-		if (e.getValueIsAdjusting()){
-			System.out.println(list.getSelectedValue());
-			actualizarPanelPreguntas(list.getSelectedIndex());
-			cambiarPanel(s_Preguntas);
-			list.setSelectedIndex(-1);
-		}		
-	}*/
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
