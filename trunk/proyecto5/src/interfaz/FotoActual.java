@@ -132,6 +132,8 @@ public class FotoActual extends JPanel implements ActionListener{
 			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
 			VentanaEtiquetar vE = new VentanaEtiquetar(controlador);
 			vE.setFotoActual(pathFotoActual);
+			////-.---.-.-.-.
+			Main.vista.activaPanelEdicion(pathFotoActual);
 			/*
 			JDialog jD = new JDialog();
 			jD.setContentPane(vE);
