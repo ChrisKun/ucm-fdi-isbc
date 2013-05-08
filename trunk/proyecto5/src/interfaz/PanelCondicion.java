@@ -41,7 +41,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 	
 	public PanelCondicion(Controlador controlador, String titulo, ArrayList<String> elementos){
 		super();
-		this.add(createPanelPregunta(titulo, controlador.getPropiedades()));		
+		this.add(createPanelPregunta(titulo, elementos));		
 	}
 	
 	/**
@@ -92,7 +92,6 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		tM_propiedades.addColumn(titulo);
 		t_propiedades = new JTable(tM_propiedades);
 		t_propiedades.getColumn("---").setMaxWidth(10);
-		//t_propiedades.setPreferredSize(new Dimension(300,140));
 		
 		JScrollPane sP = new JScrollPane(t_propiedades);
 		sP.setPreferredSize(new Dimension(300,140));

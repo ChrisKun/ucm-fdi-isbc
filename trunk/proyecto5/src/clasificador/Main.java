@@ -38,12 +38,6 @@ public class Main {
 
 	private static void checkFiles(Controlador controlador) {
 		File dir = new File(gamesPath);
-		JOptionPane.showMessageDialog(
-				null, 
-				"Estamos comprobando /fotos", 
-				"Comprobando las fotos", 
-				JOptionPane.NO_OPTION
-				);
 		Ficheros f = new Ficheros();
 		ArrayList<String> lista = f.ficheros(gamesPath);
 		int numElems = controlador.addFotosModelo(lista);
