@@ -73,7 +73,8 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		panelTipos.add(BorderLayout.NORTH,l);
 		
 		panelPreguntas = new JPanel();
-		panelPreguntas.setLayout(new GridLayout(0,2));
+		panelPreguntas.setLayout(new BorderLayout());
+		//panelPreguntas.setLayout(new GridLayout(0,2));
 		
 		actualizarPanelTipo();
 		this.add(panelTipos, s_Tipos);
@@ -140,16 +141,29 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 	
 	private void actualizarPanelPreguntas(int contenido){
 		panelPreguntas.removeAll();
+		JPanel pPreguntas = new JPanel();
+		GridLayout g = new GridLayout(0,3);
+		g.setHgap(20);
+		g.setVgap(20);
+		pPreguntas.setLayout(g);
+		int i = 0;
 		cont = contenido;
 		comboBoxRespuestas = new HashMap<String,JComboBox>();
 		respuestasMultiRespuesta = new HashMap<String,List>();
-		panelPreguntas.add(getPanelPregunta("Nombre", true, null));
+		pPreguntas.add(getPanelPregunta("Nombre", true, null));
 		ArrayList<String> list_values = controlador.getPreguntasARellenar(contenido);
 		for (String s: list_values){
 			Vector<String> v = new Vector<String>(controlador.getIndividuosValidosRellenarPropiedad(s));
-			panelPreguntas.add(getPanelPregunta(s,false,v));
+			pPreguntas.add(getPanelPregunta(s,false,v));
+			i++;
 		}
-		panelPreguntas.add(getButtonsPanel());
+		panelPreguntas.add(BorderLayout.NORTH,getButtonsPanel());
+		panelPreguntas.add(BorderLayout.CENTER,pPreguntas);
+		
+		for (; i < 9; i++){
+			pPreguntas.add(new JLabel());
+		}
+			
 	}
 
 	/**
