@@ -30,13 +30,13 @@ public class Main {
 		controlador.setVista(vista);
 		controlador.getTiposDeContenido();
 		
-		checkFiles();
+		checkFiles(controlador);
 		
 		vista.setVisible(true);
-		vista.setTitle("CLASIFICATOR 3000");						
+		vista.setTitle("CLASIFICATOR 3000");					
 	}
 
-	private static void checkFiles() {
+	private static void checkFiles(Controlador controlador) {
 		File dir = new File(gamesPath);
 		JOptionPane.showMessageDialog(
 				null, 
@@ -46,10 +46,16 @@ public class Main {
 				);
 		Ficheros f = new Ficheros();
 		ArrayList<String> lista = f.ficheros(gamesPath);
-		for (String s: lista){
-			System.out.println(s);
+		int numElems = controlador.addFotosModelo(lista);
+		if (numElems > 0){
+			JOptionPane.showMessageDialog(
+					null, 
+					"Se han añadido "+numElems+" elementos",
+					"Nuevas fotos!",
+					JOptionPane.NO_OPTION
+					);
+			
 		}
-		
 	}
 	
 }

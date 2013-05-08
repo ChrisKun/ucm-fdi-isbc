@@ -19,11 +19,9 @@ public class Ficheros {
 
         for ( File f : list ) {
             if ( f.isDirectory() ) {
-                ficherosRecursivo(lista, f.getAbsolutePath());
-                System.out.println("Dir:" + f.getAbsoluteFile());
+                ficherosRecursivo(lista, f.getAbsolutePath());                
             }
             else {
-                System.out.println("File:" + f.getAbsoluteFile());
                 lista.add(f.getAbsolutePath());
             }
         }
