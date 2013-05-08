@@ -370,8 +370,9 @@ public class Controlador {
 
 	/**
 	 * Funcion de carga de una nueva ontologia
+	 * @param string 
 	 */
-	public void cargarOntologia() {
+	public void cargarOntologia(String string) {
 		// TODO Auto-generated method stub
 		modelo = new Ontologia(Main.urlOntologia, Main.pathOntologia);
 	}
