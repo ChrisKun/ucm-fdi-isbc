@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import clasificador.Main;
 
@@ -22,11 +23,13 @@ public class PanelExploracion extends JPanel{
 	
 	public PanelExploracion(Controlador controlador){
 		explorador = new Explorador(Main.gamesPath);
+		JScrollPane exploradorScroll = new JScrollPane(explorador);
 		fotoActual = new FotoActual(controlador);
 		
 		panelIntercambiable = new JPanel();
 		panelIntercambiable.setLayout(new CardLayout(10,10));
-		panelIntercambiable.add(explorador, panelExplorador);
+		//panelIntercambiable.add(explorador, panelExplorador);
+		panelIntercambiable.add(exploradorScroll, panelExplorador);
 		panelIntercambiable.add(fotoActual, panelFoto);
 		
 		this.setLayout(new BorderLayout());
