@@ -22,6 +22,7 @@ public class Config {
 	public static final String saleElJuego = "sale_el_juego";
 	public static final String tiene = "tiene";
 	public static final String usa = "usa";
+	public static final String urlFoto = "urlfoto";
 	public static enum SeleccionArbol {Contenido, Foto}
 	
 }

@@ -260,7 +260,7 @@ public class Recuperador {
 		}
 		// Sacamos las url
 		for (String foto: fotografias) {
-			iterador = ontologia.getOb().listPropertyValue(foto,"urlfoto");
+			iterador = ontologia.getOb().listPropertyValue(foto,Config.urlFoto);
 			while (iterador.hasNext()) {
 				aux = iterador.next();
 				foto = aux;
@@ -389,7 +389,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("asdf asdf");	
+		r.consulta("en Legend");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 	}
