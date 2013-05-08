@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,6 +26,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.ListModel;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -124,14 +128,14 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	private JPanel getPanelPregunta(final String string,boolean nombre, Vector<String> individuos) {
 		JPanel p = new JPanel();
 		if (nombre){
-			p.setLayout(new GridLayout(1,2));
-			p.add(new JLabel(string));
+			p.setLayout(new FlowLayout());
+			//p.add(new JLabel(string));
 			fieldNombreIndividuo = new TextField(50);
 			p.add(fieldNombreIndividuo);
 		}
 		else {
-			p.setLayout(new GridLayout(1,4));
-			p.add(new JLabel(string));
+			p.setLayout(new FlowLayout());
+			//p.add(new JLabel(string));
 			//Parte de apareceEn (especial para restringir a la foto actual)
 			if (string.equals(Config.apareceEn)){
 				Vector<String> v = new Vector<String>();
@@ -165,7 +169,6 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 					//3. lo incluimos si no estaba
 					if (!enc)
 						lis.add(sel);
-					//respuestasMultiRespuesta.get(string).add((String) comboBoxRespuestas.get(string).getSelectedItem());
 				}
 				
 			});
@@ -178,42 +181,22 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 					//Borramos el item seleccionado de la lista
 					List lis = respuestasMultiRespuesta.get(string);
 					int indexSel = lis.getSelectedIndex();
-					System.out.println(indexSel);
 					if (indexSel>=0)
 						lis.remove(indexSel);
 				}
-				
 			});
+			
 			panelBotones.add(bMenos);
-			//TODO Action Listener
+			
 			p.add(panelBotones);
 			//lista con elementos añadidos (lo que se pasa al controlador)
 			List l = new List();
 			respuestasMultiRespuesta.put(string, l);
 			p.add(l);
-			
-			
-		}
-		
-		
-		/*p.setLayout(new BorderLayout(20,15));
-		p.add(new JLabel(string),BorderLayout.WEST);
-		if (nombre)
-			p.add(new TextField(50),BorderLayout.EAST);
-		else if (string.equals(Config.apareceEn)){
-			Vector<String> v = new Vector<String>();
-			v.add(nomFoto); 
-			JComboBox j = new JComboBox(v);
-			p.add(j);
-			comboBoxRespuestas.add(j);
-		}
-		else {
-			individuos.add(""); //para que se pueda dejar en blanco
-			JComboBox j = new JComboBox(individuos); 
-			p.add(j);
-			// agregamos ahora el combobox a la lista para mantener el puntero
-			comboBoxRespuestas.add(j);
-		}*/
+		}		
+		TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), string);
+		title.setTitleJustification(TitledBorder.CENTER);
+		p.setBorder(title);
 		return p;
 	}
 
@@ -257,6 +240,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		}
 		if (e.getSource() == b_Send){
 			//JOptionPane.showMessageDialog(this, "Habilitame un metodo para pasarte todo esto");
+			//FIXME Actualizar a la nueva forma
 			controlador.crearIndividuo(cont, recopilarRespuestas().get(0),recopilarRespuestas());
 			tab.actualizarContenidoFoto(nomFoto);
 		}
