@@ -155,7 +155,7 @@ public class FotoActual extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == b_New){
 			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
-			VentanaEtiquetar vE = new VentanaEtiquetar(controlador);
+			PanelEtiquetar vE = new PanelEtiquetar(controlador);
 			vE.setFotoActual(pathFotoActual);
 			////-.---.-.-.-.
 			Main.vista.activaPanelEdicion(pathFotoActual);
