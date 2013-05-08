@@ -138,9 +138,8 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		int pos = t_propiedades.getSelectedRow();
 				
 		if (pos >= 0){
-			// FIXME: Si es el primer elemento retirar el juntor
 			if (pos == 0){
-				tM_propiedades.setValueAt("", pos, 0);
+				tM_propiedades.setValueAt("", 1, 0);
 			}
 			String s = (String) tM_propiedades.getValueAt(pos, 1);
 			cB_elementos.addItem(s);
