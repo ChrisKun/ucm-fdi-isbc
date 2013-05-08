@@ -263,9 +263,11 @@ public class Recuperador {
 			iterador = ontologia.getOb().listPropertyValue(foto,Config.urlFoto);
 			while (iterador.hasNext()) {
 				aux = iterador.next();
-				foto = aux;
+				// Eliminamos la parte del esquema que se añade al final
+				aux = aux.replace(Config.esquemaUrl, "");
+				foto = aux.substring(0, aux.length()-2);
 			}
-			System.out.println(foto);
+			// System.out.println(foto);
 		}
 		return fotografias;
 	}
