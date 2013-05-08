@@ -129,7 +129,8 @@ public class FotoActual extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == b_New){
-			VentanaEtiquetar vE = new VentanaEtiquetar(controlador);
+			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
+			VentanaEtiquetar vE = new VentanaEtiquetar(controlador,nomFoto,tab);
 			JDialog jD = new JDialog();
 			jD.setContentPane(vE);
 			jD.setSize(vE.getPreferredSize());
