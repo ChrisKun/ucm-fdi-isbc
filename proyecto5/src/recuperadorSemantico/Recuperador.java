@@ -226,19 +226,24 @@ public class Recuperador {
 			iterador = ontologia.getOb().listPropertyValue(uri(juego), uri(Config.saleEnFoto));
 			while (iterador.hasNext()) {
 				aux = iterador.next();
-				// Sacamos los individuos de cada foto
-				iterador2 = ontologia.getOb().listPropertyValue(uri(aux), uri(Config.aparece));
-				while (iterador2.hasNext()) {
-					aux1 = iterador2.next();
-					// Si el individuo estaba en la lista y la foto no esta añadida, la añadimos
-					if (lista.contains(aux1) && !fotografias.contains(aux)) {
-						fotografias.add(aux);
-					// Si no habia propiedades, entonces el usuario a podido poner algo del estilo "fotos de Juego"
-					} else if (propiedades.size() == 0) {
-						fotografias.add(aux);
-					}
-				}
-				
+				// Si hay individuos los sacamos
+				if (instancias.size() > 0) {
+					// Sacamos los individuos de cada foto
+					iterador2 = ontologia.getOb().listPropertyValue(uri(aux), uri(Config.aparece));
+					while (iterador2.hasNext()) {
+						aux1 = iterador2.next();
+						// Si el individuo estaba en la lista y la foto no esta añadida, la añadimos
+						if (lista.contains(aux1) && !fotografias.contains(aux)) {
+							fotografias.add(aux);
+						// Si no habia propiedades, entonces el usuario a podido poner algo del estilo "fotos de Juego"
+						} else if (propiedades.size() == 0) {
+							fotografias.add(aux);
+						}
+					}	
+				// Si no hay individuos sacamos el juego
+				} else {
+					fotografias.add(aux);
+				}				
 			}
 		// Si no se nos restringe a un juego concreto, cogemos todas las fotos	
 		} else {
@@ -253,9 +258,9 @@ public class Recuperador {
 				}
 			}		
 		}
-		// Dejamos la cadena lista con los nombres cortos
+		// Sacamos las url
 		for (String foto: fotografias) {
-			iterador = ontologia.getOb().listInstanceProperties(foto);
+			iterador = ontologia.getOb().listPropertyValue(foto,"urlfoto");
 			while (iterador.hasNext()) {
 				aux = iterador.next();
 				foto = aux;
@@ -303,7 +308,7 @@ public class Recuperador {
 		ArrayList<String> lista = new ArrayList<String>();
 		lista.add("El Recuperador acepta cadenas acorde a la siguiente expresion regular:");
 		lista.add("((propiedad*)? (((clase|instancia)(conector)...(conector)(clase|instancia)))|(clase|instancia))?(en Juego)?");
-		lista.add("Es necesario al menos especificar un individuo o clase");
+		lista.add("Si se especifican propiedades sin individuos el reconocedor no las aplicará");
 		lista.add("La aplicacion contempla una serie de transformaciones predefinidas para hacer mas cómodo su uso al usuario: ");
 		lista.add("(amigos|amigo) de");
 		lista.add("(enemigos|enemigo) de");
@@ -384,7 +389,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("en Legend");	
+		r.consulta("asdf asdf");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 	}
