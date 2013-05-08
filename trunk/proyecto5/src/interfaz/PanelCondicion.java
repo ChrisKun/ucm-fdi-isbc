@@ -79,12 +79,6 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		
 		p.add(panelBotones);
 		
-		//lista con elementos añadidos (lo que se pasa al controlador)
-		/*
-		List l = new List();
-		respuestasMultiRespuesta.put(titulo, l);
-		p.add(l);
-		 */	
 		lM_propiedades = new DefaultListModel();
 		l_propiedades = new JList(lM_propiedades);
 		l_propiedades.setPreferredSize(new Dimension(300, 140));
@@ -98,28 +92,51 @@ public class PanelCondicion extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == b_Union){
-			addElementFromComboBox();
+			addElementFromComboBox(true);
 		}
 		if (e.getSource() == b_Interseccion){
-			addElementFromComboBox();
+			addElementFromComboBox(false);
 		}
 		if (e.getSource() == b_Eliminar){
 			removeElementFromComboBox();
 		}
 	}
 	
-	private void addElementFromComboBox(){
+	private void addElementFromComboBox(boolean esUnion){
 		
-		String s = (String) cB_elementos.getSelectedItem();
+		String s;
+		if (!lM_propiedades.isEmpty()){
+			if (esUnion) s = "O "; else s = "Y ";
+		} else {
+			s = "  ";
+		}
+		s += (String) cB_elementos.getSelectedItem();
+		 
 		lM_propiedades.addElement(s);
 		
 	}
 	
 	private void removeElementFromComboBox(){
 		int pos = l_propiedades.getSelectedIndex();
+				
 		if (pos >= 0){
-			lM_propiedades.remove(pos);
+			/* FIXME: Si es el primer elemento retirar el juntor
+			if (pos == 1){
+				String s = (String) lM_propiedades.get(pos);
+				s = s.substring(2);
+				lM_propiedades.set(pos, s);
+			}
+			*/
+			lM_propiedades.remove(pos);			
 		}
 	}
 
+	public ArrayList<String> getAtributosLista(){
+		ArrayList<String> l = new ArrayList<String>();
+		for (int i=0;i<lM_propiedades.getSize();i++){
+			String s = (String) lM_propiedades.getElementAt(i);
+			s.substring(2);
+		}
+		return l;
+	}
 }
