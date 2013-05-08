@@ -3,9 +3,11 @@ package interfaz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -31,10 +33,13 @@ public class FotoActual extends JPanel implements ActionListener{
 	private JTable tablaPropiedades;
 	private DefaultTableModel modeloPropiedades;
 	
+	private JPanel p_botonera;
 	private JButton b_New;
 	private JButton b_Add;
-	
+	private JButton b_Delete;
+		
 	private TablaIndividuos tab;
+
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -52,10 +57,16 @@ public class FotoActual extends JPanel implements ActionListener{
 		tablaPropiedades.setLayout(new BorderLayout());
 		this.add(tablaPropiedades,BorderLayout.CENTER);
 		
+		p_botonera = new JPanel(new GridLayout(3, 1));
 		b_New = new JButton("Nuevo Individuo");
 		b_New.addActionListener(this);
+		p_botonera.add(b_New);
 		b_Add = new JButton("Etiqueta Individuo");
 		b_Add.addActionListener(this);
+		p_botonera.add(b_Add);
+		b_Delete = new JButton("Eliminar seleccionados");
+		b_Delete.addActionListener(this);
+		p_botonera.add(b_Delete);
 	}
 
 	
@@ -82,7 +93,22 @@ public class FotoActual extends JPanel implements ActionListener{
 	private void actualizarTabla(){
 		
 		tab = new TablaIndividuos(controlador);
-		JTable t = new JTable(tab);
+		JTable t = new JTable(tab){
+			@Override
+            public Class getColumnClass(int column) {
+                switch (column) {
+                    case 0:
+                        return Boolean.class;
+                    case 1:
+                        return String.class;
+                    case 2:
+                        return String.class;
+                    default:
+                    	return String.class;
+                }
+            }
+		};
+		t.getColumnModel().getColumn(0).setPreferredWidth(50);
 		/*
 		 * Métodos interesantes a la hora de añadir el default table model a un JTable
 		 */
@@ -91,8 +117,7 @@ public class FotoActual extends JPanel implements ActionListener{
 		t.setFillsViewportHeight(true);
 		tablaPropiedades.removeAll();
 		
-		tablaPropiedades.add(BorderLayout.PAGE_START, b_New);
-		tablaPropiedades.add(BorderLayout.SOUTH, b_Add);
+		tablaPropiedades.add(BorderLayout.PAGE_START, p_botonera);
 		tablaPropiedades.add(BorderLayout.CENTER, scrollPane);
 
 		/*
@@ -152,6 +177,12 @@ public class FotoActual extends JPanel implements ActionListener{
 			tab.actualizarContenidoFoto(nomFoto);
 			//tab.ponerIndividuosPorContentidoDeFoto(nomFoto,pathFotoActual);
 			
+		}
+		if (e.getSource() == b_Delete){
+			ArrayList<String> selected = tab.getSelected();
+			for (String s: selected){
+				controlador.eliminarIndividuo(s);
+			}
 		}
 	}
 }
