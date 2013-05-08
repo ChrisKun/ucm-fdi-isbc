@@ -29,8 +29,6 @@ public class Controlador {
 		trees = new ArrayList<Component>();
 		trees.add(treeContenido);
 		trees.add(treeFoto);
-		// Creamos el hashMap que tiene la tabla de equivalencias entre nombres de la ontologia
-		// y nombres en lenguaje natural
 	}
 	
 	public void setVista(VentanaPrincipal vista){
@@ -54,14 +52,22 @@ public class Controlador {
 	}
 	
 	/**
-	 * Devuelve todas las propiedades de la ontologia
+	 * Devuelve todas las propiedades de la ontologia aplicables a Contenido y que no son "aparece" y "aparece_en"
 	 * @return ArrayList<String> con las propiedades
 	 */
 	public ArrayList<String> getPropiedades() {
 		ArrayList<String> lista = new ArrayList<String>();
-		Iterator<String> iterador = modelo.getOb().listSpecificProperties(modelo.getOb().getURI("Naturaleza"));
+		String aux, aux1;
+		Iterator<String> iterador, iterador1;
+		iterador = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"),true);
 		while (iterador.hasNext()) {
-			lista.add(iterador.next());
+			aux = iterador.next();
+			iterador1 = modelo.getOb().listProperties(aux);
+			while (iterador1.hasNext()) {
+				aux1 = iterador1.next();
+				if (!aux1.contains("aparece") && !aux1.contains("tiene"))
+					lista.add(modelo.getOb().getShortName(aux1));
+			}
 		}
 		return lista;
 	}
@@ -74,11 +80,11 @@ public class Controlador {
 		ArrayList<String> lista = new ArrayList<String>();
 		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Contenido"));
 		while (iterador.hasNext()) {
-			lista.add(iterador.next());
+			lista.add(modelo.getOb().getShortName(iterador.next()));
 		}
-		iterador = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), false);
+		iterador = modelo.getOb().listSubClasses(modelo.getOb().getURI("Contenido"), true);
 		while (iterador.hasNext()) {
-			lista.add(iterador.next());
+			lista.add(modelo.getOb().getShortName(iterador.next()));
 		}
 		return lista;
 	}
@@ -91,7 +97,7 @@ public class Controlador {
 		ArrayList<String> lista = new ArrayList<String>();
 		Iterator<String> iterador = modelo.getOb().listInstances(modelo.getOb().getURI("Juego"));
 		while (iterador.hasNext()) {
-			lista.add(iterador.next());
+			lista.add(modelo.getOb().getShortName(iterador.next()));
 		}
 		return lista;
 	}
@@ -407,7 +413,7 @@ public class Controlador {
 			}
 		}	
 		return numeroAñadido;
-	}		
+	}
 	
 	/******************** METODOS PRIVADOS ***************************/
 	/**
