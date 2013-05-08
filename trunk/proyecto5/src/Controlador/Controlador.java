@@ -11,6 +11,7 @@ import java.util.Iterator;
 import clasificador.Config;
 import clasificador.Main;
 import ontobridge.Ontologia;
+import recuperadorSemantico.Recuperador;
 import utilidades.Ficheros;
 
 public class Controlador {
@@ -20,6 +21,7 @@ public class Controlador {
 	ArbolPersonalizado treeContenido; //arbol con raiz: CONTENIDO
 	ArbolPersonalizado treeFoto; //arbol con raiz: Foto
 	ArrayList<Component> trees;
+	Recuperador recuperador;
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
@@ -29,6 +31,8 @@ public class Controlador {
 		trees = new ArrayList<Component>();
 		trees.add(treeContenido);
 		trees.add(treeFoto);
+		// Creamos el recuperador
+		recuperador = new Recuperador(modelo);
 	}
 	
 	public void setVista(VentanaPrincipal vista){
@@ -413,6 +417,16 @@ public class Controlador {
 			}
 		}	
 		return numeroAñadido;
+	}
+	
+	/**
+	 * Ejecuta una consulta en la ontologia
+	 * @param consulta - String con la consulta
+	 * @return Devuelve un ArrayList<String> con los individuos
+	 * @throws Exception si la consulta no funciona
+	 */
+	public ArrayList<String> ejecutaConsulta(String consulta) throws Exception {
+		return recuperador.consulta(consulta);
 	}
 	
 	/******************** METODOS PRIVADOS ***************************/
