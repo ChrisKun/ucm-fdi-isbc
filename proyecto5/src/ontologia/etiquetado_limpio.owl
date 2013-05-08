@@ -421,17 +421,18 @@
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Objeto">
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:someValuesFrom>
-          <owl:Class>
-            <owl:unionOf rdf:parseType="Collection">
-              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Daño"/>
-              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Sonido"/>
-            </owl:unionOf>
-          </owl:Class>
-        </owl:someValuesFrom>
+        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Daño"/>
         <owl:onProperty>
           <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#produce"/>
         </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#produce"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Sonido"/>
       </owl:Restriction>
     </rdfs:subClassOf>
     <owl:equivalentClass>
