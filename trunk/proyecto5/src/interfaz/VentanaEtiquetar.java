@@ -43,10 +43,13 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	private JPanel panelTipos;
 	private JPanel panelPreguntas;
 	
+	String nomFoto;
+	TablaIndividuos tab;
+	
 	private ArrayList<JComboBox> comboBoxRespuestas;
 	private int cont;
 	
-	public VentanaEtiquetar(Controlador controlador) {
+	public VentanaEtiquetar(Controlador controlador, String nomFoto, TablaIndividuos tab) {
 		this.controlador = controlador;
 		this.setLayout(new CardLayout(10, 10));
 		
@@ -65,6 +68,9 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		this.add(panelPreguntas, s_Preguntas);
 		
 		this.setPreferredSize(new Dimension(550,400));
+		
+		this.nomFoto = nomFoto;
+		this.tab = tab;
 	}
 	
 	public void cambiarPanel(String nuevoPanel){
@@ -116,9 +122,16 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		p.add(new JLabel(string),BorderLayout.WEST);
 		if (nombre)
 			p.add(new TextField(50),BorderLayout.EAST);
-		else{
+		else if (string.equals(Config.apareceEn)){
+			Vector<String> v = new Vector<String>();
+			v.add(nomFoto); //FIXME Chapuza xD
+			JComboBox j = new JComboBox(v);
+			p.add(j);
+			comboBoxRespuestas.add(j);
+		}
+		else {
 			individuos.add(""); //para que se pueda dejar en blanco
-			JComboBox j = new JComboBox(individuos); //FIXME (hay que guardar estos punteros para recuperar la información seleccionada)
+			JComboBox j = new JComboBox(individuos); 
 			p.add(j);
 			// agregamos ahora el combobox a la lista para mantener el puntero
 			comboBoxRespuestas.add(j);
@@ -166,7 +179,8 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		}
 		if (e.getSource() == b_Send){
 			//JOptionPane.showMessageDialog(this, "Habilitame un metodo para pasarte todo esto");
-			controlador.crearIndividuo(controlador.getTiposDeContenido().get(cont), recopilarRespuestas().get(0),recopilarRespuestas());
+			controlador.crearIndividuo(cont, recopilarRespuestas().get(0),recopilarRespuestas());
+			tab.actualizarContenidoFoto(nomFoto);
 		}
 	}
 }

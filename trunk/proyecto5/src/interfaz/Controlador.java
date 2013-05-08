@@ -296,22 +296,23 @@ public class Controlador {
 	 * FIXME Hay que rehacerlo
 	 * Permite crear un individuo de una clase indicada y rellena sus
 	 * propiedades. Tambien podrian ser fotos
-	 * @param clasePertenencia - clase a la que pertenece la instancia a crear
+	 * @param cont - clase a la que pertenece la instancia a crear
 	 * @param valoresPropiedades - valores de las propiedades que tiene que tener la instancia
 	 */
-	public void crearIndividuo(String clasePertenencia, String nombreInstancia, ArrayList<String> valoresPropiedades){
+	public void crearIndividuo(int cont, String nombreInstancia, ArrayList<String> valoresPropiedades){
 		// 1. Sacamos el nombre completo de la clase de pertenencia
-		String uriClase = modelo.getOb().getURI(clasePertenencia);
+		String uriClase = modelo.getOb().getURI(getTiposDeContenido().get(cont));
 		// 2. Comprobamos que existe
 		if (!modelo.getOb().existsClass(uriClase))
 			return;
 		// 3. Creamos la instancia de esa clase
 		modelo.getOb().createInstance(uriClase,nombreInstancia);
-		ArrayList<String> propiedades = getPropiedadesIndividuo(nombreInstancia);
+		ArrayList<String> propiedades = getPreguntasARellenar(cont);
 		// 4. Ahora tenemos que rellenar las propiedades de la instancia
 		// Para ello recuperamos los punteros a propiedades y valores
 		for (int i = 1; i < valoresPropiedades.size(); i++){
-			modelo.getOb().createOntProperty(nombreInstancia, propiedades.get(i), valoresPropiedades.get(i));
+			if (!valoresPropiedades.get(i).equals(""))
+				modelo.getOb().createOntProperty(nombreInstancia, propiedades.get(i-1), valoresPropiedades.get(i));
 		}
 		
 		/*List<String> valores = new ArrayList();
