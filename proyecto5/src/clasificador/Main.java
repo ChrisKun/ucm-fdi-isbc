@@ -1,8 +1,11 @@
 package clasificador;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import ontobridge.Ontologia;
+import utilidades.Ficheros;
 import interfaz.Controlador;
 import interfaz.VentanaPrincipal;
 
@@ -40,5 +43,12 @@ public class Main {
 				"Comprobando las fotos", 
 				JOptionPane.NO_OPTION
 				);
+		Ficheros f = new Ficheros();
+		ArrayList<String> lista = f.ficheros(gamesPath);
+		for (String s: lista){
+			System.out.println(s);
+		}
+		
 	}
+	
 }
