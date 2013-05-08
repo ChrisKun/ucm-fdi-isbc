@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 
 import ontobridge.Ontologia;
 
@@ -14,14 +16,17 @@ public class Controlador {
 	VentanaPrincipal vista;
 	ArbolPersonalizado treeContenido; //arbol con raiz: CONTENIDO
 	ArbolPersonalizado treeFoto; //arbol con raiz: Foto
-	ArbolPersonalizado tree; // Arbol ACTIVO
+	ArrayList<Component> trees;
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
 		treeContenido = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Contenido.toString());
 		treeFoto = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Foto.toString());
 		// Incialmente activamos el arbol de contenido
-		tree = treeContenido;
+		
+		trees = new ArrayList<Component>();
+		trees.add(treeContenido);
+		trees.add(treeFoto);
 	}
 	
 	public void setVista(VentanaPrincipal vista){
@@ -32,21 +37,10 @@ public class Controlador {
 	 * Devuelve el árbol de Ontobridge ACTIVO correctamente configurado.
 	 * @return
 	 */
-	public Component getTree(){
-		return tree;
+	public ArrayList<Component> getTrees(){
+		return trees;
 	}
-	
-	/**
-	 * Elige el arbol de Ontobridge activo
-	 * @return
-	 */
-	public void setTree(Config.SeleccionArbol seleccion){
-		if (seleccion.equals(Config.SeleccionArbol.Contenido))			
-			tree = treeContenido;
-		else
-			tree = treeFoto;
-	}
-	
+		
 	/**
 	 * FIXME Da un nullPointer??
 	 * Permite asociar una instancia de una foto a una imagen poniendo su ruta
@@ -330,7 +324,7 @@ public class Controlador {
 	 * ser un String pero hay que hablar de que devolvemos aquí.
 	 * @return la instancia actual seleccionada
 	 */
-	public String getInstanciaActualSeleccionada(){
+	public String getInstanciaActualSeleccionada(ArbolPersonalizado tree){
 		String s;
 		try{
 			s = modelo.getOb().getShortName(tree.getSelectedInstance());

@@ -46,6 +46,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	
 	private JPanel panelConsulta;
 	private PanelExploracion panelExploracion;
+	private JPanel panelEdicion;
 	
 	private JPanel panelBotones;
 	private JButton botonAtras;
