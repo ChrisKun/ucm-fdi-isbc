@@ -475,8 +475,8 @@ public class Controlador {
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Controlador r = new Controlador(ontologia);
 		ArrayList<String> lista = new ArrayList<String>();
-		lista.add("D:\\workspace\\ucm-fdi-isbc\\proyecto5\\fotos\\starfox\\images.jpg");
-		lista.add("D:\\workspace\\ucm-fdi-isbc\\proyecto5\\fotos\\starfox\\sfa108.jpg");
+		lista.add("\\fotos\\starfox\\images.jpg");
+		lista.add("\\fotos\\starfox\\sfa108.jpg");
 		r.añadeFotosModelo(lista);	
 		r.guardarOntologia();
 	}

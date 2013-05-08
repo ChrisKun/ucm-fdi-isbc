@@ -8,7 +8,7 @@ import ontobridge.Ontologia;
 
 /**
  * Las consultas admiten este formato:
- * FOTOS DE: ((propiedad*)? ((clase|instancia)(conector)...(conector)(clase|instancia)))|(clase|instancia)(en clase-juego)?
+ * FOTOS DE: ((propiedad*)? ((((clase|instancia)(conector)...(conector)(clase|instancia)))|(clase|instancia))?(en clase-juego)?
  */
 public class Recuperador {
 	// Lista de propiedades pedidas
@@ -232,6 +232,9 @@ public class Recuperador {
 					// Si el individuo estaba en la lista y la foto no esta añadida, la añadimos
 					if (lista.contains(aux1) && !fotografias.contains(aux)) {
 						fotografias.add(aux);
+					// Si no habia propiedades, entonces el usuario a podido poner algo del estilo "fotos de Juego"
+					} else if (propiedades.size() == 0) {
+						fotografias.add(aux);
 					}
 				}
 				
@@ -294,7 +297,7 @@ public class Recuperador {
 	public ArrayList<String> uso() {
 		ArrayList<String> lista = new ArrayList<String>();
 		lista.add("El Recuperador acepta cadenas acorde a la siguiente expresion regular:");
-		lista.add("((propiedad*)? ((clase|instancia)(conector)...(conector)(clase|instancia)))|(clase|instancia)(en Juego)?");
+		lista.add("((propiedad*)? (((clase|instancia)(conector)...(conector)(clase|instancia)))|(clase|instancia))?(en Juego)?");
 		lista.add("Es necesario al menos especificar un individuo o clase");
 		lista.add("La aplicacion contempla una serie de transformaciones predefinidas para hacer mas cómodo su uso al usuario: ");
 		lista.add("(amigos|amigo) de");
@@ -376,7 +379,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("armas de Distancia");	
+		r.consulta("");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 	}
