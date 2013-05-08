@@ -19,7 +19,7 @@ public class TablaIndividuos extends DefaultTableModel {
 	Controlador c;
 	
 	public TablaIndividuos(Controlador c){
-		modelo = c.modelo;
+		modelo = c.getModelo();
 		String[] s = {"Sel","Componente", "Individuo"};
 		this.setColumnIdentifiers(s);
 		this.c = c;
@@ -42,8 +42,6 @@ public class TablaIndividuos extends DefaultTableModel {
 	 * del inviduo
 	 */
 	public void ponerIndividuosPorContentidoDeFoto(String foto, String rutaImagen){
-		//Asociamos la ruta de la imagen a una instancia
-		c.setRutaFoto(rutaImagen, foto); //FIXME
 		Vector v = new Vector();
 		String uriAparece = modelo.getOb().getURI(Config.aparece);
 		ArrayList<String> tiposContenido = c.getTiposDeContenido();
