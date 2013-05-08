@@ -470,7 +470,7 @@ public class Controlador {
 	
 	public ArrayList<String> getPropiedades() {
 		ArrayList<String> lista = new ArrayList<String>();
-		Iterator<String> iterador = modelo.getOb().listProperties(modelo.getOb().getURI("Contenido"));
+		Iterator<String> iterador = modelo.getOb().listSpecificProperties(modelo.getOb().getURI("Naturaleza"));
 		while (iterador.hasNext()) {
 			lista.add(iterador.next());
 		}
@@ -505,6 +505,7 @@ public class Controlador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Controlador r = new Controlador(ontologia);
+		r.getPropiedades();
 		ArrayList<String> lista = new ArrayList<String>();
 		lista.add("\\fotos\\starfox\\images.jpg");
 		lista.add("\\fotos\\starfox\\sfa108.jpg");
