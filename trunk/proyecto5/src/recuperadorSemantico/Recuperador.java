@@ -257,6 +257,17 @@ public class Recuperador {
 		return fotografias;
 	}
 	
+	
+	private String transformaConsulta(String consulta) {
+		consulta = consulta.replaceFirst("(amigos|amigo) de", "amigo_de");
+		consulta = consulta.replaceFirst("(enemigos|enemigo) de", "enemigo_de");
+		consulta = consulta.replaceFirst("(objetos usados|objeto usado) por", "usa");
+		consulta = consulta.replaceFirst("(personajes que usan|personaje que usa)", "es_usado");
+		consulta = consulta.replaceFirst("personajes buenos", "comportamiento A_Bueno");
+		consulta = consulta.replaceFirst("personajes (malvados|malos)", "comportamiento A_Malo");
+		return consulta;
+	}
+	
 	/**
 	 * Funcion de consulta de cadenas
 	 * @param consulta 		- String pasado como consulta 
@@ -270,6 +281,8 @@ public class Recuperador {
 		juego = null;
 		// Separamos las comas
 		consulta = consulta.replaceAll("\\, ", " \\, ");
+		consulta = transformaConsulta(consulta);
+
 		String argumentos[] = consulta.split(" ");
 		// Hacemos el analisis semantico
 		analisisSemantico(argumentos);
@@ -283,13 +296,13 @@ public class Recuperador {
 		// Devolvemos los resultados
 		return resultados;
 	}
-
+	
 	public static void main(String[] args) throws Exception{
 		String pathOntologia = "file:src/ontologia/etiquetado.owl";
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("amigo_de Link o Mario");	
+		r.consulta("amigos de Link o Mario");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
+		}
 	}
-}

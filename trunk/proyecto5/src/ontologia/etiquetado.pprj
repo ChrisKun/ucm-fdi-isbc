@@ -1,4 +1,4 @@
-; Wed May 08 01:40:31 CEST 2013
+; Wed May 08 02:12:57 CEST 2013
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[etiquetado_ProjectKB_Class61]
-		[etiquetado_ProjectKB_Class62]
-		[etiquetado_ProjectKB_Class63]
-		[etiquetado_ProjectKB_Class64]
-		[etiquetado_ProjectKB_Class65]))
+		[etiquetado_ProjectKB_Class147]
+		[etiquetado_ProjectKB_Class148]
+		[etiquetado_ProjectKB_Class149]
+		[etiquetado_ProjectKB_Class150]
+		[etiquetado_ProjectKB_Class151]))
 
 ([CLSES_TAB] of  Widget
 
@@ -59,11 +59,36 @@
 ([etiquetado_ProjectKB_Class14] of  Property_List
 )
 
+([etiquetado_ProjectKB_Class147] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([etiquetado_ProjectKB_Class148] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([etiquetado_ProjectKB_Class149] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
 ([etiquetado_ProjectKB_Class15] of  Widget
 
 	(is_hidden TRUE)
 	(property_list [etiquetado_ProjectKB_Class16])
 	(widget_class_name "edu.stanford.smi.RemoteKBTab.WordNetTab"))
+
+([etiquetado_ProjectKB_Class150] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([etiquetado_ProjectKB_Class151] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
 
 ([etiquetado_ProjectKB_Class16] of  Property_List
 )
@@ -286,31 +311,6 @@
 
 ([etiquetado_ProjectKB_Class60] of  Property_List
 )
-
-([etiquetado_ProjectKB_Class61] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([etiquetado_ProjectKB_Class62] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([etiquetado_ProjectKB_Class63] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([etiquetado_ProjectKB_Class64] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([etiquetado_ProjectKB_Class65] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
 
 ([etiquetado_ProjectKB_Class7] of  Widget
 
