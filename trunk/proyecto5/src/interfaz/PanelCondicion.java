@@ -17,9 +17,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import Controlador.Controlador;
 
@@ -33,8 +36,8 @@ public class PanelCondicion extends JPanel implements ActionListener{
 	private JButton b_Interseccion;
 	private JButton b_Eliminar;
 		
-	private JList l_propiedades;
-	private DefaultListModel lM_propiedades;
+	private DefaultTableModel tM_propiedades;
+	private JTable t_propiedades;
 	
 	public PanelCondicion(Controlador controlador, String titulo, ArrayList<String> elementos){
 		super();
@@ -70,7 +73,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		b_Union = new JButton("Union");
 		b_Interseccion = new JButton("Interseccion");
 		b_Eliminar = new JButton("Eliminar");
-		
+				
 		b_Union.addActionListener(this);
 		b_Interseccion.addActionListener(this);
 		b_Eliminar.addActionListener(this);
@@ -81,11 +84,19 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		
 		p.add(panelBotones);
 		
-		lM_propiedades = new DefaultListModel();
-		l_propiedades = new JList(lM_propiedades);
-		l_propiedades.setPreferredSize(new Dimension(300, 140));
+		tM_propiedades = new DefaultTableModel();
 		
-		p.add(l_propiedades);
+		
+		tM_propiedades = new DefaultTableModel();
+		tM_propiedades.addColumn("---");
+		tM_propiedades.addColumn(titulo);
+		t_propiedades = new JTable(tM_propiedades);
+		t_propiedades.getColumn("---").setMaxWidth(10);
+		//t_propiedades.setPreferredSize(new Dimension(300,140));
+		
+		JScrollPane sP = new JScrollPane(t_propiedades);
+		sP.setPreferredSize(new Dimension(300,140));
+		p.add(sP);
 		
 		p.setBorder(title);
 		return p;
@@ -106,38 +117,36 @@ public class PanelCondicion extends JPanel implements ActionListener{
 	
 	private void addElementFromComboBox(boolean esUnion){
 		
-		String s;
-		if (!lM_propiedades.isEmpty()){
-			if (esUnion) s = "O "; else s = "Y ";
+		String[] s = new String[2];
+		
+		if (tM_propiedades.getRowCount() != 0){
+			if (esUnion) s[0] = "O"; else s[0] = "Y";
 		} else {
-			s = "  ";
+			s[0] = "  ";
 		}
-		s += (String) cB_elementos.getSelectedItem();
+		s[1] = (String) cB_elementos.getSelectedItem();
 		 
-		lM_propiedades.addElement(s);
+		tM_propiedades.addRow(s);
 		
 	}
 	
 	private void removeElementFromComboBox(){
-		int pos = l_propiedades.getSelectedIndex();
+		int pos = t_propiedades.getSelectedRow();
 				
 		if (pos >= 0){
-			/* FIXME: Si es el primer elemento retirar el juntor
-			if (pos == 1){
-				String s = (String) lM_propiedades.get(pos);
-				s = s.substring(2);
-				lM_propiedades.set(pos, s);
+			// FIXME: Si es el primer elemento retirar el juntor
+			if (pos == 0){
+				tM_propiedades.setValueAt("", pos, 0);
 			}
-			*/
-			lM_propiedades.remove(pos);			
+			tM_propiedades.removeRow(pos);
 		}
 	}
 
 	public ArrayList<String> getAtributosLista(){
 		ArrayList<String> l = new ArrayList<String>();
-		for (int i=0;i<lM_propiedades.getSize();i++){
-			String s = (String) lM_propiedades.getElementAt(i);
-			s.substring(2);
+		for (int i=0;i<tM_propiedades.getRowCount();i++){
+			String s = (String) tM_propiedades.getValueAt(i, 1);
+			l.add(s);
 		}
 		return l;
 	}
