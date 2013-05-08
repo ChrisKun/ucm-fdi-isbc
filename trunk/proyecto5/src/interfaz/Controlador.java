@@ -449,7 +449,7 @@ public class Controlador {
 	 * @param urlFotos - Recibe unas url's y añade al modelo los nombres de las url's
 	 * @return Entero con el numero de fotos añadidas
 	 */
-	public int añadeFotosModelo(ArrayList<String> urlFotos) {
+	public int addFotosModelo(ArrayList<String> urlFotos) {
 		int numeroAñadido = 0;
 		String nombre;
 		for (String urlFoto: urlFotos) {
@@ -508,7 +508,7 @@ public class Controlador {
 		Controlador r = new Controlador(ontologia);
 		Ficheros f = new Ficheros();
 		ArrayList<String> lista = f.ficheros(Main.gamesPath);
-		r.añadeFotosModelo(lista);
+		r.addFotosModelo(lista);
 		/*
 		ArrayList<String> lista = new ArrayList<String>();
 		lista.add("\\fotos\\starfox\\images.jpg");
