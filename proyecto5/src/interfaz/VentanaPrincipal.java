@@ -44,7 +44,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	
 	private JTabbedPane panelIntercambiable;
 	
-	private JPanel panelConsulta;
+	private PanelConsulta panelConsulta;
 	private PanelExploracion panelExploracion;
 	private VentanaEtiquetar panelEdicion;
 	
@@ -95,7 +95,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		
 		panelIntercambiable = new JTabbedPane();
 
-		panelConsulta = new JPanel();
+		panelConsulta = new PanelConsulta(controlador);
 		panelIntercambiable.add("Consulta",panelConsulta);
 		
 		panelExploracion = new PanelExploracion(controlador);
@@ -138,6 +138,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		this.validate();
 	}
 
+	public void activaPanelEdicion(String pathFile){
+		panelIntercambiable.setSelectedIndex(2);
+		panelEdicion.setFotoActual(pathFile);
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

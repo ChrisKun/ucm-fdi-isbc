@@ -80,7 +80,6 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		
 		//this.nomFoto = nomFoto;
 		setFotoActual("");
-		this.tab = tab;
 	}
 	
 	public void cambiarPanel(String nuevoPanel){
