@@ -106,15 +106,21 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 	
 	private void actualizarPanelTipo(){
 		
+		JPanel sobrePanel = new JPanel();
+		sobrePanel.setLayout(new GridLayout(0,3));
+		
 		JPanel p = new JPanel();
-		FlowLayout f = new FlowLayout();
-		f.setAlignment(FlowLayout.CENTER);
+		GridLayout f = new GridLayout(0,1);
+		f.setVgap(50);
+		f.setHgap(200);
+		//f.setAlignment(FlowLayout.CENTER);
 		p.setLayout(f);
 		
 		ArrayList<String> list_values = controlador.getTiposDeContenido();
 		
 		for (final String s: list_values){
 			JButton b = new JButton(s);
+			b.setSize(250, 100);
 			b.setFont(new Font(b.getFont().getFontName(), Font.BOLD, 22));
 			b.setBorder(BorderFactory.createBevelBorder(0));
 			b.addActionListener(new ActionListener(){
@@ -127,7 +133,9 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 			});
 			p.add(b);
 		}
-		panelTipos.add(BorderLayout.CENTER,p);
+		sobrePanel.add(new JLabel());
+		sobrePanel.add(p);
+		panelTipos.add(BorderLayout.CENTER,sobrePanel);
 	}
 	
 	private void actualizarPanelPreguntas(int contenido){
