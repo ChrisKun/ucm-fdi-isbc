@@ -324,10 +324,10 @@ public class Controlador {
 	 * ser un String pero hay que hablar de que devolvemos aquí.
 	 * @return la instancia actual seleccionada
 	 */
-	public String getInstanciaActualSeleccionada(ArbolPersonalizado tree){
+	public String getInstanciaActualSeleccionada(){
 		String s;
 		try{
-			s = modelo.getOb().getShortName(tree.getSelectedInstance());
+			s = modelo.getOb().getShortName(treeContenido.getSelectedInstance());
 		}catch(NullPointerException e){
 			s = "--???--";
 		}		
