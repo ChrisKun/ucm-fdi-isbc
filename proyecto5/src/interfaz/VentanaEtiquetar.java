@@ -57,7 +57,7 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 	private int cont;
 	private TextField fieldNombreIndividuo;
 	
-	public VentanaEtiquetar(Controlador controlador, String nomFoto, TablaIndividuos tab) {
+	public VentanaEtiquetar(Controlador controlador) {
 		this.controlador = controlador;
 		this.setLayout(new CardLayout(10, 10));
 		
@@ -77,7 +77,8 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		
 		this.setPreferredSize(new Dimension(550,400));
 		
-		this.nomFoto = nomFoto;
+		//this.nomFoto = nomFoto;
+		setFotoActual("");
 		this.tab = tab;
 	}
 	
@@ -222,6 +223,12 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 		return respuestas;
 	}
 	
+	public void setFotoActual(String nomFoto){
+		this.nomFoto = nomFoto;
+		cambiarPanel(s_Tipos);
+		actualizarPanelTipo();
+	}
+	
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		JList list = (JList) e.getSource();
@@ -242,7 +249,6 @@ public class VentanaEtiquetar extends JPanel implements ListSelectionListener, A
 			//JOptionPane.showMessageDialog(this, "Habilitame un metodo para pasarte todo esto");
 			//FIXME Actualizar a la nueva forma
 			controlador.crearIndividuo(cont, recopilarRespuestas().get(0),recopilarRespuestas());
-			tab.actualizarContenidoFoto(nomFoto);
 		}
 	}
 }
