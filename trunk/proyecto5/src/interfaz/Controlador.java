@@ -169,7 +169,6 @@ public class Controlador {
 	}
 	
 	/**
-	 * FIXME Quiza venga bien filtrar esto...
 	 * Devuelve las propiedades que puede tener un individuo
 	 * @param individuo
 	 * @return
@@ -214,18 +213,6 @@ public class Controlador {
 	public boolean eliminarIndividuo(String individuo){
 		String uriIndividuo = modelo.getOb().getURI(individuo);
 		return true;
-	}
-	
-	/**
-	 * FIXME Falla y no se xq
-	 * Devuelve un String con la ruta de la instancia de la foto actual
-	 * @param foto
-	 * @return
-	 */
-	public String getRutaInstanciaActual(String instanciaFoto){
-		//Iterator<String> it = modelo.getOb().listPropertyValue(modelo.getOb().getURI(instanciaFoto), Config.urlfoto);
-		//return it.next();
-		return "FIXME";
 	}
 	
 	/**
@@ -376,32 +363,6 @@ public class Controlador {
 		return s;
 	}
 
-	/**
-	 * XXX Sin testear
-	 * Devuelve la ruta de las fotos en las que aparece un individuo
-	 * @param individuo
-	 * @return lista de fotos en las que aparece
-	 */
-	public ArrayList<String> getFotosAparece(String individuo){
-		ArrayList<String> listaFotos = new ArrayList<String>();
-		//Primero vemos todas las clases a las que pertenece un individuo
-		List<String> properties = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		modelo.getOb().listInstancePropertiesValues(individuo, properties, values);
-		/* Ahora buscamos la propiedad de apareceEn para saber en qué fotos aparece y
-		 * lo guardamos en un arrayList que es lo que devolvemos
-		 */
-		for (int i = 0; i < properties.size(); i++){
-			String str = modelo.getOb().getShortName(properties.get(i));
-			// Ahora comprobamos si es la propiedad que nos interesa
-			if (str.equals(Config.apareceEn)){
-				listaFotos.add(modelo.getOb().getShortName(values.get(i)));
-			}
-		}
-		//En el caso de que este, lo añadimos al array que devolvemos
-		return listaFotos;
-	}
-
 	/** 
 	 * Funcion de guardado de la ontologia
 	 */
@@ -414,7 +375,6 @@ public class Controlador {
 	 * @param string 
 	 */
 	public void cargarOntologia(String string) {
-		// TODO Auto-generated method stub
 		modelo = new Ontologia(Main.urlOntologia, Main.pathOntologia);
 	}
 	
@@ -431,9 +391,28 @@ public class Controlador {
 		return index;
 	}
 	
-	// TODO: Eliminar este comentario, es solo para que Raul sepa donde he tocado
-	/******* PARTE DE ALVARO **************/
-
+	/**
+	 * Añade las fotos al modelo 
+	 * @param urlFotos - Recibe unas url's y añade al modelo los nombres de las url's
+	 * @return Entero con el numero de fotos añadidas
+	 */
+	public int addFotosModelo(ArrayList<String> urlFotos) {
+		int numeroAñadido = 0;
+		String nombre;
+		for (String urlFoto: urlFotos) {
+			nombre = nombreFoto(urlFoto);
+			if (!modelo.getOb().existsInstance(modelo.getOb().getURI(nombre))) {
+				if (tieneFormatoCorrecto(urlFoto)) {
+					modelo.getOb().createInstance("Foto", nombreFoto(nombre));
+					modelo.getOb().createDataTypeProperty(nombre, modelo.getOb().getURI("urlfoto"), urlFoto);					
+					numeroAñadido++;
+				}
+			}
+		}	
+		return numeroAñadido;
+	}		
+	
+	/******************** METODOS PRIVADOS ***************************/
 	/**
 	 * Extrae el nombre de una foto de una url
 	 * @param urlFoto - url de la foto
@@ -457,29 +436,6 @@ public class Controlador {
 		else 
 			return false;
 	}	
-	
-	/**
-	 * Añade las fotos al modelo 
-	 * @param urlFotos - Recibe unas url's y añade al modelo los nombres de las url's
-	 * @return Entero con el numero de fotos añadidas
-	 */
-	public int addFotosModelo(ArrayList<String> urlFotos) {
-		int numeroAñadido = 0;
-		String nombre;
-		for (String urlFoto: urlFotos) {
-			nombre = nombreFoto(urlFoto);
-			if (!modelo.getOb().existsInstance(modelo.getOb().getURI(nombre))) {
-				if (tieneFormatoCorrecto(urlFoto)) {
-					modelo.getOb().createInstance("Foto", nombreFoto(nombre));
-					modelo.getOb().createDataTypeProperty(nombre, modelo.getOb().getURI("urlfoto"), urlFoto);					
-					numeroAñadido++;
-				}
-			}
-		}	
-		return numeroAñadido;
-	}		
-	
-
 	
 	// TODO: Main para pruebas, eliminar cuando no se necesite
 	public static void main(String[] args) throws Exception{
