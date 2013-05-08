@@ -219,11 +219,7 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 			p.add(l);
 		}		
 		
-		String str = controlador.hashFiltrado.get(string);
-		if (str == null)
-			str = string;
-		
-		TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), str);
+		TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), string);
 		title.setTitleJustification(TitledBorder.CENTER);
 		p.setBorder(title);
 		return p;
