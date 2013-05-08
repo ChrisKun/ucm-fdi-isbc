@@ -16,7 +16,7 @@ public class TablaIndividuos extends DefaultTableModel {
 	
 	public TablaIndividuos(Controlador c){
 		modelo = c.modelo;
-		String[] s = {"Componente", "Individuo"};
+		String[] s = {"Sel","Componente", "Individuo"};
 		this.setColumnIdentifiers(s);
 		this.c = c;
 	}
@@ -26,7 +26,7 @@ public class TablaIndividuos extends DefaultTableModel {
 	 * @param foto
 	 */
 	public void actualizarContenidoFoto(String foto){
-		String[] s = {"Componente", "Individuo"};
+		String[] s = {"","Componente", "Individuo"};
 		this.setNumRows(0);
 		this.setColumnIdentifiers(s);
 		this.ponerIndividuosPorContentidoDeFoto(foto, null);
@@ -40,12 +40,12 @@ public class TablaIndividuos extends DefaultTableModel {
 	public void ponerIndividuosPorContentidoDeFoto(String foto, String rutaImagen){
 		//Asociamos la ruta de la imagen a una instancia
 		c.setRutaFoto(rutaImagen, foto); //FIXME
-		Vector <String> v = new Vector<String>();
+		Vector v = new Vector();
 		String uriAparece = modelo.getOb().getURI(Config.aparece);
 		ArrayList<String> tiposContenido = c.getTiposDeContenido();
 		
 		String foto2 = modelo.getOb().getURI(foto);
-		String[] s = {"Componente", "Individuo"};
+		String[] s = {" ","Componente", "Individuo"};
 		this.setColumnIdentifiers(s);
 		//Ver qué tipo de foto es para saber que propiedades podemos pedirle...
 		if (!modelo.getOb().existsInstance(foto2))
@@ -57,11 +57,13 @@ public class TablaIndividuos extends DefaultTableModel {
 		
 		while (it.hasNext()){
 			str = it.next();
-			v = new Vector<String>();
+			v = new Vector();
 			
 				for (int j = 0; j < tiposContenido.size() ; j++){
 					//Comprobar si es distinto de personaje
 					if (modelo.getOb().isInstanceOf(str,modelo.getOb().getURI(tiposContenido.get(j)))){
+						//
+						v.add(false);
 						v.add(tiposContenido.get(j));
 						v.add(modelo.getOb().getShortName(str));
 						//Lo añadimos como nueva fila
@@ -75,8 +77,18 @@ public class TablaIndividuos extends DefaultTableModel {
 	 * impide que se puedan modificar las celdas
 	 */
 	 public boolean isCellEditable (int row, int column){
+		 if (column == 0) return true;
 		 return false;
 	 }
 
+	 public ArrayList<String> getSelected(){
+		 ArrayList<String> selected = new ArrayList<String>();
+		 for (int i=0;i<getRowCount();i++){
+			 if ((Boolean) getValueAt(i, 0)){
+				 selected.add((String) getValueAt(i, 2));
+			 }
+		 }
+		 return selected;
+	 }
 
 }
