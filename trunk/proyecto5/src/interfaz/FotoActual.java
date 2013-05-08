@@ -173,8 +173,9 @@ public class FotoActual extends JPanel implements ActionListener{
 		}
 		if (e.getSource() == b_Add){
 			//JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
-			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
-			JOptionPane.showMessageDialog(this,controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto));
+			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1);
+			if (!controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto))
+				JOptionPane.showMessageDialog(this,"Error: No se ha podido realizar la operación");
 			//Añadir nueva fila a la tabla (solo si existe)
 			tab.actualizarContenidoFoto(nomFoto);
 			//tab.ponerIndividuosPorContentidoDeFoto(nomFoto,pathFotoActual);
@@ -185,6 +186,8 @@ public class FotoActual extends JPanel implements ActionListener{
 			for (String s: selected){
 				controlador.eliminarIndividuo(s);
 			}
+			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1);
+			tab.actualizarContenidoFoto(nomFoto);
 		}
 	}
 }
