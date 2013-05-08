@@ -86,11 +86,15 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		
 		tM_propiedades = new DefaultTableModel();
 		
-		
 		tM_propiedades = new DefaultTableModel();
 		tM_propiedades.addColumn("---");
 		tM_propiedades.addColumn(titulo);
-		t_propiedades = new JTable(tM_propiedades);
+		t_propiedades = new JTable(tM_propiedades){
+			 public boolean isCellEditable(int row, int column){  
+				    return false;  
+			 }
+		};
+		
 		t_propiedades.getColumn("---").setMaxWidth(10);
 		
 		JScrollPane sP = new JScrollPane(t_propiedades);
@@ -118,14 +122,15 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		
 		String[] s = new String[2];
 		
-		if (tM_propiedades.getRowCount() != 0){
-			if (esUnion) s[0] = "O"; else s[0] = "Y";
-		} else {
-			s[0] = "  ";
+		int rowNumber = cB_elementos.getItemCount(); 
+		if (rowNumber != 0){
+			if (tM_propiedades.getRowCount() != 0){
+				if (esUnion) s[0] = "O"; else s[0] = "Y";
+			}
+			s[1] = (String) cB_elementos.getSelectedItem();
+			cB_elementos.removeItem(s[1]);
+			tM_propiedades.addRow(s);
 		}
-		s[1] = (String) cB_elementos.getSelectedItem();
-		 
-		tM_propiedades.addRow(s);
 		
 	}
 	
@@ -137,6 +142,8 @@ public class PanelCondicion extends JPanel implements ActionListener{
 			if (pos == 0){
 				tM_propiedades.setValueAt("", pos, 0);
 			}
+			String s = (String) tM_propiedades.getValueAt(pos, 1);
+			cB_elementos.addItem(s);
 			tM_propiedades.removeRow(pos);
 		}
 	}

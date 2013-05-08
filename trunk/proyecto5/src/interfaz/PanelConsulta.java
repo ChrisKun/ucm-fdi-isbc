@@ -54,8 +54,10 @@ public class PanelConsulta extends JPanel implements ActionListener{
 		panelDerecha.add(modelos);
 	}
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == b_consulta){
+			
+		}
 		
 	}
 }
