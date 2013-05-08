@@ -1,5 +1,6 @@
 package interfaz;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -7,9 +8,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Random;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 import clasificador.Main;
 
@@ -56,6 +59,12 @@ public class BotonImagen extends JButton {
 		foto = new ImageIcon( newimg );
 		
 		this.setIcon(foto);
+		
+		Border compound = BorderFactory.createCompoundBorder(
+				BorderFactory.createRaisedBevelBorder(), 
+				BorderFactory.createLoweredBevelBorder());
+		this.setBorder(compound);
+	
 
 		this.addActionListener(new ActionListener() {
 			
