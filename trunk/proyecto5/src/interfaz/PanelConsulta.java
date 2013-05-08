@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -22,7 +25,9 @@ public class PanelConsulta extends JPanel implements ActionListener{
 	private JLabel l_fotosDe;
 	private JTextField tF_consulta;
 	private JButton b_consulta;
-	private JList modelos;
+	private JList l_modelos;
+	private DefaultListModel lM_modelos;
+	
 	public PanelConsulta(Controlador controlador){
 		super();
 		this.controlador = controlador;
@@ -45,18 +50,35 @@ public class PanelConsulta extends JPanel implements ActionListener{
 		l_fotosDe = new JLabel("FOTOS DE: ");
 		tF_consulta = new JTextField(30);
 		b_consulta = new JButton("Consulta");
+		b_consulta.addActionListener(this);
 		
 		p_consultaTexto.add(l_fotosDe);
 		p_consultaTexto.add(tF_consulta);
 		p_consultaTexto.add(b_consulta);
-				
-		modelos = new JList(/*controlador.getModelos()*/);
-		panelDerecha.add(modelos);
+		
+		lM_modelos = new DefaultListModel();
+		l_modelos = new JList(lM_modelos);
+		panelDerecha.add(l_modelos);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == b_consulta){
-			
+			String s_consulta = tF_consulta.getText();
+			try {
+				ArrayList<String> res = controlador.ejecutaConsulta(s_consulta);
+				lM_modelos.removeAllElements();
+				for (String s: res){  
+					lM_modelos.addElement(s);
+				}
+				this.validate();
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(
+						null, 
+						e1.getMessage(), 
+						"Error en la consulta", 
+						JOptionPane.NO_OPTION
+						);
+			}
 		}
 		
 	}
