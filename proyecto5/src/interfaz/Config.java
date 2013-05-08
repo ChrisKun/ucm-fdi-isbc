@@ -7,6 +7,10 @@ package interfaz;
 
 public class Config {
 	
+	/* Atributos */
+	public static final String comportamiento = "Comportamiento";
+	public static final String daño = "Daño";
+	
 	public static final String aparece = "aparece";
 	public static final String apareceEn = "aparece_en";
 	public static final String urlfoto = "urlfoto";

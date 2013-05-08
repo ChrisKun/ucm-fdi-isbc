@@ -19,16 +19,19 @@ public class Controlador {
 	ArbolPersonalizado treeContenido; //arbol con raiz: CONTENIDO
 	ArbolPersonalizado treeFoto; //arbol con raiz: Foto
 	ArrayList<Component> trees;
+	HashMap<String,String> hashFiltrado;
 	
 	public Controlador(Ontologia modelo){
 		this.modelo = modelo;
 		treeContenido = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Contenido.toString());
 		treeFoto = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Foto.toString());
-		// Incialmente activamos el arbol de contenido
-		
+		// Incialmente activamos el arbol de contenido		
 		trees = new ArrayList<Component>();
 		trees.add(treeContenido);
 		trees.add(treeFoto);
+		// Creamos el hashMap que tiene la tabla de equivalencias entre nombres de la ontologia
+		// y nombres en lenguaje natural
+		inicializaHashFiltrado();
 	}
 	
 	public void setVista(VentanaPrincipal vista){
@@ -362,7 +365,7 @@ public class Controlador {
 	 * Funcion de guardado de la ontologia
 	 */
 	public void guardarOntologia() {
-		modelo.getOb().save(Main.pathOntoLimpio);
+		modelo.getOb().save(Main.pathOntoSinFile);
 	}
 
 	/**
@@ -396,12 +399,39 @@ public class Controlador {
 	}
 	
 	/**
-	 * Añade las fotos a la modelo 
-	 * @param urlFotos - Recibe unas url's y añade a la modelo los nombres de las url's
-	 * @return Entero con el numero de fotos añadidas
-	 * @throws Exception - Excepcion lanzada en caso de no poder añadir la foto a la modelo
+	 * Devuelve el nombre pasado como parametro en lenguaje natural
+	 * @param nombre - nombre de un argumento perteneciente a la ontologia
+	 * @return String con el nombre en lenguaje natural
 	 */
-	public int añadeFotosModelo (ArrayList<String> urlFotos) throws Exception {
+	private String nombreFiltrado(String nombre) {		
+		return hashFiltrado.get(nombre);
+	}
+	
+	/**
+	 * Funcion que inicializa el hashMap de equivalencias de nombres
+	 */
+	private void inicializaHashFiltrado() {
+		hashFiltrado = new HashMap<String, String>();
+		/* Propiedades */
+		hashFiltrado.put("amigo_de", "amigo de");
+		hashFiltrado.put("aparece", "aparece");
+		hashFiltrado.put("aparece_en", "aparece en");
+		hashFiltrado.put("comportamiento", "comportamiento");
+		hashFiltrado.put("enemigo_de", "enemigo de");
+		hashFiltrado.put("es_usado", "es usado");
+		hashFiltrado.put("sale_el_juego", "sale el juego");
+		hashFiltrado.put("sale_en_foto", "sale en foto");
+		hashFiltrado.put("tiene", "tiene");
+		hashFiltrado.put("usa", "usa");
+	}
+	
+	/**
+	 * Añade las fotos al modelo 
+	 * @param urlFotos - Recibe unas url's y añade al modelo los nombres de las url's
+	 * @return Entero con el numero de fotos añadidas
+	 * @throws Exception - Excepcion lanzada en caso de no poder añadir la foto al modelo
+	 */
+	public int añadeFotosModelo(ArrayList<String> urlFotos) throws Exception {
 		int numeroAñadido = 0;
 		String nombre;
 		for (String urlFoto: urlFotos) {
@@ -412,15 +442,16 @@ public class Controlador {
 					modelo.getOb().createDataTypeProperty(nombre, modelo.getOb().getURI("urlfoto"), urlFoto);					
 					numeroAñadido++;
 				} else 
-					throw new Exception ("El nombre "+nombre+" no tiene un formato aceptado");
+					throw new Exception ("El nombre "+nombre+" con url: "+urlFoto+" no tiene un formato aceptado");
 			} else
-				throw new Exception ("El nombre "+nombre+" ya está en la ontología");
+				throw new Exception ("El nombre "+nombre+" con url: "+urlFoto+" ya está en la ontología");
 		}	
 		return numeroAñadido;
 	}		
 	
+	// TODO: Main para pruebas, eliminar cuando no se necesite
 	public static void main(String[] args) throws Exception{
-		String pathOntologia = "file:src/ontologia/etiquetado.owl";
+		String pathOntologia = "file:src/ontologia/etiquetado_limpio.owl";
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Controlador r = new Controlador(ontologia);
@@ -428,5 +459,6 @@ public class Controlador {
 		lista.add("D:\\workspace\\ucm-fdi-isbc\\proyecto5\\fotos\\starfox\\images.jpg");
 		lista.add("D:\\workspace\\ucm-fdi-isbc\\proyecto5\\fotos\\starfox\\sfa108.jpg");
 		r.añadeFotosModelo(lista);	
+		r.guardarOntologia();
 	}
 }
