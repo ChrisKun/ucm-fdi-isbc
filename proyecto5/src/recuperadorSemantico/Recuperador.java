@@ -46,6 +46,14 @@ public class Recuperador {
 			this.union = union;
 			this.cadena = cadena;
 		}
+		@Override
+		public boolean equals(Object arg) {
+			InfoCadena s = (InfoCadena) arg;
+			if (this.cadena.equals(s.cadena))
+				return true;
+			else
+				return false;
+		}		
 	}
 	
 	/********************************************** FUNCIONES ******************************************************/
@@ -173,8 +181,8 @@ public class Recuperador {
 	 * @return ArrayList<String> con los nombres de los individuos que cumplen lo pedido
 	 */
 	private ArrayList<String> ejecutarConsultas() {		
-		ArrayList<String> lista = new ArrayList<String>();
-		ArrayList<String> listaInterseccion = new ArrayList<String>();
+		ArrayList<InfoCadena> lista = new ArrayList<InfoCadena>();
+		ArrayList<InfoCadena> listaInterseccion = new ArrayList<InfoCadena>();
 		ArrayList<String> fotografias = new ArrayList<String>();
 		Iterator<String> iterador, iterador2;
 		String aux, aux1;
@@ -198,7 +206,7 @@ public class Recuperador {
 						while (iterador.hasNext()) {
 							aux = iterador.next();
 							if (!lista.contains(aux)) {						
-								lista.add(aux);
+								lista.add(new InfoCadena(true, aux));
 							}
 						}
 					} else {
@@ -206,7 +214,7 @@ public class Recuperador {
 						while (iterador.hasNext()) {
 							aux = iterador.next();
 							if (lista.contains(aux)) {
-								listaInterseccion.add(aux);
+								listaInterseccion.add(new InfoCadena(false, aux));
 							}
 						}
 						lista.clear();
@@ -217,22 +225,25 @@ public class Recuperador {
 		// Si no hay propiedades, entonces (por ahora) la lista son las instancias
 		} else {
 			for (InfoCadena instancia: instancias) {
-				lista.add(uri(instancia.cadena));
+				lista.add(instancia);
 			}
 		}
 		// Sacamos las fotos del juego pedido
+		// TODO: SACAR TODOS LOS INDIVIDUOS Y LUEGO SACAR LAS FOTOS QUE CONTENGAN ESOS INDIVIDUOS
+		// LA LISTA DE INDIVIDUOS ES ALGO QUE HAY QUE SACAR ANTES DE NADA
 		if (juego != null) {
 			// Fotos del juego
 			iterador = ontologia.getOb().listPropertyValue(uri(juego), uri(Config.saleEnFoto));
 			while (iterador.hasNext()) {
 				aux = iterador.next();
-				// Si hay individuos los sacamos
+				// Si hay individuos entonces empezamos a filtrar en funcion de sus conectores
 				if (instancias.size() > 0) {
 					// Sacamos los individuos de cada foto
 					iterador2 = ontologia.getOb().listPropertyValue(uri(aux), uri(Config.aparece));
 					while (iterador2.hasNext()) {
 						aux1 = iterador2.next();
-						// Si el individuo estaba en la lista y la foto no esta añadida, la añadimos
+						// Si el individuo esta en la lista y tiene una union se mantiene
+						// Si en cambio el individuo tiene una interseccion, tengo que eliminar
 						if (lista.contains(aux1) && !fotografias.contains(aux)) {
 							fotografias.add(aux);
 						// Si no habia propiedades, entonces el usuario a podido poner algo del estilo "fotos de Juego"
@@ -240,7 +251,7 @@ public class Recuperador {
 							fotografias.add(aux);
 						}
 					}
-				// Si no hay individuos sacamos el juego
+				// Si no hay individuos sacamos directamente la foto
 				} else {
 					fotografias.add(aux);
 				}				
@@ -248,8 +259,8 @@ public class Recuperador {
 		// Si no se nos restringe a un juego concreto, cogemos todas las fotos	
 		} else {
 			// Sacamos las fotos finalmente con la informacion de los individuos que queremos
-			for (String individuo: lista) {
-				iterador = ontologia.getOb().listPropertyValue(individuo, uri(Config.apareceEn));
+			for (InfoCadena individuo: lista) {
+				iterador = ontologia.getOb().listPropertyValue(individuo.cadena, uri(Config.apareceEn));
 				while (iterador.hasNext()) {
 					aux = iterador.next();					
 					if (!fotografias.contains(aux)) {
@@ -271,9 +282,7 @@ public class Recuperador {
 			//System.out.println(foto);
 		}
 		return urlFotografias;
-	}
-	
-	
+	}	
 	
 	/**
 	 * Funcion de consulta de cadenas
