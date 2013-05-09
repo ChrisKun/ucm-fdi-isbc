@@ -33,8 +33,8 @@ public class PanelConsulta extends JPanel implements ActionListener{
 	public PanelConsulta(Controlador controlador){
 		super();
 		this.controlador = controlador;
-		//this.setLayout(new GridLayout(1,2));
-		this.setLayout(new BorderLayout());
+		this.setLayout(new GridLayout(1,2));
+		//this.setLayout(new BorderLayout());
 		panelIzquierda = new JPanel();
 		panelDerecha = new JPanel();
 		

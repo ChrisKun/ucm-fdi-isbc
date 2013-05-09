@@ -1,8 +1,16 @@
 package interfaz;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -10,7 +18,7 @@ import javax.swing.JTextField;
 
 import Controlador.Controlador;
 
-public class PanelAsociarJuego extends JPanel{
+public class PanelAsociarJuego extends JPanel implements ActionListener{
 	
 	private Controlador controlador;
 	
@@ -22,29 +30,53 @@ public class PanelAsociarJuego extends JPanel{
 	private JRadioButton rB_nuevo;
 	private JTextField tF_nuevo;
 	
+	private ButtonGroup bG_botones;
+	
+	private JButton b_Seleccionar;
+	
 	public PanelAsociarJuego(Controlador controlador){
 		super();
 		this.controlador = controlador;
-		this.setLayout(new GridLayout(2, 2));
-		p_existe = new JPanel();
+		this.setLayout(new GridLayout(3,1));
+		p_existe = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		rB_existe = new JRadioButton("Existe");
-		ButtonGroup bG = new ButtonGroup();
+		bG_botones = new ButtonGroup();
 		
 		p_existe.add(rB_existe);
-		cB_existe = new JComboBox();
+		
+		ArrayList<String> aL_juegos = controlador.getJuegos();
+		Vector<String> v_juegos = new Vector<String>(aL_juegos);
+		cB_existe = new JComboBox(v_juegos);
+		
 		p_existe.add(cB_existe);
 		
-		p_nuevo = new JPanel();
+		p_nuevo = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		rB_nuevo = new JRadioButton("Nuevo");
 		p_nuevo.add(rB_nuevo);
 		tF_nuevo = new JTextField();
-		p_existe.add(tF_nuevo);
+		tF_nuevo.setColumns(20);
+		p_nuevo.add(tF_nuevo);
 		
-		bG.add(rB_existe);
-		bG.add(rB_nuevo);
+		bG_botones.add(rB_existe);
+		bG_botones.add(rB_nuevo);
 		
 		this.add(p_existe);
 		this.add(p_nuevo);
+		this.validate();
+		
+		b_Seleccionar = new JButton("Seleccionar");
+		b_Seleccionar.addActionListener(this);
+		
+		JPanel p_Seleccionar = new JPanel();
+		p_Seleccionar.add(b_Seleccionar);
+		this.add(p_Seleccionar);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == b_Seleccionar){
+			
+		}
 	}
 
 }
