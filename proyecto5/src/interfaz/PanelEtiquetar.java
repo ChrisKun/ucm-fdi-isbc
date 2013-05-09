@@ -288,7 +288,6 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 	}
 	
 	/**
-	 * TODO
 	 * recibe un texto que es un nombre y se encarga de eliminar espacios
 	 * al principio y sustituir los espacios intermedios por barras bajas
 	 * @param text

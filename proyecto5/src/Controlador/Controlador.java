@@ -252,8 +252,10 @@ public class Controlador {
 	 * @param propiedad - propiedad del individuo donde incluiremos el individuoP
 	 * @return (TRUE o FALSE) Si la operacion ha tenido exito
 	 */
-	public boolean anadirInvididuoAPropiedad(String individuo, String individuoP, String propiedad){
+	public boolean anadirInvididuoAPropiedad(String individuo, String individuoP, String propiedad, boolean esSimetrica){
 		boolean exito = false;
+		String prop_inv = Config.getPropiedadInversa(propiedad);
+		boolean tieneInversa = prop_inv != null;
 		//1. Pasar todo a URIs de la ontologia
 		String uriIndividuo = modelo.getOb().getURI(individuo);
 		String uriIndividuoP = modelo.getOb().getURI(individuoP);
@@ -267,14 +269,24 @@ public class Controlador {
 			return exito;
 		//4. Comprobar además que el individuo a etiquetar pertenece a alguno
 		// de los tipos de contenido
-		exito = comprobarSiEsTipoContenido(uriIndividuoP);
+		exito = comprobarSiEsTipoContenido(uriIndividuoP) || comprobarSiEsTipoFoto(uriIndividuoP);
 		if (!exito)
 			return exito;
 		//6. añadimos
 		modelo.getOb().createOntProperty(uriIndividuo, uriPropiedad, uriIndividuoP);
+		
+		if (esSimetrica)
+			modelo.getOb().createOntProperty(uriIndividuoP, uriPropiedad, uriIndividuo);
+		else if (tieneInversa)
+			modelo.getOb().createOntProperty(uriIndividuoP, prop_inv, uriIndividuo);
+		
 		return exito;
 	}
 	
+	private boolean comprobarSiEsTipoFoto(String uriIndividuoP) {
+		return modelo.getOb().isInstanceOf(uriIndividuoP, Config.claseFoto);
+	}
+
 	/**
 	 * Elimina un individuo EXISTENTE asociado a una propiedad de otro individuo
 	 * @param individuo del que se quiere eliminar
@@ -325,7 +337,7 @@ public class Controlador {
 	 * @return
 	 */
 	public boolean anadirIndividuoAFoto(String individuo, String foto){
-		return this.anadirInvididuoAPropiedad(foto, individuo, Config.aparece);
+		return anadirInvididuoAPropiedad(foto, individuo, Config.aparece, false);
 	}
 	
 	/**
@@ -346,6 +358,7 @@ public class Controlador {
 	 * @param valoresPropiedades - valores de las propiedades que tiene que tener la instancia
 	 */
 	public void crearIndividuo(int cont, HashMap<String,ArrayList<String>> valoresPropiedades){
+		boolean simetrica = false;
 		// 1. Sacamos el nombre completo de la clase de pertenencia
 		String uriClase = modelo.getOb().getURI(getTiposDeContenido().get(cont));
 		// 2. Comprobamos que existe
@@ -362,8 +375,11 @@ public class Controlador {
 			//Obtenemos la lista de valores de esa propiedad
 			//Rellenamos con toda la lista de valores esa propiedad
 			for (int j = 0; j < valorPropiedad.size(); j++){
-				if(!valorPropiedad.get(j).equals(""))
-					modelo.getOb().createOntProperty(nombreInstancia, propiedades.get(i), valorPropiedad.get(j));
+				if(!valorPropiedad.get(j).isEmpty()){
+					simetrica = Config.comprobarPropiedadEsSimetrica(propiedades.get(i));
+					anadirInvididuoAPropiedad(nombreInstancia, valorPropiedad.get(j), propiedades.get(i), simetrica);
+					//modelo.getOb().createOntProperty(nombreInstancia, propiedades.get(i), valorPropiedad.get(j));
+					}
 			}
 		}
 	}

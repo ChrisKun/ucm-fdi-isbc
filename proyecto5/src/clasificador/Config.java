@@ -23,6 +23,32 @@ public class Config {
 	public static final String usa = "usa";
 	public static final String urlFoto = "urlfoto";
 	public static final String esquemaUrl = "http://www.w3.org/2001/XMLSchema#string";
+	public static final String claseFoto = "Foto";
 	public static enum SeleccionArbol {Contenido, Foto}
 	
+	private static String[] simetricas = {Config.amigoDe, Config.enemigoDe};
+	
+	private static String[][] inversas = {{Config.usa,Config.esUsado},{Config.aparece, Config.apareceEn}};
+	
+	public static boolean comprobarPropiedadEsSimetrica(String string){
+		boolean sim = false;
+		for (int i = 0; i < simetricas.length && !sim; i++){
+			sim = simetricas[i].equals(string);
+		}
+		return sim;
+	}
+	
+	/**
+	 * ¡Devolvera null si no tiene, cuidado!
+	 * @return
+	 */
+	public static String getPropiedadInversa(String str){
+		for (int i = 0; i < inversas.length; i++){
+			if (inversas[i][0].equals(str))
+				return inversas[i][1];
+			else if (inversas[i][1].equals(str))
+				return inversas[i][0];
+		}
+		return null;
+	}
 }
