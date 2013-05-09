@@ -51,4 +51,18 @@ public class Config {
 		}
 		return null;
 	}
+	
+	/**
+	 * recibe un texto que es un nombre y se encarga de eliminar espacios
+	 * al principio y sustituir los espacios intermedios por barras bajas
+	 * @param text
+	 * @return
+	 */
+	public static String limpiarNombre(String text) {
+		// 1. Quitar espacios iniciales
+		String t = text.trim();
+		// 2. Sustituir los espacios en blanco por "_"
+		String ret = t.replaceAll(" ", "_");
+		return ret;
+	}
 }

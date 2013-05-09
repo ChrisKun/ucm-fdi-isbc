@@ -127,10 +127,11 @@ public class Controlador {
 	 * @return true si se ha podido añadir, false si no
 	 */
 	public boolean addJuego(String juego) {
-		if (this.existeIndividuo(juego)) {
+		String str = Config.limpiarNombre(juego);
+		if (this.existeIndividuo(str)) {
 			return false;
 		} else {
-			modelo.getOb().createInstance(Config.juego, juego);
+			modelo.getOb().createInstance(Config.juego, str);
 		}
 		return true;
 	}
@@ -364,7 +365,6 @@ public class Controlador {
 	 * @param valoresPropiedades - valores de las propiedades que tiene que tener la instancia
 	 */
 	public void crearIndividuo(int cont, HashMap<String,ArrayList<String>> valoresPropiedades){
-		boolean simetrica = false;
 		// 1. Sacamos el nombre completo de la clase de pertenencia
 		String uriClase = modelo.getOb().getURI(getTiposDeContenido().get(cont));
 		// 2. Comprobamos que existe
