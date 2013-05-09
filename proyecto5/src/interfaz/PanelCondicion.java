@@ -32,6 +32,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 	
 	private JComboBox cB_elementos;
 	
+	protected JPanel panelBotones;
 	private JButton b_Union;
 	private JButton b_Interseccion;
 	private JButton b_Eliminar;
@@ -62,14 +63,15 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		title.setTitleJustification(TitledBorder.CENTER);
 		
 		Vector v = new Vector(elementos);
-		cB_elementos = new JComboBox(v); 
+		cB_elementos = new JComboBox(v);
+		cB_elementos.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXX");
 		p.add(cB_elementos);
 				
 		// agregamos ahora el combobox a la lista para mantener el puntero
 		//comboBoxRespuestas.put(string,j);
 		
 		//paneles de botones
-		JPanel panelBotones = new JPanel();
+		panelBotones = new JPanel();
 		panelBotones.setLayout(new GridLayout(3,1));
 		
 		
@@ -101,7 +103,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		t_propiedades.getColumn("---").setMaxWidth(10);
 		
 		JScrollPane sP = new JScrollPane(t_propiedades);
-		sP.setPreferredSize(new Dimension(300,140));
+		sP.setPreferredSize(new Dimension(280,140));
 		p.add(sP);
 		
 		p.setBorder(title);
@@ -121,7 +123,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		}
 	}
 	
-	private void addElementFromComboBox(boolean esUnion){
+	protected void addElementFromComboBox(boolean esUnion){
 		
 		String[] s = new String[2];
 		
@@ -138,7 +140,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		
 	}
 	
-	private void removeElementFromComboBox(){
+	protected boolean removeElementFromComboBox(){
 		int pos = t_propiedades.getSelectedRow();
 				
 		if (pos >= 0){
@@ -148,7 +150,9 @@ public class PanelCondicion extends JPanel implements ActionListener{
 			String s = (String) tM_propiedades.getValueAt(pos, 1);
 			cB_elementos.addItem(s);
 			tM_propiedades.removeRow(pos);
+			return true;
 		}
+		return false;
 	}
 
 	public ArrayList<String> getListaAtributos(){

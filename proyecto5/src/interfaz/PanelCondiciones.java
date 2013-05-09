@@ -34,7 +34,7 @@ public class PanelCondiciones extends JPanel implements ActionListener{
 		
 		pC_propiedades = new PanelCondicion(controlador, "Propiedades", controlador.getPropiedades());
 		pC_instancias = new PanelCondicion(controlador, "Clases/Instancias", controlador.getIndividuosYClases());
-		pC_juego = new PanelCondicion(controlador, "Juego", controlador.getJuegos());
+		pC_juego = new PanelCondicionJuego(controlador, "Juego", controlador.getJuegos());
 			
 		panelPreguntas.add(pC_propiedades);
 		panelPreguntas.add(pC_instancias);
