@@ -1,5 +1,7 @@
 package interfaz;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,19 +27,26 @@ public class PanelCondiciones extends JPanel implements ActionListener{
 	public PanelCondiciones(Controlador controlador){
 		super();
 		this.controlador = controlador;
-		this.setLayout(new GridLayout(4,1));
+		this.setLayout(new BorderLayout());
+		
+		JPanel panelPreguntas = new JPanel();
+		panelPreguntas.setLayout(new GridLayout(3,1));
 		
 		pC_propiedades = new PanelCondicion(controlador, "Propiedades", controlador.getPropiedades());
 		pC_instancias = new PanelCondicion(controlador, "Clases/Instancias", controlador.getIndividuosYClases());
 		pC_juego = new PanelCondicion(controlador, "Juego", controlador.getJuegos());
 			
-		this.add(pC_propiedades);
-		this.add(pC_instancias);
-		this.add(pC_juego);
+		panelPreguntas.add(pC_propiedades);
+		panelPreguntas.add(pC_instancias);
+		panelPreguntas.add(pC_juego);
+		
+		this.add(panelPreguntas, BorderLayout.CENTER);
+		
 		
 		b_consulta = new JButton("Consulta");
 		b_consulta.addActionListener(this);
-		this.add(b_consulta);
+		b_consulta.setMaximumSize(new Dimension(100,30));
+		this.add(b_consulta, BorderLayout.SOUTH);
 		
 	}
 
