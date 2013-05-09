@@ -108,11 +108,11 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 	private void actualizarPanelTipo(){
 		
 		JPanel sobrePanel = new JPanel();
-		sobrePanel.setLayout(new GridLayout(0,3));
+		sobrePanel.setLayout(new BorderLayout());
 		
 		JPanel p = new JPanel();
-		GridLayout f = new GridLayout(0,1);
-		f.setVgap(50);
+		GridLayout f = new GridLayout(0,2);
+		f.setVgap(60);
 		f.setHgap(200);
 		//f.setAlignment(FlowLayout.CENTER);
 		p.setLayout(f);
@@ -121,7 +121,7 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		
 		for (final String s: list_values){
 			JButton b = new JButton(s);
-			b.setSize(250, 100);
+			//b.setSize(250, 100);
 			b.setFont(new Font(b.getFont().getFontName(), Font.BOLD, 22));
 			b.setBorder(BorderFactory.createBevelBorder(0));
 			b.addActionListener(new ActionListener(){
@@ -134,8 +134,19 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 			});
 			p.add(b);
 		}
-		sobrePanel.add(new JLabel());
-		sobrePanel.add(p);
+		JLabel l = new JLabel();
+		l.setPreferredSize(new Dimension(100, 50));
+		panelTipos.add(BorderLayout.NORTH,l);
+		sobrePanel.add(BorderLayout.CENTER,p);
+		l = new JLabel();
+		l.setPreferredSize(new Dimension(100, 50));
+		panelTipos.add(BorderLayout.EAST, l);
+		l = new JLabel();
+		l.setPreferredSize(new Dimension(100, 50));
+		panelTipos.add(BorderLayout.WEST, l);
+		l = new JLabel();
+		l.setPreferredSize(new Dimension(100, 50));
+		panelTipos.add(BorderLayout.SOUTH, l);
 		panelTipos.add(BorderLayout.CENTER,sobrePanel);
 	}
 	
