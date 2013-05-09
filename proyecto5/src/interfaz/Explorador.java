@@ -28,7 +28,7 @@ public class Explorador extends JPanel{
 		this.repaint();
 		for (String s: paths){
 			this.add(new BotonImagen(s));
-		}
+		}		
 	}
 	
 	private void actualizarPanel(){

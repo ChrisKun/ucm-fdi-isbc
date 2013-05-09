@@ -139,6 +139,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	public void activaPanelExplorador(ArrayList<String> res) {
 		panelExploracion.setPathExplorador(res);
 		panelExploracion.cambiarPanel(PanelExploracion.panelExplorador);
+		panelIntercambiable.setSelectedIndex(1);
 		this.validate();
 	}
 	
