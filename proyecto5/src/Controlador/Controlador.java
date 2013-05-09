@@ -12,6 +12,7 @@ import clasificador.Config;
 import clasificador.Main;
 import ontobridge.Ontologia;
 import recuperadorSemantico.Recuperador;
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import utilidades.Ficheros;
 
 public class Controlador {
@@ -20,7 +21,7 @@ public class Controlador {
 	VentanaPrincipal vista;
 	ArbolPersonalizado treeContenido; //arbol con raiz: CONTENIDO
 	ArbolPersonalizado treeFoto; //arbol con raiz: Foto
-	ArrayList<Component> trees;
+	ArrayList<ArbolPersonalizado> trees;
 	Recuperador recuperador;
 	
 	public Controlador(Ontologia modelo){
@@ -28,7 +29,7 @@ public class Controlador {
 		treeContenido = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Contenido.toString());
 		treeFoto = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Foto.toString());
 		// Incialmente activamos el arbol de contenido
-		trees = new ArrayList<Component>();
+		trees = new ArrayList<ArbolPersonalizado>();
 		trees.add(treeContenido);
 		trees.add(treeFoto);
 		// Creamos el recuperador
@@ -43,7 +44,7 @@ public class Controlador {
 	 * Devuelve el árbol de Ontobridge ACTIVO correctamente configurado.
 	 * @return
 	 */
-	public ArrayList<Component> getTrees(){
+	public ArrayList<ArbolPersonalizado> getTrees(){
 		return trees;
 	}
 	
@@ -462,6 +463,12 @@ public class Controlador {
 			return false;
 	}	
 	
+	public void actualizarOntoTree(){
+		for (ArbolPersonalizado a: trees){
+			a.actualizar();
+		}
+	}
+	
 	// TODO: Main para pruebas, eliminar cuando no se necesite
 	public static void main(String[] args) throws Exception{
 		String pathOntologia = "file:src/ontologia/etiquetado_limpio.owl";
@@ -479,4 +486,6 @@ public class Controlador {
 		*/
 		r.guardarOntologia();
 	}
+	
+	
 }

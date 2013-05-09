@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Controlador.ArbolPersonalizado;
 import Controlador.Controlador;
 
 public class PanelOntoTree extends JPanel implements ActionListener{
@@ -20,6 +21,7 @@ public class PanelOntoTree extends JPanel implements ActionListener{
 	private JComboBox cB_Seleccion;
 	private String[] valoresSeleccion = {"Contenidos","Fotos"};
 	private JPanel panelTrees;
+	private ArrayList<ArbolPersonalizado> trees;
 	
 	private Controlador controlador;
 	
@@ -30,8 +32,7 @@ public class PanelOntoTree extends JPanel implements ActionListener{
 		this.setLayout(new BorderLayout(10,10));
 		panelTrees = new JPanel();
 		panelTrees.setLayout(new CardLayout());
-		ArrayList<Component> trees = controlador.getTrees();
-		
+		trees = controlador.getTrees();
 		for (int i=0;i<trees.size();i++){
 			panelTrees.add(trees.get(i),valoresSeleccion[i]);
 		}
@@ -55,4 +56,11 @@ public class PanelOntoTree extends JPanel implements ActionListener{
 		}
 		panelTrees.validate();
 	}
+	
+	public void actualizar(){
+		for (ArbolPersonalizado a: trees){
+			a.actualizar();
+		}
+	}
+	
 }

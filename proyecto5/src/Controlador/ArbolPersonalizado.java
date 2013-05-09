@@ -211,4 +211,8 @@ public class ArbolPersonalizado extends JPanel  implements TreeSelectionListener
 			    return this;
 		}
 	}
+	
+	public void actualizar(){
+		readOntology();
+	}
 }
