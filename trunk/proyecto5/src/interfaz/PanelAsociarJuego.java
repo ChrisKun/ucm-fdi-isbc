@@ -10,15 +10,17 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import Controlador.Controlador;
 
-public class PanelAsociarJuego extends JPanel implements ActionListener{
+public class PanelAsociarJuego extends JDialog implements ActionListener{
 	
 	private Controlador controlador;
 	
@@ -37,9 +39,14 @@ public class PanelAsociarJuego extends JPanel implements ActionListener{
 	public PanelAsociarJuego(Controlador controlador){
 		super();
 		this.controlador = controlador;
-		this.setLayout(new GridLayout(3,1));
+		this.setBounds(500, 250, 320, 150);
+		this.setTitle("Asociar la foto a un juego");
+		JPanel p_asociarJuego = new JPanel();
+		this.setContentPane(p_asociarJuego);
+		p_asociarJuego.setLayout(new GridLayout(3,1));
 		p_existe = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		rB_existe = new JRadioButton("Existe");
+		rB_existe.setSelected(true);
 		bG_botones = new ButtonGroup();
 		
 		p_existe.add(rB_existe);
@@ -60,8 +67,8 @@ public class PanelAsociarJuego extends JPanel implements ActionListener{
 		bG_botones.add(rB_existe);
 		bG_botones.add(rB_nuevo);
 		
-		this.add(p_existe);
-		this.add(p_nuevo);
+		p_asociarJuego.add(p_existe);
+		p_asociarJuego.add(p_nuevo);
 		this.validate();
 		
 		b_Seleccionar = new JButton("Seleccionar");
@@ -69,13 +76,19 @@ public class PanelAsociarJuego extends JPanel implements ActionListener{
 		
 		JPanel p_Seleccionar = new JPanel();
 		p_Seleccionar.add(b_Seleccionar);
-		this.add(p_Seleccionar);
+		p_asociarJuego.add(p_Seleccionar);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == b_Seleccionar){
-			
+			if (rB_existe.isSelected()){
+				
+			}
+			if (rB_nuevo.isSelected()){
+				
+			}
+			this.dispose();
 		}
 	}
 
