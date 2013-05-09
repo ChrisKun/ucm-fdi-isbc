@@ -239,7 +239,7 @@ public class Recuperador {
 						} else if (propiedades.size() == 0) {
 							fotografias.add(aux);
 						}
-					}	
+					}
 				// Si no hay individuos sacamos el juego
 				} else {
 					fotografias.add(aux);
@@ -251,19 +251,19 @@ public class Recuperador {
 			for (String individuo: lista) {
 				iterador = ontologia.getOb().listPropertyValue(individuo, uri(Config.apareceEn));
 				while (iterador.hasNext()) {
-					aux = iterador.next();
+					aux = iterador.next();					
 					if (!fotografias.contains(aux)) {
 						fotografias.add(aux);
 					}
 				}
-			}		
+			}	
 		}
 		// Sacamos las url
 		ArrayList<String> urlFotografias = new ArrayList<String>();
 		for (String foto: fotografias) {
 			iterador = ontologia.getOb().listPropertyValue(foto,Config.urlFoto);
 			while (iterador.hasNext()) {
-				aux = iterador.next();
+				aux = iterador.next();				
 				// Eliminamos la parte del esquema que se añade al final
 				aux = aux.replace(Config.esquemaUrl, "");
 				urlFotografias.add(aux.substring(0, aux.length()-2));
@@ -390,7 +390,7 @@ public class Recuperador {
 	
 	// TODO: Main para pruebas, quitar cuando no se use
 	public static void main(String[] args) throws Exception{
-		String pathOntologia = "file:src/ontologia/etiquetado_limpio.owl";
+		String pathOntologia = "file:src/ontologia/etiquetado.owl";
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
