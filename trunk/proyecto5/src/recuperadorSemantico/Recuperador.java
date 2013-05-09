@@ -259,17 +259,18 @@ public class Recuperador {
 			}		
 		}
 		// Sacamos las url
+		ArrayList<String> urlFotografias = new ArrayList<String>();
 		for (String foto: fotografias) {
 			iterador = ontologia.getOb().listPropertyValue(foto,Config.urlFoto);
 			while (iterador.hasNext()) {
 				aux = iterador.next();
 				// Eliminamos la parte del esquema que se añade al final
 				aux = aux.replace(Config.esquemaUrl, "");
-				foto = aux.substring(0, aux.length()-2);
+				urlFotografias.add(aux.substring(0, aux.length()-2));
 			}
-			System.out.println(foto);
+			//System.out.println(foto);
 		}
-		return fotografias;
+		return urlFotografias;
 	}
 	
 	
