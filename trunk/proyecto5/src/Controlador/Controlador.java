@@ -2,7 +2,6 @@ package Controlador;
 
 import interfaz.VentanaPrincipal;
 
-import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +11,6 @@ import clasificador.Config;
 import clasificador.Main;
 import ontobridge.Ontologia;
 import recuperadorSemantico.Recuperador;
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-import utilidades.Ficheros;
 
 public class Controlador {
 
