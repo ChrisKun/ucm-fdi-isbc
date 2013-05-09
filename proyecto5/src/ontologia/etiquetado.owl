@@ -613,9 +613,6 @@
         </owl:intersectionOf>
       </owl:Class>
     </owl:equivalentClass>
-    <owl:disjointWith>
-      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Naturaleza"/>
-    </owl:disjointWith>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento">
     <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Atributos"/>
@@ -645,7 +642,6 @@
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Naturaleza">
-    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Estructura"/>
     <owl:equivalentClass>
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
