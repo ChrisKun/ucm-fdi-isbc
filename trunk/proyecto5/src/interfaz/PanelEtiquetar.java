@@ -301,6 +301,7 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 			if (!fieldNombreIndividuo.getText().equals("")){
 				controlador.crearIndividuo(cont, recopilarRespuestas());
 				cambiarPanel(s_Tipos);
+				controlador.actualizarOntoTree();
 			}	
 			else
 				JOptionPane.showMessageDialog(null, "Por favor, introduce un nombre de instancia");

@@ -181,6 +181,7 @@ public class FotoActual extends JPanel implements ActionListener{
 			}
 			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1);
 			tab.actualizarContenidoFoto(nomFoto);
+			controlador.actualizarOntoTree();
 		}
 	}
 
