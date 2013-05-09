@@ -486,6 +486,8 @@ public class Controlador {
 		*/
 		r.guardarOntologia();
 	}
-	
-	
+
+	public boolean existeIndividuo(String limpiarNombre) {
+		return modelo.getOb().existsInstance(limpiarNombre);
+	}
 }
