@@ -271,9 +271,9 @@ public class Controlador {
 			return exito;
 		//4. Comprobar además que el individuo a etiquetar pertenece a alguno
 		// de los tipos de contenido
-		exito = comprobarSiEsTipoContenido(uriIndividuoP);
-		if (!exito)
-			return exito;
+		//exito = comprobarSiEsTipoContenido(uriIndividuoP);
+		//if (!exito)
+		//	return exito;
 		//6. añadimos
 		modelo.getOb().createOntProperty(uriIndividuo, uriPropiedad, uriIndividuoP);
 		
