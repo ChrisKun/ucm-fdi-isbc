@@ -63,12 +63,14 @@ public class FotoActual extends JPanel implements ActionListener{
 		b_New = new JButton("Nuevo Individuo");
 		b_New.addActionListener(this);
 		p_botonera.add(b_New);
-		b_Add = new JButton("Etiqueta Individuo");
+		p_botonera.add(new JButton("Eliminar individuo")); //TODO
+		b_Add = new JButton("Etiquetar Individuo");
 		b_Add.addActionListener(this);
 		p_botonera.add(b_Add);
-		b_Delete = new JButton("Eliminar seleccionados");
+		b_Delete = new JButton("Desetiquetar selección");
 		b_Delete.addActionListener(this);
 		p_botonera.add(b_Delete);
+		
 	}
 
 	
