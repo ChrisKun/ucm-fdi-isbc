@@ -1053,7 +1053,6 @@
     <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Fox"/>
     <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
   </Personaje>
-  <LugarEstructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#LugarEstructura_7"/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Mari0.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\Mari0.jpg</urlfoto>
