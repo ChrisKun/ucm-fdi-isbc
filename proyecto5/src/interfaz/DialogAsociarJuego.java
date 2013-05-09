@@ -113,6 +113,7 @@ public class DialogAsociarJuego extends JDialog implements ActionListener, Focus
 			}
 			dir = new File(dir.getAbsolutePath() + "\\" + fichero.getName());
 			try {
+				//FIXME Solo Java 7
 				Files.copy(fichero.toPath(), dir.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

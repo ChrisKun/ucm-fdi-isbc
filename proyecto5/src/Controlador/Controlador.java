@@ -445,6 +445,13 @@ public class Controlador {
 			if (!modelo.getOb().existsInstance(modelo.getOb().getURI(nombre))) {
 				if (tieneFormatoCorrecto(urlFoto)) {
 					modelo.getOb().createInstance("Foto", nombreFoto(nombre));
+					String urlFoto_ = urlFoto;
+					//FIXME Buscar una forma mejor de encontrar la ruta
+					int ini = urlFoto_.indexOf("\\fotos")+7;
+					int fin = urlFoto_.lastIndexOf("\\");
+					urlFoto_ = urlFoto_.substring(ini,fin);
+					addJuego(urlFoto_);
+					
 					modelo.getOb().createDataTypeProperty(nombre, modelo.getOb().getURI("urlfoto"), urlFoto);					
 					numeroAñadido++;
 				}
