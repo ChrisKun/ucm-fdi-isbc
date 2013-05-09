@@ -154,12 +154,20 @@ public class Recuperador {
 			}
 		case 1:
 			if (ontologia.getOb().existsClass(uri(argumento))) {
-				clases.add(new InfoCadena(union, argumento));
+				// La primera vez que añadimos siempre es union
+				if (clases.size() == 0)
+					clases.add(new InfoCadena(true, argumento));
+				else
+					clases.add(new InfoCadena(union, argumento));
 				fase = 1;				
 				break;
 			}
 			else if (ontologia.getOb().existsInstance(uri(argumento))) {
-				instancias.add(new InfoCadena(union, argumento));
+				// La primera vez que añadimos siempre es union
+				if (instancias.size() == 0)
+					instancias.add(new InfoCadena(true, argumento));
+				else
+					instancias.add(new InfoCadena(union, argumento));
 				fase = 1;
 				break;
 			}			
@@ -206,7 +214,7 @@ public class Recuperador {
 				// Por cada individuo sacamos los valores de la propiedad
 				for (InfoCadena instancia: instancias) {
 					iterador = ontologia.getOb().listPropertyValue(uri(instancia.cadena), uri(propiedad.cadena));
-					if (instancia.union) {
+					if (propiedad.union) {
 						// En caso de union si no esta lo unimos 
 						while (iterador.hasNext()) {
 							aux = iterador.next();
@@ -352,8 +360,8 @@ public class Recuperador {
 	 */
 	private String transformaConsulta(String consulta) {
 		// Expresiones que contemplamos para relajar lo estricto que puede resultar hacer una consulta
-		consulta = consulta.replaceFirst("(amigos|amigo) de", "amigo_de");
-		consulta = consulta.replaceFirst("(enemigos|enemigo) de", "enemigo_de");
+		consulta = consulta.replaceFirst("(amigos|amigo) ", "amigo_de");
+		consulta = consulta.replaceFirst("(enemigos|enemigo) ", "enemigo_de");
 		consulta = consulta.replaceFirst("(objetos usados|objeto usado) por", "usa");
 		consulta = consulta.replaceFirst("(personajes que usan|personaje que usa)", "es_usado");
 		consulta = consulta.replaceFirst("(P|p)ersonajes buenos", "comportamiento A_Bueno");
@@ -419,7 +427,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("Koopa o Mario");	
+		r.consulta("enemigo_de y amigo_de Mario");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 }
