@@ -211,28 +211,30 @@ public class Recuperador {
 		if (propiedades.size() > 0) {
 			// Sacamos los individuos que cumplen las propiedades pedidas
 			for (InfoCadena propiedad: propiedades) {
-				// Por cada individuo sacamos los valores de la propiedad
-				for (InfoCadena instancia: instancias) {
-					iterador = ontologia.getOb().listPropertyValue(uri(instancia.cadena), uri(propiedad.cadena));
-					if (propiedad.union) {
-						// En caso de union si no esta lo unimos 
-						while (iterador.hasNext()) {
-							aux = iterador.next();
-							if (!lista.contains(aux)) {						
-								lista.add(new InfoCadena(true, aux));
+				if (propiedad.union) {
+					// Por cada individuo sacamos los valores de la propiedad
+					for (InfoCadena instancia: instancias) {
+						iterador = ontologia.getOb().listPropertyValue(uri(instancia.cadena), uri(propiedad.cadena));
+						if (instancia.union) {
+							// En caso de union si no esta lo unimos 
+							while (iterador.hasNext()) {
+								aux = iterador.next();
+								if (!lista.contains(aux)) {				
+									lista.add(new InfoCadena(true, aux));
+								}
 							}
-						}
-					} else {
-						// En caso de interseccion solo dejamos los comunes 
-						while (iterador.hasNext()) {
-							aux = iterador.next();
-							if (lista.contains(aux)) {
-								listaInterseccion.add(new InfoCadena(false, aux));
+						} else {
+							// En caso de interseccion solo dejamos los comunes 
+							while (iterador.hasNext()) {
+								aux = iterador.next();
+								if (lista.contains(aux)) {
+									listaInterseccion.add(new InfoCadena(false, aux));
+								}
 							}
+							lista.clear();
+							lista.addAll(listaInterseccion);
 						}
-						lista.clear();
-						lista.addAll(listaInterseccion);
-					}
+					}			
 				}			
 			}
 		// Si no hay propiedades, entonces (por ahora) la lista son las instancias
@@ -271,15 +273,23 @@ public class Recuperador {
 		
 		// Por ultimo comprobamos si las fotos tienen que tener un juego
 		if (juego != null) {
+			if (instancias.size() == 0 && propiedades.size() == 0) {
+				iterador = ontologia.getOb().listInstances("Foto");
+				// Sacamos todos los juegos etiquetados en la foto
+				while (iterador.hasNext()) {
+					fotografias.add(iterador.next());					
+				}
+			}
 			for (String foto: fotografias) {
 				iterador = ontologia.getOb().listPropertyValue(uri(foto), uri(Config.saleElJuego));
 				// Sacamos todos los juegos etiquetados en la foto
 				while (iterador.hasNext()) {
-					listaJuegos.add(iterador.next());					
+					listaJuegos.add(ontologia.getOb().getShortName(iterador.next()));					
 				}
 				// Si el juego esta en la lista, dejamos la foto, si no la borramos
 				if (listaJuegos.contains(juego))
-					fotosAux.add(foto);					
+					fotosAux.add(foto);		
+				listaJuegos.clear();
 			}
 			// Añadimos las fotos que cumplen la condicion
 			fotografias.clear();
@@ -360,8 +370,8 @@ public class Recuperador {
 	 */
 	private String transformaConsulta(String consulta) {
 		// Expresiones que contemplamos para relajar lo estricto que puede resultar hacer una consulta
-		consulta = consulta.replaceFirst("(amigos|amigo) ", "amigo_de");
-		consulta = consulta.replaceFirst("(enemigos|enemigo) ", "enemigo_de");
+		consulta = consulta.replaceFirst("(amigos|amigo) de", "amigo_de");
+		consulta = consulta.replaceFirst("(enemigos|enemigo) de", "enemigo_de");
 		consulta = consulta.replaceFirst("(objetos usados|objeto usado) por", "usa");
 		consulta = consulta.replaceFirst("(personajes que usan|personaje que usa)", "es_usado");
 		consulta = consulta.replaceFirst("(P|p)ersonajes buenos", "comportamiento A_Bueno");
@@ -427,7 +437,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("enemigo_de y amigo_de Mario");	
+		r.consulta("amigo_de Link y Sheik en zelda");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 }

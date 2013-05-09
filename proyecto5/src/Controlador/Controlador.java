@@ -136,6 +136,16 @@ public class Controlador {
 		return true;
 	}
 	
+	/**
+	 * Etiqueta un juego en una foto
+	 * @param foto - String con la foto
+	 * @param juego - String con el nombre del juego
+	 */
+	public void etiquetarJuego(String foto, String juego) {
+		String str = Config.limpiarNombre(juego);
+		modelo.getOb().createOntProperty(modelo.getOb().getURI(foto), Config.saleElJuego, modelo.getOb().getShortName(juego));
+	}
+	
 	
 	/**
 	 * Devuelve en una lista los individuos que pueden asociarse a una propiedad
@@ -446,11 +456,11 @@ public class Controlador {
 				if (tieneFormatoCorrecto(urlFoto)) {
 					modelo.getOb().createInstance("Foto", nombreFoto(nombre));
 					String urlFoto_ = urlFoto;
-					//FIXME Buscar una forma mejor de encontrar la ruta
 					int ini = urlFoto_.indexOf("\\fotos")+7;
 					int fin = urlFoto_.lastIndexOf("\\");
 					urlFoto_ = urlFoto_.substring(ini,fin);
-					addJuego(urlFoto_);
+					
+					etiquetarJuego(nombre, urlFoto_);
 					
 					modelo.getOb().createDataTypeProperty(nombre, modelo.getOb().getURI("urlfoto"), urlFoto);					
 					numeroAñadido++;
