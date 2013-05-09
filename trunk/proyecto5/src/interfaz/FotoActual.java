@@ -77,7 +77,9 @@ public class FotoActual extends JPanel implements ActionListener{
 		pathFotoActual = nuevaFoto;
 		actualizarPanel();
 		actualizarTabla();
-		tab.actualizarContenidoFoto(nuevaFoto);
+		String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1);
+		tab.actualizarContenidoFoto(nomFoto);
+		
 	}
 	
 	private void actualizarPanel(){
@@ -166,7 +168,7 @@ public class FotoActual extends JPanel implements ActionListener{
 			//JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
 			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1);
 			if (!controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto))
-				JOptionPane.showMessageDialog(this,"Error: No se ha podido realizar la operación");
+				JOptionPane.showMessageDialog(this,"Por favor, selecciona una instancia válida en el árbol");
 			//Añadir nueva fila a la tabla (solo si existe)
 			tab.actualizarContenidoFoto(nomFoto);
 			//tab.ponerIndividuosPorContentidoDeFoto(nomFoto,pathFotoActual);
