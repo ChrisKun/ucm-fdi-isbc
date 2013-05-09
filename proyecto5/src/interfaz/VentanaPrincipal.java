@@ -165,8 +165,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 			   // Aquí debemos abrir y leer el fichero.
 			   activaPanelFoto(fichero.getAbsolutePath());
 			   JDialog jD = new JDialog();
-			   jD.setBounds(500, 600, 400, 300);
+			   jD.setBounds(500, 600, 320, 150);
 			   jD.setContentPane(new PanelAsociarJuego(controlador));
+			   jD.setTitle("Asociar la foto a un juego");
 			   jD.setVisible(true);
 			}
 		}

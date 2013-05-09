@@ -45,7 +45,6 @@ public class PanelCondiciones extends JPanel implements ActionListener{
 		
 		b_consulta = new JButton("Consulta");
 		b_consulta.addActionListener(this);
-		b_consulta.setMaximumSize(new Dimension(100,30));
 		this.add(b_consulta, BorderLayout.SOUTH);
 		
 	}

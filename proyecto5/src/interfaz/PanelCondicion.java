@@ -41,7 +41,8 @@ public class PanelCondicion extends JPanel implements ActionListener{
 	
 	public PanelCondicion(Controlador controlador, String titulo, ArrayList<String> elementos){
 		super();
-		this.add(createPanelPregunta(titulo, elementos));		
+		this.add(createPanelPregunta(titulo, elementos));	
+		this.setMinimumSize(new Dimension(640,140));
 	}
 	
 	/**
@@ -55,6 +56,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout());
+		p.setMinimumSize(new Dimension(640,140));
 		
 		TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), titulo);		
 		title.setTitleJustification(TitledBorder.CENTER);
@@ -69,6 +71,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		//paneles de botones
 		JPanel panelBotones = new JPanel();
 		panelBotones.setLayout(new GridLayout(3,1));
+		
 		
 		b_Union = new JButton("Union");
 		b_Interseccion = new JButton("Interseccion");
