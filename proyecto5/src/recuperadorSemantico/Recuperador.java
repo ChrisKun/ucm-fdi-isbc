@@ -354,8 +354,15 @@ public class Recuperador {
 		consulta = consulta.replaceFirst("(enemigos|enemigo) de", "enemigo_de");
 		consulta = consulta.replaceFirst("(objetos usados|objeto usado) por", "usa");
 		consulta = consulta.replaceFirst("(personajes que usan|personaje que usa)", "es_usado");
-		consulta = consulta.replaceFirst("personajes buenos", "comportamiento A_Bueno");
-		consulta = consulta.replaceFirst("personajes (malvados|malos)", "comportamiento A_Malo");
+		consulta = consulta.replaceFirst("(P|p)ersonajes buenos", "comportamiento A_Bueno");
+		consulta = consulta.replaceFirst("(P|p)ersonajes (malvados|malos)", "comportamiento A_Malo");
+		consulta = consulta.replaceFirst("(L|l)ugare(s)? ostentosos", "tiene A_Ostentoso");
+		consulta = consulta.replaceFirst("(L|l)ugare(s)? construido(s)?", "tiene A_Construido");
+		consulta = consulta.replaceFirst("(L|l)ugare(s)? de culto", "tiene A_Culto");
+		consulta = consulta.replaceFirst("(L|l)ugare(s)? defensivo(s)?", "tiene A_Defensivo");
+		consulta = consulta.replaceFirst("(L|l)ugare(s)? emblematico(s)?", "tiene A_Emblematico");
+		consulta = consulta.replaceFirst("(L|l)ugare(s)? habitable(s)?", "tiene A_Habitable");
+		consulta = consulta.replaceFirst("(L|l)ugare(s)? ruinoso(s)?", "tiene A_Ruinoso");
 		// Permitimos variaciones en los nombres de las clases
 		// Los comentarios inferiores estan desplazados acorde al nivel de la clase en la ontologia
 		// Contenido
@@ -365,14 +372,12 @@ public class Recuperador {
 				// Edidicio
 		consulta = consulta.replaceAll(" (E|e)dificio(s)? ", "Edificio");
 		consulta = consulta.replaceAll(" (C|c)astillo(s)? ", "Castillo");
-		consulta = consulta.replaceAll(" (G|g)ranja(s)? ", "Granja");
+		consulta = consulta.replaceAll(" (C|c)hamizo(s)? ", "Chamizo");
 		consulta = consulta.replaceAll(" (T|t)emplo(s)? ", "Templo");
-		consulta = consulta.replaceAll(" (T|t)ienda(s)? ", "Tienda");
-		consulta = consulta.replaceAll(" (T|t)orre(s)? ", "Torre");
 				// Monumento
 		consulta = consulta.replaceAll(" (M|m)onumento(s)? ", "Monumento");
 		consulta = consulta.replaceAll(" (C|c)atedral(es)? ", "Catedral");
-		consulta = consulta.replaceAll(" (E|e)statua(s)? ", "Estatua");
+		consulta = consulta.replaceAll(" (P|p)alacio(s)? ", "Palacio");
 				// Puente
 		consulta = consulta.replaceAll(" (P|p)uente(s)? ", "Puente");
 			// Naturaleza
