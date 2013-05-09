@@ -153,7 +153,7 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 	private void actualizarPanelPreguntas(int contenido){
 		panelPreguntas.removeAll();
 		JPanel pPreguntas = new JPanel();
-		GridLayout g = new GridLayout(0,3);
+		GridLayout g = new GridLayout(0,2);
 		g.setHgap(20);
 		g.setVgap(20);
 		pPreguntas.setLayout(g);
@@ -171,7 +171,7 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		panelPreguntas.add(BorderLayout.NORTH,getButtonsPanel());
 		panelPreguntas.add(BorderLayout.CENTER,pPreguntas);
 		
-		for (; i < 9; i++){
+		for (; i < 4; i++){
 			pPreguntas.add(new JLabel());
 		}
 			
@@ -188,13 +188,13 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		JPanel p = new JPanel();
 		if (nombre){
 			p.setLayout(new FlowLayout());
-			fieldNombreIndividuo = new TextField(50);
+			fieldNombreIndividuo = new TextField(30);
 			p.add(fieldNombreIndividuo);
 		}
 		else {
 			p.setLayout(new FlowLayout());
 			//Parte de apareceEn (especial para restringir a la foto actual)
-			if (string.equals("OTRA cosA")){ //XXX Config.apareceEn
+			if (string.equals("OTRA cosA")){
 				Vector<String> v = new Vector<String>();
 				v.add(nomFoto); 
 				JComboBox j = new JComboBox(v);
@@ -262,7 +262,7 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		HashMap<String,ArrayList<String>> respuestas = new HashMap<String,ArrayList<String>>();
 		
 		ArrayList<String> a = new ArrayList<String>();
-		a.add(fieldNombreIndividuo.getText());
+		a.add(limpiarNombre(fieldNombreIndividuo.getText()));
 		
 		respuestas.put("Nombre", a);
 		
@@ -287,6 +287,21 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		return respuestas;
 	}
 	
+	/**
+	 * TODO
+	 * recibe un texto que es un nombre y se encarga de eliminar espacios
+	 * al principio y sustituir los espacios intermedios por barras bajas
+	 * @param text
+	 * @return
+	 */
+	private String limpiarNombre(String text) {
+		// 1. Quitar espacios iniciales
+		String t = text.trim();
+		// 2. Sustituir los espacios en blanco por "_"
+		String ret = t.replaceAll(" ", "_");
+		return ret;
+	}
+
 	public void setFotoActual(String nomFoto){
 		this.nomFoto = nomFoto;
 		cambiarPanel(s_Tipos);
@@ -298,13 +313,30 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 			cambiarPanel(s_Tipos);
 		}
 		if (e.getSource() == b_Send){
-			if (!fieldNombreIndividuo.getText().equals("")){
+			if (esNombreValido()){
 				controlador.crearIndividuo(cont, recopilarRespuestas());
 				cambiarPanel(s_Tipos);
 				controlador.actualizarOntoTree();
 			}	
 			else
-				JOptionPane.showMessageDialog(null, "Por favor, introduce un nombre de instancia");
+				JOptionPane.showMessageDialog(null, "Por favor, introduce un nombre de instancia válido");
 		}
+	}
+	
+	/**
+	 * Comprueba si un nombre es válido
+	 * @return
+	 */
+	private boolean esNombreValido(){
+		//1. Comprobar que no es vacio
+		if (fieldNombreIndividuo.getText().isEmpty())
+			return false;
+		//2. Comprobar que despues de limpiar, no es vacio
+		if (limpiarNombre(fieldNombreIndividuo.getText()).isEmpty())
+			return false;
+		//3. Comprobar que no existe ya el individuo
+		if (controlador.existeIndividuo(limpiarNombre(fieldNombreIndividuo.getText())))
+			return false;
+		return true;
 	}
 }
