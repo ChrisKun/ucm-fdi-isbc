@@ -189,6 +189,7 @@ public class Recuperador {
 		ArrayList<String> listaJuegos = new ArrayList<String>();
 		Iterator<String> iterador;
 		String aux;
+		
 		// Sacamos las instancias de todas las clases
 		for(InfoCadena clase: clases) {
 			iterador = ontologia.getOb().listInstances(uri(clase.cadena));
@@ -197,7 +198,8 @@ public class Recuperador {
 				instancias.add(new InfoCadena(clase.union, iterador.next()));
 			}
 		}
-		// Comprobamos si hay propiedades
+		
+		// Comprobamos si hay propiedades y las aplicamos
 		if (propiedades.size() > 0) {
 			// Sacamos los individuos que cumplen las propiedades pedidas
 			for (InfoCadena propiedad: propiedades) {
@@ -231,6 +233,7 @@ public class Recuperador {
 				lista.add(instancia);
 			}
 		}
+		
 		// Una vez tenemos los individuos, tenemos que sacar las fotos que cumplan 
 		// las relaciones de interseccion y union		
 		for (InfoCadena individuo: lista) {

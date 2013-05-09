@@ -125,6 +125,21 @@ public class Controlador {
 	}
 	
 	/**
+	 * Añade un juego en la ontologia
+	 * @param juego - String con el nombre del juego
+	 * @return true si se ha podido añadir, false si no
+	 */
+	public boolean addJuego(String juego) {
+		if (this.existeIndividuo(juego)) {
+			return false;
+		} else {
+			modelo.getOb().createInstance(Config.juego, juego);
+		}
+		return true;
+	}
+	
+	
+	/**
 	 * Devuelve en una lista los individuos que pueden asociarse a una propiedad
 	 * pasada por parámetro
 	 * @param propiedad
@@ -438,6 +453,16 @@ public class Controlador {
 		return recuperador.uso();
 	}
 	
+	public void actualizarOntoTree(){
+		for (ArbolPersonalizado a: trees){
+			a.actualizar();
+		}
+	}
+	
+	public boolean existeIndividuo(String limpiarNombre) {
+		return modelo.getOb().existsInstance(limpiarNombre);
+	}
+	
 	/******************** METODOS PRIVADOS ***************************/
 	/**
 	 * Extrae el nombre de una foto de una url
@@ -461,33 +486,5 @@ public class Controlador {
 			return true;
 		else 
 			return false;
-	}	
-	
-	public void actualizarOntoTree(){
-		for (ArbolPersonalizado a: trees){
-			a.actualizar();
-		}
-	}
-	
-	// TODO: Main para pruebas, eliminar cuando no se necesite
-	public static void main(String[] args) throws Exception{
-		String pathOntologia = "file:src/ontologia/etiquetado_limpio.owl";
-		String urlOntologia = "http://http://sentwittment.p.ht/";
-		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
-		Controlador r = new Controlador(ontologia);
-		Ficheros f = new Ficheros();
-		ArrayList<String> lista = f.ficheros(Main.gamesPath);
-		r.addFotosModelo(lista);
-		/*
-		ArrayList<String> lista = new ArrayList<String>();
-		lista.add("\\fotos\\starfox\\images.jpg");
-		lista.add("\\fotos\\starfox\\sfa108.jpg");
-		r.añadeFotosModelo(lista);	
-		*/
-		r.guardarOntologia();
-	}
-
-	public boolean existeIndividuo(String limpiarNombre) {
-		return modelo.getOb().existsInstance(limpiarNombre);
 	}
 }
