@@ -35,6 +35,7 @@ import javax.swing.event.ListSelectionListener;
 
 import Controlador.Controlador;
 
+import clasificador.Config;
 import clasificador.Main;
 
 public class PanelEtiquetar extends JPanel implements ActionListener{
@@ -262,7 +263,7 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		HashMap<String,ArrayList<String>> respuestas = new HashMap<String,ArrayList<String>>();
 		
 		ArrayList<String> a = new ArrayList<String>();
-		a.add(limpiarNombre(fieldNombreIndividuo.getText()));
+		a.add(Config.limpiarNombre(fieldNombreIndividuo.getText()));
 		
 		respuestas.put("Nombre", a);
 		
@@ -285,20 +286,6 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 			respuestas.put(propiedades.get(i),resp);
 		}
 		return respuestas;
-	}
-	
-	/**
-	 * recibe un texto que es un nombre y se encarga de eliminar espacios
-	 * al principio y sustituir los espacios intermedios por barras bajas
-	 * @param text
-	 * @return
-	 */
-	private String limpiarNombre(String text) {
-		// 1. Quitar espacios iniciales
-		String t = text.trim();
-		// 2. Sustituir los espacios en blanco por "_"
-		String ret = t.replaceAll(" ", "_");
-		return ret;
 	}
 
 	public void setFotoActual(String nomFoto){
@@ -331,10 +318,10 @@ public class PanelEtiquetar extends JPanel implements ActionListener{
 		if (fieldNombreIndividuo.getText().isEmpty())
 			return false;
 		//2. Comprobar que despues de limpiar, no es vacio
-		if (limpiarNombre(fieldNombreIndividuo.getText()).isEmpty())
+		if (Config.limpiarNombre(fieldNombreIndividuo.getText()).isEmpty())
 			return false;
 		//3. Comprobar que no existe ya el individuo
-		if (controlador.existeIndividuo(limpiarNombre(fieldNombreIndividuo.getText())))
+		if (controlador.existeIndividuo(Config.limpiarNombre(fieldNombreIndividuo.getText())))
 			return false;
 		return true;
 	}
