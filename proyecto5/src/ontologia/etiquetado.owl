@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0"?>
 <rdf:RDF
     xmlns="http://www.owl-ontologies.com/Ontology1365698210.owl#"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -9,7 +9,8 @@
     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
     xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="file:/D:/workspace/ucm-fdi-isbc/proyecto5/src/ontologia/etiquetado.owl">
   <owl:Ontology rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl"/>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Contenido">
     <owl:equivalentClass>
@@ -30,7 +31,7 @@
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Arma"/>
           <owl:Restriction>
             <owl:hasValue>
-              <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Cortante"/>
+              <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Cortante"/>
             </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#produce"/>
@@ -45,12 +46,12 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:someValuesFrom>
-              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Naturaleza"/>
-            </owl:someValuesFrom>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#aparece"/>
             </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Naturaleza"/>
+            </owl:someValuesFrom>
           </owl:Restriction>
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Foto"/>
         </owl:intersectionOf>
@@ -74,7 +75,7 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
-  <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Daño">
+  <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#DaÃ±o">
     <rdfs:subClassOf>
       <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosObjeto"/>
     </rdfs:subClassOf>
@@ -105,7 +106,7 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Objeto"/>
           <owl:Restriction>
-            <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Daño"/>
+            <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#DaÃ±o"/>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#produce"/>
             </owl:onProperty>
@@ -119,12 +120,12 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_estructura"/>
-            </owl:onProperty>
             <owl:hasValue>
               <LugarEstructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Ostentoso"/>
             </owl:hasValue>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_estructura"/>
+            </owl:onProperty>
           </owl:Restriction>
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Monumento"/>
         </owl:intersectionOf>
@@ -165,6 +166,23 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
+  <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Edificio">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Estructura"/>
+          <owl:Restriction>
+            <owl:hasValue>
+              <LugarEstructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Habitable"/>
+            </owl:hasValue>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_estructura"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Foto">
     <owl:equivalentClass>
       <owl:Class>
@@ -176,29 +194,12 @@
             <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Contenido"/>
           </owl:Restriction>
           <owl:Restriction>
-            <owl:someValuesFrom>
-              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
-            </owl:someValuesFrom>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#sale_el_juego"/>
             </owl:onProperty>
-          </owl:Restriction>
-        </owl:intersectionOf>
-      </owl:Class>
-    </owl:equivalentClass>
-  </owl:Class>
-  <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Edificio">
-    <owl:equivalentClass>
-      <owl:Class>
-        <owl:intersectionOf rdf:parseType="Collection">
-          <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Estructura"/>
-          <owl:Restriction>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_estructura"/>
-            </owl:onProperty>
-            <owl:hasValue>
-              <LugarEstructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Habitable"/>
-            </owl:hasValue>
+            <owl:someValuesFrom>
+              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
+            </owl:someValuesFrom>
           </owl:Restriction>
         </owl:intersectionOf>
       </owl:Class>
@@ -217,12 +218,12 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:hasValue>
-              <Raza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Monstruo"/>
-            </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene"/>
             </owl:onProperty>
+            <owl:hasValue>
+              <Raza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Monstruo"/>
+            </owl:hasValue>
           </owl:Restriction>
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
         </owl:intersectionOf>
@@ -238,7 +239,7 @@
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#produce"/>
             </owl:onProperty>
             <owl:hasValue>
-              <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Distancia"/>
+              <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Distancia"/>
             </owl:hasValue>
           </owl:Restriction>
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Arma"/>
@@ -251,13 +252,16 @@
       <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Atributos"/>
     </rdfs:subClassOf>
     <owl:disjointWith>
-      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje"/>
+      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento"/>
     </owl:disjointWith>
     <owl:disjointWith>
       <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosObjeto"/>
     </owl:disjointWith>
     <owl:disjointWith>
-      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento"/>
+      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje"/>
     </owl:disjointWith>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Templo">
@@ -298,24 +302,24 @@
     <owl:equivalentClass>
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Resource">
-          <rdf:first>
-            <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Naturaleza"/>
-          </rdf:first>
           <rdf:rest>
             <rdf:List>
               <rdf:first>
                 <owl:Restriction>
-                  <owl:hasValue>
-                    <Raza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Planta"/>
-                  </owl:hasValue>
                   <owl:onProperty>
                     <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene"/>
                   </owl:onProperty>
+                  <owl:hasValue>
+                    <Raza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Planta"/>
+                  </owl:hasValue>
                 </owl:Restriction>
               </rdf:first>
               <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
             </rdf:List>
           </rdf:rest>
+          <rdf:first>
+            <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Naturaleza"/>
+          </rdf:first>
         </owl:intersectionOf>
       </owl:Class>
     </owl:equivalentClass>
@@ -338,7 +342,7 @@
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Sonido">
-    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Daño"/>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#DaÃ±o"/>
     <rdfs:subClassOf>
       <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosObjeto"/>
     </rdfs:subClassOf>
@@ -349,12 +353,12 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Foto"/>
           <owl:Restriction>
-            <owl:someValuesFrom>
-              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Estructura"/>
-            </owl:someValuesFrom>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#aparece"/>
             </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Estructura"/>
+            </owl:someValuesFrom>
           </owl:Restriction>
         </owl:intersectionOf>
       </owl:Class>
@@ -382,19 +386,17 @@
     <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#LugarNatural"/>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego">
-    <owl:equivalentClass>
-      <owl:Class>
-        <owl:intersectionOf rdf:parseType="Collection">
-          <owl:Restriction>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#sale_en_foto"/>
-            </owl:onProperty>
-            <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Foto"/>
-          </owl:Restriction>
-          <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Atributos"/>
-        </owl:intersectionOf>
-      </owl:Class>
-    </owl:equivalentClass>
+    <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Atributos"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosObjeto"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Lugar"/>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Sexo">
     <rdfs:subClassOf>
@@ -437,12 +439,12 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Foto"/>
           <owl:Restriction>
-            <owl:someValuesFrom>
-              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Monumento"/>
-            </owl:someValuesFrom>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#aparece"/>
             </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Monumento"/>
+            </owl:someValuesFrom>
           </owl:Restriction>
         </owl:intersectionOf>
       </owl:Class>
@@ -453,12 +455,12 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:hasValue>
-              <Raza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Animal"/>
-            </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene"/>
             </owl:onProperty>
+            <owl:hasValue>
+              <Raza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Animal"/>
+            </owl:hasValue>
           </owl:Restriction>
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
         </owl:intersectionOf>
@@ -466,32 +468,33 @@
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje">
-    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Lugar"/>
-    <owl:disjointWith>
-      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosObjeto"/>
-    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
     <owl:disjointWith>
       <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento"/>
     </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosObjeto"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Lugar"/>
     <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Atributos"/>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje">
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Objeto"/>
         <owl:onProperty>
           <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#usa"/>
         </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Objeto"/>
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene"/>
-        </owl:onProperty>
         <owl:someValuesFrom>
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento"/>
         </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene"/>
+        </owl:onProperty>
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:subClassOf>
@@ -504,10 +507,10 @@
     </rdfs:subClassOf>
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
         <owl:onProperty>
           <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#enemigo_de"/>
         </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
       </owl:Restriction>
     </rdfs:subClassOf>
     <owl:equivalentClass>
@@ -525,11 +528,12 @@
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosObjeto">
-    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Lugar"/>
-    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje"/>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
     <owl:disjointWith>
       <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento"/>
     </owl:disjointWith>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje"/>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Lugar"/>
     <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Atributos"/>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Contundente">
@@ -538,12 +542,12 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Arma"/>
           <owl:Restriction>
-            <owl:hasValue>
-              <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Contundente"/>
-            </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#produce"/>
             </owl:onProperty>
+            <owl:hasValue>
+              <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Contundente"/>
+            </owl:hasValue>
           </owl:Restriction>
         </owl:intersectionOf>
       </owl:Class>
@@ -555,12 +559,12 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
           <owl:Restriction>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene"/>
-            </owl:onProperty>
             <owl:hasValue>
               <Raza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Hada"/>
             </owl:hasValue>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene"/>
+            </owl:onProperty>
           </owl:Restriction>
         </owl:intersectionOf>
       </owl:Class>
@@ -571,29 +575,14 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_naturaleza"/>
-            </owl:onProperty>
             <owl:hasValue>
               <LugarNatural rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Tierra"/>
             </owl:hasValue>
-          </owl:Restriction>
-          <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Naturaleza"/>
-        </owl:intersectionOf>
-      </owl:Class>
-    </owl:equivalentClass>
-  </owl:Class>
-  <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Estructura">
-    <owl:equivalentClass>
-      <owl:Class>
-        <owl:intersectionOf rdf:parseType="Collection">
-          <owl:Restriction>
-            <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#LugarEstructura"/>
             <owl:onProperty>
-              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_estructura"/>
+              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_naturaleza"/>
             </owl:onProperty>
           </owl:Restriction>
-          <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Contenido"/>
+          <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Naturaleza"/>
         </owl:intersectionOf>
       </owl:Class>
     </owl:equivalentClass>
@@ -613,11 +602,27 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
+  <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Estructura">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#LugarEstructura"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_estructura"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Contenido"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento">
     <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Atributos"/>
-    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Lugar"/>
-    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje"/>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
     <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosObjeto"/>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje"/>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Lugar"/>
   </owl:Class>
   <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Raza">
     <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#AtributosPersonaje"/>
@@ -628,12 +633,12 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_estructura"/>
-            </owl:onProperty>
             <owl:hasValue>
               <LugarEstructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Emblematico"/>
             </owl:hasValue>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene_estructura"/>
+            </owl:onProperty>
           </owl:Restriction>
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Estructura"/>
         </owl:intersectionOf>
@@ -663,12 +668,12 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Arma"/>
           <owl:Restriction>
-            <owl:hasValue>
-              <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Magico"/>
-            </owl:hasValue>
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#produce"/>
             </owl:onProperty>
+            <owl:hasValue>
+              <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Magico"/>
+            </owl:hasValue>
           </owl:Restriction>
         </owl:intersectionOf>
       </owl:Class>
@@ -676,9 +681,9 @@
   </owl:Class>
   <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#enemigo_de">
     <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
     <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
     <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#enemigo_de"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#aparece_en">
     <owl:inverseOf>
@@ -726,21 +731,13 @@
     <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
     <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Comportamiento"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#sale_en_foto">
-    <owl:inverseOf>
-      <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#sale_el_juego"/>
-    </owl:inverseOf>
-    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Foto"/>
-    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
+  <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#sale_el_juego">
+    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
+    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Foto"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#tiene">
     <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Contenido"/>
     <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Atributos"/>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#sale_el_juego">
-    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Juego"/>
-    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Foto"/>
-    <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#sale_en_foto"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#amigo_de">
     <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Personaje"/>
@@ -768,54 +765,48 @@
       </Personaje>
     </aparece>
   </Foto>
-  <Estructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Castillo_de_Zelda">
-    <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Emblematico"/>
-    <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Habitable"/>
-    <tiene_estructura>
-      <LugarEstructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Construido"/>
-    </tiene_estructura>
-    <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Ostentoso"/>
-  </Estructura>
+  <rdf:List/>
   <owl:AllDifferent/>
-  <Comportamiento rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Malo"/>
-  <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Ocarina">
-    <produce>
-      <Sonido rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Musica"/>
-    </produce>
-    <es_usado>
-      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Link">
-        <usa>
-          <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada">
-            <es_usado rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
-            <produce rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Cortante"/>
-          </Objeto>
-        </usa>
-        <usa rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ocarina"/>
+  <Juego rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Legend"/>
+  <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ05.jpg">
+    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ05.jpg</urlfoto>
+    <aparece>
+      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Dependiente">
         <tiene_personaje>
           <Sexo rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Masculino"/>
         </tiene_personaje>
         <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
-      </Personaje>
-    </es_usado>
-  </Objeto>
-  <owl:AllDifferent/>
-  <Juego rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Legend"/>
-  <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ05.jpg">
-    <aparece>
-      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Dependiente">
         <comportamiento>
           <Comportamiento rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Neutral"/>
         </comportamiento>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Masculino"/>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
       </Personaje>
     </aparece>
     <aparece>
       <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Escudo_Hylian">
+        <es_usado>
+          <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Link">
+            <usa>
+              <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada">
+                <es_usado rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
+                <produce rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Cortante"/>
+              </Objeto>
+            </usa>
+            <usa>
+              <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Ocarina">
+                <produce>
+                  <Sonido rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Musica"/>
+                </produce>
+                <es_usado rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
+              </Objeto>
+            </usa>
+            <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Masculino"/>
+            <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
+          </Personaje>
+        </es_usado>
         <produce>
-          <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Proteccion"/>
+          <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Proteccion"/>
         </produce>
-        <es_usado rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
       </Objeto>
     </aparece>
     <aparece>
@@ -827,18 +818,19 @@
     </aparece>
     <aparece>
       <Estructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Tienda">
-        <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Construido"/>
+        <tiene_estructura>
+          <LugarEstructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Construido"/>
+        </tiene_estructura>
       </Estructura>
     </aparece>
-    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ05.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
   </Foto>
+  <owl:AllDifferent/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ11.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ11.jpg</urlfoto>
   </Foto>
-  <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Fuego"/>
+  <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Fuego"/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#ws_Star_Fox_Adventures_1600x1200.jpg">
     <aparece>
       <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Fox">
@@ -849,47 +841,55 @@
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\starfox\ws_Star_Fox_Adventures_1600x1200.jpg</urlfoto>
   </Foto>
-  <owl:AllDifferent/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ06.png">
-    <aparece>
-      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Kaepora_Gaebora">
-        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Neutral"/>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Animal"/>
-      </Personaje>
-    </aparece>
+    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada_Maestra"/>
     <aparece>
       <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Epona">
-        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
         <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Neutral"/>
         <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Animal"/>
         <tiene_personaje>
           <Sexo rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Femenino"/>
         </tiene_personaje>
+        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
       </Personaje>
     </aparece>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
     <aparece>
-      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Zelda">
-        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Femenino"/>
-        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
-      </Personaje>
-    </aparece>
-    <aparece>
-      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Impa">
-        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Zelda"/>
-        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Femenino"/>
+      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Sheik">
         <enemigo_de>
           <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Ganon">
             <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Monstruo"/>
             <enemigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
-            <enemigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Zelda"/>
-            <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Malo"/>
+            <enemigo_de>
+              <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Zelda">
+                <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
+                <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
+                <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Femenino"/>
+                <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
+              </Personaje>
+            </enemigo_de>
+            <comportamiento>
+              <Comportamiento rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Malo"/>
+            </comportamiento>
           </Personaje>
         </enemigo_de>
+        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
+        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
+        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
+        <tiene_personaje>
+          <Sexo rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Desconocido"/>
+        </tiene_personaje>
+        <usa>
+          <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Arpa">
+            <produce rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Musica"/>
+          </Objeto>
+        </usa>
+      </Personaje>
+    </aparece>
+    <aparece>
+      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Kaepora_Gaebora">
+        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Animal"/>
+        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Neutral"/>
       </Personaje>
     </aparece>
     <aparece>
@@ -900,6 +900,26 @@
       </Personaje>
     </aparece>
     <aparece>
+      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Impa">
+        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Zelda"/>
+        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
+        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
+        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Femenino"/>
+        <enemigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ganon"/>
+      </Personaje>
+    </aparece>
+    <aparece>
+      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Saria">
+        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
+        <usa rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ocarina"/>
+        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Femenino"/>
+        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
+        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
+      </Personaje>
+    </aparece>
+    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ganon"/>
+    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Zelda"/>
+    <aparece>
       <Estructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Templo_del_tiempo">
         <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Culto"/>
         <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Construido"/>
@@ -907,37 +927,12 @@
         <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Emblematico"/>
       </Estructura>
     </aparece>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada_Maestra"/>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ganon"/>
-    <aparece>
-      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Sheik">
-        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
-        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
-        <usa>
-          <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Arpa">
-            <produce rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Musica"/>
-          </Objeto>
-        </usa>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
-        <tiene_personaje>
-          <Sexo rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Desconocido"/>
-        </tiene_personaje>
-        <enemigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ganon"/>
-      </Personaje>
-    </aparece>
-    <aparece>
-      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Saria">
-        <amigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
-        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Bueno"/>
-        <usa rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ocarina"/>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Femenino"/>
-        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Elfa"/>
-      </Personaje>
-    </aparece>
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ06.png</urlfoto>
   </Foto>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ09.jpg">
+    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ09.jpg</urlfoto>
     <aparece>
       <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Escudo">
         <produce rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Proteccion"/>
@@ -945,28 +940,40 @@
     </aparece>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Navi"/>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Castillo_de_Zelda"/>
+    <aparece>
+      <Estructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Castillo_de_Zelda">
+        <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Emblematico"/>
+        <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Habitable"/>
+        <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Construido"/>
+        <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Ostentoso"/>
+      </Estructura>
+    </aparece>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Zelda"/>
-    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ09.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
   </Foto>
-  <Naturaleza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Palmera">
-    <tiene_naturaleza rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Natural"/>
-  </Naturaleza>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#star-fox-64-3d.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\starfox\star-fox-64-3d.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Fox"/>
   </Foto>
-  <Naturaleza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Bosque_Kokiri"/>
-  <owl:AllDifferent/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ16.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ16.jpg</urlfoto>
   </Foto>
-  <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Metroide">
-    <enemigo_de>
+  <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#fondo_mario.jpg">
+    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\fondo_mario.jpg</urlfoto>
+    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
+  </Foto>
+  <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#super-mario-world.jpg">
+    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
+    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\super-mario-world.jpg</urlfoto>
+  </Foto>
+  <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#super_metroid___depths_of_tourian_by_elemental79-d5z66m9.png">
+    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\metroid\super_metroid___depths_of_tourian_by_elemental79-d5z66m9.png</urlfoto>
+    <aparece>
       <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Samus">
         <aparece_en>
           <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#ws_Metroid_1024x768.jpg">
@@ -993,31 +1000,22 @@
         <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Femenino"/>
         <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Humana"/>
       </Personaje>
-    </enemigo_de>
-    <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Monstruo"/>
-    <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Malo"/>
-  </Personaje>
-  <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#fondo_mario.jpg">
-    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\fondo_mario.jpg</urlfoto>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
+    </aparece>
+    <aparece>
+      <Personaje rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Metroide">
+        <enemigo_de rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Samus"/>
+        <tiene_personaje rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Monstruo"/>
+        <comportamiento rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Malo"/>
+      </Personaje>
+    </aparece>
   </Foto>
-  <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#super-mario-world.jpg">
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
-    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\super-mario-world.jpg</urlfoto>
-  </Foto>
-  <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#super_metroid___depths_of_tourian_by_elemental79-d5z66m9.png">
-    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\metroid\super_metroid___depths_of_tourian_by_elemental79-d5z66m9.png</urlfoto>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Samus"/>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Metroide"/>
-  </Foto>
-  <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Explosivo"/>
+  <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Explosivo"/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ14.png">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ14.png</urlfoto>
   </Foto>
+  <owl:AllDifferent/>
+  <owl:AllDifferent/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#images1.jpg">
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Samus"/>
     <aparece>
@@ -1031,15 +1029,11 @@
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\metroid\images1.jpg</urlfoto>
   </Foto>
-  <Naturaleza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Playa">
-    <tiene_naturaleza rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Agua"/>
-    <tiene_naturaleza rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Tierra"/>
-  </Naturaleza>
-  <owl:AllDifferent/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#The-Mario-Avengers-super-mario-bros-32893064-709-496.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\The-Mario-Avengers-super-mario-bros-32893064-709-496.jpg</urlfoto>
   </Foto>
+  <owl:AllDifferent/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#images.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\starfox\images.jpg</urlfoto>
@@ -1063,14 +1057,16 @@
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
   </Foto>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ07.jpg">
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Bosque_Kokiri"/>
+    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ07.jpg</urlfoto>
+    <aparece>
+      <Naturaleza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Bosque_Kokiri"/>
+    </aparece>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Navi"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Arpa"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada_Maestra"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Escudo_Hylian"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Sheik"/>
-    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ07.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
   </Foto>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ03.png">
@@ -1088,14 +1084,14 @@
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ03.png</urlfoto>
   </Foto>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ08.jpg">
+    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ08.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Bosque_Kokiri"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada_Maestra"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Escudo_Hylian"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ocarina"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Arpa"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Sheik"/>
-    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ08.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
   </Foto>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ04.jpg">
@@ -1114,24 +1110,20 @@
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\New-Super-Mario-Bros.-Review-1.jpg</urlfoto>
   </Foto>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ02.jpg">
+    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ02.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Monte_de_la_muerte"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Arpa"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Sheik"/>
-    <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ02.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Escudo_Hylian"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada_Maestra"/>
   </Foto>
-  <owl:AllDifferent/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Super-Mario-Advance-3.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\Super-Mario-Advance-3.jpg</urlfoto>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
   </Foto>
-  <Estructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Castillo_de_Ganondorf">
-    <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Ruinoso"/>
-  </Estructura>
   <Naturaleza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Enredadera">
     <tiene_naturaleza rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Natural"/>
   </Naturaleza>
@@ -1144,22 +1136,24 @@
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Link"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Zelda"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Ganon"/>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Castillo_de_Ganondorf"/>
+    <aparece>
+      <Estructura rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Castillo_de_Ganondorf">
+        <tiene_estructura rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Ruinoso"/>
+      </Estructura>
+    </aparece>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Navi"/>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Espada_Maestra"/>
+    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Escudo_Hylian"/>
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ01.jpg</urlfoto>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Escudo_Hylian"/>
   </Foto>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#mario1.png">
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\mario1.png</urlfoto>
   </Foto>
-  <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Laser"/>
-  <Daño rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Veneno"/>
-  <rdf:List/>
-  <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Pelota"/>
+  <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Laser"/>
+  <DaÃ±o rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Veneno"/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#super-mario-sunshine.jpg">
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -1173,6 +1167,7 @@
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\zelda\TLOZ12.jpg</urlfoto>
   </Foto>
+  <owl:AllDifferent/>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Starfox.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\starfox\Starfox.jpg</urlfoto>
@@ -1198,9 +1193,20 @@
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario-Sunshine-Beach-super-mario-bros-1990295-1024-768.jpg">
     <urlfoto rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >D:\workspace\ucm-fdi-isbc\proyecto5\fotos\supermario\Mario-Sunshine-Beach-super-mario-bros-1990295-1024-768.jpg</urlfoto>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Palmera"/>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Pelota"/>
-    <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Playa"/>
+    <aparece>
+      <Naturaleza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Palmera">
+        <tiene_naturaleza rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Natural"/>
+      </Naturaleza>
+    </aparece>
+    <aparece>
+      <Objeto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Pelota"/>
+    </aparece>
+    <aparece>
+      <Naturaleza rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#Playa">
+        <tiene_naturaleza rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Agua"/>
+        <tiene_naturaleza rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#A_Tierra"/>
+      </Naturaleza>
+    </aparece>
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
   </Foto>
   <Foto rdf:about="http://www.owl-ontologies.com/Ontology1365698210.owl#TLOZ15.jpg">
@@ -1219,3 +1225,5 @@
     <aparece rdf:resource="http://www.owl-ontologies.com/Ontology1365698210.owl#Mario"/>
   </Foto>
 </rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.8, Build 629)  http://protege.stanford.edu -->
