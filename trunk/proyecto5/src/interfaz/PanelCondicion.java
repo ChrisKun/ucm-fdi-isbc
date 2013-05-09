@@ -124,6 +124,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		
 		int rowNumber = cB_elementos.getItemCount(); 
 		if (rowNumber != 0){
+			s[0] = "";
 			if (tM_propiedades.getRowCount() != 0){
 				if (esUnion) s[0] = "O"; else s[0] = "Y";
 			}
@@ -150,7 +151,8 @@ public class PanelCondicion extends JPanel implements ActionListener{
 	public ArrayList<String> getListaAtributos(){
 		ArrayList<String> l = new ArrayList<String>();
 		for (int i=0;i<tM_propiedades.getRowCount();i++){
-			String s = (String) tM_propiedades.getValueAt(i, 1);
+			String s = (String) tM_propiedades.getValueAt(i, 0);
+			s += (String) tM_propiedades.getValueAt(i, 1);
 			l.add(s);
 		}
 		return l;
