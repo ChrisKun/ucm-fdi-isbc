@@ -267,7 +267,7 @@ public class Recuperador {
 				aux = aux.replace(Config.esquemaUrl, "");
 				foto = aux.substring(0, aux.length()-2);
 			}
-			// System.out.println(foto);
+			System.out.println(foto);
 		}
 		return fotografias;
 	}
