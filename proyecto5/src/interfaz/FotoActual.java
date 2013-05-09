@@ -38,6 +38,7 @@ public class FotoActual extends JPanel implements ActionListener{
 	private JPanel p_botonera;
 	private JButton b_New;
 	private JButton b_Add;
+	private JButton b_DesEtq;
 	private JButton b_Delete;
 		
 	private TablaIndividuos tab;
@@ -59,17 +60,19 @@ public class FotoActual extends JPanel implements ActionListener{
 		tablaPropiedades.setLayout(new BorderLayout());
 		this.add(tablaPropiedades,BorderLayout.CENTER);
 		
-		p_botonera = new JPanel(new GridLayout(3, 1));
+		p_botonera = new JPanel(new GridLayout(0, 2));
 		b_New = new JButton("Nuevo Individuo");
 		b_New.addActionListener(this);
 		p_botonera.add(b_New);
-		p_botonera.add(new JButton("Eliminar individuo")); //TODO
+		b_Delete = new JButton("Eliminar Individuo");
+		b_Delete.addActionListener(this);
+		p_botonera.add(b_Delete);
 		b_Add = new JButton("Etiquetar Individuo");
 		b_Add.addActionListener(this);
 		p_botonera.add(b_Add);
-		b_Delete = new JButton("Desetiquetar selección");
-		b_Delete.addActionListener(this);
-		p_botonera.add(b_Delete);
+		b_DesEtq = new JButton("Desetiquetar selección");
+		b_DesEtq.addActionListener(this);
+		p_botonera.add(b_DesEtq);
 		
 	}
 
@@ -160,30 +163,37 @@ public class FotoActual extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1);
 		if (e.getSource() == b_New){
-			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
 			PanelEtiquetar vE = new PanelEtiquetar(controlador);
 			vE.setFotoActual(pathFotoActual);
 			Main.vista.activaPanelEdicion(pathFotoActual);
 		}
 		if (e.getSource() == b_Add){
-			//JOptionPane.showMessageDialog(this, controlador.getInstanciaActualSeleccionada());
-			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1);
 			if (!controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto))
 				JOptionPane.showMessageDialog(this,"Por favor, selecciona una instancia válida en el árbol");
 			//Añadir nueva fila a la tabla (solo si existe)
 			tab.actualizarContenidoFoto(nomFoto);
-			//tab.ponerIndividuosPorContentidoDeFoto(nomFoto,pathFotoActual);
 			
 		}
-		if (e.getSource() == b_Delete){
+		if (e.getSource() == b_DesEtq){
 			ArrayList<String> selected = tab.getSelected();
+			if (selected.isEmpty())
+				JOptionPane.showMessageDialog(this,"Por favor, selecciona individuos en la tabla para desetiquetarlos de la foto");
 			for (String s: selected){
-				controlador.eliminarIndividuo(s);
+				controlador.desetiquetarIndividuoDeFoto(s, nomFoto);
 			}
-			String nomFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1);
 			tab.actualizarContenidoFoto(nomFoto);
 			controlador.actualizarOntoTree();
+		}
+		if (e.getSource() == b_Delete){
+			if (!controlador.anadirIndividuoAFoto(controlador.getInstanciaActualSeleccionada(), nomFoto))
+				JOptionPane.showMessageDialog(this,"Por favor, selecciona una instancia válida en el árbol para eliminar");
+			else{
+				controlador.eliminarIndividuo(controlador.getInstanciaActualSeleccionada());
+				controlador.actualizarOntoTree();
+				tab.actualizarContenidoFoto(nomFoto);
+			}
 		}
 	}
 
