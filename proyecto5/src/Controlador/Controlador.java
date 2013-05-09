@@ -252,10 +252,11 @@ public class Controlador {
 	 * @param propiedad - propiedad del individuo donde incluiremos el individuoP
 	 * @return (TRUE o FALSE) Si la operacion ha tenido exito
 	 */
-	public boolean anadirInvididuoAPropiedad(String individuo, String individuoP, String propiedad, boolean esSimetrica){
+	public boolean anadirInvididuoAPropiedad(String individuo, String individuoP, String propiedad){
 		boolean exito = false;
 		String prop_inv = Config.getPropiedadInversa(propiedad);
 		boolean tieneInversa = prop_inv != null;
+		boolean esSimetrica = Config.comprobarPropiedadEsSimetrica(propiedad);
 		//1. Pasar todo a URIs de la ontologia
 		String uriIndividuo = modelo.getOb().getURI(individuo);
 		String uriIndividuoP = modelo.getOb().getURI(individuoP);
@@ -269,7 +270,7 @@ public class Controlador {
 			return exito;
 		//4. Comprobar además que el individuo a etiquetar pertenece a alguno
 		// de los tipos de contenido
-		exito = comprobarSiEsTipoContenido(uriIndividuoP) || comprobarSiEsTipoFoto(uriIndividuoP);
+		exito = comprobarSiEsTipoContenido(uriIndividuoP);
 		if (!exito)
 			return exito;
 		//6. añadimos
@@ -282,10 +283,6 @@ public class Controlador {
 		
 		return exito;
 	}
-	
-	private boolean comprobarSiEsTipoFoto(String uriIndividuoP) {
-		return modelo.getOb().isInstanceOf(uriIndividuoP, Config.claseFoto);
-	}
 
 	/**
 	 * Elimina un individuo EXISTENTE asociado a una propiedad de otro individuo
@@ -297,6 +294,9 @@ public class Controlador {
 	 */
 	public boolean eliminarIndividuoDePropiedad(String individuo, String individuoP, String propiedad){
 		boolean exito = false;
+		String prop_inv = Config.getPropiedadInversa(propiedad);
+		boolean tieneInversa = prop_inv != null;
+		boolean esSimetrica = Config.comprobarPropiedadEsSimetrica(propiedad);
 		//1. Pasar todo a URIs de la ontologia
 		String uriIndividuo = modelo.getOb().getURI(individuo);
 		String uriIndividuoP = modelo.getOb().getURI(individuoP);
@@ -310,6 +310,12 @@ public class Controlador {
 			return exito;
 		//4. eliminamos
 		modelo.getOb().deleteOntProperty(uriIndividuo, uriPropiedad, uriIndividuoP);
+		
+		if (esSimetrica)
+			modelo.getOb().deleteOntProperty(uriIndividuoP, uriPropiedad, uriIndividuo);
+		else if (tieneInversa)
+			modelo.getOb().deleteOntProperty(uriIndividuoP, prop_inv, uriIndividuo);
+		
 		return exito;
 	}
 	
@@ -337,7 +343,7 @@ public class Controlador {
 	 * @return
 	 */
 	public boolean anadirIndividuoAFoto(String individuo, String foto){
-		return anadirInvididuoAPropiedad(foto, individuo, Config.aparece, false);
+		return anadirInvididuoAPropiedad(foto, individuo, Config.aparece);
 	}
 	
 	/**
@@ -376,8 +382,7 @@ public class Controlador {
 			//Rellenamos con toda la lista de valores esa propiedad
 			for (int j = 0; j < valorPropiedad.size(); j++){
 				if(!valorPropiedad.get(j).isEmpty()){
-					simetrica = Config.comprobarPropiedadEsSimetrica(propiedades.get(i));
-					anadirInvididuoAPropiedad(nombreInstancia, valorPropiedad.get(j), propiedades.get(i), simetrica);
+					anadirInvididuoAPropiedad(nombreInstancia, valorPropiedad.get(j), propiedades.get(i));
 					//modelo.getOb().createOntProperty(nombreInstancia, propiedades.get(i), valorPropiedad.get(j));
 					}
 			}
