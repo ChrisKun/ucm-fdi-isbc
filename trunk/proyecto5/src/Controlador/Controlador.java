@@ -338,7 +338,7 @@ public class Controlador {
 	 * @param foto de la que queremos quitar el individuo
 	 * @return
 	 */
-	public boolean eliminarIndividuoDeFoto(String individuo, String foto){
+	public boolean desetiquetarIndividuoDeFoto(String individuo, String foto){
 		return this.eliminarIndividuoDePropiedad(foto, individuo, Config.aparece);
 	}
 	
