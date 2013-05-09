@@ -332,59 +332,59 @@ public class Recuperador {
 	 */
 	private String transformaConsulta(String consulta) {
 		// Expresiones que contemplamos para relajar lo estricto que puede resultar hacer una consulta
-		consulta = consulta.replaceFirst(" (amigos|amigo) de", "amigo_de");
-		consulta = consulta.replaceFirst(" (enemigos|enemigo) de", "enemigo_de");
-		consulta = consulta.replaceFirst(" (objetos usados|objeto usado) por", "usa");
-		consulta = consulta.replaceFirst(" (personajes que usan|personaje que usa)", "es_usado");
+		consulta = consulta.replaceFirst("(amigos|amigo) de", "amigo_de");
+		consulta = consulta.replaceFirst("(enemigos|enemigo) de", "enemigo_de");
+		consulta = consulta.replaceFirst("(objetos usados|objeto usado) por", "usa");
+		consulta = consulta.replaceFirst("(personajes que usan|personaje que usa)", "es_usado");
 		consulta = consulta.replaceFirst("personajes buenos", "comportamiento A_Bueno");
 		consulta = consulta.replaceFirst("personajes (malvados|malos)", "comportamiento A_Malo");
 		// Permitimos variaciones en los nombres de las clases
 		// Los comentarios inferiores estan desplazados acorde al nivel de la clase en la ontologia
 		// Contenido
-		consulta = consulta.replaceAll(" (C|c)ontenido(s)?", "Contenido");
+		consulta = consulta.replaceAll(" (C|c)ontenido(s)? ", "Contenido");
 			// Estructura
-		consulta = consulta.replaceAll(" (E|e)structura(s)?", "Estructura");
+		consulta = consulta.replaceAll(" (E|e)structura(s)? ", "Estructura");
 				// Edidicio
-		consulta = consulta.replaceAll(" (E|e)dificio(s)?", "Edificio");
-		consulta = consulta.replaceAll(" (C|c)astillo(s)?", "Castillo");
-		consulta = consulta.replaceAll(" (G|g)ranja(s)?", "Granja");
-		consulta = consulta.replaceAll(" (T|t)emplo(s)?", "Templo");
-		consulta = consulta.replaceAll(" (T|t)ienda(s)?", "Tienda");
-		consulta = consulta.replaceAll(" (T|t)orre(s)?", "Torre");
+		consulta = consulta.replaceAll(" (E|e)dificio(s)? ", "Edificio");
+		consulta = consulta.replaceAll(" (C|c)astillo(s)? ", "Castillo");
+		consulta = consulta.replaceAll(" (G|g)ranja(s)? ", "Granja");
+		consulta = consulta.replaceAll(" (T|t)emplo(s)? ", "Templo");
+		consulta = consulta.replaceAll(" (T|t)ienda(s)? ", "Tienda");
+		consulta = consulta.replaceAll(" (T|t)orre(s)? ", "Torre");
 				// Monumento
-		consulta = consulta.replaceAll(" (M|m)onumento(s)?", "Monumento");
-		consulta = consulta.replaceAll(" (C|c)atedral(es)?", "Catedral");
-		consulta = consulta.replaceAll(" (E|e)statua(s)?", "Estatua");
+		consulta = consulta.replaceAll(" (M|m)onumento(s)? ", "Monumento");
+		consulta = consulta.replaceAll(" (C|c)atedral(es)? ", "Catedral");
+		consulta = consulta.replaceAll(" (E|e)statua(s)? ", "Estatua");
 				// Puente
-		consulta = consulta.replaceAll(" (P|p)uente(s)?", "Puente");
+		consulta = consulta.replaceAll(" (P|p)uente(s)? ", "Puente");
 			// Naturaleza
-		consulta = consulta.replaceAll(" (N|n)aturaleza(s)?", "Naturaleza");
-		consulta = consulta.replaceAll(" (A|a)gua(s)?", "Agua");
-		consulta = consulta.replaceAll(" (L|l)ago(s)?", "Lago");
-		consulta = consulta.replaceAll(" (M|m)ar(es)?", "Mar");
-		consulta = consulta.replaceAll(" (R|r)io(s)?", "Rio");
-		consulta = consulta.replaceAll(" (P|p)lanta(s)?", "Planta");
-		consulta = consulta.replaceAll(" (T|t)ierra(s)?", "Tierra");
-		consulta = consulta.replaceAll(" (B|b)osque(s)?", "Bosque");
-		consulta = consulta.replaceAll(" (C|c)ampo(s)?", "Campo");
-		consulta = consulta.replaceAll(" (M|m)ontaña(s)?", "Montaña");
+		consulta = consulta.replaceAll(" (N|n)aturaleza(s)? ", "Naturaleza");
+		consulta = consulta.replaceAll(" (A|a)gua(s)? ", "Agua");
+		consulta = consulta.replaceAll(" (L|l)ago(s)? ", "Lago");
+		consulta = consulta.replaceAll(" (M|m)ar(es)? ", "Mar");
+		consulta = consulta.replaceAll(" (R|r)io(s)? ", "Rio");
+		consulta = consulta.replaceAll(" (P|p)lanta(s)? ", "Planta");
+		consulta = consulta.replaceAll(" (T|t)ierra(s)? ", "Tierra");
+		consulta = consulta.replaceAll(" (B|b)osque(s)? ", "Bosque");
+		consulta = consulta.replaceAll(" (C|c)ampo(s)? ", "Campo");
+		consulta = consulta.replaceAll(" (M|m)ontaña(s)? ", "Montaña");
 			// Objeto
-		consulta = consulta.replaceAll(" (O|o)bjeto(s)?", "Objeto");
+		consulta = consulta.replaceAll(" (O|o)bjeto(s)? ", "Objeto");
 				// Arma
-		consulta = consulta.replaceAll(" (A|a)rma(s)?", "Arma");
-		consulta = consulta.replaceAll(" (A|a)rma(s)? (C|c)ontundente(s)?", "Contundente");
+		consulta = consulta.replaceAll(" (A|a)rma(s)? ", "Arma");
+		consulta = consulta.replaceAll(" (A|a)rma(s)? (C|c)ontundente(s)? ", "Contundente");
 		consulta = consulta.replaceAll(" (A|a)rma(s)? (A|a|de)? (D|d)istancia", "Distancia");
-		consulta = consulta.replaceAll(" (A|a)rma(s)? (de|con)? (F|f)ilo(s)?", "Filo");
-		consulta = consulta.replaceAll(" (A|a)rma(s)? (M|m)(a|á)gica(s)?", "Magica");
+		consulta = consulta.replaceAll(" (A|a)rma(s)? (de|con)? (F|f)ilo(s)? ", "Filo");
+		consulta = consulta.replaceAll(" (A|a)rma(s)? (M|m)(a|á)gica(s)? ", "Magica");
 				// Instrumento
-		consulta = consulta.replaceAll(" (I|i)nstrumento(s)?", "Instrumento");
+		consulta = consulta.replaceAll(" (I|i)nstrumento(s)? ", "Instrumento");
 			// Personaje
-		consulta = consulta.replaceAll(" (P|p)ersonaje(s)?", "Personaje");
-		consulta = consulta.replaceAll(" (A|a)nimal(es)?", "Animal");
-		consulta = consulta.replaceAll(" (E|e)lfo(s)?", "Elfo");
-		consulta = consulta.replaceAll(" (H|h)ada(s)?", "Hada");
-		consulta = consulta.replaceAll(" (H|h)umano(s)?", "Humano");
-		consulta = consulta.replaceAll(" (M|m)onstruo(s)?", "Monstruo");
+		consulta = consulta.replaceAll(" (P|p)ersonaje(s)? ", "Personaje");
+		consulta = consulta.replaceAll(" (A|a)nimal(es)? ", "Animal");
+		consulta = consulta.replaceAll(" (E|e)lfo(s)? ", "Elfo");
+		consulta = consulta.replaceAll(" (H|h)ada(s)? ", "Hada");
+		consulta = consulta.replaceAll(" (H|h)umano(s)? ", "Humano");
+		consulta = consulta.replaceAll(" (M|m)onstruo(s)? ", "Monstruo");
 		return consulta;
 	}
 	
@@ -394,7 +394,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("Mario");	
+		r.consulta("Koopa y Mario");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 }
