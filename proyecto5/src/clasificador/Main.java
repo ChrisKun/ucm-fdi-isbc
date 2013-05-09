@@ -15,10 +15,9 @@ public class Main {
 	// Rutas accesibles desde toda la aplicacion
 	public static final String rootPath = "proyecto5";
 	public static final String gamesPath = "fotos";// rootPath + "\\fotos"; //"fotos"; 
-	// XXX: AHORA MISMO APUNTAMOS A LA ONTOLOGIA VACIA, debemos trabajar sobre esta y llamarla etiquetado
-	// Hay que mantener siempre una limpia para que Belen vea como hacemos la Maxi Carga de la muerte
-	public static final String pathOntoSinFile = "src/ontologia/etiquetado_limpio.owl";
-	public static final String pathOntologia = "file:src/ontologia/etiquetado_limpio.owl";// "file:proyecto5/src/ontologia/etiquetado.owl"; //"file:src/ontologia/etiquetado.owl";
+
+	public static final String pathOntoSinFile = "src/ontologia/etiquetado.owl";
+	public static final String pathOntologia = "file:src/ontologia/etiquetado.owl";// "file:proyecto5/src/ontologia/etiquetado.owl"; //"file:src/ontologia/etiquetado.owl";
 	public static final String urlOntologia = "http://http://sentwittment.p.ht/";	
 	
 	public static VentanaPrincipal vista;
