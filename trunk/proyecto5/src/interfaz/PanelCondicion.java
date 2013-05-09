@@ -138,7 +138,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		int pos = t_propiedades.getSelectedRow();
 				
 		if (pos >= 0){
-			if (pos == 0){
+			if (pos == 0 && tM_propiedades.getRowCount() > 1){
 				tM_propiedades.setValueAt("", 1, 0);
 			}
 			String s = (String) tM_propiedades.getValueAt(pos, 1);

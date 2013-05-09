@@ -129,7 +129,7 @@ public class FotoActual extends JPanel implements ActionListener{
 		 * actualizar el contenido con una foto
 		 */
 		String nombreFoto = pathFotoActual.substring(pathFotoActual.lastIndexOf('\\')+1, pathFotoActual.lastIndexOf('.'));
-		tab.ponerIndividuosPorContentidoDeFoto(nombreFoto,pathFotoActual);
+		tab.ponerIndividuosPorContentidoDeFoto(nombreFoto,pathFotoActual);	
 	}
 	
 	private ImageIcon resizeFoto(String pathFoto, int ancho, int alto){

@@ -8,6 +8,7 @@ public class Ficheros {
 	public ArrayList<String> ficheros(String path){
 		ArrayList<String> lista = new ArrayList<String>();
 		ficherosRecursivo(lista, path);
+
 		return lista;
 	}
 	

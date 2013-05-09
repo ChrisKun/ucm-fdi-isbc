@@ -33,8 +33,9 @@ public class BotonImagen extends JButton {
 			String[] fotos = dir.list();
 			Random rand = new Random();
 			String fotoRandom = fotos[rand.nextInt(fotos.length)];
-			foto = new ImageIcon(pathFile + "\\" + fotoRandom);			
-		} else if (dir.isFile()  /* Check file extension*/) {
+			foto = new ImageIcon(pathFile + "\\" + fotoRandom);		
+			this.setBackground(Color.ORANGE);
+		} else if (dir.isFile()  /* FIXME Check file extension*/) {
 			foto = new ImageIcon(pathFile);			
 		} else {
 			foto = new ImageIcon(Main.rootPath + "\\" + "nok.png");

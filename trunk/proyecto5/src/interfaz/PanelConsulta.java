@@ -74,7 +74,12 @@ public class PanelConsulta extends JPanel implements ActionListener{
 			String s_consulta = tF_consulta.getText();
 			try {
 				ArrayList<String> res = controlador.ejecutaConsulta(s_consulta);
-				Main.vista.activaPanelExplorador(res);
+				ArrayList<String> res_ = new ArrayList<String>();
+				for (String s: res){
+					s = s.substring(s.indexOf("\\fotos")+1);
+					res_.add(s);
+				}
+				Main.vista.activaPanelExplorador(res_);
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(
 						null, 
