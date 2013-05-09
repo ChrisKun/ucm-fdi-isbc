@@ -152,6 +152,8 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		ArrayList<String> l = new ArrayList<String>();
 		for (int i=0;i<tM_propiedades.getRowCount();i++){
 			String s = (String) tM_propiedades.getValueAt(i, 0);
+			s = s.toLowerCase();
+			if (!s.isEmpty()) s += " ";
 			s += (String) tM_propiedades.getValueAt(i, 1);
 			l.add(s);
 		}
