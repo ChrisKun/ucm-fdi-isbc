@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
@@ -27,7 +29,7 @@ import clasificador.Main;
 
 import Controlador.Controlador;
 
-public class DialogAsociarJuego extends JDialog implements ActionListener{
+public class DialogAsociarJuego extends JDialog implements ActionListener, FocusListener{
 	
 	private Controlador controlador;
 	private File fichero;
@@ -63,6 +65,7 @@ public class DialogAsociarJuego extends JDialog implements ActionListener{
 		ArrayList<String> aL_juegos = controlador.getJuegos();
 		Vector<String> v_juegos = new Vector<String>(aL_juegos);
 		cB_existe = new JComboBox(v_juegos);
+		cB_existe.addFocusListener(this);
 		
 		p_existe.add(cB_existe);
 		
@@ -71,6 +74,8 @@ public class DialogAsociarJuego extends JDialog implements ActionListener{
 		p_nuevo.add(rB_nuevo);
 		tF_nuevo = new JTextField();
 		tF_nuevo.setColumns(20);
+		tF_nuevo.addFocusListener(this);
+		
 		p_nuevo.add(tF_nuevo);
 		
 		bG_botones.add(rB_existe);
@@ -113,8 +118,25 @@ public class DialogAsociarJuego extends JDialog implements ActionListener{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			Main.checkFiles(controlador);
 			this.dispose();
+		}		
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		if (e.getSource() == cB_existe){
+			rB_existe.setSelected(true);
 		}
+		if (e.getSource() == tF_nuevo){
+			rB_nuevo.setSelected(true);
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
