@@ -6,6 +6,11 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -18,11 +23,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import clasificador.Main;
+
 import Controlador.Controlador;
 
-public class PanelAsociarJuego extends JDialog implements ActionListener{
+public class DialogAsociarJuego extends JDialog implements ActionListener{
 	
 	private Controlador controlador;
+	private File fichero;
 	
 	private JPanel p_existe;
 	private JRadioButton rB_existe;
@@ -36,8 +44,9 @@ public class PanelAsociarJuego extends JDialog implements ActionListener{
 	
 	private JButton b_Seleccionar;
 	
-	public PanelAsociarJuego(Controlador controlador){
+	public DialogAsociarJuego(Controlador controlador, File fichero){
 		super();
+		this.fichero = fichero;
 		this.controlador = controlador;
 		this.setBounds(500, 250, 320, 150);
 		this.setTitle("Asociar la foto a un juego");
@@ -82,11 +91,27 @@ public class PanelAsociarJuego extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == b_Seleccionar){
+			String juegoSeleccionado;
+			String pathGame = "";
+			File dir = new File("");
 			if (rB_existe.isSelected()){
-				
+				juegoSeleccionado = (String) cB_existe.getSelectedItem();
+				pathGame = Main.gamesPath + "\\" + juegoSeleccionado;
+				dir = new File(pathGame);
 			}
 			if (rB_nuevo.isSelected()){
-				
+				juegoSeleccionado = tF_nuevo.getText();
+				pathGame = Main.gamesPath + "\\" + juegoSeleccionado;
+				dir = new File(pathGame);
+				dir.mkdir();				
+				controlador.addJuego(juegoSeleccionado);
+			}
+			dir = new File(dir.getAbsolutePath() + "\\" + fichero.getName());
+			try {
+				Files.copy(fichero.toPath(), dir.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 			this.dispose();
 		}
