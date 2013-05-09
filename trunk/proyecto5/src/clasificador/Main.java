@@ -35,7 +35,7 @@ public class Main {
 		vista.setTitle("CLASIFICATOR 3000");					
 	}
 
-	private static void checkFiles(Controlador controlador) {
+	public static void checkFiles(Controlador controlador) {
 		File dir = new File(gamesPath);
 		Ficheros f = new Ficheros();
 		ArrayList<String> lista = f.ficheros(gamesPath);

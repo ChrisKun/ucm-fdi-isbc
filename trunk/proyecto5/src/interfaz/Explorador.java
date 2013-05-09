@@ -41,4 +41,8 @@ public class Explorador extends JPanel{
 			this.add(new BotonImagen(directoryPath + "\\" + carpetas[i]));
 		}
 	}
+
+	public String getPathActual() {
+		return directoryPath;		
+	}
 }

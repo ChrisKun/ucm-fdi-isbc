@@ -43,6 +43,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private JMenuItem itemNuevo;
 	private JMenuItem itemGuardarOnt;
 	private JMenuItem itemCargarOnt;
+	private JMenuItem itemActualizarOnt;
 	
 	private JLabel l_Banner;
 	
@@ -52,10 +53,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private PanelExploracion panelExploracion;
 	private PanelEtiquetar panelEdicion;
 	
-	private JPanel panelBotones;
-	private JButton botonAtras;
-	private JButton botonInicio;
-	
+		
 	public final static int W = 1280;
 	public final static int H = 720;
 	
@@ -73,7 +71,15 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		this.addWindowListener(new WindowAdapter() {
 			@Override
             public void windowClosing(WindowEvent e) {
-                int confirm = JOptionPane.showOptionDialog(null, "Estas seguro de que te quieres ir? ya te vas?", "Cerrar el programa", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                int confirm = JOptionPane.showOptionDialog(
+                		null, 
+                		"Estas seguro de que te quieres ir? " +
+                		"\nTodos los cambios no guardados se perderan", 
+                		"Cerrar el programa", 
+                		JOptionPane.YES_NO_OPTION, 
+                		JOptionPane.QUESTION_MESSAGE, 
+                		null, null, null
+                		);
                 if (confirm == 0) {
                    System.exit(0);
                 }
@@ -85,17 +91,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		this.setLayout(new BorderLayout());
 		l_Banner = new JLabel("Banner",SwingConstants.CENTER);
 		this.add(l_Banner,BorderLayout.NORTH);
-		
-		
-		panelBotones = new JPanel();
-		panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		botonAtras = new JButton("Atras");
-		botonAtras.addActionListener(this);
-		panelBotones.add(botonAtras);
-		botonInicio = new JButton("Inicio");
-		botonInicio.addActionListener(this);
-		panelBotones.add(botonInicio);		
-		this.add(panelBotones, BorderLayout.SOUTH);
 		
 		panelIntercambiable = new JTabbedPane();
 
@@ -128,6 +123,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		itemCargarOnt = new JMenuItem("Cargar Ontologia");
 		itemCargarOnt.addActionListener(this);
 		menuArchivo.add(itemCargarOnt);
+		itemActualizarOnt = new JMenuItem("Actualizar Ontologia");
+		itemActualizarOnt.addActionListener(this);
+		menuArchivo.add(itemActualizarOnt);
 	}
 
 	public void activaPanelExplorador(String pathFile){
@@ -190,14 +188,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 			}
 		}
 
-		/////////////
-		
-		if (e.getSource() == botonAtras) {
-			JOptionPane.showMessageDialog(null, "You shall not pass!!");
-		}
-		
-		if (e.getSource() == botonInicio) {
-			activaPanelExplorador(Main.gamesPath);
+		if (e.getSource() == itemActualizarOnt){
+			Main.checkFiles(controlador);
 		}
 	}
 

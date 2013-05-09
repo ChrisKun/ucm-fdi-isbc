@@ -183,4 +183,8 @@ public class FotoActual extends JPanel implements ActionListener{
 			tab.actualizarContenidoFoto(nomFoto);
 		}
 	}
+
+	public String getPathActual() {
+		return pathFotoActual;
+	}
 }
