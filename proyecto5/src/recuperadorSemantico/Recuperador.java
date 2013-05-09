@@ -312,7 +312,7 @@ public class Recuperador {
 	public ArrayList<String> uso() {
 		ArrayList<String> lista = new ArrayList<String>();
 		lista.add("El Recuperador acepta cadenas acorde a la siguiente expresion regular:");
-		lista.add("((propiedad(conector)...(conector)propiedad)* (((clase|instancia)(conector)...(conector)(clase|instancia)))|(clase|instancia))?(en Juego)?");
+		lista.add("(propiedad(conector)...(conector)propiedad)* (((clase|instancia)(conector)...(conector)(clase|instancia)))|(clase|instancia))?(en Juego)?");
 		lista.add("Si se especifican propiedades sin individuos el reconocedor no las aplicará");
 		lista.add("La aplicacion contempla una serie de transformaciones predefinidas para hacer mas cómodo su uso al usuario: ");
 		lista.add("(amigos|amigo) de");
