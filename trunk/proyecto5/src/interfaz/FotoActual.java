@@ -77,6 +77,7 @@ public class FotoActual extends JPanel implements ActionListener{
 		pathFotoActual = nuevaFoto;
 		actualizarPanel();
 		actualizarTabla();
+		tab.actualizarContenidoFoto(nuevaFoto);
 	}
 	
 	private void actualizarPanel(){

@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -131,6 +132,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
 	public void activaPanelExplorador(String pathFile){
 		panelExploracion.setPathExplorador(pathFile);
+		panelExploracion.cambiarPanel(PanelExploracion.panelExplorador);
+		this.validate();
+	}
+
+	public void activaPanelExplorador(ArrayList<String> res) {
+		panelExploracion.setPathExplorador(res);
 		panelExploracion.cambiarPanel(PanelExploracion.panelExplorador);
 		this.validate();
 	}

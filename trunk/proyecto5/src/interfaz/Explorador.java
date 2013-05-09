@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.FlowLayout;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -20,6 +21,14 @@ public class Explorador extends JPanel{
 	public void setDirectoryPath(String directoryPath){
 		this.directoryPath = directoryPath;
 		actualizarPanel();
+	}
+	
+	public void setFotosAMostrar(ArrayList<String> paths){
+		this.removeAll();
+		this.repaint();
+		for (String s: paths){
+			this.add(new BotonImagen(s));
+		}
 	}
 	
 	private void actualizarPanel(){

@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import clasificador.Main;
+
 import Controlador.Controlador;
 
 public class PanelConsulta extends JPanel implements ActionListener{
@@ -58,6 +60,12 @@ public class PanelConsulta extends JPanel implements ActionListener{
 		
 		lM_modelos = new DefaultListModel();
 		l_modelos = new JList(lM_modelos);
+		l_modelos.setBackground(this.getBackground());
+		l_modelos.setEnabled(false);
+		ArrayList<String> uso = controlador.usoRecuperador();
+		for (String s: uso){
+			lM_modelos.addElement(s);
+		}
 		panelDerecha.add(l_modelos);
 	}
 	@Override
@@ -66,11 +74,7 @@ public class PanelConsulta extends JPanel implements ActionListener{
 			String s_consulta = tF_consulta.getText();
 			try {
 				ArrayList<String> res = controlador.ejecutaConsulta(s_consulta);
-				lM_modelos.removeAllElements();
-				for (String s: res){  
-					lM_modelos.addElement(s);
-				}
-				this.validate();
+				Main.vista.activaPanelExplorador(res);
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(
 						null, 

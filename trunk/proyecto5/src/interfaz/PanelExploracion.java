@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -55,6 +56,10 @@ public class PanelExploracion extends JPanel{
 		explorador.setDirectoryPath(pathFile);
 	}
 
+	public void setPathExplorador(ArrayList<String> paths){
+		explorador.setFotosAMostrar(paths);
+	}
+	
 	public void setPathFoto(String pathFile) {
 		fotoActual.actualizarFoto(pathFile);		
 	}

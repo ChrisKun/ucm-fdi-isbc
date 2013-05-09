@@ -147,7 +147,7 @@ public class PanelCondicion extends JPanel implements ActionListener{
 		}
 	}
 
-	public ArrayList<String> getAtributosLista(){
+	public ArrayList<String> getListaAtributos(){
 		ArrayList<String> l = new ArrayList<String>();
 		for (int i=0;i<tM_propiedades.getRowCount();i++){
 			String s = (String) tM_propiedades.getValueAt(i, 1);
