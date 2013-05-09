@@ -184,8 +184,11 @@ public class Recuperador {
 		ArrayList<InfoCadena> lista = new ArrayList<InfoCadena>();
 		ArrayList<InfoCadena> listaInterseccion = new ArrayList<InfoCadena>();
 		ArrayList<String> fotografias = new ArrayList<String>();
-		Iterator<String> iterador, iterador2;
-		String aux, aux1;
+		ArrayList<String> fotosAux = new ArrayList<String>();
+		ArrayList<String> listaInterseccionFotos = new ArrayList<String>();
+		ArrayList<String> listaJuegos = new ArrayList<String>();
+		Iterator<String> iterador;
+		String aux;
 		// Sacamos las instancias de todas las clases
 		for(InfoCadena clase: clases) {
 			iterador = ontologia.getOb().listInstances(uri(clase.cadena));
@@ -228,47 +231,50 @@ public class Recuperador {
 				lista.add(instancia);
 			}
 		}
-		// Sacamos las fotos del juego pedido
-		// TODO: SACAR TODOS LOS INDIVIDUOS Y LUEGO SACAR LAS FOTOS QUE CONTENGAN ESOS INDIVIDUOS
-		// LA LISTA DE INDIVIDUOS ES ALGO QUE HAY QUE SACAR ANTES DE NADA
-		if (juego != null) {
-			// Fotos del juego
-			iterador = ontologia.getOb().listPropertyValue(uri(juego), uri(Config.saleEnFoto));
-			while (iterador.hasNext()) {
-				aux = iterador.next();
-				// Si hay individuos entonces empezamos a filtrar en funcion de sus conectores
-				if (instancias.size() > 0) {
-					// Sacamos los individuos de cada foto
-					iterador2 = ontologia.getOb().listPropertyValue(uri(aux), uri(Config.aparece));
-					while (iterador2.hasNext()) {
-						aux1 = iterador2.next();
-						// Si el individuo esta en la lista y tiene una union se mantiene
-						// Si en cambio el individuo tiene una interseccion, tengo que eliminar
-						if (lista.contains(aux1) && !fotografias.contains(aux)) {
-							fotografias.add(aux);
-						// Si no habia propiedades, entonces el usuario a podido poner algo del estilo "fotos de Juego"
-						} else if (propiedades.size() == 0) {
-							fotografias.add(aux);
-						}
-					}
-				// Si no hay individuos sacamos directamente la foto
-				} else {
-					fotografias.add(aux);
-				}				
-			}
-		// Si no se nos restringe a un juego concreto, cogemos todas las fotos	
-		} else {
-			// Sacamos las fotos finalmente con la informacion de los individuos que queremos
-			for (InfoCadena individuo: lista) {
-				iterador = ontologia.getOb().listPropertyValue(individuo.cadena, uri(Config.apareceEn));
+		// Una vez tenemos los individuos, tenemos que sacar las fotos que cumplan 
+		// las relaciones de interseccion y union		
+		for (InfoCadena individuo: lista) {
+			// Recorremos los individuos y vamos viendo sus fotos
+			iterador = ontologia.getOb().listPropertyValue(uri(individuo.cadena), uri(Config.apareceEn));
+			if (individuo.union) {					
+				// En caso de union si no esta la foto la unimos 
 				while (iterador.hasNext()) {
-					aux = iterador.next();					
-					if (!fotografias.contains(aux)) {
+					aux = iterador.next();
+					if (!fotografias.contains(aux)) {						
 						fotografias.add(aux);
 					}
 				}
-			}	
+			} else {
+				// En caso de interseccion solo dejamos los comunes 
+				while (iterador.hasNext()) {
+					aux = iterador.next();
+					if (fotografias.contains(aux)) {
+						listaInterseccionFotos.add(aux);
+					}
+				}
+				// Borramos la lista y añadimos la interseccion
+				listaInterseccionFotos.clear();
+				fotografias.addAll(listaInterseccionFotos);
+			}
 		}
+		
+		// Por ultimo comprobamos si las fotos tienen que tener un juego
+		if (juego != null) {
+			for (String foto: fotografias) {
+				iterador = ontologia.getOb().listPropertyValue(uri(foto), uri(Config.saleElJuego));
+				// Sacamos todos los juegos etiquetados en la foto
+				while (iterador.hasNext()) {
+					listaJuegos.add(iterador.next());					
+				}
+				// Si el juego esta en la lista, dejamos la foto, si no la borramos
+				if (listaJuegos.contains(juego))
+					fotosAux.add(foto);					
+			}
+			// Añadimos las fotos que cumplen la condicion
+			fotografias.clear();
+			fotografias.addAll(fotosAux);
+		}
+
 		// Sacamos las url
 		ArrayList<String> urlFotografias = new ArrayList<String>();
 		for (String foto: fotografias) {
@@ -279,7 +285,7 @@ public class Recuperador {
 				aux = aux.replace(Config.esquemaUrl, "");
 				urlFotografias.add(aux.substring(0, aux.length()-2));
 			}
-			//System.out.println(foto);
+			System.out.println(foto);
 		}
 		return urlFotografias;
 	}	
@@ -403,7 +409,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("Koopa y Mario");	
+		r.consulta("Koopa o Mario");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 }
