@@ -45,8 +45,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private JMenuItem itemCargarOnt;
 	private JMenuItem itemActualizarOnt;
 	
-	private JLabel l_Banner;
-	
 	private JTabbedPane panelIntercambiable;
 	
 	private PanelConsulta panelConsulta;
@@ -89,8 +87,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		this.setJMenuBar(menuBar);
 		
 		this.setLayout(new BorderLayout());
-		l_Banner = new JLabel("Banner",SwingConstants.CENTER);
-		this.add(l_Banner,BorderLayout.NORTH);
 		
 		panelIntercambiable = new JTabbedPane();
 
