@@ -117,9 +117,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		itemGuardarOnt = new JMenuItem("Salvar Ontologia");
 		itemGuardarOnt.addActionListener(this);
 		menuArchivo.add(itemGuardarOnt);
-		itemCargarOnt = new JMenuItem("Cargar Ontologia");
-		itemCargarOnt.addActionListener(this);
-		menuArchivo.add(itemCargarOnt);
+		//itemCargarOnt = new JMenuItem("Cargar Ontologia");
+		//itemCargarOnt.addActionListener(this);
+		//menuArchivo.add(itemCargarOnt);
 		itemActualizarOnt = new JMenuItem("Actualizar Ontologia");
 		itemActualizarOnt.addActionListener(this);
 		menuArchivo.add(itemActualizarOnt);
@@ -180,6 +180,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 			{
 			   File fichero = fileChooser.getSelectedFile();
 			   controlador.cargarOntologia(fichero.getAbsolutePath());
+			   this.validate();
 			}
 		}
 
