@@ -424,6 +424,11 @@ public class Controlador {
 	 */
 	public void cargarOntologia(String string) {
 		modelo = new Ontologia(Main.urlOntologia, Main.pathOntologia);
+		treeContenido = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Contenido.toString());
+		treeFoto = new ArbolPersonalizado(modelo.getOb(),true, Config.SeleccionArbol.Foto.toString());
+		trees.clear();
+		trees.add(treeContenido);
+		trees.add(treeFoto);
 	}
 	
 	/**
