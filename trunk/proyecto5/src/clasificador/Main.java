@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Controlador.Controlador;
+import controlador.Controlador;
+
 import ontobridge.Ontologia;
 import utilidades.Ficheros;
 import interfaz.VentanaPrincipal;
@@ -41,9 +42,13 @@ public class Main {
 		checkFiles(controlador);
 		
 		vista.setVisible(true);
-		vista.setTitle("CLASIFICATOR 3000");					
+		vista.setTitle("Videogame Tagger");					
 	}
 
+	/**
+	 * Comprueba que todas las fotos de la carpeta \fotos estan en la ontologia y si no las añade 
+	 * @param controlador
+	 */
 	public static void checkFiles(Controlador controlador) {
 		File dir = new File(gamesPath);
 		Ficheros f = new Ficheros();

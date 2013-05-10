@@ -21,7 +21,8 @@ import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-import Controlador.Controlador;
+import controlador.Controlador;
+
 
 import clasificador.Main;
 

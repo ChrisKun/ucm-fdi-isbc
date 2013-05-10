@@ -458,14 +458,4 @@ public class Recuperador {
 		consulta = consulta.replaceAll(" (M|m)onstruo(s)? ", "Monstruo");
 		return consulta;
 	}
-	
-	// TODO: Main para pruebas, quitar cuando no se use
-	public static void main(String[] args) throws Exception{
-		String pathOntologia = "file:src/ontologia/etiquetado.owl";
-		String urlOntologia = "http://http://sentwittment.p.ht/";
-		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
-		Recuperador r = new Recuperador(ontologia);
-		r.consulta("amigo_de y enemigo_de Link o Sheik en zelda");	
-		//r.consulta("enemigo_de Link, Ganondorf");	
-	}
 }

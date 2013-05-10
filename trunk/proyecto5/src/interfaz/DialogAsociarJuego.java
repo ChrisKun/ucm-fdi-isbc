@@ -25,9 +25,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import controlador.Controlador;
+
 import clasificador.Main;
 
-import Controlador.Controlador;
 
 public class DialogAsociarJuego extends JDialog implements ActionListener, FocusListener{
 	

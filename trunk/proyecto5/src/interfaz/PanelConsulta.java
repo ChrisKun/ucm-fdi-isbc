@@ -14,9 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controlador.Controlador;
+
 import clasificador.Main;
 
-import Controlador.Controlador;
 
 public class PanelConsulta extends JPanel implements ActionListener{
 

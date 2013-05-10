@@ -4,7 +4,8 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
-import Controlador.Controlador;
+import controlador.Controlador;
+
 
 import clasificador.Main;
 

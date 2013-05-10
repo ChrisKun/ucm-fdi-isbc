@@ -30,7 +30,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.MouseInputListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import Controlador.Controlador;
+import controlador.Controlador;
+
 
 import clasificador.Main;
 

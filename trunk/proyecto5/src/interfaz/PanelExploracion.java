@@ -14,7 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import Controlador.Controlador;
+import controlador.Controlador;
+
 
 import clasificador.Main;
 

@@ -11,9 +11,10 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controlador.Controlador;
+
 import clasificador.Main;
 
-import Controlador.Controlador;
 
 public class PanelCondiciones extends JPanel implements ActionListener{
 

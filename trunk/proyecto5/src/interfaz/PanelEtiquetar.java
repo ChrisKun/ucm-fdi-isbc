@@ -33,7 +33,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import Controlador.Controlador;
+import controlador.Controlador;
+
 
 import clasificador.Config;
 import clasificador.Main;
