@@ -23,11 +23,20 @@ public class Main {
 	public static VentanaPrincipal vista;
 	
 	public static void main(String[] args){
+		
+		File dir = new File("fotos");
+		if (!dir.exists()){
+			dir.mkdir();
+			System.out.println(dir.getAbsolutePath());
+		}
+		
 		Ontologia modelo = new Ontologia(urlOntologia, pathOntologia);
 		Controlador controlador = new Controlador(modelo);
 		vista = new VentanaPrincipal(controlador);
 		controlador.setVista(vista);
 		controlador.getTiposDeContenido();
+		
+		
 		
 		checkFiles(controlador);
 		
