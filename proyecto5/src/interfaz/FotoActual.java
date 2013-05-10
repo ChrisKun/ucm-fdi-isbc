@@ -96,7 +96,6 @@ public class FotoActual extends JPanel implements ActionListener{
         fotoActual.setPreferredSize(new Dimension(600,300));
         fotoActual.setBorder(blackline);
         this.add(fotoActual, BorderLayout.WEST);
-		this.add(new JLabel("Añadir información, etiquetar, etc."), BorderLayout.SOUTH);		
 		
 	}
 	

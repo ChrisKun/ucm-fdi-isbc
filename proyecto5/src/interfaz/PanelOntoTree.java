@@ -56,7 +56,7 @@ public class PanelOntoTree extends JPanel implements ActionListener{
 		}
 		panelTrees.validate();
 	}
-	
+	 
 	public void actualizar(){
 		for (ArbolPersonalizado a: trees){
 			a.actualizar();
