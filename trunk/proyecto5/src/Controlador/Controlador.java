@@ -67,7 +67,8 @@ public class Controlador {
 			iterador1 = modelo.getOb().listProperties(aux);
 			while (iterador1.hasNext()) {
 				aux1 = iterador1.next();
-				if (!aux1.contains("aparece") && !aux1.contains("tiene"))
+				if (!aux1.contains(Config.aparece) && !aux1.contains(Config.tiene) && !aux1.contains(Config.produce) 
+						&& !aux1.contains(Config.comportamiento))
 					lista.add(modelo.getOb().getShortName(aux1));
 			}
 		}
