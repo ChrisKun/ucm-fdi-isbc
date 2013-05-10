@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import Controlador.Controlador;
+import controlador.Controlador;
+
 
 public class PanelCondicionJuego extends PanelCondicion implements ActionListener{
 

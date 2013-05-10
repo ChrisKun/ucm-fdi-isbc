@@ -11,8 +11,9 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import Controlador.ArbolPersonalizado;
-import Controlador.Controlador;
+import controlador.ArbolPersonalizado;
+import controlador.Controlador;
+
 
 public class PanelOntoTree extends JPanel implements ActionListener{
 

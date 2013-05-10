@@ -31,17 +31,22 @@ public class Config {
 	
 	private static String[][] inversas = {{Config.usa,Config.esUsado},{Config.aparece, Config.apareceEn}};
 	
-	public static boolean comprobarPropiedadEsSimetrica(String string){
+	/**
+	 * Comprueba si la propiedad pasada por parámetro tiene simétrica
+	 * @param str Propiedad a comprobar
+	 * @return (TRUE o FALSE)
+	 */
+	public static boolean comprobarPropiedadEsSimetrica(String str){
 		boolean sim = false;
 		for (int i = 0; i < simetricas.length && !sim; i++){
-			sim = simetricas[i].equals(string);
+			sim = simetricas[i].equals(str);
 		}
 		return sim;
 	}
 	
 	/**
-	 * ¡Devolvera null si no tiene, cuidado!
-	 * @return
+	 * @param str Propiedad de la que se desea averiguar la inversa
+	 * @return Propiedad inversa a la pasada por parámetro o NULL si no tiene inversa
 	 */
 	public static String getPropiedadInversa(String str){
 		for (int i = 0; i < inversas.length; i++){
@@ -54,10 +59,10 @@ public class Config {
 	}
 	
 	/**
-	 * recibe un texto que es un nombre y se encarga de eliminar espacios
-	 * al principio y sustituir los espacios intermedios por barras bajas
-	 * @param text
-	 * @return
+	 * Permite limpiar una cadena de caracteres quitando espacios iniciales y sustituyendo el
+	 * resto por '_'
+	 * @param text String a limpiar
+	 * @return String limpiada
 	 */
 	public static String limpiarNombre(String text) {
 		// 1. Quitar espacios iniciales

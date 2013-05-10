@@ -1,4 +1,4 @@
-package Controlador;
+package controlador;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

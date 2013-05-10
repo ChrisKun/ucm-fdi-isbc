@@ -1,4 +1,4 @@
-package Controlador;
+package controlador;
 
 import interfaz.VentanaPrincipal;
 
@@ -144,7 +144,7 @@ public class Controlador {
 	 */
 	public void etiquetarJuego(String foto, String juego) {
 		String str = Config.limpiarNombre(juego);
-		modelo.getOb().createOntProperty(modelo.getOb().getURI(foto), Config.saleElJuego, modelo.getOb().getShortName(juego));
+		modelo.getOb().createOntProperty(modelo.getOb().getURI(foto), Config.saleElJuego, modelo.getOb().getShortName(str));
 	}
 	
 	
@@ -219,8 +219,8 @@ public class Controlador {
 	
 	/**
 	 * Elimina todos los valores asociados a una misma propiedad. Por ejemplo
-	 * aparece Zelda, aparece Link y mandamos borrar aparece, borraria todas
-	 * las propiedades asociadas a aparece (Link y Zelda)
+	 * aparece Zelda, aparece Link y mandamos borrar 'aparece', borraria todas
+	 * las propiedades asociadas a 'aparece' (Link y Zelda)
 	 * @param propiedad
 	 * @return
 	 */
@@ -280,12 +280,7 @@ public class Controlador {
 		//3. Si alguna no exite, no continuamos y devolvemos FALSE
 		if (!exito)
 			return exito;
-		//4. Comprobar además que el individuo a etiquetar pertenece a alguno
-		// de los tipos de contenido
-		//exito = comprobarSiEsTipoContenido(uriIndividuoP);
-		//if (!exito)
-		//	return exito;
-		//6. añadimos
+		
 		modelo.getOb().createOntProperty(uriIndividuo, uriPropiedad, uriIndividuoP);
 		
 		if (esSimetrica)
@@ -336,6 +331,7 @@ public class Controlador {
 	/**
 	 * Comprueba si un individuo pertenece a una de las clases de Tipo de Contenido
 	 * @param individuo
+	 * @deprecated
 	 * @return
 	 */
 	private boolean comprobarSiEsTipoContenido(String individuo){
@@ -430,10 +426,16 @@ public class Controlador {
 		modelo = new Ontologia(Main.urlOntologia, Main.pathOntologia);
 	}
 	
+	/**
+	 * Devuelve un indice asociado a un tipo de contenido.
+	 * @param contenido Nombre del contenido del que se quiere conocer el índice
+	 * @see getTiposDeContenido
+	 * @return entero que da el indice acorde al metodo que los coloca en un orden
+	 */
 	public int dameIndiceContenido(String contenido){
 		int index = -1;
 		boolean enc = false;
-		ArrayList<String> s = this.getTiposDeContenido();
+		ArrayList<String> s = getTiposDeContenido();
 		for (int i = 0; i < s.size() && !enc; i++){
 			if (s.get(i).equals(contenido)){
 				enc = true;
@@ -489,14 +491,22 @@ public class Controlador {
 		return recuperador.uso();
 	}
 	
+	/**
+	 * Permite actualizar el panel del árbol de la ontología
+	 */
 	public void actualizarOntoTree(){
 		for (ArbolPersonalizado a: trees){
 			a.actualizar();
 		}
 	}
 	
-	public boolean existeIndividuo(String limpiarNombre) {
-		return modelo.getOb().existsInstance(limpiarNombre);
+	/**
+	 * Comprueba si existe una instancia
+	 * @param str - nombre de la instancia a comprobar
+	 * @return TRUE o FALSE
+	 */
+	public boolean existeIndividuo(String str) {
+		return modelo.getOb().existsInstance(str);
 	}
 	
 	/******************** METODOS PRIVADOS ***************************/
