@@ -190,6 +190,7 @@ public class Recuperador {
 	 */
 	private ArrayList<String> ejecutarConsultas() {		
 		ArrayList<InfoCadena> lista = new ArrayList<InfoCadena>();
+		ArrayList<InfoCadena> listaInstProp = new ArrayList<InfoCadena>();
 		ArrayList<InfoCadena> listaInterseccion = new ArrayList<InfoCadena>();
 		ArrayList<String> fotografias = new ArrayList<String>();
 		ArrayList<String> fotosAux = new ArrayList<String>();
@@ -219,7 +220,7 @@ public class Recuperador {
 							// En caso de union si no esta lo unimos 
 							while (iterador.hasNext()) {
 								aux = iterador.next();
-								if (!lista.contains(aux)) {				
+								if (!lista.contains(aux)) {						
 									lista.add(new InfoCadena(true, aux));
 								}
 							}
@@ -234,8 +235,35 @@ public class Recuperador {
 							lista.clear();
 							lista.addAll(listaInterseccion);
 						}
-					}			
-				}			
+					}	
+				// Si la propiedad es una interseccion intersecamos conjuntos
+				} else {
+					// Por cada individuo sacamos los valores de la propiedad
+					for (InfoCadena instancia: instancias) {
+						iterador = ontologia.getOb().listPropertyValue(uri(instancia.cadena), uri(propiedad.cadena));
+						if (instancia.union) {
+							// En caso de union si no esta lo unimos 
+							while (iterador.hasNext()) {
+								aux = iterador.next();
+								if (!listaInstProp.contains(aux)) {						
+									listaInstProp.add(new InfoCadena(true, aux));
+								}
+							}
+						} else {
+							// En caso de interseccion solo dejamos los comunes 
+							while (iterador.hasNext()) {
+								aux = iterador.next();
+								if (listaInstProp.contains(aux)) {
+									listaInterseccion.add(new InfoCadena(false, aux));
+								}
+							}
+							listaInstProp.clear();
+							listaInstProp.addAll(listaInterseccion);
+						}
+					}	
+					lista.clear();
+					lista.addAll(listaInstProp);
+				}
 			}
 		// Si no hay propiedades, entonces (por ahora) la lista son las instancias
 		} else {
@@ -437,7 +465,7 @@ public class Recuperador {
 		String urlOntologia = "http://http://sentwittment.p.ht/";
 		Ontologia ontologia = new Ontologia(urlOntologia, pathOntologia);
 		Recuperador r = new Recuperador(ontologia);
-		r.consulta("amigo_de Link y Sheik en zelda");	
+		r.consulta("amigo_de y enemigo_de Link o Sheik en zelda");	
 		//r.consulta("enemigo_de Link, Ganondorf");	
 	}
 }
