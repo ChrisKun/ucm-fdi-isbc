@@ -3,7 +3,7 @@ package behaviours;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 
-public class Blocker extends Behaviour{
+public class Blocker extends Behaviour {
 
 	@Override
 	public void configure() {

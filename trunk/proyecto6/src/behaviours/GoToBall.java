@@ -12,7 +12,7 @@ public class GoToBall extends Behaviour{
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
@@ -30,7 +30,6 @@ public class GoToBall extends Behaviour{
 		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 		if (myRobotAPI.canKick())
 			myRobotAPI.kick();
-		return myRobotAPI.ROBOT_OK;
+		return RobotAPI.ROBOT_OK;
 	}
-
 }
