@@ -30,10 +30,15 @@ public class Goalkeeper extends Behaviour {
 	public int takeStep() {
 		Vec2 ball = myRobotAPI.getBall();
 		Vec2 ourGoal = myRobotAPI.getOurGoal();
-		ball.sub(ourGoal);
-		myRobotAPI.setSpeed(0);
-		myRobotAPI.setSteerHeading(ball.angle(ball));
+		//ball.sub(ourGoal);
+		ourGoal.sub(ball);
 		
+		myRobotAPI.setSteerHeading(ourGoal.t);
+		if (myRobotAPI.getPosition().y > 1||myRobotAPI.getPosition().y < -1){
+			myRobotAPI.setSpeed(0);
+		} else {
+			myRobotAPI.setSpeed(10);
+		}
 		if (!myRobotAPI.behindEverybody()){
 			//Opciones
 			// · Que otro sea el portero
