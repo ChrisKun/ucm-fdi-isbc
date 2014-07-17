@@ -1,0 +1,59 @@
+package Cbr;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import GAPDataBase.*;
+
+import jcolibri.cbrcore.CBRCase;
+import jcolibri.cbrcore.CaseBaseFilter;
+import jcolibri.cbrcore.Connector;
+import jcolibri.exception.InitializingException;
+
+public class Conector implements Connector {
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub		
+	}
+
+	@Override
+	public void deleteCases(Collection<CBRCase> arg0) {
+		// TODO Auto-generated method stub		
+	}
+
+	@Override
+	public void initFromXMLfile(URL arg0) throws InitializingException {
+		// TODO Auto-generated method stub		
+	}
+
+	@Override
+	public Collection<CBRCase> retrieveAllCases() {		
+		ArrayList<CBRCase> casos = new ArrayList<CBRCase>();
+		try{
+			ArrayList<Product> productos = GAPLoader.extractProducts();
+			for (Product p: productos) {
+				CBRCase caso = new CBRCase();
+				Prenda prenda = new Prenda(p);
+				caso.setDescription(prenda);
+				casos.add(caso);
+			}
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+		return casos;
+	}
+
+	@Override
+	public Collection<CBRCase> retrieveSomeCases(CaseBaseFilter arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void storeCases(Collection<CBRCase> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+}

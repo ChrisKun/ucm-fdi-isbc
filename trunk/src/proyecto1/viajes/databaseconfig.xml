@@ -1,7 +1,0 @@
-<DataBaseConfiguration>
-	<HibernateConfigFile>proyecto1/viajes/hibernate.cfg.xml</HibernateConfigFile>
-	<DescriptionMappingFile>proyecto1/viajes/TravelDescription.hbm.xml</DescriptionMappingFile>
-	<DescriptionClassName>proyecto1.viajes.TravelDescription</DescriptionClassName>
-	<SolutionMappingFile>proyecto1/viajes/TravelSolution.hbm.xml</SolutionMappingFile>
-	<SolutionClassName>proyecto1.viajes.TravelSolution</SolutionClassName>
-</DataBaseConfiguration>
